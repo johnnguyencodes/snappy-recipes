@@ -52,13 +52,25 @@ $.ajax({
   success: function(data) {
     startWatson(data);
   },
-  error: function (err) {
+  error: function(err) {
     console.log(err)
   }
 })
 
 function startWatson(data) {
   $.ajax({
-    method: ""
-  })
+    method: "GET",
+    url: "https://api.us-south.visual-recognition.watson.cloud.ibm.com/instances/d0911929-4812-48d8-ba0c-918b93722084",
+    headers: {
+      "apikey": "7hFCtrlfYDTXJ-KaBq4CwxviS7iee5NAQD_NaIX4pogE",
+      "Content-Type": "application/json",
+      "url": data.link
+    },
+    success: function(data) {
+      console.log(data);
+    },
+    error: function(err) {
+      console.log(err)
+    }
+  });
 }
