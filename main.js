@@ -44,33 +44,84 @@
 
 $.ajax({
   method: "GET",
-  url: "https://api.imgur.com/3/image/csFntM8",
+  url: "https://api.imgur.com/3/image/kqSaPhf",
   headers: {
     "Authorization": "Client-ID 62cbd49ff79d018",
     "Content-Type": "application/json"
   },
   success: function(data) {
-    startWatson(data);
+    console.log(data.data.link);
+    // startSpoonacular(data.data.link);
   },
   error: function(err) {
     console.log(err)
   }
 })
 
-function startWatson(data) {
-  $.ajax({
-    method: "GET",
-    url: "https://api.us-south.visual-recognition.watson.cloud.ibm.com/instances/d0911929-4812-48d8-ba0c-918b93722084",
-    headers: {
-      "apikey": "7hFCtrlfYDTXJ-KaBq4CwxviS7iee5NAQD_NaIX4pogE",
-      "Content-Type": "application/json",
-      "url": data.link
-    },
-    success: function(data) {
-      console.log(data);
-    },
-    error: function(err) {
-      console.log(err)
+var dataToSend = {
+  "requests": [
+    {
+      "image": {
+        "source": {
+          "imageUri": "https://i.imgur.com/kqSaPhf.jpg"
+        }
+      },
+      "features": [
+        {
+          "type": "LABEL_DETECTION"
+        }
+      ]
     }
-  });
-}
+  ]
+};
+
+$.ajax({
+  url: "https://vision.googleapis.com/v1/images:annotate?fields=responses&key=AIzaSyAJzv7ThEspgv8_BxX2EwCs8PUEJMtJN6c",
+  type: "POST",
+  data: dataToSend,
+  success: function (response) {
+    console.log(response);
+  },
+  error: function(err) {
+    console.log(err);
+  }
+});
+
+// function startSpoonacular(data) {
+//   var spoonacularURL = "https://api.spoonacular.com/food/images/analyze?imageUrl=" + data + "&apiKey=5d83fe3f2cf14616a6ea74137c2be564"
+//   $.ajax({
+//     method: "GET",
+//     url: spoonacularURL,
+//     headers: {
+//       "Content-Type": "application/json"
+//     },
+//     success: function(data) {
+//       console.log(data);
+//     },
+//     error: function(err) {
+//       console.log(err);
+//     }
+//   })
+// }
+
+// function startWatson(data) {
+//   var watsonURL = "https://api.us-south.visual-recognition.watson.cloud.ibm.com/v3/classify?url=" + data + "&version=2018-03-19";
+//   $.ajax({
+//     method: "GET",
+//     url: watsonURL,
+//     data: {
+//       apikey: "7hFCtrlfYDTXJ-KaBq4CwxviS7iee5NAQD_NaIX4pogE"
+//     },
+//     headers: {
+//       "Content-Type": "application/json"
+//     },
+//     success: function(data) {
+//       console.log(data);
+//     },
+//     error: function(err) {
+//       console.log(err)
+//     }
+//   });
+// }
+// curl -u "apikey:7hFCtrlfYDTXJ-KaBq4CwxviS7iee5NAQD_NaIX4pogE"
+// "https://api.us-south.visual-recognition.watson.cloud.ibm.com/v3/classify?url=https://i.imgur.com/kqSaPhf.jpg&version=2018-03-19"
