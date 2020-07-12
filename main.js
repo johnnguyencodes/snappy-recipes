@@ -24,6 +24,35 @@
 //   }
 // }
 
+const uploadButton = document.getElementById("upload-button");
+var formData = new FormData();
+
+
+
+uploadButton.addEventListener("click", fileValidation);
+
+function fileValidation() {
+  const fileInput = document.getElementById("file-input");
+  const file = fileInput.files[0];
+  const fileType = file.type;
+  const mimeTypes = ['image/jpg', 'image/png', 'image/gif'];
+  if (!(fileInput.isDefaultNamespace.length)) {
+    alert("Error: No file selected, please select a file to upload.");
+    return;
+  }
+  if (!(mimeTypes.indexOf(fileType))) {
+    alert("Error: Incorrect file type, please select a jpeg, png or gif file.");
+    return;
+  }
+  if (file.size > 10 * 1024 * 1024) {
+    alert("Error: Image exceeds 10MB size limit");
+    return;
+  }
+  alert(`You have chosen the file ${file.name}`);
+  formData.append("file", document.getElementById("file-input").files[0]);
+  startImgur();
+}
+
 let googleDataToSend = {
   "requests": [
     {
@@ -42,12 +71,17 @@ let googleDataToSend = {
 };
 
 //GET request to IMGUR with image id supplied
-$.ajax({
+function startImgur() {
+  $.ajax({
   method: "POST",
   url: "https://api.imgur.com/3/image/",
+  processData: false,
+  contentType: false,
+  async: false,
+  cache: false,
+  data: formData,
   headers: {
     "Authorization": "Client-ID 62cbd49ff79d018",
-    "Content-Type": "application/json"
   },
   success: function(data) {
     console.log("Imgur:", data.data.link);
@@ -58,6 +92,7 @@ $.ajax({
     console.log(err)
   }
 })
+}
 
 //POST request to Google's Cloud Vision API with image from IMGUR to label the object in the image
 function startGoogle(data) {
