@@ -43,8 +43,8 @@ let googleDataToSend = {
 
 //GET request to IMGUR with image id supplied
 $.ajax({
-  method: "GET",
-  url: "https://api.imgur.com/3/image/69SUs49",
+  method: "POST",
+  url: "https://api.imgur.com/3/image/",
   headers: {
     "Authorization": "Client-ID 62cbd49ff79d018",
     "Content-Type": "application/json"
