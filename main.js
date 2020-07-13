@@ -25,7 +25,10 @@
 // }
 
 const uploadButton = document.getElementById("button");
-uploadButton.addEventListener("click", event => {
+uploadButton.addEventListener("click", event => fileValidation(event));
+
+//file validation checker
+function fileValidation(event) {
   event.preventDefault();
   const fileInput = document.getElementById("input-form");
   const imageFile = fileInput.files[0];
@@ -48,7 +51,7 @@ uploadButton.addEventListener("click", event => {
   formData.append("image", imageFile);
   console.log(formData);
   startImgur(formData);
-});
+}
 
 let googleDataToSend = {
   "requests": [
@@ -109,7 +112,7 @@ function startGoogle(data) {
   });
 }
 
-//GET request to Spoonacular's API with label from Google to get a list of up to 10 recipes containing the item from the image.
+//GET request to Spoonacular's API with label from Google to get a list of up to 10 recipes containing the item from the image and other nutrition info.
 function startSpoonacular(data) {
   var spoonacularURL = "https://api.spoonacular.com/recipes/complexSearch?query=" + data + "&apiKey=5d83fe3f2cf14616a6ea74137c2be564&addRecipeNutrition=true"
   $.ajax({
