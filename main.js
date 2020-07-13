@@ -24,17 +24,13 @@
 //   }
 // }
 
-const uploadButton = document.getElementById("upload-button");
-var formData = new FormData();
-
-
-
-uploadButton.addEventListener("click", fileValidation);
-
-function fileValidation() {
-  const fileInput = document.getElementById("file-input");
-  const file = fileInput.files[0];
-  const fileType = file.type;
+const uploadButton = document.getElementById("button");
+uploadButton.addEventListener("click", event => {
+  event.preventDefault();
+  const fileInput = document.getElementById("input-form");
+  const imageFile = fileInput.files[0];
+  const fileType = imageFile.type;
+  const formData = new FormData();
   const mimeTypes = ['image/jpg', 'image/png', 'image/gif'];
   if (!(fileInput.isDefaultNamespace.length)) {
     alert("Error: No file selected, please select a file to upload.");
@@ -44,14 +40,15 @@ function fileValidation() {
     alert("Error: Incorrect file type, please select a jpeg, png or gif file.");
     return;
   }
-  if (file.size > 10 * 1024 * 1024) {
+  if (imageFile.size > 10 * 1024 * 1024) {
     alert("Error: Image exceeds 10MB size limit");
     return;
   }
-  alert(`You have chosen the file ${file.name}`);
-  formData.append("file", document.getElementById("file-input").files[0]);
-  startImgur();
-}
+  alert(`You have chosen the file ${imageFile.name}`);
+  formData.append("image", imageFile);
+  console.log(formData);
+  startImgur(formData);
+});
 
 let googleDataToSend = {
   "requests": [
@@ -71,21 +68,20 @@ let googleDataToSend = {
 };
 
 //GET request to IMGUR with image id supplied
-function startImgur() {
+function startImgur(formData) {
   $.ajax({
   method: "POST",
   url: "https://api.imgur.com/3/image/",
+  data: formData,
   processData: false,
   contentType: false,
-  async: false,
   cache: false,
-  data: formData,
   headers: {
-    "Authorization": "Client-ID 62cbd49ff79d018",
-  },
+    "Authorization": "Client-ID 62cbd49ff79d018"
+    },
   success: function(data) {
     console.log("Imgur:", data.data.link);
-    googleDataToSend.requests[0].image.source.imageUri =  data.data.link;
+    googleDataToSend.requests[0].image.source.imageUri = data.data.link;
     startGoogle();
   },
   error: function(err) {
