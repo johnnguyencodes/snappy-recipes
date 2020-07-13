@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>AJAX - 2</title>
   <link rel="shortcut icon" type="image/png" href="/images/favicon.png">
@@ -21,7 +21,13 @@
     <input type="file" id="input-form"  accept="image/jpeg, image/png, image/gif" required>
     <button type="button" id="button" class="btn btn-primary">Upload Image</button>
   </form>
-  <table>
+  <div id="image-container">
+  </div>
+  <div id="title-container">
+  </div>
+  <div id="recipe-container">
+  </div>
+  <!-- <table>
     <thead>
       <tr>
         <th>User ID</th>
@@ -32,7 +38,7 @@
     <tbody id="user-data">
 
     </tbody>
-  </table>
+  </table> -->
   <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
   <script src="main.js"></script>
 </body>
