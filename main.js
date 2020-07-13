@@ -1,29 +1,3 @@
-// $.ajax({
-//   method: "GET",
-//   url: "https://jsonplaceholder.typicode.com/users",
-//   success: generateUserData,
-//   error: function(err) {
-//     console.log(err)
-//   }
-// })
-
-// function generateUserData(data) {
-//   const userData = document.getElementById("user-data");
-//   for (let i = 0; i < data.length; i++) {
-//     const tr = document.createElement("tr");
-//     const userId = document.createElement("td");
-//     const name = document.createElement("td");
-//     const email = document.createElement("td");
-//     userId.textContent = data[i].id;
-//     name.textContent = data[i].name;
-//     email.textContent = data[i].email;
-//     tr.append(userId);
-//     tr.append(name);
-//     tr.append(email);
-//     userData.append(tr);
-//   }
-// }
-
 const uploadButton = document.getElementById("button");
 uploadButton.addEventListener("click", event => fileValidation(event));
 
@@ -32,13 +6,13 @@ function fileValidation(event) {
   event.preventDefault();
   const fileInput = document.getElementById("input-form");
   const imageFile = fileInput.files[0];
-  const fileType = imageFile.type;
-  const formData = new FormData();
-  const mimeTypes = ['image/jpg', 'image/png', 'image/gif'];
-  if (!(fileInput.isDefaultNamespace.length)) {
+  if (!(imageFile)) {
     alert("Error: No file selected, please select a file to upload.");
     return;
   }
+  const fileType = imageFile.type;
+  const formData = new FormData();
+  const mimeTypes = ['image/jpg', 'image/png', 'image/gif'];
   if (!(mimeTypes.indexOf(fileType))) {
     alert("Error: Incorrect file type, please select a jpeg, png or gif file.");
     return;
@@ -86,12 +60,12 @@ function startImgurAPI(formData) {
     const imageURL = data.data.link;
     googleDataToSend.requests[0].image.source.imageUri = imageURL;
     imageOnPage(imageURL);
-    startGoogleAPI();
+    // startGoogleAPI();
   },
   error: function(err) {
     console.log(err)
   }
-})
+  })
 }
 
 //POST request to Google's Cloud Vision API with image from IMGUR to label the object in the image
@@ -133,11 +107,12 @@ function startSpoonacularAPI(imageTitle) {
 }
 
 function imageOnPage(imageURL) {
+  console.log("imageOnPage");
   const imageContainer = document.getElementById("image-container");
   const img = document.createElement("img");
   img.src = imageURL;
-  img.height = "300";
-  img.width = "400";
+  img.height = "225";
+  img.width = "300";
   imageContainer.append(img);
 }
 

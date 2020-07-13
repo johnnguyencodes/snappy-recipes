@@ -17,28 +17,21 @@
 </head>
 
 <body>
-  <form id="form">
+  <header class="col-xs-12 d-flex justify-content-center">
+    <h3>Snap Chef</h3>
+  </header>
+  <form id="form" class="col-xs-12 d-flex justify-content-space-between">
     <input type="file" id="input-form"  accept="image/jpeg, image/png, image/gif" required>
-    <button type="button" id="button" class="btn btn-primary">Upload Image</button>
+    <button type="button" id="button" class="btn btn-primary"><i class="fa fa-upload"></i></button>
   </form>
-  <div id="image-container">
+  <div id="image-container" class="col-xs-12 d-flex justify-content-center">
+    <img src="https://i.imgur.com/qJPxXmH.jpg" alt="uploaded image" height="225" width="300">
   </div>
-  <div id="title-container">
+  <div id="title-container" class="col-xs-12 d-flex justify-content-center">
+    <h1>Yam</h1>
   </div>
-  <div id="recipe-container">
+  <div id="recipe-container" class="col-xs-12 d-flex justify-content-center">
   </div>
-  <!-- <table>
-    <thead>
-      <tr>
-        <th>User ID</th>
-        <th>Name</th>
-        <th>Email</th>
-      </tr>
-    </thead>
-    <tbody id="user-data">
-
-    </tbody>
-  </table> -->
   <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
   <script src="main.js"></script>
 </body>
