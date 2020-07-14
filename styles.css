@@ -8,10 +8,9 @@ table {
   max-width: 75ch;
 }
 
-
-#image-container {
+/* #image-container {
   height: 400px;
-}
+} */
 
 #image-on-page {
   max-height: 100%;
