@@ -3,6 +3,16 @@ table {
   text-align: center;
 }
 
+.summary {
+  overflow: hidden;
+  max-width: 75ch;
+}
+
+.image-card-top {
+  max-width: 375px;
+  max-height: 500px;
+}
+
 /* Extra small devices (phones, less than 768px) */
 /* No media query since this is the default in Bootstrap */
 

@@ -8,6 +8,7 @@ function fileValidation(event) {
   const imageFile = fileInput.files[0];
   if (!(imageFile)) {
     alert("Error: No file selected, please select a file to upload.");
+    fileInput.value = "";
     return;
   }
   const fileType = imageFile.type;
@@ -15,18 +16,21 @@ function fileValidation(event) {
   const mimeTypes = ['image/jpg', 'image/png', 'image/gif'];
   if (!(mimeTypes.indexOf(fileType))) {
     alert("Error: Incorrect file type, please select a jpeg, png or gif file.");
+    fileInput.value = "";
     return;
   }
   if (imageFile.size > 10 * 1024 * 1024) {
     alert("Error: Image exceeds 10MB size limit");
+    fileInput.value = "";
     return;
   }
   alert(`You have chosen the file ${imageFile.name}`);
   formData.append("image", imageFile);
-  console.log(formData);
   startImgurAPI(formData);
+  fileInput.value = "";
 }
 
+//data for startGoogleAPI() function to POST
 let googleDataToSend = {
   "requests": [
     {
@@ -60,7 +64,7 @@ function startImgurAPI(formData) {
     const imageURL = data.data.link;
     googleDataToSend.requests[0].image.source.imageUri = imageURL;
     imageOnPage(imageURL);
-    // startGoogleAPI();
+    startGoogleAPI();
   },
   error: function(err) {
     console.log(err)
@@ -77,6 +81,11 @@ function startGoogleAPI() {
     contentType: "application/json",
     data: JSON.stringify(googleDataToSend),
     success: function (response) {
+      if (!(response.responses[0].labelAnnotations)) {
+        alert("Sorry, google Cloud VISION API could not label your image correctly, please try another image");
+        resetImageOnPage();
+        return;
+      }
       const imageTitle = response.responses[0].labelAnnotations[0].description;
       imageTitleOnPage(imageTitle);
       startSpoonacularAPI(imageTitle);
@@ -89,7 +98,7 @@ function startGoogleAPI() {
 
 //GET request to Spoonacular's API with label from Google to get a list of up to 10 recipes containing the item from the image and other nutrition info.
 function startSpoonacularAPI(imageTitle) {
-  var spoonacularURL = "https://api.spoonacular.com/recipes/complexSearch?query=" + imageTitle + "&apiKey=5d83fe3f2cf14616a6ea74137c2be564&addRecipeNutrition=true"
+  var spoonacularURL = "https://api.spoonacular.com/recipes/complexSearch?query=" + imageTitle + "&apiKey=5d83fe3f2cf14616a6ea74137c2be564&addRecipeNutrition=true&size=312"
   $.ajax({
     method: "GET",
     url: spoonacularURL,
@@ -97,8 +106,8 @@ function startSpoonacularAPI(imageTitle) {
       "Content-Type": "application/json"
     },
     success: function(data) {
-      console.log("Spoonacular:", data);
       recipeOnPage(data);
+
     },
     error: function(err) {
       console.log(err);
@@ -107,13 +116,17 @@ function startSpoonacularAPI(imageTitle) {
 }
 
 function imageOnPage(imageURL) {
-  console.log("imageOnPage");
   const imageContainer = document.getElementById("image-container");
   const img = document.createElement("img");
   img.src = imageURL;
-  img.height = "225";
-  img.width = "300";
+  img.width = "375";
+  img.alt = "Uploaded Image"
+  img.id = "uploaded-image";
   imageContainer.append(img);
+}
+
+function resetImageOnPage() {
+  document.getElementById("uploaded-image").remove();
 }
 
 function imageTitleOnPage(imageTitle) {
@@ -124,28 +137,65 @@ function imageTitleOnPage(imageTitle) {
 }
 
 function recipeOnPage(recipes) {
-  const recipeContainer = document.getElementById("recipe-container");
-  // const imageURL = recipes.results[0].image;
-  // const title = recipes.results[0].title;
-  // const readyInMinutes = recipes.results[0].readyInMinutes;
-  // const servings = recipes.results[0].servings;
-  // const recipeURL = recipes.results[0].sourceUrl;
-  // const healthScore = recipes.results[0].healthScore;
-  // const caloriesAmount = recipes.results[0].nutrition.nutrients[0].amount;
-  // const proteinAmount = recipes.results[0].nutrition.nutrients[8].amount;
-  // const fatAmount = recipes.results[0].nutrition.nutrients[1].amount
-  // const carbsAmount = recipes.results[0].nutrition.nutrients[3].amount;
+  const recipeContainer = document.getElementById("recipes-container");
+  for (let i = 0; i < recipes.results.length; i++) {
+    const imageURL = recipes.results[i].image;
+    const title = recipes.results[i].title;
+    const readyInMinutes = recipes.results[i].readyInMinutes;
+    const servings = recipes.results[i].servings;
+    const recipeURL = recipes.results[i].sourceUrl;
+    const summary = recipes.results[i].summary;
+    const healthScore = recipes.results[i].healthScore;
+    const caloriesAmount = recipes.results[i].nutrition.nutrients[0].amount;
+    const proteinAmount = recipes.results[i].nutrition.nutrients[8].amount;
+    const fatAmount = recipes.results[i].nutrition.nutrients[1].amount
+    const carbsAmount = recipes.results[i].nutrition.nutrients[3].amount;
+    const sodiumAmount = recipes.results[i].nutrition.nutrients[7].amount;
+    const recipeCard = document.createElement("div");
+    recipeCard.className = "recipe-card card mb-3 col-xs-12";
+    const anchorTag = document.createElement("a");
+    const titleAnchorTag = document.createElement("a");
+    anchorTag.href = recipeURL;
+    titleAnchorTag.href = recipeURL;
+    anchorTag.className = "stretched-link d-flex justify-content-center"
+    const img = document.createElement("img");
+    img.className = "card-image-top";
+    img.src = imageURL;
+    img.width = "375";
+    img.alt = "Recipe Image"
+    const cardBody = document.createElement("div");
+    cardBody.className = "card-body";
+    const cardTitle = document.createElement("div");
+    cardTitle.className = "card-title";
+    const recipeTitle = document.createElement("h3");
+    recipeTitle.textContent = title;
+    const cardText1 = document.createElement("p");
+    cardText1.className = "card-text";
+    cardText1.textContent = `Ready in ${readyInMinutes} minutes, ${servings} servings.`;
+    const cardText2 = document.createElement("p");
+    cardText2.className = "card-text";
+    cardText2.textContent = `${caloriesAmount} calories, ${carbsAmount} g carbs, ${fatAmount} g fat, ${proteinAmount} g protein, ${sodiumAmount} mg sodium.`;
+    cardTitle.append(recipeTitle);
+    cardTitle.append(cardText1);
+    cardTitle.append(cardText2);
+    cardBody.append(cardTitle);
+    anchorTag.append(img);
+    recipeCard.append(anchorTag);
+    recipeCard.append(cardBody);
+    recipeContainer.append(recipeCard);
+  }
 
-  const imageURL = "https://spoonacular.com/recipeImages/46384-312x231.jpg"
-  const title = "Yam Purée"
-  const readyInMinutes = 120;
-  const servings = 4
-  const recipeURL = "http://www.cookstr.com/recipes/yam-pureacutee"
-  const healthScore = 0;
-  const caloriesAmount = 181.75;
-  const proteinAmount = 0.08;
-  const fatAmount = 18.06;
-  const carbsAmount = 5.97;
+  // const imageURL = "https://spoonacular.com/recipeImages/46384-636x393.jpg"
+  // const title = "Yam Purée"
+  // const readyInMinutes = 120;
+  // const servings = 4
+  // const recipeURL = "http://www.cookstr.com/recipes/yam-pureacutee"
+  // const healthScore = 0;
+  // const caloriesAmount = 181.75;
+  // const proteinAmount = 0.08;
+  // const fatAmount = 18.06;
+  // const carbsAmount = 5.97;
+  // const summary = "You can never have too many side dish recipes, so give Yam Puree a try.  One serving contains"
 }
 
 // function generateUserData(data) {
