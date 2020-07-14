@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>AJAX - 2</title>
   <link rel="shortcut icon" type="image/png" href="/images/favicon.png">
@@ -17,22 +17,33 @@
 </head>
 
 <body>
-  <form id="form">
+  <header class="col-xs-12 d-flex justify-content-center mb-3">
+    <h3>Snap Chef</h3>
+  </header>
+  <form id="form" class="col-xs-12 d-flex justify-content-between">
     <input type="file" id="input-form"  accept="image/jpeg, image/png, image/gif" required>
-    <button type="button" id="button" class="btn btn-primary">Upload Image</button>
+    <button type="button" id="button" class="btn btn-primary"><i class="fa fa-upload"></i></button>
   </form>
-  <table>
-    <thead>
-      <tr>
-        <th>User ID</th>
-        <th>Name</th>
-        <th>Email</th>
-      </tr>
-    </thead>
-    <tbody id="user-data">
-
-    </tbody>
-  </table>
+  <div id="image-container" class="col-xs-12 d-flex justify-content-center my-3">
+  </div>
+  <div id="title-container" class="col-xs-12 d-flex justify-content-center mb-3">
+  </div>
+  <div id="recipes-container" class="col-xs-12 d-flex flex-column align-items-center justify-content-center">
+    <!-- <div class="recipe-card card mb-3">
+      <a href="http://www.cookstr.com/recipes/yam-pureacutee" class="stretched-link d-flex justify-content-center">
+      <img class="card-image-top" src="https://spoonacular.com/recipeImages/46384-636x393.jpg" width="375" alt="Recipe Image">
+      </a>
+      <div class="card-body">
+        <div class="card-title">
+          <h5>Yam Purée</h5>
+          <div class="small-text d-flex justify-content-left">
+            <p class="card-text"><small class="text-muted">Ready in 120 Minutes, Serves 4</small></p>
+          </div>
+        </div>
+        <p class="card-text summary">You can never have too many side dish recipes, so give Yam Puree a try. One serving contains...</p>
+      </div>
+    </div> -->
+  </div>
   <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
   <script src="main.js"></script>
 </body>
