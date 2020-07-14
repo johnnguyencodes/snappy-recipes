@@ -118,8 +118,8 @@ function startSpoonacularAPI(imageTitle) {
 function imageOnPage(imageURL) {
   const imageContainer = document.getElementById("image-container");
   const img = document.createElement("img");
+  img.className = "image-on-page"
   img.src = imageURL;
-  img.width = "375";
   img.alt = "Uploaded Image"
   img.id = "uploaded-image";
   imageContainer.append(img);
@@ -161,7 +161,6 @@ function recipeOnPage(recipes) {
     const img = document.createElement("img");
     img.className = "card-image-top";
     img.src = imageURL;
-    img.width = "375";
     img.alt = "Recipe Image"
     const cardBody = document.createElement("div");
     cardBody.className = "card-body";

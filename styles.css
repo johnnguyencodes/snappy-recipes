@@ -13,6 +13,11 @@ table {
   max-height: 500px;
 }
 
+.image-on-page {
+  max-width: 375px;
+  max-height: 500px;
+}
+
 /* Extra small devices (phones, less than 768px) */
 /* No media query since this is the default in Bootstrap */
 
