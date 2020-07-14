@@ -98,7 +98,7 @@ function startGoogleAPI() {
 
 //GET request to Spoonacular's API with label from Google to get a list of up to 10 recipes containing the item from the image and other nutrition info.
 function startSpoonacularAPI(imageTitle) {
-  var spoonacularURL = "https://api.spoonacular.com/recipes/complexSearch?query=" + imageTitle + "&apiKey=5d83fe3f2cf14616a6ea74137c2be564&addRecipeNutrition=true&size=312"
+  var spoonacularURL = "https://api.spoonacular.com/recipes/complexSearch?query=" + imageTitle + "&apiKey=5d83fe3f2cf14616a6ea74137c2be564&addRecipeNutrition=true"
   $.ajax({
     method: "GET",
     url: spoonacularURL,
@@ -184,33 +184,4 @@ function recipeOnPage(recipes) {
     recipeCard.append(cardBody);
     recipeContainer.append(recipeCard);
   }
-
-  // const imageURL = "https://spoonacular.com/recipeImages/46384-636x393.jpg"
-  // const title = "Yam Purée"
-  // const readyInMinutes = 120;
-  // const servings = 4
-  // const recipeURL = "http://www.cookstr.com/recipes/yam-pureacutee"
-  // const healthScore = 0;
-  // const caloriesAmount = 181.75;
-  // const proteinAmount = 0.08;
-  // const fatAmount = 18.06;
-  // const carbsAmount = 5.97;
-  // const summary = "You can never have too many side dish recipes, so give Yam Puree a try.  One serving contains"
 }
-
-// function generateUserData(data) {
-//   const userData = document.getElementById("user-data");
-//   for (let i = 0; i < data.length; i++) {
-//     const tr = document.createElement("tr");
-//     const userId = document.createElement("td");
-//     const name = document.createElement("td");
-//     const email = document.createElement("td");
-//     userId.textContent = data[i].id;
-//     name.textContent = data[i].name;
-//     email.textContent = data[i].email;
-//     tr.append(userId);
-//     tr.append(name);
-//     tr.append(email);
-//     userData.append(tr);
-//   }
-// }
