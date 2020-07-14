@@ -4,6 +4,9 @@ uploadButton.addEventListener("click", event => fileValidation(event));
 //file validation checker
 function fileValidation(event) {
   event.preventDefault();
+  if (document.getElementById("image-on-page")) {
+    document.getElementById("image-on-page").remove();
+  }
   const fileInput = document.getElementById("input-form");
   const imageFile = fileInput.files[0];
   if (!(imageFile)) {
@@ -64,7 +67,7 @@ function startImgurAPI(formData) {
     const imageURL = data.data.link;
     googleDataToSend.requests[0].image.source.imageUri = imageURL;
     imageOnPage(imageURL);
-    startGoogleAPI();
+    // startGoogleAPI();
   },
   error: function(err) {
     console.log(err)
@@ -118,10 +121,9 @@ function startSpoonacularAPI(imageTitle) {
 function imageOnPage(imageURL) {
   const imageContainer = document.getElementById("image-container");
   const img = document.createElement("img");
-  img.className = "image-on-page"
+  img.id = "image-on-page"
   img.src = imageURL;
   img.alt = "Uploaded Image"
-  img.id = "uploaded-image";
   imageContainer.append(img);
 }
 
