@@ -8,9 +8,27 @@ table {
   max-width: 75ch;
 }
 
+/* #image-container {
+  height: 400px;
+} */
+
+#image-on-page {
+  max-height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+}
+
 .image-card-top {
   max-width: 375px;
   max-height: 500px;
+}
+
+.card-title h3 {
+  text-decoration: underline;
+}
+
+span {
+  white-space: nowrap;
 }
 
 /* Extra small devices (phones, less than 768px) */
@@ -18,7 +36,6 @@ table {
 
 /* Small devices (tablets, 768px and up) */
 @media (min-width: @screen-sm-min) {
-
  }
 
 /* Medium devices (desktops, 992px and up) */
