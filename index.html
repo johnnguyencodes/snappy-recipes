@@ -20,8 +20,97 @@
   <header class="col-xs-12 d-flex justify-content-center mb-3">
     <h3>Snap Chef</h3>
   </header>
-  <form id="form" class="col-xs-12 d-flex justify-content-between">
-    <input type="file" id="input-form"  accept="image/jpeg, image/png, image/gif" required>
+  <form id="form" class="col-xs-12">
+    <p>Do you have any dietary restrictions?</p>
+    <span>
+      <input type="radio" id="no-restrictions" name="restrictions" value="no-restrictions" onclick="showHideResDiv()" checked>
+      <label for="no-restrictions">No</label>
+    </span>
+    <span>
+      <input type="radio" id="yes-restrictions" name="restrictions" value="yes-restrictions" onclick="showHideResDiv()">
+      <label for="yes-restrictions">Yes</label>
+    </span>
+    <div id="dietary-restrictions" class="d-none">
+      <hr><p>Please select any dietary restrictions</p>
+      <span>
+        <input type="checkbox" id="vegetarian" class="restrictionCheckbox" value="vegetarian" name="vegetarian">
+        <label for="vegetarian">Vegetarian</label>
+      </span>
+      <span>
+        <input type="checkbox" id="lacto-vegetarian" class="restrictionCheckbox" value="lacto-vegetarian" name="lacto-vegetarian">
+        <label for="lacto-vegetarian">Lacto-Vegetarian</label>
+      </span>
+      <span>
+        <input type="checkbox" id="ovo-vegetarian" class="restrictionCheckbox" value="ovo-vegetarian" name="ovo-vegetarian">
+        <label for="ovo-vegetarian">Ovo-Vegetarian</label>
+      </span>
+      <span>
+        <input type="checkbox" id="vegan" class="restrictionCheckbox" value="vegan" name="vegan">
+        <label for="vegan">Vegan</label>
+      </span>
+      <span>
+        <input type="checkbox" id="pescetarian" class="restrictionCheckbox" value="pescetarian" name="pescetarian">
+        <label for="pescetarian">Pescetarian</label>
+      <hr>
+    </div>
+    <p>Do you have any dietary intolerances?</p>
+    <span>
+      <input type="radio" id="no-intolerances" name="intolerances" value="no-intolerances" onclick="showHideIntDiv()" checked>
+      <label for="no-intolerances">No</label>
+    </span>
+    <span>
+      <input type="radio" id="yes-intolerances" name="intolerances" value="yes-intolerances" onclick="showHideIntDiv()">
+      <label for="yes-intolerances">Yes</label>
+    </span>
+    <div id="dietary-intolerances" class="d-none">
+      <hr><p>Please select any dietary tolerances</p>
+      <span>
+        <input type="checkbox" id="dairy" class="intoleranceCheckbox" value="dairy" name="dairy">
+        <label for="dairy">Dairy</label>
+      </span>
+      <span>
+        <input type="checkbox" id="egg" class="intoleranceCheckbox" value="egg" name="egg">
+        <label for="egg">Egg</label>
+      </span>
+      <span>
+        <input type="checkbox" id="gluten" class="intoleranceCheckbox" value="gluten" name="gluten">
+        <label for="gluten">Gluten</label>
+      </span>
+      <span>
+        <input type="checkbox" id="peanut" class="intoleranceCheckbox" value="peanut" name="peanut">
+        <label for="peanut">Peanut</label>
+      </span>
+      <span>
+        <input type="checkbox" id="seafood" class="intoleranceCheckbox" value="seafood" name="seafood">
+        <label for="seafood">Seafood</label>
+      </span>
+      <span>
+        <input type="checkbox" id="sesame" class="intoleranceCheckbox" value="sesame" name="sesame">
+        <label for="sesame">Sesame</label>
+      </span>
+      <span>
+        <input type="checkbox" id="shellfish" class="intoleranceCheckbox" value="shellfish" name="shellfish">
+        <label for="shellfish">Shellfish</label>
+      </span>
+      <span>
+        <input type="checkbox" id="soy" class="intoleranceCheckbox" value="soy" name="soy">
+        <label for="soy">Soy</label>
+      </span>
+      <span>
+        <input type="checkbox" id="sulfite" class="intoleranceCheckbox" value="sulfite" name="sulfite">
+        <label for="sulfite">Sulfite</label>
+      </span>
+      <span>
+        <input type="checkbox" id="tree-nut" class="intoleranceCheckbox" value="tree-nut" name="tree-nut">
+        <label for="tree-nut">Tree Nut</label>
+      </span>
+      <span>
+        <input type="checkbox" id="wheat" class="intoleranceCheckbox" value="wheat" name="wheat">
+        <label for="wheat">Wheat</label>
+      </span>
+      <hr>
+    </div>
+    <input type="file" id="input-form" accept="image/jpeg, image/png, image/gif" required>
     <button type="button" id="button" class="btn btn-primary"><i class="fa fa-upload"></i></button>
   </form>
   <div id="image-container" class="col-xs-12 d-flex justify-content-center my-3">
@@ -29,20 +118,6 @@
   <div id="title-container" class="col-xs-12 d-flex justify-content-center mb-3">
   </div>
   <div id="recipes-container" class="col-xs-12 d-flex flex-column align-items-center justify-content-center">
-    <!-- <div class="recipe-card card mb-3">
-      <a href="http://www.cookstr.com/recipes/yam-pureacutee" class="stretched-link d-flex justify-content-center">
-      <img class="card-image-top" src="https://spoonacular.com/recipeImages/46384-636x393.jpg" width="375" alt="Recipe Image">
-      </a>
-      <div class="card-body">
-        <div class="card-title">
-          <h5>Yam Purée</h5>
-          <div class="small-text d-flex justify-content-left">
-            <p class="card-text"><small class="text-muted">Ready in 120 Minutes, Serves 4</small></p>
-          </div>
-        </div>
-        <p class="card-text summary">You can never have too many side dish recipes, so give Yam Puree a try. One serving contains...</p>
-      </div>
-    </div> -->
   </div>
   <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
   <script src="main.js"></script>

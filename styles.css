@@ -23,6 +23,14 @@ table {
   max-height: 500px;
 }
 
+.card-title h3 {
+  text-decoration: underline;
+}
+
+span {
+  white-space: nowrap;
+}
+
 /* Extra small devices (phones, less than 768px) */
 /* No media query since this is the default in Bootstrap */
 

@@ -29,6 +29,7 @@ function fileValidation(event) {
   }
   alert(`You have chosen the file ${imageFile.name}`);
   formData.append("image", imageFile);
+  dietInfo();
   startImgurAPI(formData);
   fileInput.value = "";
 }
@@ -51,8 +52,42 @@ let googleDataToSend = {
   ]
 };
 
+// // "diet": "vegetarian",
+// "intolerances": "egg, gluten, tree nut, peanut"
+
+function dietInfo() {
+  let restrictionValues = "";
+  let intoleranceValues = "";
+  var restrictionCheckboxes = document.getElementsByClassName("restrictionCheckbox");
+  for (var i = 0; i < restrictionCheckboxes.length; i++) {
+    // if (i === restrictionCheckboxes.length - 1) {
+    //   restrictionValues += restrictionCheckboxes[i].value;
+    // }
+    if (restrictionCheckboxes[i].checked) {
+      restrictionValues += restrictionCheckboxes[i].value + ", ";
+    }
+  }
+  var intoleranceCheckboxes = document.getElementsByClassName("intoleranceCheckbox");
+  for (var j = 0; j < intoleranceCheckboxes.length; j++) {
+    // if (j === intoleranceCheckboxes.length - 1) {
+    //   intoleranceValues += intoleranceCheckboxes[j].value;
+    // }
+    if (intoleranceCheckboxes[j].checked) {
+      intoleranceValues += intoleranceCheckboxes[j].value + ", ";
+    }
+  }
+  spoonacularDataToSend.diet = restrictionValues.slice(0, -2)
+  spoonacularDataToSend.intolerances = intoleranceValues.slice(0, -2);
+  console.log(spoonacularDataToSend);
+}
+let spoonacularDataToSend = {
+  "diet": null,
+  "intolerances": null
+}
+
 //GET request to IMGUR with image id supplied
 function startImgurAPI(formData) {
+  console.log(formData);
   $.ajax({
   method: "POST",
   url: "https://api.imgur.com/3/image/",
@@ -67,7 +102,7 @@ function startImgurAPI(formData) {
     const imageURL = data.data.link;
     googleDataToSend.requests[0].image.source.imageUri = imageURL;
     imageOnPage(imageURL);
-    // startGoogleAPI();
+    startGoogleAPI();
   },
   error: function(err) {
     console.log(err)
@@ -105,10 +140,12 @@ function startSpoonacularAPI(imageTitle) {
   $.ajax({
     method: "GET",
     url: spoonacularURL,
+    data: spoonacularDataToSend,
     headers: {
       "Content-Type": "application/json"
     },
     success: function(data) {
+      console.log(data);
       recipeOnPage(data);
 
     },
@@ -128,7 +165,7 @@ function imageOnPage(imageURL) {
 }
 
 function resetImageOnPage() {
-  document.getElementById("uploaded-image").remove();
+  document.getElementById("image-on-page").remove();
 }
 
 function imageTitleOnPage(imageTitle) {
@@ -136,6 +173,18 @@ function imageTitleOnPage(imageTitle) {
   const h1 = document.createElement("h1");
   h1.textContent = imageTitle;
   titleContainer.append(h1);
+}
+
+function showHideResDiv() {
+  const yesRes = document.getElementById("yes-restrictions");
+  const resDiv = document.getElementById("dietary-restrictions");
+  resDiv.className = yesRes.checked ? "" : "d-none";
+}
+
+function showHideIntDiv() {
+  const yesInt = document.getElementById("yes-intolerances");
+  const intDiv = document.getElementById("dietary-intolerances");
+  intDiv.className = yesInt.checked ? "" : "d-none";
 }
 
 function recipeOnPage(recipes) {
@@ -148,11 +197,11 @@ function recipeOnPage(recipes) {
     const recipeURL = recipes.results[i].sourceUrl;
     const summary = recipes.results[i].summary;
     const healthScore = recipes.results[i].healthScore;
-    const caloriesAmount = recipes.results[i].nutrition.nutrients[0].amount;
-    const proteinAmount = recipes.results[i].nutrition.nutrients[8].amount;
-    const fatAmount = recipes.results[i].nutrition.nutrients[1].amount
-    const carbsAmount = recipes.results[i].nutrition.nutrients[3].amount;
-    const sodiumAmount = recipes.results[i].nutrition.nutrients[7].amount;
+    const caloriesAmount = Math.round(recipes.results[i].nutrition.nutrients[0].amount);
+    const proteinAmount = Math.round(recipes.results[i].nutrition.nutrients[8].amount);
+    const fatAmount = Math.round(recipes.results[i].nutrition.nutrients[1].amount);
+    const carbsAmount = Math.round(recipes.results[i].nutrition.nutrients[3].amount);
+    const sodiumAmount = Math.round(recipes.results[i].nutrition.nutrients[7].amount);
     const recipeCard = document.createElement("div");
     recipeCard.className = "recipe-card card mb-3 col-xs-12";
     const anchorTag = document.createElement("a");
@@ -170,14 +219,51 @@ function recipeOnPage(recipes) {
     cardTitle.className = "card-title";
     const recipeTitle = document.createElement("h3");
     recipeTitle.textContent = title;
-    const cardText1 = document.createElement("p");
+    const cardText1 = document.createElement("div");
     cardText1.className = "card-text";
-    cardText1.textContent = `Ready in ${readyInMinutes} minutes, ${servings} servings.`;
-    const cardText2 = document.createElement("p");
-    cardText2.className = "card-text";
-    cardText2.textContent = `${caloriesAmount} calories, ${carbsAmount} g carbs, ${fatAmount} g fat, ${proteinAmount} g protein, ${sodiumAmount} mg sodium.`;
+    const minutesSpan = document.createElement("span");
+    minutesSpan.className = "badge badge-dark mr-1 mb-1";
+    minutesSpan.textContent = `${readyInMinutes} Minutes`;
+    const servingsSpan = document.createElement("span");
+    servingsSpan.className = "badge badge-dark mb-1";
+    servingsSpan.textContent = `${servings} Servings`;
+    cardText1.append(minutesSpan);
+    cardText1.append(servingsSpan);
+    const cardText2 = document.createElement("div");
+    cardText2.className = "card-text d-flex flex-wrap";
+    const calorieSpan = document.createElement("span");
+    calorieSpan.className = "badge badge-secondary mb-1 mr-1"
+    calorieSpan.textContent = `${caloriesAmount} Calories`
+    const carbsSpan = document.createElement("span");
+    carbsSpan.className = "badge badge-secondary mb-1 mr-1"
+    carbsSpan.textContent = `${carbsAmount}g Carbs`
+    const fatSpan = document.createElement("span");
+    fatSpan.className = "badge badge-secondary mb-1 mr-1"
+    fatSpan.textContent = `${fatAmount}g Total Fat`
+    const proteinSpan = document.createElement("span");
+    proteinSpan.className = "badge badge-secondary mb-1 mr-1";
+    proteinSpan.textContent = `${proteinAmount}g Protein`
+    const sodiumSpan = document.createElement("span");
+    sodiumSpan.className = "badge badge-secondary mb-1 mr-1";
+    sodiumSpan.textContent = `${sodiumAmount}mg Sodium`;
+    const cardText3 = document.createElement("div");
+    cardText3.className = "card=text d-flex flex-wrap";
+    if (recipes.results[i].diets) {
+      for (var j = 0; j < recipes.results[i].diets.length; j++) {
+        const dietSpan = document.createElement("span");
+        dietSpan.className = "badge badge-light mb-1 mr-1";
+        dietSpan.textContent = recipes.results[i].diets[j];
+        cardText3.append(dietSpan);
+      }
+    }
+    cardText2.append(calorieSpan);
+    cardText2.append(carbsSpan);
+    cardText2.append(fatSpan);
+    cardText2.append(proteinSpan);
+    cardText2.append(sodiumSpan);
     cardTitle.append(recipeTitle);
     cardTitle.append(cardText1);
+    cardTitle.append(cardText3);
     cardTitle.append(cardText2);
     cardBody.append(cardTitle);
     anchorTag.append(img);
