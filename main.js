@@ -187,17 +187,17 @@ function imageTitleOnPage(imageTitle) {
   titleContainer.append(h1);
 }
 
-function showHideResDiv() {
-  const yesRes = document.getElementById("yes-restrictions");
-  const resDiv = document.getElementById("dietary-restrictions");
-  resDiv.className = yesRes.checked ? "" : "d-none";
-}
+// function showHideResDiv() {
+//   const yesRes = document.getElementById("yes-restrictions");
+//   const resDiv = document.getElementById("dietary-restrictions");
+//   resDiv.className = yesRes.checked ? "" : "d-none";
+// }
 
-function showHideIntDiv() {
-  const yesInt = document.getElementById("yes-intolerances");
-  const intDiv = document.getElementById("dietary-intolerances");
-  intDiv.className = yesInt.checked ? "" : "d-none";
-}
+// function showHideIntDiv() {
+//   const yesInt = document.getElementById("yes-intolerances");
+//   const intDiv = document.getElementById("dietary-intolerances");
+//   intDiv.className = yesInt.checked ? "" : "d-none";
+// }
 
 function recipeOnPage(recipes) {
   const recipeContainer = document.getElementById("recipes-container");
