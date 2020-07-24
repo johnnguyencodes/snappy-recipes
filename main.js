@@ -1,13 +1,17 @@
-/* Set the width of the side navigation to 250px */
-function openNav() {
+document.querySelector('.custom-file-input').addEventListener('change', function (e) {
+  var fileName = document.getElementById("input-form").files[0].name;
+  var nextSibling = e.target.nextElementSibling
+  nextSibling.innerText = fileName
+})
+
+function openMenu() {
   event.preventDefault();
-  document.getElementById("mySidenav").style.width = "350px";
+  document.getElementById("mySideMenu").className = "side-menu-visible d-flex flex-column justify-content-center";
 }
 
-/* Set the width of the side navigation to 0 */
-function closeNav() {
+function closeMenu() {
   event.preventDefault();
-  document.getElementById("mySidenav").style.width = "0";
+  document.getElementById("mySideMenu").className = "side-menu-hidden d-flex flex-column justify-content-center"
 }
 
 const uploadButton = document.getElementById("button");
@@ -17,8 +21,15 @@ function imgValidation(event) {
   event.preventDefault();
   if (document.getElementById("image-on-page")) {
     document.getElementById("image-on-page").remove();
+    document.getElementById("title-container").textContent="";
+    while (document.getElementById("recipes-container").firstChild) {
+      document.getElementById("recipes-container").removeChild((document.getElementById("recipes-container").firstChild));
+    }
   }
   const fileInput = document.getElementById("input-form");
+  if (fileInput.files[1]) {
+    fileInput.files.splice(1, 1);
+  }
   const imageFile = fileInput.files[0];
   if (!(imageFile)) {
     alert("Error: No file selected, please select a file to upload.");
