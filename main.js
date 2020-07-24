@@ -1,13 +1,35 @@
-const uploadButton = document.getElementById("button");
-uploadButton.addEventListener("click", event => fileValidation(event));
+document.querySelector('.custom-file-input').addEventListener('change', function (e) {
+  var fileName = document.getElementById("input-form").files[0].name;
+  var nextSibling = e.target.nextElementSibling
+  nextSibling.innerText = fileName
+})
 
-//file validation checker
-function fileValidation(event) {
+function openMenu() {
+  event.preventDefault();
+  document.getElementById("mySideMenu").className = "side-menu-visible d-flex flex-column justify-content-center";
+}
+
+function closeMenu() {
+  event.preventDefault();
+  document.getElementById("mySideMenu").className = "side-menu-hidden d-flex flex-column justify-content-center"
+}
+
+const uploadButton = document.getElementById("button");
+uploadButton.addEventListener("click", event => imgValidation(event));
+
+function imgValidation(event) {
   event.preventDefault();
   if (document.getElementById("image-on-page")) {
     document.getElementById("image-on-page").remove();
+    document.getElementById("title-container").textContent="";
+    while (document.getElementById("recipes-container").firstChild) {
+      document.getElementById("recipes-container").removeChild((document.getElementById("recipes-container").firstChild));
+    }
   }
   const fileInput = document.getElementById("input-form");
+  if (fileInput.files[1]) {
+    fileInput.files.splice(1, 1);
+  }
   const imageFile = fileInput.files[0];
   if (!(imageFile)) {
     alert("Error: No file selected, please select a file to upload.");
@@ -34,7 +56,6 @@ function fileValidation(event) {
   fileInput.value = "";
 }
 
-//data for startGoogleAPI() function to POST
 let googleDataToSend = {
   "requests": [
     {
@@ -52,37 +73,28 @@ let googleDataToSend = {
   ]
 };
 
-// // "diet": "vegetarian",
-// "intolerances": "egg, gluten, tree nut, peanut"
+let spoonacularDataToSend = {
+  "diet": null,
+  "intolerances": null
+}
 
 function dietInfo() {
   let restrictionValues = "";
   let intoleranceValues = "";
   var restrictionCheckboxes = document.getElementsByClassName("restrictionCheckbox");
   for (var i = 0; i < restrictionCheckboxes.length; i++) {
-    // if (i === restrictionCheckboxes.length - 1) {
-    //   restrictionValues += restrictionCheckboxes[i].value;
-    // }
     if (restrictionCheckboxes[i].checked) {
       restrictionValues += restrictionCheckboxes[i].value + ", ";
     }
   }
   var intoleranceCheckboxes = document.getElementsByClassName("intoleranceCheckbox");
   for (var j = 0; j < intoleranceCheckboxes.length; j++) {
-    // if (j === intoleranceCheckboxes.length - 1) {
-    //   intoleranceValues += intoleranceCheckboxes[j].value;
-    // }
     if (intoleranceCheckboxes[j].checked) {
       intoleranceValues += intoleranceCheckboxes[j].value + ", ";
     }
   }
   spoonacularDataToSend.diet = restrictionValues.slice(0, -2)
   spoonacularDataToSend.intolerances = intoleranceValues.slice(0, -2);
-  console.log(spoonacularDataToSend);
-}
-let spoonacularDataToSend = {
-  "diet": null,
-  "intolerances": null
 }
 
 //GET request to IMGUR with image id supplied
@@ -175,17 +187,17 @@ function imageTitleOnPage(imageTitle) {
   titleContainer.append(h1);
 }
 
-function showHideResDiv() {
-  const yesRes = document.getElementById("yes-restrictions");
-  const resDiv = document.getElementById("dietary-restrictions");
-  resDiv.className = yesRes.checked ? "" : "d-none";
-}
+// function showHideResDiv() {
+//   const yesRes = document.getElementById("yes-restrictions");
+//   const resDiv = document.getElementById("dietary-restrictions");
+//   resDiv.className = yesRes.checked ? "" : "d-none";
+// }
 
-function showHideIntDiv() {
-  const yesInt = document.getElementById("yes-intolerances");
-  const intDiv = document.getElementById("dietary-intolerances");
-  intDiv.className = yesInt.checked ? "" : "d-none";
-}
+// function showHideIntDiv() {
+//   const yesInt = document.getElementById("yes-intolerances");
+//   const intDiv = document.getElementById("dietary-intolerances");
+//   intDiv.className = yesInt.checked ? "" : "d-none";
+// }
 
 function recipeOnPage(recipes) {
   const recipeContainer = document.getElementById("recipes-container");
