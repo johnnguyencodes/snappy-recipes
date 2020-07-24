@@ -12,6 +12,19 @@ table {
   height: 400px;
 } */
 
+.progress {
+    display: block;
+    text-align: center;
+    width: 0;
+    height: 3px;
+    background:blue;
+    transition: width .3s;
+}
+.progress.hide {
+    opacity: 0;
+    transition: opacity 1.3s;
+}
+
 #image-on-page {
   max-height: 100%;
   max-width: 100%;
