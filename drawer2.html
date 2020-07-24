@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css"
+    integrity="sha256-+N4/V/SbAFiW1MPBCXnfnP9QSN3+Keu+NlB+0ev/YKQ=" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha256-YLGeXaapI0/5IgZopewRJcFXomhRMlYYjugPLSyNjTY=" crossorigin="anonymous" />
+  <link href="https://fonts.googleapis.com/css2?family=Palanquin:wght@100;200;300;400;500;600;700&display=swap"
+    rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <div id="mySidenav" class="sidenav">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <div id="dietary-restrictions" class="d-flex flex-column">
+      <hr>
+      <p>Please select any dietary restrictions</p>
+      <div class="w-100 d-flex">
+      <span class="col">
+        <input type="checkbox" id="vegan" class="restrictionCheckbox" value="vegan" name="vegan">
+        <label for="vegan">Vegan</label>
+      </span>
+      <span class="col">
+        <input type="checkbox" id="vegetarian" class="restrictionCheckbox" value="vegetarian" name="vegetarian">
+        <label for="vegetarian">Vegetarian</label>
+      </span>
+      </div>
+      <div class="w-100 d-flex">
+        <span class="col">
+          <input type="checkbox" id="lacto-vegetarian" class="restrictionCheckbox" value="lacto-vegetarian"
+            name="lacto-vegetarian">
+          <label for="lacto-vegetarian">Lacto-Vegetarian</label>
+        </span>
+        <span class="col">
+          <input type="checkbox" id="ovo-vegetarian" class="restrictionCheckbox" value="ovo-vegetarian" name="ovo-vegetarian">
+          <label for="ovo-vegetarian">Ovo-Vegetarian</label>
+        </span>
+      </div>
+      <div class="w-100 d-flex">
+        <span class="col">
+          <input type="checkbox" id="pescetarian" class="restrictionCheckbox" value="pescetarian" name="pescetarian">
+          <label for="pescetarian">Pescetarian</label>
+        </span>
+      </div>
+    </div>
+    <div id="dietary-intolerances" class="d-flex flex-column">
+      <hr>
+      <p>Please select any food intolerances</p>
+      <div class="w-100 d-flex">
+      <span class="col">
+        <div ></div>
+        <input type="checkbox" id="dairy" class="intoleranceCheckbox" value="dairy" name="dairy">
+        <label for="dairy">Dairy</label>
+      </span>
+      <span class="col">
+        <input type="checkbox" id="egg" class="intoleranceCheckbox" value="egg" name="egg">
+        <label for="egg">Egg</label>
+      </span>
+      </div>
+      <div class="w-100 d-flex">
+      <span class="col">
+        <input type="checkbox" id="gluten" class="intoleranceCheckbox" value="gluten" name="gluten">
+        <label for="gluten">Gluten</label>
+      </span>
+      <span class="col">
+        <input type="checkbox" id="peanut" class="intoleranceCheckbox" value="peanut" name="peanut">
+        <label for="peanut">Peanut</label>
+      </span>
+      </div>
+      <div class="w-100 d-flex">
+      <span class="col">
+        <input type="checkbox" id="seafood" class="intoleranceCheckbox" value="seafood" name="seafood">
+        <label for="seafood">Seafood</label>
+      </span>
+      <span class="col">
+        <input type="checkbox" id="sesame" class="intoleranceCheckbox" value="sesame" name="sesame">
+        <label for="sesame">Sesame</label>
+      </span>
+      </div>
+      <div class="w-100 d-flex">
+      <span class="col">
+        <input type="checkbox" id="shellfish" class="intoleranceCheckbox" value="shellfish" name="shellfish">
+        <label for="shellfish">Shellfish</label>
+      </span>
+      <span class="col">
+        <input type="checkbox" id="soy" class="intoleranceCheckbox" value="soy" name="soy">
+        <label for="soy">Soy</label>
+      </span>
+      </div>
+      <div class="w-100 d-flex">
+      <span class="col">
+        <input type="checkbox" id="sulfite" class="intoleranceCheckbox" value="sulfite" name="sulfite">
+        <label for="sulfite">Sulfite</label>
+      </span>
+      <span class="col">
+        <input type="checkbox" id="tree-nut" class="intoleranceCheckbox" value="tree-nut" name="tree-nut">
+        <label for="tree-nut">Tree Nut</label>
+      </span>
+      </div>
+      <div class="w-100 d-flex">
+      <span class="col">
+        <input type="checkbox" id="wheat" class="intoleranceCheckbox" value="wheat" name="wheat">
+        <label for="wheat">Wheat</label>
+      </span>
+      </div>
+      <hr>
+    </div>
+  </div>
+
+  <!-- Use any element to open the sidenav -->
+  <div>
+  <button class="btn btn-primary" onclick="openNav(event)">Yes</button>
+  </div>
+
+</body>
+<script>
+
+</script>
+</html>

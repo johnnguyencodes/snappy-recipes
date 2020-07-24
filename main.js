@@ -1,8 +1,19 @@
-const uploadButton = document.getElementById("button");
-uploadButton.addEventListener("click", event => fileValidation(event));
+/* Set the width of the side navigation to 250px */
+function openNav() {
+  event.preventDefault();
+  document.getElementById("mySidenav").style.width = "350px";
+}
 
-//file validation checker
-function fileValidation(event) {
+/* Set the width of the side navigation to 0 */
+function closeNav() {
+  event.preventDefault();
+  document.getElementById("mySidenav").style.width = "0";
+}
+
+const uploadButton = document.getElementById("button");
+uploadButton.addEventListener("click", event => imgValidation(event));
+
+function imgValidation(event) {
   event.preventDefault();
   if (document.getElementById("image-on-page")) {
     document.getElementById("image-on-page").remove();
@@ -34,7 +45,6 @@ function fileValidation(event) {
   fileInput.value = "";
 }
 
-//data for startGoogleAPI() function to POST
 let googleDataToSend = {
   "requests": [
     {
@@ -52,37 +62,28 @@ let googleDataToSend = {
   ]
 };
 
-// // "diet": "vegetarian",
-// "intolerances": "egg, gluten, tree nut, peanut"
+let spoonacularDataToSend = {
+  "diet": null,
+  "intolerances": null
+}
 
 function dietInfo() {
   let restrictionValues = "";
   let intoleranceValues = "";
   var restrictionCheckboxes = document.getElementsByClassName("restrictionCheckbox");
   for (var i = 0; i < restrictionCheckboxes.length; i++) {
-    // if (i === restrictionCheckboxes.length - 1) {
-    //   restrictionValues += restrictionCheckboxes[i].value;
-    // }
     if (restrictionCheckboxes[i].checked) {
       restrictionValues += restrictionCheckboxes[i].value + ", ";
     }
   }
   var intoleranceCheckboxes = document.getElementsByClassName("intoleranceCheckbox");
   for (var j = 0; j < intoleranceCheckboxes.length; j++) {
-    // if (j === intoleranceCheckboxes.length - 1) {
-    //   intoleranceValues += intoleranceCheckboxes[j].value;
-    // }
     if (intoleranceCheckboxes[j].checked) {
       intoleranceValues += intoleranceCheckboxes[j].value + ", ";
     }
   }
   spoonacularDataToSend.diet = restrictionValues.slice(0, -2)
   spoonacularDataToSend.intolerances = intoleranceValues.slice(0, -2);
-  console.log(spoonacularDataToSend);
-}
-let spoonacularDataToSend = {
-  "diet": null,
-  "intolerances": null
 }
 
 //GET request to IMGUR with image id supplied
