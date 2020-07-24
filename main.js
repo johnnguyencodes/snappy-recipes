@@ -49,7 +49,6 @@ function imgValidation(event) {
     fileInput.value = "";
     return;
   }
-  alert(`You have chosen the file ${imageFile.name}`);
   formData.append("image", imageFile);
   dietInfo();
   startImgurAPI(formData);
@@ -115,7 +114,6 @@ function startImgurAPI(formData) {
         xhr.upload.addEventListener("progress", function (evt) {
           if (evt.lengthComputable) {
             var percentComplete = evt.loaded / evt.total;
-            console.log(percentComplete);
             $('.progress').css({
               width: percentComplete * 100 + '%'
             });
@@ -124,15 +122,15 @@ function startImgurAPI(formData) {
             }
           }
         }, false);
-        xhr.addEventListener("progress", function (evt) {
-          if (evt.lengthComputable) {
-            var percentComplete = evt.loaded / evt.total;
-            console.log(percentComplete);
-            $('.progress').css({
-              width: percentComplete * 100 + '%'
-            });
-          }
-        }, false);
+        // xhr.addEventListener("progress", function (evt) {
+        //   if (evt.lengthComputable) {
+        //     var percentComplete = evt.loaded / evt.total;
+        //     console.log(percentComplete);
+        //     $('.progress').css({
+        //       width: percentComplete * 100 + '%'
+        //     });
+        //   }
+        // }, false);
         return xhr;
       },
   success: function(data) {
@@ -140,7 +138,7 @@ function startImgurAPI(formData) {
     const imageURL = data.data.link;
     googleDataToSend.requests[0].image.source.imageUri = imageURL;
     imageOnPage(imageURL);
-    startGoogleAPI();
+    // startGoogleAPI();
   },
   error: function(err) {
     console.log(err)
@@ -164,7 +162,7 @@ function startGoogleAPI() {
       }
       const imageTitle = response.responses[0].labelAnnotations[0].description;
       imageTitleOnPage(imageTitle);
-      startSpoonacularAPI(imageTitle);
+      // startSpoonacularAPI(imageTitle);
     },
     error: function (err) {
       console.log(err);
@@ -194,13 +192,68 @@ function startSpoonacularAPI(imageTitle) {
 }
 
 function imageOnPage(imageURL) {
-  const imageContainer = document.getElementById("image-container");
-  const img = document.createElement("img");
-  img.id = "image-on-page"
-  img.src = imageURL;
-  img.alt = "Uploaded Image"
-  imageContainer.append(img);
+  let imageURLParameter = imageURL;
+  let imageLoader = {};
+  imageLoader['LoadImage'] = function (imageURLParameter, progressUpdateCallback) {
+    return new Promise((resolve, reject) => {
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', imageURL, true);
+      xhr.responseType = 'arraybuffer';
+
+      xhr.onprogress = function(e) {
+        if (e.lengthComputable) {
+          var percentComplete = e.loaded / e.total;
+          $('#imageProgress').css({
+            width: percentComplete * 100 + '%'
+          });
+          if (percentComplete === 1) {
+            $('#imageProgress').addClass('hide');
+          }
+        }
+        // progressUpdateCallback(parseInt((e.loaded / e.total) * 100))
+      };
+
+      xhr.onloadend = function() {
+        // progressUpdateCallback(100);
+        var options = {};
+        var headers = xhr.getAllResponseHeaders();
+        var typeMatch = headers.match(/^Content-Type:\s*(.*?)$/mi);
+
+        if(typeMatch && typeMatch[1]){
+          options.type = typeMatch[1];
+        }
+
+        var blob = new Blob([this.response], options);
+        resolve(window.URL.createObjectURL(blob));
+      }
+      xhr.send();
+    });
+
+  }
+  imageLoaderFunction(imageLoader, imageURLParameter);
+
+  // const imageContainer = document.getElementById("image-container");
+  // const img = document.createElement("img");
+  // img.id = "image-on-page"
+  // img.src = imageURL;
+  // img.alt = "Uploaded Image"
+  // imageContainer.append(img);
 }
+
+function imageLoaderFunction(imageLoader, imageURL){
+  let myImage = document.getElementById('myImage');
+  // let imageProgress = document.getElementById("imageProgress");
+
+  // function updateProgress(progress) {
+  //   imageProgress.value = progress;
+  // }
+
+  imageLoader.LoadImage('imageURL')
+    .then(image => {
+      myImage.src = image;
+    })
+}
+
 
 function resetImageOnPage() {
   document.getElementById("image-on-page").remove();

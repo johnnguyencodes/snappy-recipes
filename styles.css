@@ -14,7 +14,7 @@ table {
 
 .progress {
     display: block;
-    text-align: center;
+    /* text-align: center; */
     width: 0;
     height: 3px;
     background:blue;
@@ -25,11 +25,69 @@ table {
     transition: opacity 1.3s;
 }
 
-#image-on-page {
+#imageProgress {
+  display: block;
+  text-align: left;
+  width: 0;
+  height: 3px;
+  background:blue;
+  transition: width .3s;
+}
+#imageProgress.hide {
+  opacity: 0;
+  transition: opacity 1.3s;
+}
+
+#image-on-page, #myImage {
   max-height: 100%;
   max-width: 100%;
   object-fit: contain;
+  visibility: hidden;
 }
+
+/* #imageProgress[value]::-webkit-progress-bar {
+  background-color: #eee;
+  border-radius: 2px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
+      display: block;
+    text-align: center;
+    width: 0;
+    height: 3px;
+    background:blue;
+    transition: width .3s;
+} */
+
+
+
+/* progress[value] {
+  -webkit-appearance: none;
+   appearance: none;
+
+  width: 0%;
+  height: 3px;
+}
+
+progress[value]::-webkit-progress-value {
+  background-image: blue;
+} */
+
+/* ::-webkit-progress-bar {
+  background-color: blue;
+} */
+
+/* #imageProgress[value]::-webkit-progress-value {
+  background-image:
+	   -webkit-linear-gradient(-45deg,
+	                           transparent 33%, rgba(0, 0, 0, .1) 33%,
+	                           rgba(0,0, 0, .1) 66%, transparent 66%),
+	   -webkit-linear-gradient(top,
+	                           rgba(255, 255, 255, .25),
+	                           rgba(0, 0, 0, .25)),
+	   -webkit-linear-gradient(left, #09c, #f44);
+
+    border-radius: 2px;
+    background-size: 35px 20px, 100% 100%, 100% 100%;
+} */
 
 .image-card-top {
   max-width: 375px;
