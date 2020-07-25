@@ -23,20 +23,23 @@
   </header>
   <form id="form" class="col-xs-12">
     <div class="col-xs-12 d-flex justify-content-center mb-3">
-      <button class="btn btn-primary" onclick="openMenu()">Dietary Restrictions</button>
+      <button id="diet" class="btn btn-primary" onclick="openMenu()" >Dietary Restrictions</button>
     </div>
     <div class="col-xs-12 mx-2">
       <div class="input-group mb-3">
         <div class="custom-file">
-          <input type="file" class="custom-file-input" id="input-form">
-          <label class="custom-file-label text-center" for="input-form"></label>
+          <input type="file" class="custom-file-input" id="input-form" >
+          <label id="custom-file-label" class="custom-file-label text-center" for="input-form"></label>
         </div>
         <div class="input-group-prepend">
-          <button class="btn btn-primary" id="button">Upload</button>
+          <button class="btn btn-primary" id="upload" >Upload</button>
         </div>
       </div>
     </div>
   </form>
+  <div id="reset-button-container" class="d-flex justify-content-center mb-3">
+    <button class="btn btn-primary" onclick="resetFields()">Reset</button>
+  </div>
   <div class="image-percentage-bar-container d-flex flex-column justify-content-center">
     <div id="image-upload-container" class="d-none">
       <div id="upload-progress"></div>
@@ -151,10 +154,6 @@
     <p id="title-download-text" class="text-center">Recognizing image...</p>
   </div>
   <div id="title-container" class="col-xs-12 d-flex justify-content-center mb-3">
-  </div>
-  <div id="recipe-download-container" class="d-none">
-    <div id="recipe-progress"></div>
-    <p id="recipe-download-text" class="text-center">Gathering recipes...</p>
   </div>
   <div id="recipes-container" class="col-xs-12 d-flex flex-column align-items-center justify-content-center">
   </div>
