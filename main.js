@@ -98,7 +98,6 @@ function dietInfo() {
 
 //POST request to IMGUR with image id supplied
 function startImgurAPI(formData) {
-  console.log(formData);
   $.ajax({
   method: "POST",
   url: "https://api.imgur.com/3/image/",
@@ -125,19 +124,9 @@ function startImgurAPI(formData) {
             }
           }
         }, false);
-        // xhr.addEventListener("progress", function (evt) {
-        //   if (evt.lengthComputable) {
-        //     var percentComplete = evt.loaded / evt.total;
-        //     console.log(percentComplete);
-        //     $('.progress').css({
-        //       width: percentComplete * 100 + '%'
-        //     });
-        //   }
-        // }, false);
         return xhr;
       },
   success: function(data) {
-    $("#status").html('UPLOADED!!');
     const imageURL = data.data.link;
     googleDataToSend.requests[0].image.source.imageUri = imageURL;
     imageOnPage(imageURL);
@@ -168,20 +157,11 @@ function startGoogleAPI() {
           if (percentComplete > 0 && percentComplete < 1) {
             $('#title-download-container').removeClass('d-none');
           }
-          // if (percentComplete === 1) {
-          //   $('#title-download-container').addClass('d-none');
-          // }
+          if (percentComplete === 1) {
+            $('#title-download-container').addClass('d-none');
+          }
         }
       }, false);
-      // xhr.addEventListener("progress", function (evt) {
-      //   if (evt.lengthComputable) {
-      //     var percentComplete = evt.loaded / evt.total;
-      //     console.log(percentComplete);
-      //     $('.progress').css({
-      //       width: percentComplete * 100 + '%'
-      //     });
-      //   }
-      // }, false);
       return xhr;
     },
     success: function (response) {
@@ -211,7 +191,6 @@ function startSpoonacularAPI(imageTitle) {
       "Content-Type": "application/json"
     },
     success: function(data) {
-      console.log(data);
       recipeOnPage(data);
 
     },

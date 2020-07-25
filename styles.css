@@ -20,7 +20,7 @@ table {
 }
 
 
-#upload-progress, #download-progress, #title-progress {
+#upload-progress, #download-progress, #title-progress, #recipe-progress {
     display: block;
     text-align: left;
     width: 0;
