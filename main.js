@@ -62,9 +62,9 @@ function resetFields() {
   document.getElementById("recipe-search-input").disabled = false;
   document.getElementById("recipe-search-button").disabled = false;
   document.getElementById("recipe-search-input").value = "";
-    if (document.getElementById("myImage")) {
-      document.getElementById("myImage").remove();
-    }
+    // if (document.getElementById("myImage")) {
+      document.getElementById("myImage").src="";
+    // }
     document.getElementById("title-container").textContent = "";
     while (document.getElementById("recipes-container").firstChild) {
       document.getElementById("recipes-container").removeChild((document.getElementById("recipes-container").firstChild));
@@ -236,16 +236,15 @@ function startSpoonacularAPI(imageTitle) {
 }
 
 function imageOnPage(imageURL) {
-  debugger;
   let imageURLParameter = imageURL;
   let imageLoader = {};
   imageLoader['LoadImage'] = function (imageURLParameter, progressUpdateCallback) {
     return new Promise((resolve, reject) => {
       var xhr = new XMLHttpRequest();
+      console.log(xhr);
       xhr.open('GET', imageURL, true);
       xhr.responseType = 'arraybuffer';
       xhr.onprogress = function(e) {
-        console.log("hello from imageOnPage");
         if (e.lengthComputable) {
           var percentComplete = e.loaded / e.total;
           $('#download-progress').css({
@@ -256,7 +255,6 @@ function imageOnPage(imageURL) {
           }
           if (percentComplete === 1) {
             $("#image-download-container").addClass("d-none");
-
           }
         }
       };
@@ -280,8 +278,12 @@ function imageOnPage(imageURL) {
 }
 
 function imageLoaderFunction(imageLoader, imageURL) {
-  // let imageProgress = document.getElementById("imageProgress");
-  document.getElementById('myImage').src = imageURL
+  let myImage = document.getElementById("myImage");
+  let downloadProgress = document.getElementById("download-progress");
+  imageLoader.LoadImage("imageURL")
+    .then(image => {
+      myImage.src = imageURL;
+    })
 }
 
 

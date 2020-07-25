@@ -9,7 +9,7 @@ table {
 }
 
 #image-container {
-  max-height: 0px;
+  max-height: 400px;
 }
 
 .custom-file-label::after {
