@@ -225,6 +225,7 @@ function startSpoonacularAPI(imageTitle) {
       "Content-Type": "application/json"
     },
     success: function(data) {
+      console.log(data);
       document.getElementById("recipe-download-text").className = "text-center";
       document.getElementById("recipe-progress").className = "recipe-progress-visible";
       recipeOnPage(data);
