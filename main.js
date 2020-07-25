@@ -18,8 +18,6 @@ uploadButton.addEventListener("click", event => imgValidation(event));
 
 function imgValidation(event) {
   event.preventDefault();
-  // document.getElementById("reset-button-container").classList.remove("d-none");
-  // document.getElementById("reset-button-container").classList.add("d-flex");
   document.getElementById("diet").disabled = true;
   document.getElementById("input-form").disabled = true;
   document.getElementById("upload").disabled = true;
@@ -53,6 +51,7 @@ function imgValidation(event) {
 }
 
 function resetFields() {
+  event.preventDefault();
   document.getElementById("diet").disabled = false;
   document.getElementById("input-form").disabled = false;
   document.getElementById("upload").disabled = false;
@@ -66,6 +65,16 @@ function resetFields() {
     while (document.getElementById("recipes-container").firstChild) {
       document.getElementById("recipes-container").removeChild((document.getElementById("recipes-container").firstChild));
     }
+}
+
+function search(query) {
+  event.preventDefault();
+  document.getElementById("diet").disabled = true;
+  document.getElementById("input-form").disabled = true;
+  document.getElementById("upload").disabled = true;
+  const fileInput = document.getElementById("input-form");
+  dietInfo();
+  startSpoonacularAPI(query);
 }
 
 
@@ -205,6 +214,7 @@ function startSpoonacularAPI(imageTitle) {
       "Content-Type": "application/json"
     },
     success: function(data) {
+      console.log(data);
       recipeOnPage(data);
 
     },
