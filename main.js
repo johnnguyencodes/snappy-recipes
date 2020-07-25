@@ -96,7 +96,7 @@ function dietInfo() {
   spoonacularDataToSend.intolerances = intoleranceValues.slice(0, -2);
 }
 
-//GET request to IMGUR with image id supplied
+//POST request to IMGUR with image id supplied
 function startImgurAPI(formData) {
   console.log(formData);
   $.ajax({
@@ -114,11 +114,14 @@ function startImgurAPI(formData) {
         xhr.upload.addEventListener("progress", function (evt) {
           if (evt.lengthComputable) {
             var percentComplete = evt.loaded / evt.total;
-            $('.progress').css({
+            $('#upload-progress').css({
               width: percentComplete * 100 + '%'
             });
+            if (percentComplete > 0 && percentComplete < 1) {
+              $('#image-upload-container').removeClass('d-none');
+            }
             if (percentComplete === 1) {
-              $('.progress').addClass('hide');
+              $('#image-upload-container').addClass('d-none');
             }
           }
         }, false);
@@ -203,18 +206,20 @@ function imageOnPage(imageURL) {
       xhr.onprogress = function(e) {
         if (e.lengthComputable) {
           var percentComplete = e.loaded / e.total;
-          $('#imageProgress').css({
+          $('#download-progress').css({
             width: percentComplete * 100 + '%'
           });
+          if (percentComplete > 0 && percentComplete < 1) {
+            $("#image-download-container").removeClass("d-none");
+          }
           if (percentComplete === 1) {
-            $('#imageProgress').addClass('hide');
+            $("#image-download-container").addClass("d-none");
+
           }
         }
-        // progressUpdateCallback(parseInt((e.loaded / e.total) * 100))
       };
 
       xhr.onloadend = function() {
-        // progressUpdateCallback(100);
         var options = {};
         var headers = xhr.getAllResponseHeaders();
         var typeMatch = headers.match(/^Content-Type:\s*(.*?)$/mi);
@@ -231,23 +236,10 @@ function imageOnPage(imageURL) {
 
   }
   imageLoaderFunction(imageLoader, imageURLParameter);
-
-  // const imageContainer = document.getElementById("image-container");
-  // const img = document.createElement("img");
-  // img.id = "image-on-page"
-  // img.src = imageURL;
-  // img.alt = "Uploaded Image"
-  // imageContainer.append(img);
 }
 
 function imageLoaderFunction(imageLoader, imageURL){
   let myImage = document.getElementById('myImage');
-  // let imageProgress = document.getElementById("imageProgress");
-
-  // function updateProgress(progress) {
-  //   imageProgress.value = progress;
-  // }
-
   imageLoader.LoadImage('imageURL')
     .then(image => {
       myImage.src = image;
