@@ -8,11 +8,28 @@ table {
   max-width: 75ch;
 }
 
-/* #image-container {
+#image-container {
   height: 400px;
-} */
+}
 
-#image-on-page {
+.custom-file-label::after {
+    left: 0;
+    right: auto;
+    border-left-width: 0;
+    border-right: inherit;
+}
+
+
+#upload-progress, #download-progress, #title-progress, #recipe-progress {
+    display: block;
+    text-align: left;
+    width: 0;
+    height: 3px;
+    background:blue;
+    transition: width .3s;
+}
+
+#myImage {
   max-height: 100%;
   max-width: 100%;
   object-fit: contain;
@@ -33,13 +50,6 @@ table {
 
 span {
   white-space: nowrap;
-}
-
-.custom-file-label::after {
-    left: 0;
-    right: auto;
-    border-left-width: 0;
-    border-right: inherit;
 }
 
 .side-menu-hidden{

@@ -49,7 +49,6 @@ function imgValidation(event) {
     fileInput.value = "";
     return;
   }
-  alert(`You have chosen the file ${imageFile.name}`);
   formData.append("image", imageFile);
   dietInfo();
   startImgurAPI(formData);
@@ -97,9 +96,8 @@ function dietInfo() {
   spoonacularDataToSend.intolerances = intoleranceValues.slice(0, -2);
 }
 
-//GET request to IMGUR with image id supplied
+//POST request to IMGUR with image id supplied
 function startImgurAPI(formData) {
-  console.log(formData);
   $.ajax({
   method: "POST",
   url: "https://api.imgur.com/3/image/",
@@ -110,6 +108,24 @@ function startImgurAPI(formData) {
   headers: {
     "Authorization": "Client-ID 62cbd49ff79d018"
     },
+      xhr: function () {
+        var xhr = new window.XMLHttpRequest();
+        xhr.upload.addEventListener("progress", function (evt) {
+          if (evt.lengthComputable) {
+            var percentComplete = evt.loaded / evt.total;
+            $('#upload-progress').css({
+              width: percentComplete * 100 + '%'
+            });
+            if (percentComplete > 0 && percentComplete < 1) {
+              $('#image-upload-container').removeClass('d-none');
+            }
+            if (percentComplete === 1) {
+              $('#image-upload-container').addClass('d-none');
+            }
+          }
+        }, false);
+        return xhr;
+      },
   success: function(data) {
     const imageURL = data.data.link;
     googleDataToSend.requests[0].image.source.imageUri = imageURL;
@@ -130,6 +146,24 @@ function startGoogleAPI() {
     dataType: "JSON",
     contentType: "application/json",
     data: JSON.stringify(googleDataToSend),
+    xhr: function () {
+      var xhr = new window.XMLHttpRequest();
+      xhr.upload.addEventListener("progress", function (evt) {
+        if (evt.lengthComputable) {
+          var percentComplete = evt.loaded / evt.total;
+          $('#title-progress').css({
+            width: percentComplete * 100 + '%'
+          });
+          if (percentComplete > 0 && percentComplete < 1) {
+            $('#title-download-container').removeClass('d-none');
+          }
+          if (percentComplete === 1) {
+            $('#title-download-container').addClass('d-none');
+          }
+        }
+      }, false);
+      return xhr;
+    },
     success: function (response) {
       if (!(response.responses[0].labelAnnotations)) {
         alert("Sorry, google Cloud VISION API could not label your image correctly, please try another image");
@@ -157,7 +191,6 @@ function startSpoonacularAPI(imageTitle) {
       "Content-Type": "application/json"
     },
     success: function(data) {
-      console.log(data);
       recipeOnPage(data);
 
     },
@@ -168,16 +201,61 @@ function startSpoonacularAPI(imageTitle) {
 }
 
 function imageOnPage(imageURL) {
-  const imageContainer = document.getElementById("image-container");
-  const img = document.createElement("img");
-  img.id = "image-on-page"
-  img.src = imageURL;
-  img.alt = "Uploaded Image"
-  imageContainer.append(img);
+  let imageURLParameter = imageURL;
+  let imageLoader = {};
+  imageLoader['LoadImage'] = function (imageURLParameter, progressUpdateCallback) {
+    return new Promise((resolve, reject) => {
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', imageURL, true);
+      xhr.responseType = 'arraybuffer';
+
+      xhr.onprogress = function(e) {
+        if (e.lengthComputable) {
+          var percentComplete = e.loaded / e.total;
+          $('#download-progress').css({
+            width: percentComplete * 100 + '%'
+          });
+          if (percentComplete > 0 && percentComplete < 1) {
+            $("#image-download-container").removeClass("d-none");
+          }
+          if (percentComplete === 1) {
+            $("#image-download-container").addClass("d-none");
+
+          }
+        }
+      };
+      xhr.onloadend = function() {
+        var options = {};
+        var headers = xhr.getAllResponseHeaders();
+        var typeMatch = headers.match(/^Content-Type:\s*(.*?)$/mi);
+
+        if(typeMatch && typeMatch[1]){
+          options.type = typeMatch[1];
+        }
+
+        var blob = new Blob([this.response], options);
+        resolve(window.URL.createObjectURL(blob));
+      }
+      xhr.send();
+    });
+
+  }
+  imageLoaderFunction(imageLoader, imageURLParameter);
 }
 
+function imageLoaderFunction(imageLoader, imageURL){
+  let myImage = document.getElementById('myImage');
+  imageLoader.LoadImage('imageURL')
+    .then(image => {
+      myImage.src = imageURL;
+    })
+  // let myImage = document.getElementById("myImage");
+  // myImage.src = imageURL;
+}
+
+
 function resetImageOnPage() {
-  document.getElementById("image-on-page").remove();
+  document.getElementById("myImage").remove();
 }
 
 function imageTitleOnPage(imageTitle) {
@@ -207,7 +285,6 @@ function recipeOnPage(recipes) {
     const readyInMinutes = recipes.results[i].readyInMinutes;
     const servings = recipes.results[i].servings;
     const recipeURL = recipes.results[i].sourceUrl;
-    const summary = recipes.results[i].summary;
     const healthScore = recipes.results[i].healthScore;
     const caloriesAmount = Math.round(recipes.results[i].nutrition.nutrients[0].amount);
     const proteinAmount = Math.round(recipes.results[i].nutrition.nutrients[8].amount);
@@ -215,7 +292,7 @@ function recipeOnPage(recipes) {
     const carbsAmount = Math.round(recipes.results[i].nutrition.nutrients[3].amount);
     const sodiumAmount = Math.round(recipes.results[i].nutrition.nutrients[7].amount);
     const recipeCard = document.createElement("div");
-    recipeCard.className = "recipe-card card mb-3 col-xs-12";
+    recipeCard.className = "recipe-card card mb-5 mx-3 pt-3 col-xs-12";
     const anchorTag = document.createElement("a");
     const titleAnchorTag = document.createElement("a");
     anchorTag.href = recipeURL;
