@@ -141,7 +141,7 @@ function startImgurAPI(formData) {
     const imageURL = data.data.link;
     googleDataToSend.requests[0].image.source.imageUri = imageURL;
     imageOnPage(imageURL);
-    // startGoogleAPI();
+    startGoogleAPI();
   },
   error: function(err) {
     console.log(err)
@@ -157,6 +157,33 @@ function startGoogleAPI() {
     dataType: "JSON",
     contentType: "application/json",
     data: JSON.stringify(googleDataToSend),
+    xhr: function () {
+      var xhr = new window.XMLHttpRequest();
+      xhr.upload.addEventListener("progress", function (evt) {
+        if (evt.lengthComputable) {
+          var percentComplete = evt.loaded / evt.total;
+          $('#title-progress').css({
+            width: percentComplete * 100 + '%'
+          });
+          if (percentComplete > 0 && percentComplete < 1) {
+            $('#title-download-container').removeClass('d-none');
+          }
+          // if (percentComplete === 1) {
+          //   $('#title-download-container').addClass('d-none');
+          // }
+        }
+      }, false);
+      // xhr.addEventListener("progress", function (evt) {
+      //   if (evt.lengthComputable) {
+      //     var percentComplete = evt.loaded / evt.total;
+      //     console.log(percentComplete);
+      //     $('.progress').css({
+      //       width: percentComplete * 100 + '%'
+      //     });
+      //   }
+      // }, false);
+      return xhr;
+    },
     success: function (response) {
       if (!(response.responses[0].labelAnnotations)) {
         alert("Sorry, google Cloud VISION API could not label your image correctly, please try another image");
@@ -165,7 +192,7 @@ function startGoogleAPI() {
       }
       const imageTitle = response.responses[0].labelAnnotations[0].description;
       imageTitleOnPage(imageTitle);
-      // startSpoonacularAPI(imageTitle);
+      startSpoonacularAPI(imageTitle);
     },
     error: function (err) {
       console.log(err);
@@ -218,7 +245,6 @@ function imageOnPage(imageURL) {
           }
         }
       };
-
       xhr.onloadend = function() {
         var options = {};
         var headers = xhr.getAllResponseHeaders();
@@ -242,13 +268,15 @@ function imageLoaderFunction(imageLoader, imageURL){
   let myImage = document.getElementById('myImage');
   imageLoader.LoadImage('imageURL')
     .then(image => {
-      myImage.src = image;
+      myImage.src = imageURL;
     })
+  // let myImage = document.getElementById("myImage");
+  // myImage.src = imageURL;
 }
 
 
 function resetImageOnPage() {
-  document.getElementById("image-on-page").remove();
+  document.getElementById("myImage").remove();
 }
 
 function imageTitleOnPage(imageTitle) {
@@ -278,7 +306,6 @@ function recipeOnPage(recipes) {
     const readyInMinutes = recipes.results[i].readyInMinutes;
     const servings = recipes.results[i].servings;
     const recipeURL = recipes.results[i].sourceUrl;
-    const summary = recipes.results[i].summary;
     const healthScore = recipes.results[i].healthScore;
     const caloriesAmount = Math.round(recipes.results[i].nutrition.nutrients[0].amount);
     const proteinAmount = Math.round(recipes.results[i].nutrition.nutrients[8].amount);
