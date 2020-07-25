@@ -38,9 +38,9 @@
       </div>
     </div>
       <div class="input-group col-xs-12">
-        <input type="text" id="recipe-search" class="form-control ml-2" placeholder="Search for recipes">
+        <input type="text" id="recipe-search-input" class="form-control ml-2" placeholder="Search for recipes">
         <div class="input-group-append">
-          <button class="btn btn-secondary mr-2" type="button" onclick="search(document.getElementById('recipe-search').value)">
+          <button class="btn btn-secondary mr-2" id="recipe-search-button" type="button" onclick="search(document.getElementById('recipe-search-input').value)">
             <i class="fa fa-search"></i>
           </button>
         </div>
@@ -160,6 +160,10 @@
     <p id="title-download-text" class="text-center">Recognizing image...</p>
   </div>
   <div id="title-container" class="col-xs-12 d-flex justify-content-center mb-3">
+  </div>
+  <div id="recipe-download-container">
+    <div id="recipe-progress" class="recipe-progress-hidden"></div>
+    <p id="recipe-download-text" class="text-center d-none">Gathering recipes...</p>
   </div>
   <div id="recipes-container" class="col-xs-12 d-flex flex-column align-items-center justify-content-center">
   </div>

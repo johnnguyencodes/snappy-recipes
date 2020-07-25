@@ -9,7 +9,7 @@ table {
 }
 
 #image-container {
-  height: 400px;
+  max-height: 0px;
 }
 
 .custom-file-label::after {
@@ -20,13 +20,61 @@ table {
 }
 
 
-#upload-progress, #download-progress, #title-progress, #recipe-progress {
+#upload-progress, #download-progress, #title-progress {
+    z-index: 5;
     display: block;
     text-align: left;
-    width: 0;
+    width: 50%;
     height: 3px;
     background:blue;
     transition: width .3s;
+}
+
+
+.recipe-progress-hidden {
+  position: absolute;
+  text-align: left;
+  width: 375px;
+  left:  -375px;
+  height: 3px;
+  background:blue;
+  transition: 0.3s ease-in-out;
+}
+
+.recipe-progress-visible {
+  z-index: 5;
+  position: absolute;
+  text-align: left;
+  width: 375px;
+  left: 0;
+  height: 3px;
+  background:blue;
+  transition: 3s ease-in-out;
+}
+
+.side-menu-hidden{
+  z-index: 3;
+  height: 100vh;
+  width: 350px;
+  position: absolute;
+  top: 0;
+  left: -355px;
+  border-right: 3px black solid;
+  box-shadow: 5px 5px rgba(0, 0, 0, 0.4);
+  background-color: white;
+}
+
+.side-menu-visible {
+  z-index: 3;
+  height: 100vh;
+  width: 350px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: 0.3s ease-in-out;
+  border-right: 3px black solid;
+  box-shadow: 5px 5px rgba(0, 0, 0, 0.4);
+  background-color: white;
 }
 
 #myImage {
@@ -50,32 +98,6 @@ table {
 
 span {
   white-space: nowrap;
-}
-
-.side-menu-hidden{
-  z-index: 3;
-  height: 100vh;
-  width: 350px;
-  position: absolute;
-  top: 0;
-  left: -355px;
-  transition: 0.3s ease-in-out;
-  border-right: 3px black solid;
-  box-shadow: 5px 5px rgba(0, 0, 0, 0.4);
-  background-color: white;
-}
-
-.side-menu-visible {
-  z-index: 3;
-  height: 100vh;
-  width: 350px;
-  position: absolute;
-  top: 0;
-  left: 0;
-  transition: 0.3s ease-in-out;
-  border-right: 3px black solid;
-  box-shadow: 5px 5px rgba(0, 0, 0, 0.4);
-  background-color: white;
 }
 
 /* @media screen and (max-height: 450px) {
