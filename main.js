@@ -1,7 +1,6 @@
 document.querySelector('.custom-file-input').addEventListener('change', function (e) {
   var fileName = document.getElementById("input-form").files[0].name;
-  var nextSibling = e.target.nextElementSibling
-  nextSibling.innerText = fileName
+  document.getElementById("custom-file-label").textContent = fileName;
 })
 
 function openMenu() {
@@ -14,18 +13,16 @@ function closeMenu() {
   document.getElementById("mySideMenu").className = "side-menu-hidden d-flex flex-column justify-content-center"
 }
 
-const uploadButton = document.getElementById("button");
+const uploadButton = document.getElementById("upload");
 uploadButton.addEventListener("click", event => imgValidation(event));
 
 function imgValidation(event) {
   event.preventDefault();
-  if (document.getElementById("image-on-page")) {
-    document.getElementById("image-on-page").remove();
-    document.getElementById("title-container").textContent="";
-    while (document.getElementById("recipes-container").firstChild) {
-      document.getElementById("recipes-container").removeChild((document.getElementById("recipes-container").firstChild));
-    }
-  }
+  // document.getElementById("reset-button-container").classList.remove("d-none");
+  // document.getElementById("reset-button-container").classList.add("d-flex");
+  document.getElementById("diet").disabled = true;
+  document.getElementById("input-form").disabled = true;
+  document.getElementById("upload").disabled = true;
   const fileInput = document.getElementById("input-form");
   if (fileInput.files[1]) {
     fileInput.files.splice(1, 1);
@@ -54,6 +51,23 @@ function imgValidation(event) {
   startImgurAPI(formData);
   fileInput.value = "";
 }
+
+function resetFields() {
+  document.getElementById("diet").disabled = false;
+  document.getElementById("input-form").disabled = false;
+  document.getElementById("upload").disabled = false;
+    document.getElementById("custom-file-label").textContent = "";
+    // document.getElementById("reset-button-container").classList.remove("d-flex");
+    // document.getElementById("reset-button-container").classList.add("d-none");
+    if (document.getElementById("myImage")) {
+      document.getElementById("myImage").remove();
+    }
+    document.getElementById("title-container").textContent = "";
+    while (document.getElementById("recipes-container").firstChild) {
+      document.getElementById("recipes-container").removeChild((document.getElementById("recipes-container").firstChild));
+    }
+}
+
 
 let googleDataToSend = {
   "requests": [
