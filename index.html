@@ -17,20 +17,20 @@
 </head>
 
 <body class="bg-light">
-  <header class="col-xs-12 d-flex flex-column align-items-center mb-2">
+  <header id="header" class="col-xs-12 d-flex flex-column align-items-center mb-2">
     <p>Welcome to</p>
     <h3>Snap Chef!</h3>
   </header>
-  <form id="form" class="col-xs-12">
-    <div class="col-xs-12 d-flex justify-content-around mb-3">
-      <button id="diet" class="btn btn-primary" onclick="openMenu()">Diet Preferences</button>
-      <button class="btn btn-primary" onclick="resetFields()">Reset</button>
+  <form class="col-xs-12">
+    <div class="form-group col-xs-12 d-flex justify-content-around">
+      <button id="diet" class="btn btn-primary" onclick="openDietMenu()">Diet Preferences</button>
+      <button id="resetFields" class="btn btn-primary" onclick="resetFields()">Reset</button>
     </div>
     <div class="col-xs-12 mx-2">
       <div class="input-group mb-3">
         <div class="custom-file">
-          <input type="file" class="custom-file-input" id="input-form">
-          <label id="custom-file-label" class="custom-file-label text-center" for="input-form"></label>
+          <input type="file" class="custom-file-input" id="inputForm">
+          <label id="inputLabel" class="custom-file-label text-center" for="inputForm"></label>
         </div>
         <div class="input-group-prepend">
           <button class="btn btn-primary rounded-right" id="upload">Upload</button>
@@ -149,7 +149,7 @@
       </div>
     </div>
     <div class="col-xs-12">
-      <button class="btn btn-primary col-3 offset-4" onclick="closeMenu()">Done</button>
+      <button class="btn btn-primary col-3 offset-4" onclick="closeDietMenu()">Done</button>
     </div>
   </div>
   <div id="image-container" class="col-xs-12 d-flex justify-content-center my-3">

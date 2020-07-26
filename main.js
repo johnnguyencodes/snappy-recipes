@@ -1,14 +1,14 @@
-document.querySelector('.custom-file-input').addEventListener('change', function (e) {
-  var fileName = document.getElementById("input-form").files[0].name;
+document.getElementById('inputForm').addEventListener('change', function (e) {
+  var fileName = document.getElementById("inputForm").files[0].name;
   document.getElementById("custom-file-label").textContent = fileName;
 })
 
-function openMenu() {
+function openDietMenu() {
   event.preventDefault();
   document.getElementById("mySideMenu").className = "side-menu-visible d-flex flex-column justify-content-center";
 }
 
-function closeMenu() {
+function closeDietMenu() {
   event.preventDefault();
   document.getElementById("mySideMenu").className = "side-menu-hidden d-flex flex-column justify-content-center"
 }
@@ -18,7 +18,7 @@ uploadButton.addEventListener("click", event => imgValidation(event));
 
 function imgValidation(event) {
   event.preventDefault();
-  const fileInput = document.getElementById("input-form");
+  const fileInput = document.getElementById("inputForm");
   if (fileInput.files[1]) {
     fileInput.files.splice(1, 1);
   }
@@ -29,7 +29,7 @@ function imgValidation(event) {
     return;
   }
   document.getElementById("diet").disabled = true;
-  document.getElementById("input-form").disabled = true;
+  document.getElementById("inputForm").disabled = true;
   document.getElementById("upload").disabled = true;
   document.getElementById("recipe-search-input").disabled = true;
   document.getElementById("recipe-search-button").disabled = true;
@@ -55,7 +55,7 @@ function imgValidation(event) {
 function resetFields() {
   event.preventDefault();
   document.getElementById("diet").disabled = false;
-  document.getElementById("input-form").disabled = false;
+  document.getElementById("inputForm").disabled = false;
   document.getElementById("upload").disabled = false;
   document.getElementById("recipe-search-input").disabled = false;
     document.getElementById("custom-file-label").textContent = "";
@@ -80,7 +80,7 @@ function search(query) {
   document.getElementById("recipe-download-text").className = "text-center";
   document.getElementById("recipe-progress").className = "recipe-progress-visible";
   document.getElementById("diet").disabled = true;
-  document.getElementById("input-form").disabled = true;
+  document.getElementById("inputForm").disabled = true;
   document.getElementById("upload").disabled = true;
   document.getElementById("recipe-search-input").disabled = true;
   const fileInput = document.getElementById("input-form");
