@@ -176,7 +176,7 @@ function startGoogleAPI() {
     data: JSON.stringify(googleDataToSend),
     success: function (response) {
       if (!(response.responses[0].labelAnnotations)) {
-        alert("Sorry, google Cloud VISION API could not label your image correctly, please try another image");
+        alert("Sorry, your image could not be recognized. Please upload a different image or enter a search");
         document.getElementById("myImage").src = "";
         return;
       }
