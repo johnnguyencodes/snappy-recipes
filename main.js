@@ -1,23 +1,23 @@
-document.getElementById('file_Input_Form').addEventListener('change', function (e) {
-  var fileName = document.getElementById("file_Input_Form").files[0].name;
+document.getElementById('file_input_form').addEventListener('change', function (e) {
+  var fileName = document.getElementById("file_input_form").files[0].name;
   if (fileName) {
-    document.getElementById("file_Input_Form").disabled = true;
+    document.getElementById("file_input_form").disabled = true;
   }
-  document.getElementById("customFileLabel").textContent = fileName;
+  document.getElementById("custom_file_label").textContent = fileName;
 })
 
 function openDietMenu() {
   event.preventDefault();
-  document.getElementById("mySideMenu").className = "side-menu-visible d-flex flex-column justify-content-center";
+  document.getElementById("diet_menu").className = "diet-menu-visible d-flex flex-column justify-content-center";
 }
 
 function closeDietMenu() {
   event.preventDefault();
-  document.getElementById("mySideMenu").className = "side-menu-hidden d-flex flex-column justify-content-center"
+  document.getElementById("diet_menu").className = "diet-menu-hidden d-flex flex-column justify-content-center"
 }
 function imgValidation(event) {
   event.preventDefault();
-  const fileInput = document.getElementById("file_Input_Form");
+  const fileInput = document.getElementById("file_input_form");
   if (fileInput.files[1]) {
     fileInput.files.splice(1, 1);
   }
@@ -56,14 +56,14 @@ function resetFields() {
   for (var i = 0; i < inputs.length; i++) {
     inputs[i].disabled = false;
   }
-  document.getElementById("file_Input_Form").value = "";
-  document.getElementById("customFileLabel").textContent = "";
-  document.getElementById("title-container").textContent = "";
-  document.getElementById("recipeSearchInput").value = "";
-  document.getElementById("myImage").src="";
-  while (document.getElementById("recipes-container").firstChild) {
-    document.getElementById("recipes-container").removeChild((document.getElementById("recipes-container").firstChild));
-    }
+  document.getElementById("file_input_form").value = "";
+  document.getElementById("custom_file_label").textContent = "";
+  document.getElementById("title").remove();
+  document.getElementById("recipe_search_input").value = "";
+  document.getElementById("my_image").src="";
+  while (document.getElementById("recipe")) {
+    document.getElementById("recipe").remove();
+  }
 }
 
 function search(query) {
@@ -76,7 +76,7 @@ function search(query) {
   for (var i = 0; i < inputs.length; i++) {
     inputs[i].disabled = true;
   }
-  document.getElementById("recipe-download-text").className = "text-center";
+  document.getElementById("recipe_download_text").className = "text-center";
   dietInfo();
   startSpoonacularAPI(query);
 }
@@ -140,14 +140,14 @@ function startImgurAPI(formData) {
         xhr.upload.addEventListener("progress", function (evt) {
           if (evt.lengthComputable) {
             var percentComplete = evt.loaded / evt.total;
-            $('#upload-progress').css({
+            $('#upload_progress').css({
               width: percentComplete * 100 + '%'
             });
             if (percentComplete > 0 && percentComplete < 1) {
-              $('#image-upload-container').removeClass('d-none');
+              $('#image_upload_container').removeClass('d-none');
             }
             if (percentComplete === 1) {
-              $('#image-upload-container').addClass('d-none');
+              $('#image_upload_container').addClass('d-none');
             }
           }
         }, false);
@@ -167,7 +167,7 @@ function startImgurAPI(formData) {
 
 //POST request to Google's Cloud Vision API with image from IMGUR to label the object in the image
 function startGoogleAPI() {
-  document.getElementById("title-download-text").className = "text-center";
+  document.getElementById("title_download_text").className = "text-center";
   $.ajax({
     url: "https://vision.googleapis.com/v1/images:annotate?fields=responses&key=AIzaSyAJzv7ThEspgv8_BxX2EwCs8PUEJMtJN6c",
     type: "POST",
@@ -177,12 +177,12 @@ function startGoogleAPI() {
     success: function (response) {
       if (!(response.responses[0].labelAnnotations)) {
         alert("Sorry, your image could not be recognized. Please upload a different image or enter a search");
-        document.getElementById("myImage").src = "";
+        document.getElementById("my_image").src = "";
         return;
       }
       const imageTitle = response.responses[0].labelAnnotations[0].description;
       imageTitleOnPage(imageTitle);
-      document.getElementById("title-download-text").className = "text-center d-none";
+      document.getElementById("title_download_text").className = "text-center d-none";
       startSpoonacularAPI(imageTitle);
     },
     error: function (err) {
@@ -193,7 +193,7 @@ function startGoogleAPI() {
 
 //GET request to Spoonacular's API with label from Google to get a list of up to 10 recipes containing the item from the image and other nutrition info.
 function startSpoonacularAPI(imageTitle) {
-  document.getElementById("recipe-download-text").className = "text-center";
+  document.getElementById("recipe_download_text").className = "text-center";
   var spoonacularURL = "https://api.spoonacular.com/recipes/complexSearch?query=" + imageTitle + "&apiKey=5d83fe3f2cf14616a6ea74137c2be564&addRecipeNutrition=true"
   $.ajax({
     method: "GET",
@@ -212,26 +212,24 @@ function startSpoonacularAPI(imageTitle) {
 }
 
 function imageOnPage(imageURL) {
-  console.log("image On Page");
   let imageURLParameter = imageURL;
   let imageLoader = {};
   imageLoader['LoadImage'] = function (imageURLParameter, progressUpdateCallback) {
     return new Promise((resolve, reject) => {
       var xhr = new XMLHttpRequest();
-      console.log(xhr);
       xhr.open('GET', imageURL, true);
       xhr.responseType = 'arraybuffer';
       xhr.onprogress = function(e) {
         if (e.lengthComputable) {
           var percentComplete = e.loaded / e.total;
-          $('#download-progress').css({
+          $('#download_progress').css({
             width: percentComplete * 100 + '%'
           });
           if (percentComplete > 0 && percentComplete < 1) {
-            $("#image-download-container").removeClass("d-none");
+            $("#image_download_container").removeClass("d-none");
           }
           if (percentComplete === 1) {
-            $("#image-download-container").addClass("d-none");
+            $("#image_download_container").addClass("d-none");
           }
         }
       };
@@ -255,23 +253,24 @@ function imageOnPage(imageURL) {
 }
 
 function imageLoaderFunction(imageLoader, imageURL) {
-  let myImage = document.getElementById("myImage");
+  let my_image = document.getElementById("my_image");
   let downloadProgress = document.getElementById("download-progress");
   imageLoader.LoadImage("imageURL")
     .then(image => {
-      myImage.src = imageURL;
+      my_image.src = imageURL;
     })
 }
 
 function imageTitleOnPage(imageTitle) {
-  const titleContainer = document.getElementById("title-container");
+  const titleContainer = document.getElementById("title_container");
   const h1 = document.createElement("h1");
+  h1.id="title";
   h1.textContent = imageTitle;
   titleContainer.append(h1);
 }
 
 function recipeOnPage(recipes) {
-  const recipeContainer = document.getElementById("recipes-container");
+  const recipeContainer = document.getElementById("recipes_container");
   for (let i = 0; i < recipes.results.length; i++) {
     const imageURL = recipes.results[i].image;
     const title = recipes.results[i].title;
@@ -286,6 +285,7 @@ function recipeOnPage(recipes) {
     const sodiumAmount = Math.round(recipes.results[i].nutrition.nutrients[7].amount);
     const recipeCard = document.createElement("div");
     recipeCard.className = "recipe-card card mb-5 mx-3 pt-3 col-xs-12";
+    recipeCard.id="recipe";
     const anchorTag = document.createElement("a");
     const titleAnchorTag = document.createElement("a");
     anchorTag.href = recipeURL;
@@ -353,5 +353,5 @@ function recipeOnPage(recipes) {
     recipeCard.append(cardBody);
     recipeContainer.append(recipeCard);
   }
-  document.getElementById("recipe-download-text").className = "text-center d-none";
+  document.getElementById("recipe_download_text").className = "text-center d-none";
 }
