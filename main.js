@@ -1,3 +1,5 @@
+//*Form Begin
+
 document.getElementById('file_input_form').addEventListener('change', function (e) {
   var fileName = document.getElementById("file_input_form").files[0].name;
   if (fileName) {
@@ -15,6 +17,7 @@ function closeDietMenu() {
   event.preventDefault();
   document.getElementById("diet_menu").className = "diet-menu-hidden d-flex flex-column justify-content-center"
 }
+
 function imgValidation(event) {
   event.preventDefault();
   const fileInput = document.getElementById("file_input_form");
@@ -81,29 +84,6 @@ function search(query) {
   startSpoonacularAPI(query);
 }
 
-
-let googleDataToSend = {
-  "requests": [
-    {
-      "image": {
-        "source": {
-          "imageUri": null
-        }
-      },
-      "features": [
-        {
-          "type": "LABEL_DETECTION"
-        }
-      ]
-    }
-  ]
-};
-
-let spoonacularDataToSend = {
-  "diet": null,
-  "intolerances": null
-}
-
 function dietInfo() {
   let restrictionValues = "";
   let intoleranceValues = "";
@@ -122,6 +102,10 @@ function dietInfo() {
   spoonacularDataToSend.diet = restrictionValues.slice(0, -2)
   spoonacularDataToSend.intolerances = intoleranceValues.slice(0, -2);
 }
+
+//*Form End
+
+//*App End
 
 //POST request to IMGUR with image id supplied
 function startImgurAPI(formData) {
@@ -165,6 +149,24 @@ function startImgurAPI(formData) {
   })
 }
 
+
+let googleDataToSend = {
+  "requests": [
+    {
+      "image": {
+        "source": {
+          "imageUri": null
+        }
+      },
+      "features": [
+        {
+          "type": "LABEL_DETECTION"
+        }
+      ]
+    }
+  ]
+};
+
 //POST request to Google's Cloud Vision API with image from IMGUR to label the object in the image
 function startGoogleAPI() {
   document.getElementById("title_download_text").className = "text-center";
@@ -191,6 +193,11 @@ function startGoogleAPI() {
   });
 }
 
+let spoonacularDataToSend = {
+  "diet": null,
+  "intolerances": null
+}
+
 //GET request to Spoonacular's API with label from Google to get a list of up to 10 recipes containing the item from the image and other nutrition info.
 function startSpoonacularAPI(imageTitle) {
   document.getElementById("recipe_download_text").className = "text-center";
@@ -210,6 +217,10 @@ function startSpoonacularAPI(imageTitle) {
     }
   })
 }
+
+//*App end
+
+//*image on page
 
 function imageOnPage(imageURL) {
   let imageURLParameter = imageURL;
@@ -268,6 +279,10 @@ function imageTitleOnPage(imageTitle) {
   h1.textContent = imageTitle;
   titleContainer.append(h1);
 }
+
+//*image end
+
+//*recipes start
 
 function recipeOnPage(recipes) {
   const recipeContainer = document.getElementById("recipes_container");
@@ -355,3 +370,5 @@ function recipeOnPage(recipes) {
   }
   document.getElementById("recipe_download_text").className = "text-center d-none";
 }
+
+//*recipes end
