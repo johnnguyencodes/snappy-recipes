@@ -20,18 +20,18 @@ table {
 }
 
 
-#upload-progress, #download-progress, #title-progress {
+#upload-progress, #download-progress {
     z-index: 5;
     display: block;
     text-align: left;
-    width: 50%;
+    width: 0;
     height: 3px;
     background:blue;
     transition: width .3s;
 }
 
 
-.recipe-progress-hidden {
+/* .recipe-progress-hidden {
   position: absolute;
   text-align: left;
   width: 375px;
@@ -50,7 +50,7 @@ table {
   height: 3px;
   background:blue;
   transition: 3s ease-in-out;
-}
+} */
 
 .side-menu-hidden{
   z-index: 3;
@@ -59,6 +59,7 @@ table {
   position: absolute;
   top: 0;
   left: -355px;
+  transition: 0.3s ease-in-out;
   border-right: 3px black solid;
   box-shadow: 5px 5px rgba(0, 0, 0, 0.4);
   background-color: white;

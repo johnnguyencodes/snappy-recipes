@@ -11,39 +11,37 @@
     integrity="sha256-+N4/V/SbAFiW1MPBCXnfnP9QSN3+Keu+NlB+0ev/YKQ=" crossorigin="anonymous" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha256-YLGeXaapI0/5IgZopewRJcFXomhRMlYYjugPLSyNjTY=" crossorigin="anonymous" />
-  <link href="https://fonts.googleapis.com/css2?family=Palanquin:wght@100;200;300;400;500;600;700&display=swap"
-    rel="stylesheet">
+  <!-- <link href="https://fonts.googleapis.com/css2?family=Palanquin:wght@100;200;300;400;500;600;700&display=swap"
+    rel="stylesheet"> -->
   <link rel="stylesheet" href="styles.css">
 </head>
 
 <body class="bg-light">
-  <header id="header" class="col-xs-12 d-flex flex-column align-items-center mb-2">
+  <header class="col-xs-12 d-flex flex-column align-items-center mb-2">
     <p>Welcome to</p>
     <h3>Snap Chef!</h3>
   </header>
   <form class="col-xs-12">
     <div class="form-group col-xs-12 d-flex justify-content-around">
-      <button id="diet" class="btn btn-primary" onclick="openDietMenu()">Diet Preferences</button>
-      <button id="resetFields" class="btn btn-primary" onclick="resetFields()">Reset</button>
+      <button class="btn btn-primary input" onclick="openDietMenu()">Diet Preferences</button>
+      <button class="btn btn-primary" onclick="resetFields()">Reset</button>
     </div>
-    <div class="col-xs-12 mx-2">
+    <div class="form-group col-xs-12 mx-2">
       <div class="input-group mb-3">
         <div class="custom-file">
-          <input type="file" class="custom-file-input" id="inputForm">
-          <label id="inputLabel" class="custom-file-label text-center" for="inputForm"></label>
+          <input type="file" id="file_Input_Form" class="custom-file-input input">
+          <label id="customFileLabel" class="custom-file-label text-center input" for="fileInputForm"></label>
         </div>
         <div class="input-group-prepend">
-          <button class="btn btn-primary rounded-right" id="upload">Upload</button>
+          <button class="btn btn-primary rounded-right input" onclick="imgValidation(event)">Upload</button>
         </div>
       </div>
     </div>
       <div class="input-group col-xs-12">
-        <input type="text" id="recipe-search-input" class="form-control ml-2" placeholder="Search for recipes">
-        <div class="input-group-append">
-          <button class="btn btn-secondary mr-2" id="recipe-search-button" type="button" onclick="search(document.getElementById('recipe-search-input').value)">
-            <i class="fa fa-search"></i>
-          </button>
-        </div>
+        <input type="text" id="recipeSearchInput" class="form-control ml-2 input" placeholder="Search for recipes">
+        <button class="btn btn-secondary mr-2 input" type="button" onclick="search(document.getElementById('recipeSearchInput').value)">
+          <i class="fa fa-search"></i>
+        </button>
       </div>
   </form>
   <div class="image-percentage-bar-container d-flex flex-column justify-content-center">
@@ -53,7 +51,7 @@
     </div>
     <div id="image-download-container" class="d-none">
       <div id="download-progress"></div>
-      <p id="image-download-text" class="text-center">Displaying image...</p>
+      <p id="image-download-text" class="text-center">Downloading image...</p>
     </div>
   </div>
   <div id="mySideMenu" class="side-menu-hidden d-flex flex-column">
@@ -155,14 +153,12 @@
   <div id="image-container" class="col-xs-12 d-flex justify-content-center my-3">
     <img id="myImage" src="" alt="">
   </div>
-  <div id="title-download-container" class="d-none">
-    <div id="title-progress"></div>
-    <p id="title-download-text" class="text-center">Recognizing image...</p>
+  <div id="title-download-container">
+    <p id="title-download-text" class="text-center d-none">Recognizing image...</p>
   </div>
   <div id="title-container" class="col-xs-12 d-flex justify-content-center mb-3">
   </div>
   <div id="recipe-download-container">
-    <div id="recipe-progress" class="recipe-progress-hidden"></div>
     <p id="recipe-download-text" class="text-center d-none">Gathering recipes...</p>
   </div>
   <div id="recipes-container" class="col-xs-12 d-flex flex-column align-items-center justify-content-center">

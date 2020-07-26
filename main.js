@@ -1,6 +1,9 @@
-document.getElementById('inputForm').addEventListener('change', function (e) {
-  var fileName = document.getElementById("inputForm").files[0].name;
-  document.getElementById("custom-file-label").textContent = fileName;
+document.getElementById('file_Input_Form').addEventListener('change', function (e) {
+  var fileName = document.getElementById("file_Input_Form").files[0].name;
+  if (fileName) {
+    document.getElementById("file_Input_Form").disabled = true;
+  }
+  document.getElementById("customFileLabel").textContent = fileName;
 })
 
 function openDietMenu() {
@@ -12,13 +15,9 @@ function closeDietMenu() {
   event.preventDefault();
   document.getElementById("mySideMenu").className = "side-menu-hidden d-flex flex-column justify-content-center"
 }
-
-const uploadButton = document.getElementById("upload");
-uploadButton.addEventListener("click", event => imgValidation(event));
-
 function imgValidation(event) {
   event.preventDefault();
-  const fileInput = document.getElementById("inputForm");
+  const fileInput = document.getElementById("file_Input_Form");
   if (fileInput.files[1]) {
     fileInput.files.splice(1, 1);
   }
@@ -28,11 +27,10 @@ function imgValidation(event) {
     fileInput.value = "";
     return;
   }
-  document.getElementById("diet").disabled = true;
-  document.getElementById("inputForm").disabled = true;
-  document.getElementById("upload").disabled = true;
-  document.getElementById("recipe-search-input").disabled = true;
-  document.getElementById("recipe-search-button").disabled = true;
+  const inputs = document.querySelectorAll(".input");
+  for (var i = 0; i < inputs.length; i++) {
+    inputs[i].disabled = true;
+  }
   const fileType = imageFile.type;
   const formData = new FormData();
   const mimeTypes = ['image/jpg', 'image/png', 'image/gif'];
@@ -54,20 +52,17 @@ function imgValidation(event) {
 
 function resetFields() {
   event.preventDefault();
-  document.getElementById("diet").disabled = false;
-  document.getElementById("inputForm").disabled = false;
-  document.getElementById("upload").disabled = false;
-  document.getElementById("recipe-search-input").disabled = false;
-    document.getElementById("custom-file-label").textContent = "";
-  document.getElementById("recipe-search-input").disabled = false;
-  document.getElementById("recipe-search-button").disabled = false;
-  document.getElementById("recipe-search-input").value = "";
-    // if (document.getElementById("myImage")) {
-      document.getElementById("myImage").src="";
-    // }
-    document.getElementById("title-container").textContent = "";
-    while (document.getElementById("recipes-container").firstChild) {
-      document.getElementById("recipes-container").removeChild((document.getElementById("recipes-container").firstChild));
+  const inputs = document.querySelectorAll(".input");
+  for (var i = 0; i < inputs.length; i++) {
+    inputs[i].disabled = false;
+  }
+  document.getElementById("file_Input_Form").value = "";
+  document.getElementById("customFileLabel").textContent = "";
+  document.getElementById("title-container").textContent = "";
+  document.getElementById("recipeSearchInput").value = "";
+  document.getElementById("myImage").src="";
+  while (document.getElementById("recipes-container").firstChild) {
+    document.getElementById("recipes-container").removeChild((document.getElementById("recipes-container").firstChild));
     }
 }
 
@@ -77,13 +72,11 @@ function search(query) {
     alert("Error: No search query entered. Please enter a search query.");
     return;
   }
+  const inputs = document.querySelectorAll(".input");
+  for (var i = 0; i < inputs.length; i++) {
+    inputs[i].disabled = true;
+  }
   document.getElementById("recipe-download-text").className = "text-center";
-  document.getElementById("recipe-progress").className = "recipe-progress-visible";
-  document.getElementById("diet").disabled = true;
-  document.getElementById("inputForm").disabled = true;
-  document.getElementById("upload").disabled = true;
-  document.getElementById("recipe-search-input").disabled = true;
-  const fileInput = document.getElementById("input-form");
   dietInfo();
   startSpoonacularAPI(query);
 }
@@ -174,38 +167,22 @@ function startImgurAPI(formData) {
 
 //POST request to Google's Cloud Vision API with image from IMGUR to label the object in the image
 function startGoogleAPI() {
+  document.getElementById("title-download-text").className = "text-center";
   $.ajax({
     url: "https://vision.googleapis.com/v1/images:annotate?fields=responses&key=AIzaSyAJzv7ThEspgv8_BxX2EwCs8PUEJMtJN6c",
     type: "POST",
     dataType: "JSON",
     contentType: "application/json",
     data: JSON.stringify(googleDataToSend),
-    xhr: function () {
-      var xhr = new window.XMLHttpRequest();
-      xhr.upload.addEventListener("progress", function (evt) {
-        if (evt.lengthComputable) {
-          var percentComplete = evt.loaded / evt.total;
-          $('#title-progress').css({
-            width: percentComplete * 100 + '%'
-          });
-          if (percentComplete > 0 && percentComplete < 1) {
-            $('#title-download-container').removeClass('d-none');
-          }
-          if (percentComplete === 1) {
-            $('#title-download-container').addClass('d-none');
-          }
-        }
-      }, false);
-      return xhr;
-    },
     success: function (response) {
       if (!(response.responses[0].labelAnnotations)) {
         alert("Sorry, google Cloud VISION API could not label your image correctly, please try another image");
-        resetImageOnPage();
+        document.getElementById("myImage").src = "";
         return;
       }
       const imageTitle = response.responses[0].labelAnnotations[0].description;
       imageTitleOnPage(imageTitle);
+      document.getElementById("title-download-text").className = "text-center d-none";
       startSpoonacularAPI(imageTitle);
     },
     error: function (err) {
@@ -216,6 +193,7 @@ function startGoogleAPI() {
 
 //GET request to Spoonacular's API with label from Google to get a list of up to 10 recipes containing the item from the image and other nutrition info.
 function startSpoonacularAPI(imageTitle) {
+  document.getElementById("recipe-download-text").className = "text-center";
   var spoonacularURL = "https://api.spoonacular.com/recipes/complexSearch?query=" + imageTitle + "&apiKey=5d83fe3f2cf14616a6ea74137c2be564&addRecipeNutrition=true"
   $.ajax({
     method: "GET",
@@ -225,8 +203,6 @@ function startSpoonacularAPI(imageTitle) {
       "Content-Type": "application/json"
     },
     success: function(data) {
-      document.getElementById("recipe-download-text").className = "text-center";
-      document.getElementById("recipe-progress").className = "recipe-progress-visible";
       recipeOnPage(data);
     },
     error: function(err) {
@@ -236,6 +212,7 @@ function startSpoonacularAPI(imageTitle) {
 }
 
 function imageOnPage(imageURL) {
+  console.log("image On Page");
   let imageURLParameter = imageURL;
   let imageLoader = {};
   imageLoader['LoadImage'] = function (imageURLParameter, progressUpdateCallback) {
@@ -284,11 +261,6 @@ function imageLoaderFunction(imageLoader, imageURL) {
     .then(image => {
       myImage.src = imageURL;
     })
-}
-
-
-function resetImageOnPage() {
-  document.getElementById("myImage").remove();
 }
 
 function imageTitleOnPage(imageTitle) {
@@ -381,6 +353,5 @@ function recipeOnPage(recipes) {
     recipeCard.append(cardBody);
     recipeContainer.append(recipeCard);
   }
-  document.getElementById("recipe-progress").className = ("recipe-progress-hidden");
   document.getElementById("recipe-download-text").className = "text-center d-none";
 }
