@@ -5,90 +5,86 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>AJAX - 2</title>
+  <title>Snappy Recipes</title>
   <link rel="shortcut icon" type="image/png" href="/images/favicon.png">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css"
     integrity="sha256-+N4/V/SbAFiW1MPBCXnfnP9QSN3+Keu+NlB+0ev/YKQ=" crossorigin="anonymous" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha256-YLGeXaapI0/5IgZopewRJcFXomhRMlYYjugPLSyNjTY=" crossorigin="anonymous" />
-  <link href="https://fonts.googleapis.com/css2?family=Palanquin:wght@100;200;300;400;500;600;700&display=swap"
-    rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
-
 <body class="bg-light">
   <header class="col-xs-12 d-flex flex-column align-items-center mb-2">
-    <p>Welcome to</p>
-    <h3>Snap Chef!</h3>
+    <h1> <span class="badge badge-primary">Snappy Recipes <i class="fa fa-utensils"></i></span></h1>
+    <p class="m-2 text-center">Find recipes by uploading an <strong>image</strong>,
+      <br>or by entering a <strong>search</strong>.</p>
   </header>
-  <form id="form" class="col-xs-12">
-    <div class="col-xs-12 d-flex justify-content-around mb-3">
-      <button id="diet" class="btn btn-primary" onclick="openMenu()">Diet Preferences</button>
-      <button class="btn btn-primary" onclick="resetFields()">Reset</button>
+  <form class="col-xs-12">
+    <div class="form-group col-xs-12 d-flex justify-content-around">
+      <button class="btn btn-secondary input" onclick="openDietMenu()">Diet Preferences</button>
+      <button class="btn btn-secondary" onclick="resetFields()">Reset</button>
     </div>
-    <div class="col-xs-12 mx-2">
+    <div class="form-group col-xs-12 mx-2">
       <div class="input-group mb-3">
         <div class="custom-file">
-          <input type="file" class="custom-file-input" id="input-form">
-          <label id="custom-file-label" class="custom-file-label text-center" for="input-form"></label>
+          <input type="file" id="file_input_form" class="custom-file-input input">
+          <label id="custom_file_label" class="custom-file-label text-center input" for="file_input_form"></label>
         </div>
         <div class="input-group-prepend">
-          <button class="btn btn-primary rounded-right" id="upload">Upload</button>
+          <button class="btn btn-primary rounded-right input" onclick="imgValidation(event)">Upload</button>
         </div>
       </div>
     </div>
       <div class="input-group col-xs-12">
-        <input type="text" id="recipe-search-input" class="form-control ml-2" placeholder="Search for recipes">
-        <div class="input-group-append">
-          <button class="btn btn-secondary mr-2" id="recipe-search-button" type="button" onclick="search(document.getElementById('recipe-search-input').value)">
-            <i class="fa fa-search"></i>
-          </button>
-        </div>
+        <input type="text" id="recipe_search_input" class="form-control ml-2 input rounded-left" placeholder="Search for recipes">
+        <button class="btn btn-primary rounded-right mr-2 input" type="button" onclick="search(document.getElementById('recipe_search_input').value)">
+          <i class="fa fa-search"></i>
+        </button>
       </div>
   </form>
   <div class="image-percentage-bar-container d-flex flex-column justify-content-center">
-    <div id="image-upload-container" class="d-none">
-      <div id="upload-progress"></div>
-      <p id="image-upload-text" class="text-center">Uploading image...</p>
+    <div id="image_upload_container" class="d-none">
+      <div id="upload_progress"></div>
+      <p id="image_upload_text" class="text-center">Uploading image...</p>
     </div>
-    <div id="image-download-container" class="d-none">
-      <div id="download-progress"></div>
-      <p id="image-download-text" class="text-center">Displaying image...</p>
+    <div id="image_download_container" class="d-none">
+      <div id="download_progress"></div>
+      <p id="image_download_text" class="text-center">Downloading image...</p>
     </div>
   </div>
-  <div id="mySideMenu" class="side-menu-hidden d-flex flex-column">
-    <div id="dietary-restrictions" class="d-flex flex-column my-5">
+  <div id="diet_menu" class="diet-menu-hidden">
+    <div id="dietary_restrictions">
       <p class="font-weight-bold text-center">Please select any dietary restrictions</p>
       <div class="w-100 d-flex">
         <span class="col">
-          <input type="checkbox" id="vegan" class="restrictionCheckbox" value="vegan" name="vegan">
+          <input type="checkbox" id="vegan" class="restriction-checkbox" value="vegan" name="vegan">
           <label for="vegan">Vegan</label>
         </span>
         <span class="col">
-          <input type="checkbox" id="vegetarian" class="restrictionCheckbox" value="vegetarian" name="vegetarian">
+          <input type="checkbox" id="vegetarian" class="restriction-checkbox" value="vegetarian" name="vegetarian">
           <label for="vegetarian">Vegetarian</label>
         </span>
       </div>
       <div class="w-100 d-flex">
         <span class="col">
-          <input type="checkbox" id="lacto-vegetarian" class="restrictionCheckbox" value="lacto-vegetarian"
+          <input type="checkbox" id="lacto-vegetarian" class="restriction-checkbox" value="lacto-vegetarian"
             name="lacto-vegetarian">
           <label for="lacto-vegetarian">Lacto-Vegetarian</label>
         </span>
         <span class="col">
-          <input type="checkbox" id="ovo-vegetarian" class="restrictionCheckbox" value="ovo-vegetarian"
+          <input type="checkbox" id="ovo-vegetarian" class="restriction-checkbox" value="ovo-vegetarian"
             name="ovo-vegetarian">
           <label for="ovo-vegetarian">Ovo-Vegetarian</label>
         </span>
       </div>
       <div class="w-100 d-flex">
         <span class="col">
-          <input type="checkbox" id="pescetarian" class="restrictionCheckbox" value="pescetarian" name="pescetarian">
+          <input type="checkbox" id="pescetarian" class="restriction-checkbox" value="pescetarian" name="pescetarian">
           <label for="pescetarian">Pescetarian</label>
         </span>
       </div>
     </div>
-    <div id="dietary-intolerances" class="d-flex flex-column mb-5">
+    <div id="dietary_intolerances" class="my-5">
       <p class="font-weight-bold text-center">Please select any food intolerances</p>
       <div class="w-100 d-flex">
         <span class="col">
@@ -148,24 +144,18 @@
         </span>
       </div>
     </div>
-    <div class="col-xs-12">
-      <button class="btn btn-primary col-3 offset-4" onclick="closeMenu()">Done</button>
+    <div id="close_button" class="col-xs-12">
+      <button class="btn btn-primary col-3 offset-4" onclick="closeDietMenu()">Done</button>
     </div>
   </div>
-  <div id="image-container" class="col-xs-12 d-flex justify-content-center my-3">
-    <img id="myImage" src="" alt="">
+  <div class="image-container col-xs-12 d-flex justify-content-center my-3">
+    <img id="my_image" src="" alt="">
   </div>
-  <div id="title-download-container" class="d-none">
-    <div id="title-progress"></div>
-    <p id="title-download-text" class="text-center">Recognizing image...</p>
+  <div id="title_container" class="col-xs-12 d-flex justify-content-center mb-3">
+    <p id="title_download_text" class="text-center d-none">Recognizing image...</p>
   </div>
-  <div id="title-container" class="col-xs-12 d-flex justify-content-center mb-3">
-  </div>
-  <div id="recipe-download-container">
-    <div id="recipe-progress" class="recipe-progress-hidden"></div>
-    <p id="recipe-download-text" class="text-center d-none">Gathering recipes...</p>
-  </div>
-  <div id="recipes-container" class="col-xs-12 d-flex flex-column align-items-center justify-content-center">
+  <div id="recipes_container" class="col-xs-12 d-flex flex-column align-items-center justify-content-center">
+      <p id="recipe_download_text" class="text-center d-none">Gathering recipes...</p>
   </div>
   <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
   <script src="main.js"></script>
