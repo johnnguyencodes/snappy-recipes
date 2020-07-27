@@ -115,7 +115,7 @@ function dietInfo() {
   dataForGetRecipe.intolerances = intoleranceValues.slice(0, -2);
 }
 
-// POST request to IMGUR with image id supplied
+// POST request to upload image to Imgur's API
 function postImage(formData) {
   $.ajax({
     method: 'POST',
@@ -200,24 +200,24 @@ function imageRecognition() {
   });
 }
 
-const dataForGetRecipe = {
+const dataForGetRecipes = {
   diet: null,
   intolerances: null
 };
 
-// GET request to Spoonacular's API with label from Google to get a list of up to 10 recipes containing the item from the image and other nutrition info.
+// GET request to Spoonacular's API with label from Google to receive a list of up to 10 related recipes
 function getRecipes(recognizedImageLabel) {
   recipeDownloadIndicator.className = 'text-center';
   var spoonacularURL = `https://api.spoonacular.com/recipes/complexSearch?query=${recognizedImageLabel}&apiKey=${spoonacularAPIKey}&addRecipeNutrition=true`;
   $.ajax({
     method: 'GET',
     url: spoonacularURL,
-    data: dataForGetRecipe,
+    data: dataForGetRecipes,
     headers: {
       'Content-Type': 'application/json'
     },
-    success: function (data) {
-      recipeOnPage(data);
+    success: function (recipes) {
+      recipeOnPage(recipes);
     },
     error: function (err) {
       console.log(err);
