@@ -1,5 +1,4 @@
 var dietMenu = document.getElementById("diet_menu");
-// const uploadButton = document.getElementById("upload_button");
 
 let dataForImageRecognition = {
   "requests": [
@@ -27,14 +26,11 @@ let spoonacularDataToSend = {
 class App {
   constructor(pageHeader, imageTitleContainer, recipesContainer) {
     this.pageHeader = pageHeader,
-    // this.dietForm = dietForm,
     this.imageTitleContainer = imageTitleContainer,
     this.recipesContainer = recipesContainer;
-    // uploadButton.addEventListener("click", function(event) {
-    //   imgValidation(event).bind(this)
-    // });
     this.openDietMenu = this.openDietMenu.bind(this);
     this.closeDietMenu = this.closeDietMenu.bind(this);
+    this.dietInfo = this.dietInfo.bind(this);
     this.postImage = this.postImage.bind(this);
     this.handlePostImageSuccess = this.handlePostImageSuccess.bind(this);
     this.handlePostImageError = this.handlePostImageError.bind(this);
@@ -48,9 +44,9 @@ class App {
 
   start() {
   this.pageHeader.handleAddImage();
-  this.pageHeader.search(query);
-  // this.pageHeader.uploadButton.imgValidation.dietInfo();
-  // this.pageHeader.uploadButton.imgValidation.postImage(formData);
+  this.pageHeader.onClick(this.dietInfo);
+  this.pageHeader.onClick(this.postImage);
+  this.pageHeader.onClick(this.getRecipes);
   }
 
   openDietMenu() {

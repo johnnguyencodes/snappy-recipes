@@ -7,16 +7,22 @@ const recipe = document.getElementById("recipe");
 const inputs = document.querySelectorAll(".input");
 const recipeDownloadText = document.getElementById("recipe_download_text");
 const uploadButton = document.getElementById("upload_button");
+const searchButton = document.getElementById("search_button");
+const recipeSearchInput = document.getElementById('recipe_search_input')
 
 class PageHeader {
   constructor(headerElement) {
     this.headerElement = headerElement;
+    this.search = this.search.bind(this);
+    // this.headerElement.addEventListener("click", this.imgValidation.bind(this));
     uploadButton.addEventListener("click", this.imgValidation.bind(this));
+    searchButton.addEventListener("click", this.search.bind(this));
     fileInputForm.addEventListener("change", this.handleAddImage.bind(this));
   }
-
-  onClick(formData) {
-
+  onClick(dietInfo, postImage, getRecipes) {
+    this.dietInfo = dietInfo;
+    this.postImage = postImage;
+    this.getRecipes = getRecipes;
   }
 
   imgValidation(event) {
@@ -49,7 +55,7 @@ class PageHeader {
       return;
     }
     formData.append("image", imageFile);
-    this.on();
+    this.dietInfo();
     this.postImage(formData);
     fileInput.value = "";
   }
@@ -62,8 +68,9 @@ class PageHeader {
     fileLabel.textContent = fileName;
   }
 
-  search(query) {
+  search(event) {
     event.preventDefault();
+    let query = (recipeSearchInput.value)
     if (query === "") {
       alert("Error: No search query entered. Please enter a search query.");
       return;
@@ -72,8 +79,8 @@ class PageHeader {
       inputs[i].disabled = true;
     }
     recipeDownloadText.className = "text-center";
-    dietInfo();
-    getRecipes(query);
+    this.dietInfo();
+    this.getRecipes(query);
   }
 
   resetFields() {

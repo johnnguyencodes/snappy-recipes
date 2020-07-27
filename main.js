@@ -1,4 +1,4 @@
-const headerElement = document.querySelector("header");
+const headerElement = document.querySelector("form");
 const newPageHeader = new PageHeader(headerElement);
 
 // const dietaryRestrictions = document.getElementById("dietary_restrictions");
