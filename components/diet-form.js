@@ -29,4 +29,8 @@ dietInfo() {
   spoonacularDataToSend.intolerances = intoleranceValues.slice(0, -2);
 }
 
+dietForm() {
+  //dynamically create diet restrictions form here
+}
+
 //*Form End

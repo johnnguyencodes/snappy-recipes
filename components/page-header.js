@@ -1,40 +1,55 @@
-document.getElementById('file_input_form').addEventListener('change', function (e) {
-  var fileName = document.getElementById("file_input_form").files[0].name;
-  if (fileName) {
-    document.getElementById("file_input_form").disabled = true;
-  }
-  document.getElementById("custom_file_label").textContent = fileName;
-})
+const fileInputForm = document.getElementById("file_input_form");
+const fileLabel = document.getElementById("custom_file_label");
+const title = document.getElementById("title");
+const searchInput = document.getElementById("recipe_search_input");
+const image = document.getElementById("my_image");
+const recipe = document.getElementById("recipe");
+const inputs = document.querySelectorAll(".input");
+const recipeDownloadText = document.getElementById("recipe_download_text");
 
-resetFields() {
-  event.preventDefault();
-  const inputs = document.querySelectorAll(".input");
-  for (var i = 0; i < inputs.length; i++) {
-    inputs[i].disabled = false;
+class PageHeader {
+  constructor(headerElement) {
+    this.headerElement = headerElement;
+    this.fileInputForm.addEventListener("change", this.handleAddImage.bind(this));
   }
-  document.getElementById("file_input_form").value = "";
-  document.getElementById("custom_file_label").textContent = "";
-  if (document.getElementById("title")) {
-    document.getElementById("title").remove();
-  }
-  document.getElementById("recipe_search_input").value = "";
-  document.getElementById("my_image").src = "";
-  while (document.getElementById("recipe")) {
-    document.getElementById("recipe").remove();
-  }
-}
 
-search(query) {
-  event.preventDefault();
-  if (query === "") {
-    alert("Error: No search query entered. Please enter a search query.");
-    return;
+  handleAddImage() {
+    let fileName = document.getElementById("file_input_form").files[0].name;
+    if (fileName) {
+      fileInputForm = true;
+    }
+    fileLabel.textContent = fileName;
   }
-  const inputs = document.querySelectorAll(".input");
-  for (var i = 0; i < inputs.length; i++) {
-    inputs[i].disabled = true;
+
+  search(query) {
+    event.preventDefault();
+    if (query === "") {
+      alert("Error: No search query entered. Please enter a search query.");
+      return;
+    }
+    for (var i = 0; i < inputs.length; i++) {
+      inputs[i].disabled = true;
+    }
+    recipeDownloadText.className = "text-center";
+    dietInfo();
+    getRecipes(query);
   }
-  document.getElementById("recipe_download_text").className = "text-center";
-  dietInfo();
-  getRecipes(query);
+
+  resetFields() {
+    event.preventDefault();
+    for (var i = 0; i < inputs.length; i++) {
+      inputs[i].disabled = false;
+    }
+    fileInputForm.value = "";
+    fileLabel.textContent = "";
+    if (title) {
+      title.remove();
+    }
+    searchInput.value = "";
+    image.src = "";
+    while (recipe) {
+      recipe.remove();
+    }
+  }
+
 }

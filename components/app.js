@@ -41,6 +41,8 @@ class App {
 
   start() {
   this.imgValidation(event);
+  this.pageHeader.handleAddImage();
+  this.pageHeader.search(query);
   }
 
   imgValidation(event) {
@@ -76,6 +78,26 @@ class App {
     dietInfo();
     postImage(formData);
     fileInput.value = "";
+  }
+
+
+  dietInfo() {
+    let restrictionValues = "";
+    let intoleranceValues = "";
+    var restrictionCheckboxes = document.getElementsByClassName("restrictionCheckbox");
+    for (var i = 0; i < restrictionCheckboxes.length; i++) {
+      if (restrictionCheckboxes[i].checked) {
+        restrictionValues += restrictionCheckboxes[i].value + ", ";
+      }
+    }
+    var intoleranceCheckboxes = document.getElementsByClassName("intoleranceCheckbox");
+    for (var j = 0; j < intoleranceCheckboxes.length; j++) {
+      if (intoleranceCheckboxes[j].checked) {
+        intoleranceValues += intoleranceCheckboxes[j].value + ", ";
+      }
+    }
+    spoonacularDataToSend.diet = restrictionValues.slice(0, -2)
+    spoonacularDataToSend.intolerances = intoleranceValues.slice(0, -2);
   }
 
   //*App Begin
@@ -135,8 +157,8 @@ class App {
       dataType: "JSON",
       contentType: "application/json",
       data: JSON.stringify(dataForImageRecognition),
-      success: this.handleImageRecognitionSuccess;
-      error: this.handleImageRecognitionError;
+      success: this.handleImageRecognitionSuccess,
+      error: this.handleImageRecognitionError
     });
   }
 
