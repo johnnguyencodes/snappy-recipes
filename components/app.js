@@ -49,6 +49,8 @@ class App {
   start() {
   this.pageHeader.handleAddImage();
   this.pageHeader.search(query);
+  // this.pageHeader.uploadButton.imgValidation.dietInfo();
+  // this.pageHeader.uploadButton.imgValidation.postImage(formData);
   }
 
   openDietMenu() {
@@ -60,41 +62,6 @@ class App {
     event.preventDefault();
     dietMenu.className = "diet-menu-hidden"
   }
-
-  // imgValidation(event) {
-  //   event.preventDefault();
-  //   const fileInput = document.getElementById("file_input_form");
-  //   if (fileInput.files[1]) {
-  //     fileInput.files.splice(1, 1);
-  //   }
-  //   const imageFile = fileInput.files[0];
-  //   if (!(imageFile)) {
-  //     alert("Error: No file selected, please select a file to upload.");
-  //     fileInput.value = "";
-  //     return;
-  //   }
-  //   const inputs = document.querySelectorAll(".input");
-  //   for (var i = 0; i < inputs.length; i++) {
-  //     inputs[i].disabled = true;
-  //   }
-  //   const fileType = imageFile.type;
-  //   const formData = new FormData();
-  //   const mimeTypes = ['image/jpg', 'image/png', 'image/gif'];
-  //   if (!(mimeTypes.indexOf(fileType))) {
-  //     alert("Error: Incorrect file type, please select a jpeg, png or gif file.");
-  //     fileInput.value = "";
-  //     return;
-  //   }
-  //   if (imageFile.size > 10 * 1024 * 1024) {
-  //     alert("Error: Image exceeds 10MB size limit");
-  //     fileInput.value = "";
-  //     return;
-  //   }
-  //   formData.append("image", imageFile);
-  //   dietInfo();
-  //   postImage(formData);
-  //   fileInput.value = "";
-  // }
 
 
   dietInfo() {

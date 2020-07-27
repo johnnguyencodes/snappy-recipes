@@ -15,6 +15,10 @@ class PageHeader {
     fileInputForm.addEventListener("change", this.handleAddImage.bind(this));
   }
 
+  onClick(formData) {
+
+  }
+
   imgValidation(event) {
     event.preventDefault();
     const fileInput = document.getElementById("file_input_form");
@@ -45,8 +49,8 @@ class PageHeader {
       return;
     }
     formData.append("image", imageFile);
-    dietInfo();
-    postImage(formData);
+    this.on();
+    this.postImage(formData);
     fileInput.value = "";
   }
 
