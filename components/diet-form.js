@@ -1,36 +1,12 @@
-//*Form Begin
+// class DietForm {
+//   constructor(dietForm) {
+//     // this.dietForm = dietForm;
+//   }
 
-openDietMenu() {
-  event.preventDefault();
-  document.getElementById("diet_menu").className = "diet-menu-visible d-flex flex-column justify-content-center";
-}
+//   // dietForm() {
+//   //   const restrictions = ["vegan", "vegetarian", "lacto-vegetarian", "ovo-vegetarian", "pescetarian"]
+//   //   const intolerances = ["dairy", "egg", "gluten", "peanut", "seafood", "sesame", "shellfish", "soy", "sulfite", "tree-nut", "wheat"]
 
-closeDietMenu() {
-  event.preventDefault();
-  document.getElementById("diet_menu").className = "diet-menu-hidden"
-}
+//   // }
 
-dietInfo() {
-  let restrictionValues = "";
-  let intoleranceValues = "";
-  var restrictionCheckboxes = document.getElementsByClassName("restrictionCheckbox");
-  for (var i = 0; i < restrictionCheckboxes.length; i++) {
-    if (restrictionCheckboxes[i].checked) {
-      restrictionValues += restrictionCheckboxes[i].value + ", ";
-    }
-  }
-  var intoleranceCheckboxes = document.getElementsByClassName("intoleranceCheckbox");
-  for (var j = 0; j < intoleranceCheckboxes.length; j++) {
-    if (intoleranceCheckboxes[j].checked) {
-      intoleranceValues += intoleranceCheckboxes[j].value + ", ";
-    }
-  }
-  spoonacularDataToSend.diet = restrictionValues.slice(0, -2)
-  spoonacularDataToSend.intolerances = intoleranceValues.slice(0, -2);
-}
-
-dietForm() {
-  //dynamically create diet restrictions form here
-}
-
-//*Form End
+// }

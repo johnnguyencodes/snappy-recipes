@@ -1,3 +1,6 @@
+var dietMenu = document.getElementById("diet_menu");
+// const uploadButton = document.getElementById("upload_button");
+
 let dataForImageRecognition = {
   "requests": [
     {
@@ -22,12 +25,16 @@ let spoonacularDataToSend = {
 }
 
 class App {
-  constructor(pageHeader, dietForm, imageTitleContainer, recipesContainer) {
+  constructor(pageHeader, imageTitleContainer, recipesContainer) {
     this.pageHeader = pageHeader,
-    this.dietForm = dietForm,
+    // this.dietForm = dietForm,
     this.imageTitleContainer = imageTitleContainer,
     this.recipesContainer = recipesContainer;
-    this.imgValidation = this.imgValidation.bind(this);
+    // uploadButton.addEventListener("click", function(event) {
+    //   imgValidation(event).bind(this)
+    // });
+    this.openDietMenu = this.openDietMenu.bind(this);
+    this.closeDietMenu = this.closeDietMenu.bind(this);
     this.postImage = this.postImage.bind(this);
     this.handlePostImageSuccess = this.handlePostImageSuccess.bind(this);
     this.handlePostImageError = this.handlePostImageError.bind(this);
@@ -40,45 +47,54 @@ class App {
   }
 
   start() {
-  this.imgValidation(event);
   this.pageHeader.handleAddImage();
   this.pageHeader.search(query);
   }
 
-  imgValidation(event) {
+  openDietMenu() {
     event.preventDefault();
-    const fileInput = document.getElementById("file_input_form");
-    if (fileInput.files[1]) {
-      fileInput.files.splice(1, 1);
-    }
-    const imageFile = fileInput.files[0];
-    if (!(imageFile)) {
-      alert("Error: No file selected, please select a file to upload.");
-      fileInput.value = "";
-      return;
-    }
-    const inputs = document.querySelectorAll(".input");
-    for (var i = 0; i < inputs.length; i++) {
-      inputs[i].disabled = true;
-    }
-    const fileType = imageFile.type;
-    const formData = new FormData();
-    const mimeTypes = ['image/jpg', 'image/png', 'image/gif'];
-    if (!(mimeTypes.indexOf(fileType))) {
-      alert("Error: Incorrect file type, please select a jpeg, png or gif file.");
-      fileInput.value = "";
-      return;
-    }
-    if (imageFile.size > 10 * 1024 * 1024) {
-      alert("Error: Image exceeds 10MB size limit");
-      fileInput.value = "";
-      return;
-    }
-    formData.append("image", imageFile);
-    dietInfo();
-    postImage(formData);
-    fileInput.value = "";
+    dietMenu.className = "diet-menu-visible d-flex flex-column justify-content-center";
   }
+
+  closeDietMenu() {
+    event.preventDefault();
+    dietMenu.className = "diet-menu-hidden"
+  }
+
+  // imgValidation(event) {
+  //   event.preventDefault();
+  //   const fileInput = document.getElementById("file_input_form");
+  //   if (fileInput.files[1]) {
+  //     fileInput.files.splice(1, 1);
+  //   }
+  //   const imageFile = fileInput.files[0];
+  //   if (!(imageFile)) {
+  //     alert("Error: No file selected, please select a file to upload.");
+  //     fileInput.value = "";
+  //     return;
+  //   }
+  //   const inputs = document.querySelectorAll(".input");
+  //   for (var i = 0; i < inputs.length; i++) {
+  //     inputs[i].disabled = true;
+  //   }
+  //   const fileType = imageFile.type;
+  //   const formData = new FormData();
+  //   const mimeTypes = ['image/jpg', 'image/png', 'image/gif'];
+  //   if (!(mimeTypes.indexOf(fileType))) {
+  //     alert("Error: Incorrect file type, please select a jpeg, png or gif file.");
+  //     fileInput.value = "";
+  //     return;
+  //   }
+  //   if (imageFile.size > 10 * 1024 * 1024) {
+  //     alert("Error: Image exceeds 10MB size limit");
+  //     fileInput.value = "";
+  //     return;
+  //   }
+  //   formData.append("image", imageFile);
+  //   dietInfo();
+  //   postImage(formData);
+  //   fileInput.value = "";
+  // }
 
 
   dietInfo() {
@@ -140,7 +156,7 @@ class App {
   handlePostImageSuccess(data) {
     const imageURL = data.data.link;
     dataForImageRecognition.requests[0].image.source.imageUri = imageURL;
-    imageOnPage(imageURL);
+    this.imageTitleContainer.imageOnPage(imageURL);
     imageRecognition();
   }
 
@@ -169,7 +185,7 @@ class App {
       return;
     }
     const imageTitle = response.responses[0].labelAnnotations[0].description;
-    imageTitleOnPage(imageTitle);
+    this.imageTitleContainer.imageTitleOnPage(imageTitle);
     document.getElementById("title_download_text").className = "text-center d-none";
     getRecipes(imageTitle);
   }
@@ -195,7 +211,7 @@ class App {
   }
 
   handleGetRecipesSuccess(recipes) {
-    recipeOnPage(recipes);
+    this.recipesContainer.recipeOnPage(recipes);
   }
 
   handleGetRecipesError(error) {

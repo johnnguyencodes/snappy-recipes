@@ -1,16 +1,15 @@
-var headerElement = document.querySelector("header");
-var newPageHeader = new PageHeader(headerElement);
+const headerElement = document.querySelector("header");
+const newPageHeader = new PageHeader(headerElement);
 
-var dietMenu = document.getElementById("diet_menu");
-var dietaryRestrictions = document.getElementById("dietary_restrictions");
-var dietaryIntolerances = document.getElementById("dietary_intolerances");
-var closeButton = document.getElementById("close_button");
-var newDietForm = new DietForm(dietMenu, dietaryRestrictions, dietaryIntolerances, closeButton);
+// const dietaryRestrictions = document.getElementById("dietary_restrictions");
+// const dietaryIntolerances = document.getElementById("dietary_intolerances");
+// const closeButton = document.getElementById("close_button");
+// const newDietForm = new DietForm(dietMenu, dietaryRestrictions, dietaryIntolerances, closeButton);
 
-var imageContainer = document.getElementById("image_container");
-var titleContainer = document.getElementById("title_container");
-var newImageTitleContainer = new ImageTitleContainer(imageContainer, titleContainer);
+const imageContainer = document.getElementById("image_container");
+const titleContainer = document.getElementById("title_container");
+const newImageTitleContainer = new ImageTitleContainer(imageContainer, titleContainer);
 
-var recipesContainer = document.getElementById("recipes_container");
-var newRecipesContainer = new RecipesContainer(recipesContainer);
-var newApp = new App(newHeader, newForm, newImageTitleContainer, newRecipesContainer);
+const recipesContainer = document.getElementById("recipes_container");
+const newRecipesContainer = new RecipesContainer(recipesContainer);
+const newApp = new App(newPageHeader, newImageTitleContainer, newRecipesContainer);
