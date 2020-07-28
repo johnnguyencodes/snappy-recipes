@@ -13,7 +13,7 @@ const imageRecognitionIndicator = document.getElementById("title_download_text")
 
 // input forms
 fileInputForm.addEventListener('change', function (e) {
-  var fileName = document.getElementById("file_input_form").files[0].name;
+  const fileName = document.getElementById("file_input_form").files[0].name;
   if (fileName) {
     fileInputForm.disabled = true;
   }
@@ -41,7 +41,7 @@ function imgValidation(event) {
     fileInputForm.value = '';
     return;
   }
-  for (var i = 0; i < inputs.length; i++) {
+  for (let i = 0; i < inputs.length; i++) {
     inputs[i].disabled = true;
   }
   const fileType = imageFile.type;
@@ -67,7 +67,7 @@ function resetFields() {
   const imageTitle = document.getElementById("title");
   const recipe = document.getElementById("recipe");
   event.preventDefault();
-  for (var i = 0; i < inputs.length; i++) {
+  for (let i = 0; i < inputs.length; i++) {
     inputs[i].disabled = false;
   }
   fileInputForm.value = '';
@@ -88,7 +88,7 @@ function search(query) {
     alert('Error: No search query entered. Please enter a search query.');
     return;
   }
-  for (var i = 0; i < inputs.length; i++) {
+  for (let i = 0; i < inputs.length; i++) {
     inputs[i].disabled = true;
   }
   recipeDownloadIndicator.className = 'text-center';
@@ -100,19 +100,19 @@ function dietInfo() {
   let restrictionValues = '';
   let intoleranceValues = '';
   let restrictionCheckboxes = document.getElementsByClassName('restrictionCheckbox');
-  for (var i = 0; i < restrictionCheckboxes.length; i++) {
+  for (let i = 0; i < restrictionCheckboxes.length; i++) {
     if (restrictionCheckboxes[i].checked) {
       restrictionValues += restrictionCheckboxes[i].value + ', ';
     }
   }
   let intoleranceCheckboxes = document.getElementsByClassName('intoleranceCheckbox');
-  for (var j = 0; j < intoleranceCheckboxes.length; j++) {
+  for (let j = 0; j < intoleranceCheckboxes.length; j++) {
     if (intoleranceCheckboxes[j].checked) {
       intoleranceValues += intoleranceCheckboxes[j].value + ', ';
     }
   }
-  dataForGetRecipe.diet = restrictionValues.slice(0, -2);
-  dataForGetRecipe.intolerances = intoleranceValues.slice(0, -2);
+  dataForGetRecipes.diet = restrictionValues.slice(0, -2);
+  dataForGetRecipes.intolerances = intoleranceValues.slice(0, -2);
 }
 
 // POST request to upload image to Imgur's API
@@ -208,7 +208,7 @@ const dataForGetRecipes = {
 // GET request to Spoonacular's API with label from Google to receive a list of up to 10 related recipes
 function getRecipes(recognizedImageLabel) {
   recipeDownloadIndicator.className = 'text-center';
-  var spoonacularURL = `https://api.spoonacular.com/recipes/complexSearch?query=${recognizedImageLabel}&apiKey=${spoonacularAPIKey}&addRecipeNutrition=true`;
+  let spoonacularURL = `https://api.spoonacular.com/recipes/complexSearch?query=${recognizedImageLabel}&apiKey=${spoonacularAPIKey}&addRecipeNutrition=true`;
   $.ajax({
     method: 'GET',
     url: spoonacularURL,
@@ -347,7 +347,7 @@ function recipeOnPage(recipes) {
     const cardText3 = document.createElement('div');
     cardText3.className = 'card=text d-flex flex-wrap';
     if (recipes.results[i].diets) {
-      for (var j = 0; j < recipes.results[i].diets.length; j++) {
+      for (let j = 0; j < recipes.results[i].diets.length; j++) {
         const dietSpan = document.createElement('span');
         dietSpan.className = 'badge badge-light mb-1 mr-1';
         dietSpan.textContent = recipes.results[i].diets[j];
