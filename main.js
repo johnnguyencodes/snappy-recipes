@@ -152,7 +152,7 @@ function postImage(formData) {
       imageRecognition();
     },
     error: function (err) {
-      console.log(err);
+      console.error(err);
     }
   });
 }
@@ -195,7 +195,7 @@ function imageRecognition() {
       getRecipes(recognizedImageLabel);
     },
     error: function (err) {
-      console.log(err);
+      console.error(err);
     }
   });
 }
@@ -220,7 +220,7 @@ function getRecipes(recognizedImageLabel) {
       recipeOnPage(recipes);
     },
     error: function (err) {
-      console.log(err);
+      console.error(err);
     }
   });
 }
