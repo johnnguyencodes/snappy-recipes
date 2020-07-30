@@ -1,3 +1,6 @@
+// let imgurAPIKey = config.imgurAPIKey;
+// let googleAPIKey = config.googleAPIKey;
+let spoonacularAPIKey = config.spoonacularAPIKey;
 var dietMenu = document.getElementById("diet_menu");
 
 let dataForImageRecognition = {
@@ -60,6 +63,7 @@ class App {
 
 
   dietInfo() {
+    console.log("hello");
     let restrictionValues = "";
     let intoleranceValues = "";
     var restrictionCheckboxes = document.getElementsByClassName("restrictionCheckbox");
