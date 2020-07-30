@@ -1,7 +1,19 @@
-let imgurAPIKey = config.imgurAPIKey;
-let googleAPIKey = config.googleAPIKey;
-let spoonacularAPIKey = config.spoonacularAPIKey;
-var dietMenu = document.getElementById("diet_menu");
+const imgurAPIKey = config.imgurAPIKey;
+const googleAPIKey = config.googleAPIKey;
+const spoonacularAPIKey = config.spoonacularAPIKey;
+const dietMenu = document.getElementById("diet_menu");
+let fileInputForm = document.getElementById("file_input_form");
+const fileLabel = document.getElementById("custom_file_label");
+const title = document.getElementById("title");
+const searchInput = document.getElementById("recipe_search_input");
+const image = document.getElementById("my_image");
+const recipe = document.getElementById("recipe");
+const inputs = document.querySelectorAll(".input");
+const recipeDownloadText = document.getElementById("recipe_download_text");
+const uploadButton = document.getElementById("upload_button");
+const searchButton = document.getElementById("search_button");
+const recipeSearchInput = document.getElementById('recipe_search_input')
+const resetButton = document.getElementById("reset_button");
 
 let dataForImageRecognition = {
   "requests": [
