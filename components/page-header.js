@@ -83,16 +83,34 @@ class PageHeader {
     for (var i = 0; i < inputs.length; i++) {
       inputs[i].disabled = false;
     }
-    // fileInputForm.value = "";
     fileLabel.textContent = "";
-    if (title) {
-      title.remove();
+    if (document.getElementById("title")) {
+      document.getElementById("title").remove();
     }
     searchInput.value = "";
     image.src = "";
-    while (recipe) {
-      recipe.remove();
+    while (document.getElementById("recipe")) {
+      document.getElementById("recipe").remove();
     }
   }
+
+//   function resetFields() {
+//   const imageTitle = document.getElementById("title");
+//   const recipe = document.getElementById("recipe");
+//   event.preventDefault();
+//   for (let i = 0; i < inputs.length; i++) {
+//     inputs[i].disabled = false;
+//   }
+//   fileInputForm.value = '';
+//   customFileLabel.textContent = '';
+//   if (imageTitle) {
+//     imageTitle.remove();
+//   }
+//   recipeSearchInput.value = '';
+//   myImage.src = '';
+//   while (document.getElementById("recipe")) {
+//     document.getElementById("recipe").remove();
+//   }
+// }
 
 }
