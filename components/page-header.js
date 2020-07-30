@@ -21,9 +21,15 @@ class PageHeader {
     resetButton.addEventListener("click", this.resetFields.bind(this));
   }
 
-  onClick(dietInfo, postImage, getRecipes) {
+  clickDietInfo(dietInfo) {
     this.dietInfo = dietInfo;
+  }
+
+  clickPostImage(postImage) {
     this.postImage = postImage;
+  }
+
+  clickGetRecipes(getRecipes) {
     this.getRecipes = getRecipes;
   }
 
