@@ -43,7 +43,6 @@ class App {
   }
 
   start() {
-  this.pageHeader.handleAddImage();
   this.pageHeader.onClick(this.dietInfo);
   this.pageHeader.onClick(this.postImage);
   this.pageHeader.onClick(this.getRecipes);

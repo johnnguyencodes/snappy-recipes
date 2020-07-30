@@ -9,16 +9,18 @@ const recipeDownloadText = document.getElementById("recipe_download_text");
 const uploadButton = document.getElementById("upload_button");
 const searchButton = document.getElementById("search_button");
 const recipeSearchInput = document.getElementById('recipe_search_input')
+const resetButton = document.getElementById("reset_button");
 
 class PageHeader {
   constructor(headerElement) {
     this.headerElement = headerElement;
     this.search = this.search.bind(this);
-    // this.headerElement.addEventListener("click", this.imgValidation.bind(this));
     uploadButton.addEventListener("click", this.imgValidation.bind(this));
     searchButton.addEventListener("click", this.search.bind(this));
     fileInputForm.addEventListener("change", this.handleAddImage.bind(this));
+    resetButton.addEventListener("click", this.resetFields.bind(this));
   }
+
   onClick(dietInfo, postImage, getRecipes) {
     this.dietInfo = dietInfo;
     this.postImage = postImage;
