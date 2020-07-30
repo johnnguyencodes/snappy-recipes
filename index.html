@@ -31,13 +31,13 @@
           <label id="custom_file_label" class="custom-file-label text-center input" for="file_input_form"></label>
         </div>
         <div class="input-group-prepend">
-          <button class="btn btn-primary rounded-right input" onclick="imgValidation(event)">Upload</button>
+          <button id="upload_button" class="btn btn-primary rounded-right input">Upload</button>
         </div>
       </div>
     </div>
       <div class="input-group col-xs-12">
         <input type="text" id="recipe_search_input" class="form-control ml-2 input rounded-left" placeholder="Search for recipes">
-        <button class="btn btn-primary rounded-right mr-2 input" type="button" onclick="search(document.getElementById('recipe_search_input').value)">
+        <button id="search_button" class="btn btn-primary rounded-right mr-2 input" type="button">
           <i class="fa fa-search"></i>
         </button>
       </div>
@@ -158,6 +158,12 @@
       <p id="recipe_download_text" class="text-center d-none">Gathering recipes...</p>
   </div>
   <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+  <script src="config.js"></script>
+  <script src="components/app.js"></script>
+  <script src="components/diet-form.js"></script>
+  <script src="components/page-header.js"></script>
+  <script src="components/image-title-container.js"></script>
+  <script src="components/recipes-container.js"></script>
   <script src="main.js"></script>
 </body>
 
