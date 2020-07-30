@@ -91,7 +91,7 @@ class App {
       contentType: false,
       cache: false,
       headers: {
-        "Authorization": "Client-ID 62cbd49ff79d018"
+        "Authorization": `${imgurAPIKey}`
       },
       xhr: function () {
         var xhr = new window.XMLHttpRequest();
@@ -131,7 +131,7 @@ class App {
   imageRecognition() {
     document.getElementById("title_download_text").className = "text-center";
     $.ajax({
-      url: "https://vision.googleapis.com/v1/images:annotate?fields=responses&key=AIzaSyAJzv7ThEspgv8_BxX2EwCs8PUEJMtJN6c",
+      url: `https://vision.googleapis.com/v1/images:annotate?fields=responses&key=${googleAPIKey}`,
       type: "POST",
       dataType: "JSON",
       contentType: "application/json",
@@ -160,7 +160,7 @@ class App {
   //GET request to Spoonacular's API with label from Google to get a list of up to 10 recipes containing the item from the image and other nutrition info.
   getRecipes(imageTitle) {
     document.getElementById("recipe_download_text").className = "text-center";
-    var spoonacularURL = "https://api.spoonacular.com/recipes/complexSearch?query=" + imageTitle + "&apiKey=5d83fe3f2cf14616a6ea74137c2be564&addRecipeNutrition=true"
+    var spoonacularURL = `https://api.spoonacular.com/recipes/complexSearch?query=${imageTitle}&apiKey=${spoonacularAPIKey}&addRecipeNutrition=true`
     $.ajax({
       method: "GET",
       url: spoonacularURL,
