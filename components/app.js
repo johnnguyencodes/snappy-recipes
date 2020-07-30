@@ -1,5 +1,5 @@
-// let imgurAPIKey = config.imgurAPIKey;
-// let googleAPIKey = config.googleAPIKey;
+let imgurAPIKey = config.imgurAPIKey;
+let googleAPIKey = config.googleAPIKey;
 let spoonacularAPIKey = config.spoonacularAPIKey;
 var dietMenu = document.getElementById("diet_menu");
 
@@ -46,9 +46,9 @@ class App {
   }
 
   start() {
-  this.pageHeader.onClick(this.dietInfo);
-  this.pageHeader.onClick(this.postImage);
-  this.pageHeader.onClick(this.getRecipes);
+  this.pageHeader.clickDietInfo(this.dietInfo);
+  this.pageHeader.clickPostImage(this.postImage);
+  this.pageHeader.clickGetRecipes(this.getRecipes);
   }
 
   openDietMenu() {
@@ -123,7 +123,7 @@ class App {
     const imageURL = data.data.link;
     dataForImageRecognition.requests[0].image.source.imageUri = imageURL;
     this.imageTitleContainer.imageOnPage(imageURL);
-    imageRecognition();
+    this.imageRecognition();
   }
 
   handlePostImageError(error) {
@@ -153,7 +153,7 @@ class App {
     const imageTitle = response.responses[0].labelAnnotations[0].description;
     this.imageTitleContainer.imageTitleOnPage(imageTitle);
     document.getElementById("title_download_text").className = "text-center d-none";
-    getRecipes(imageTitle);
+    this.getRecipes(imageTitle);
   }
 
   handleImageRecognitionError(error) {
