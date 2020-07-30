@@ -1,4 +1,17 @@
-var dietMenu = document.getElementById("diet_menu");
+const imgurAPIKey = config.imgurAPIKey;
+const googleAPIKey = config.googleAPIKey;
+const spoonacularAPIKey = config.spoonacularAPIKey;
+const dietMenu = document.getElementById("diet_menu");
+let fileInputForm = document.getElementById("file_input_form");
+const fileLabel = document.getElementById("custom_file_label");
+const searchInput = document.getElementById("recipe_search_input");
+const image = document.getElementById("my_image");
+const inputs = document.querySelectorAll(".input");
+const recipeDownloadText = document.getElementById("recipe_download_text");
+const uploadButton = document.getElementById("upload_button");
+const searchButton = document.getElementById("search_button");
+const recipeSearchInput = document.getElementById('recipe_search_input')
+const resetButton = document.getElementById("reset_button");
 
 let dataForImageRecognition = {
   "requests": [
@@ -43,10 +56,9 @@ class App {
   }
 
   start() {
-  this.pageHeader.handleAddImage();
-  this.pageHeader.onClick(this.dietInfo);
-  this.pageHeader.onClick(this.postImage);
-  this.pageHeader.onClick(this.getRecipes);
+  this.pageHeader.clickDietInfo(this.dietInfo);
+  this.pageHeader.clickPostImage(this.postImage);
+  this.pageHeader.clickGetRecipes(this.getRecipes);
   }
 
   openDietMenu() {
@@ -120,7 +132,7 @@ class App {
     const imageURL = data.data.link;
     dataForImageRecognition.requests[0].image.source.imageUri = imageURL;
     this.imageTitleContainer.imageOnPage(imageURL);
-    imageRecognition();
+    this.imageRecognition();
   }
 
   handlePostImageError(error) {
@@ -150,7 +162,7 @@ class App {
     const imageTitle = response.responses[0].labelAnnotations[0].description;
     this.imageTitleContainer.imageTitleOnPage(imageTitle);
     document.getElementById("title_download_text").className = "text-center d-none";
-    getRecipes(imageTitle);
+    this.getRecipes(imageTitle);
   }
 
   handleImageRecognitionError(error) {

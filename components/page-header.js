@@ -1,27 +1,22 @@
-let fileInputForm = document.getElementById("file_input_form");
-const fileLabel = document.getElementById("custom_file_label");
-const title = document.getElementById("title");
-const searchInput = document.getElementById("recipe_search_input");
-const image = document.getElementById("my_image");
-const recipe = document.getElementById("recipe");
-const inputs = document.querySelectorAll(".input");
-const recipeDownloadText = document.getElementById("recipe_download_text");
-const uploadButton = document.getElementById("upload_button");
-const searchButton = document.getElementById("search_button");
-const recipeSearchInput = document.getElementById('recipe_search_input')
-
 class PageHeader {
   constructor(headerElement) {
     this.headerElement = headerElement;
     this.search = this.search.bind(this);
-    // this.headerElement.addEventListener("click", this.imgValidation.bind(this));
     uploadButton.addEventListener("click", this.imgValidation.bind(this));
     searchButton.addEventListener("click", this.search.bind(this));
     fileInputForm.addEventListener("change", this.handleAddImage.bind(this));
+    resetButton.addEventListener("click", this.resetFields.bind(this));
   }
-  onClick(dietInfo, postImage, getRecipes) {
+
+  clickDietInfo(dietInfo) {
     this.dietInfo = dietInfo;
+  }
+
+  clickPostImage(postImage) {
     this.postImage = postImage;
+  }
+
+  clickGetRecipes(getRecipes) {
     this.getRecipes = getRecipes;
   }
 
@@ -88,16 +83,34 @@ class PageHeader {
     for (var i = 0; i < inputs.length; i++) {
       inputs[i].disabled = false;
     }
-    fileInputForm.value = "";
     fileLabel.textContent = "";
-    if (title) {
-      title.remove();
+    if (document.getElementById("title")) {
+      document.getElementById("title").remove();
     }
     searchInput.value = "";
     image.src = "";
-    while (recipe) {
-      recipe.remove();
+    while (document.getElementById("recipe")) {
+      document.getElementById("recipe").remove();
     }
   }
+
+//   function resetFields() {
+//   const imageTitle = document.getElementById("title");
+//   const recipe = document.getElementById("recipe");
+//   event.preventDefault();
+//   for (let i = 0; i < inputs.length; i++) {
+//     inputs[i].disabled = false;
+//   }
+//   fileInputForm.value = '';
+//   customFileLabel.textContent = '';
+//   if (imageTitle) {
+//     imageTitle.remove();
+//   }
+//   recipeSearchInput.value = '';
+//   myImage.src = '';
+//   while (document.getElementById("recipe")) {
+//     document.getElementById("recipe").remove();
+//   }
+// }
 
 }

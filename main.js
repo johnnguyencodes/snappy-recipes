@@ -13,3 +13,4 @@ const newImageTitleContainer = new ImageTitleContainer(imageContainer, titleCont
 const recipesContainer = document.getElementById("recipes_container");
 const newRecipesContainer = new RecipesContainer(recipesContainer);
 const newApp = new App(newPageHeader, newImageTitleContainer, newRecipesContainer);
+newApp.start();
