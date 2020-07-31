@@ -93,23 +93,4 @@ class PageHeader {
     }
   }
 
-//   function resetFields() {
-//   const imageTitle = document.getElementById("title");
-//   const recipe = document.getElementById("recipe");
-//   event.preventDefault();
-//   for (let i = 0; i < inputs.length; i++) {
-//     inputs[i].disabled = false;
-//   }
-//   fileInputForm.value = '';
-//   customFileLabel.textContent = '';
-//   if (imageTitle) {
-//     imageTitle.remove();
-//   }
-//   recipeSearchInput.value = '';
-//   myImage.src = '';
-//   while (document.getElementById("recipe")) {
-//     document.getElementById("recipe").remove();
-//   }
-// }
-
 }
