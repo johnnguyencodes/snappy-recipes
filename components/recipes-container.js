@@ -2,6 +2,7 @@ class RecipesContainer {
   constructor(recipesContainer) {
     this.recipesContainer = recipesContainer;
   }
+
   recipeOnPage(recipes) {
     const recipeContainer = document.getElementById("recipes_container");
     for (let i = 0; i < recipes.results.length; i++) {
@@ -88,5 +89,4 @@ class RecipesContainer {
     }
     document.getElementById("recipe_download_text").className = "text-center d-none";
   }
-
 }

@@ -19,6 +19,10 @@ class PageHeader {
     this.getRecipes = getRecipes;
   }
 
+  clickGetFavoritedRecipes(getFavoritedRecipes) {
+    this.getFavoritedRecipes = getFavoritedRecipes;
+  }
+
   imgValidation(event) {
     event.preventDefault();
     const fileInput = document.getElementById("file_input_form");
@@ -74,7 +78,8 @@ class PageHeader {
     }
     recipeDownloadText.className = "text-center";
     this.dietInfo();
-    this.getRecipes(query);
+    // this.getRecipes(query);
+    this.getFavoritedRecipes();
   }
 
   resetFields() {
