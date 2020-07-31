@@ -1,7 +1,6 @@
 class PageHeader {
   constructor(headerElement) {
     this.headerElement = headerElement;
-    this.search = this.search.bind(this);
     uploadButton.addEventListener("click", this.imgValidation.bind(this));
     searchButton.addEventListener("click", this.search.bind(this));
     fileInputForm.addEventListener("change", this.handleAddImage.bind(this));
