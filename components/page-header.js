@@ -1,7 +1,6 @@
 class PageHeader {
   constructor(headerElement) {
     this.headerElement = headerElement;
-    this.search = this.search.bind(this);
     uploadButton.addEventListener("click", this.imgValidation.bind(this));
     searchButton.addEventListener("click", this.search.bind(this));
     fileInputForm.addEventListener("change", this.handleAddImage.bind(this));
@@ -93,24 +92,5 @@ class PageHeader {
       document.getElementById("recipe").remove();
     }
   }
-
-//   function resetFields() {
-//   const imageTitle = document.getElementById("title");
-//   const recipe = document.getElementById("recipe");
-//   event.preventDefault();
-//   for (let i = 0; i < inputs.length; i++) {
-//     inputs[i].disabled = false;
-//   }
-//   fileInputForm.value = '';
-//   customFileLabel.textContent = '';
-//   if (imageTitle) {
-//     imageTitle.remove();
-//   }
-//   recipeSearchInput.value = '';
-//   myImage.src = '';
-//   while (document.getElementById("recipe")) {
-//     document.getElementById("recipe").remove();
-//   }
-// }
 
 }
