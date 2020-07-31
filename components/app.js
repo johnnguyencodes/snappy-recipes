@@ -12,6 +12,8 @@ const uploadButton = document.getElementById("upload_button");
 const searchButton = document.getElementById("search_button");
 const recipeSearchInput = document.getElementById('recipe_search_input')
 const resetButton = document.getElementById("reset_button");
+const openDietMenuButton = document.getElementById("open_diet_menu_button");
+const closeDietMenuButton = document.getElementById("close_diet_menu_button");
 
 let dataForImageRecognition = {
   "requests": [
@@ -37,12 +39,11 @@ let spoonacularDataToSend = {
 }
 
 class App {
-  constructor(pageHeader, imageTitleContainer, recipesContainer) {
+  constructor(pageHeader, imageTitleContainer, recipesContainer, dietForm) {
     this.pageHeader = pageHeader,
     this.imageTitleContainer = imageTitleContainer,
     this.recipesContainer = recipesContainer;
-    this.openDietMenu = this.openDietMenu.bind(this);
-    this.closeDietMenu = this.closeDietMenu.bind(this);
+    this.dietForm = dietForm
     this.dietInfo = this.dietInfo.bind(this);
     this.postImage = this.postImage.bind(this);
     this.handlePostImageSuccess = this.handlePostImageSuccess.bind(this);
@@ -60,17 +61,6 @@ class App {
   this.pageHeader.clickPostImage(this.postImage);
   this.pageHeader.clickGetRecipes(this.getRecipes);
   }
-
-  openDietMenu() {
-    event.preventDefault();
-    dietMenu.className = "diet-menu-visible d-flex flex-column justify-content-center";
-  }
-
-  closeDietMenu() {
-    event.preventDefault();
-    dietMenu.className = "diet-menu-hidden"
-  }
-
 
   dietInfo() {
     let restrictionValues = "";
@@ -90,8 +80,6 @@ class App {
     spoonacularDataToSend.diet = restrictionValues.slice(0, -2)
     spoonacularDataToSend.intolerances = intoleranceValues.slice(0, -2);
   }
-
-  //*App Begin
 
   //POST request to IMGUR with image id supplied
   postImage(formData) {
