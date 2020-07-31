@@ -1,12 +1,18 @@
-// class DietForm {
-//   constructor(dietForm) {
-//     // this.dietForm = dietForm;
-//   }
+class DietForm {
+  constructor(dietForm) {
+    this.dietForm = dietForm;
+    openDietMenuButton.addEventListener("click", this.openDietMenu.bind(this));
+    closeDietMenuButton.addEventListener("click", this.closeDietMenu.bind(this));
+  }
 
-//   // dietForm() {
-//   //   const restrictions = ["vegan", "vegetarian", "lacto-vegetarian", "ovo-vegetarian", "pescetarian"]
-//   //   const intolerances = ["dairy", "egg", "gluten", "peanut", "seafood", "sesame", "shellfish", "soy", "sulfite", "tree-nut", "wheat"]
 
-//   // }
+  openDietMenu() {
+    event.preventDefault();
+    dietMenu.className = "diet-menu-visible d-flex flex-column justify-content-center";
+  }
 
-// }
+  closeDietMenu() {
+    event.preventDefault();
+    dietMenu.className = "diet-menu-hidden"
+  }
+}
