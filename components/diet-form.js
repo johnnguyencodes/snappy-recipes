@@ -12,6 +12,6 @@ class DietForm {
 
   closeDietMenu() {
     event.preventDefault();
-    dietMenu.className = "diet-menu-hidden"
+    dietMenu.className = "diet-menu-hidden d-flex flex-column justify-content-center"
   }
 }

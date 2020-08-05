@@ -41,12 +41,12 @@ let spoonacularDataToSend = {
 }
 
 class App {
-  constructor(pageHeader, imageTitleContainer, recipesContainer, favoritedRecipesContainer, dietForm) {
+  constructor(pageHeader, imageTitleContainer, recipesContainer, favoritedRecipesElement, dietForm) {
     this.pageHeader = pageHeader;
     this.imageTitleContainer = imageTitleContainer;
     this.recipesContainer = recipesContainer;
-    this.favoritedRecipesContainer = favoritedRecipesContainer;
-    this.dietForm = dietForm
+    this.favoritedRecipesElement = favoritedRecipesElement;
+    this.dietForm = dietForm;
     this.dietInfo = this.dietInfo.bind(this);
     this.postImage = this.postImage.bind(this);
     this.handlePostImageSuccess = this.handlePostImageSuccess.bind(this);
@@ -187,7 +187,7 @@ class App {
   }
 
   getFavoritedRecipes() {
-    document.getElementById("recipe_download_text").className = "text-center";
+    // document.getElementById("recipe_download_text").className = "text-center";
     var spoonacularURL = `https://api.spoonacular.com/recipes/informationBulk?ids=715538,716429&apiKey=${spoonacularAPIKey}&includeNutrition=true`
     $.ajax({
       method: "GET",
@@ -202,7 +202,7 @@ class App {
   }
 
   handleGetFavoritedRecipesSuccess(recipes) {
-    this.recipesContainer.favoritedRecipesOnPage(recipes)
+    this.favoritedRecipesElement.favoritedRecipesOnPage(recipes);
   }
 
   handleGetFavoritedRecipesError(error) {

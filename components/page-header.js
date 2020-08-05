@@ -5,6 +5,18 @@ class PageHeader {
     searchButton.addEventListener("click", this.search.bind(this));
     fileInputForm.addEventListener("change", this.handleAddImage.bind(this));
     resetButton.addEventListener("click", this.resetFields.bind(this));
+    openFavoriteButton.addEventListener("click", this.openFavorites.bind(this));
+    closeFavoriteButton.addEventListener("click", this.closeFavorites.bind(this));
+  }
+
+  openFavorites() {
+    event.preventDefault();
+    document.getElementById("favorited_recipes_element").className = "favorited-recipes-visible d-flex flex-column justify-content-center";
+  }
+
+  closeFavorites() {
+    event.preventDefault();
+    document.getElementById("favorited_recipes_element").className = "favorited-recipes-hidden d-flex flex-column justify-content-center";
   }
 
   clickDietInfo(dietInfo) {
