@@ -41,11 +41,10 @@ let spoonacularDataToSend = {
 }
 
 class App {
-  constructor(pageHeader, imageTitleContainer, recipesContainer, favoritedRecipesElement, dietForm) {
+  constructor(pageHeader, imageTitleContainer, recipesHandler, dietForm) {
     this.pageHeader = pageHeader;
     this.imageTitleContainer = imageTitleContainer;
-    this.recipesContainer = recipesContainer;
-    this.favoritedRecipesElement = favoritedRecipesElement;
+    this.recipesHandler = recipesHandler;
     this.dietForm = dietForm;
     this.dietInfo = this.dietInfo.bind(this);
     this.postImage = this.postImage.bind(this);
@@ -64,7 +63,7 @@ class App {
   this.pageHeader.clickDietInfo(this.dietInfo);
   this.pageHeader.clickPostImage(this.postImage);
   this.pageHeader.clickGetRecipes(this.getRecipes);
-  // this.getFavoritedRecipes();
+  this.getFavoritedRecipes();
   }
 
   dietInfo() {
@@ -165,7 +164,7 @@ class App {
   //GET request to Spoonacular's API with label from Google to get a list of up to 10 recipes containing the item from the image and other nutrition info.
   getRecipes(imageTitle) {
     document.getElementById("recipe_download_text").className = "text-center";
-    var spoonacularURL = `https://api.spoonacular.com/recipes/complexSearch?query=${imageTitle}&apiKey=${spoonacularAPIKey}&addRecipeNutrition=true`
+    let spoonacularURL = `https://api.spoonacular.com/recipes/complexSearch?query=${imageTitle}&apiKey=${spoonacularAPIKey}&addRecipeNutrition=true`
     $.ajax({
       method: "GET",
       url: spoonacularURL,
@@ -179,7 +178,7 @@ class App {
   }
 
   handleGetRecipesSuccess(recipes) {
-    this.recipesContainer.recipeOnPage(recipes);
+    this.recipesHandler.displaySearchedRecipes(recipes);
   }
 
   handleGetRecipesError(error) {
@@ -195,12 +194,12 @@ class App {
         "Content-Type": "application/json"
       },
       success: this.handleGetFavoritedRecipesSuccess,
-      error: this.handleGetFavoritedRecipesSuccess
+      error: this.handleGetFavoritedRecipesError
     })
   }
 
   handleGetFavoritedRecipesSuccess(recipes) {
-    this.recipesContainer.favoritedRecipesOnPage(recipes);
+    this.recipesHandler.displayFavoritedRecipes(recipes);
   }
 
   handleGetFavoritedRecipesError(error) {

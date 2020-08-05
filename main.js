@@ -9,7 +9,7 @@ const newImageTitleContainer = new ImageTitleContainer(titleContainer);
 
 const recipesContainer = document.getElementById("recipes_container");
 const favoritedRecipesContainer = document.getElementById("favorited_recipes_container");
-const newRecipesContainer = new RecipesContainer(recipesContainer, favoritedRecipesContainer);
+const newRecipesHandler = new RecipesHandler(recipesContainer, favoritedRecipesContainer);
 
-const newApp = new App(newPageHeader, newImageTitleContainer, newRecipesContainer, newDietForm);
+const newApp = new App(newPageHeader, newImageTitleContainer, newRecipesHandler, newDietForm);
 newApp.start();
