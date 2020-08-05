@@ -1,23 +1,10 @@
-class FavoritedRecipesContainer {
-  constructor(favoritedRecipesContainer) {
-    this.favoritedRecipesContainer = favoritedRecipesContainer;
-    openFavoriteButton.addEventListener("click", this.openFavorites.bind(this));
-    closeFavoriteButton.addEventListener("click", this.closeFavorites.bind(this));
-
-  }
-
-  openFavorites() {
-    event.preventDefault();
-    favoritedRecipesContainer.className = "favorited-recipes-visible d-flex flex-column justify-content-center";
-  }
-
-  closeFavorites() {
-    event.preventDefault();
-    favoritedRecipesContainer.className = "favorited-recipes-hidden"
+class FavoritedRecipesElement {
+  constructor(favoritedRecipesElement) {
+    this.favoritedRecipesElement = favoritedRecipesElement;
   }
 
   favoritedRecipesOnPage(recipes) {
-    const recipeContainer = document.getElementById("recipes_container");
+    const favoritedRecipesContainer = document.getElementById("favorited_recipes_container");
     for (let i = 0; i < recipes.length; i++) {
       const imageURL = recipes[i].image;
       const title = recipes[i].title;
@@ -98,8 +85,8 @@ class FavoritedRecipesContainer {
       anchorTag.append(img);
       recipeCard.append(anchorTag);
       recipeCard.append(cardBody);
-      recipeContainer.append(recipeCard);
+      favoritedRecipesContainer.append(recipeCard);
     }
-    document.getElementById("recipe_download_text").className = "text-center d-none";
+    // document.getElementById("recipe_download_text").className = "text-center d-none";
   }
 }

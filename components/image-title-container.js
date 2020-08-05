@@ -2,7 +2,6 @@ class ImageTitleContainer {
   constructor(imageContainer, titleContainer) {
     this.imageContainer = imageContainer;
     this.titleContainer = titleContainer;
-    this.imageLoaderFunction = this.imageLoaderFunction.bind(this);
   }
 
   imageOnPage(imageURL) {
@@ -56,11 +55,9 @@ class ImageTitleContainer {
   }
 
   imageTitleOnPage(imageTitle) {
-    const titleContainer = document.getElementById("title_container");
     const h1 = document.createElement("h1");
     h1.id = "title";
     h1.textContent = imageTitle;
-    titleContainer.append(h1);
+    this.titleContainer.append(h1);
   }
-
 }
