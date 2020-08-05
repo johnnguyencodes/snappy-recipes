@@ -1,6 +1,5 @@
 class ImageTitleContainer {
-  constructor(imageContainer, titleContainer) {
-    this.imageContainer = imageContainer;
+  constructor(titleContainer) {
     this.titleContainer = titleContainer;
   }
 

@@ -64,7 +64,7 @@ class App {
   this.pageHeader.clickDietInfo(this.dietInfo);
   this.pageHeader.clickPostImage(this.postImage);
   this.pageHeader.clickGetRecipes(this.getRecipes);
-  this.pageHeader.clickGetFavoritedRecipes(this.getFavoritedRecipes);
+  // this.getFavoritedRecipes();
   }
 
   dietInfo() {
@@ -187,12 +187,10 @@ class App {
   }
 
   getFavoritedRecipes() {
-    // document.getElementById("recipe_download_text").className = "text-center";
-    var spoonacularURL = `https://api.spoonacular.com/recipes/informationBulk?ids=715538,716429&apiKey=${spoonacularAPIKey}&includeNutrition=true`
+    let spoonacularURL = `https://api.spoonacular.com/recipes/informationBulk?ids=715538,716429&apiKey=${spoonacularAPIKey}&includeNutrition=true`
     $.ajax({
       method: "GET",
       url: spoonacularURL,
-      data: spoonacularDataToSend,
       headers: {
         "Content-Type": "application/json"
       },
@@ -202,7 +200,7 @@ class App {
   }
 
   handleGetFavoritedRecipesSuccess(recipes) {
-    this.favoritedRecipesElement.favoritedRecipesOnPage(recipes);
+    this.recipesContainer.favoritedRecipesOnPage(recipes);
   }
 
   handleGetFavoritedRecipesError(error) {
