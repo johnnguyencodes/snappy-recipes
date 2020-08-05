@@ -39,10 +39,11 @@ let spoonacularDataToSend = {
 }
 
 class App {
-  constructor(pageHeader, imageTitleContainer, recipesContainer, dietForm) {
-    this.pageHeader = pageHeader,
-    this.imageTitleContainer = imageTitleContainer,
+  constructor(pageHeader, imageTitleContainer, recipesContainer, favoritedRecipesContainer, dietForm) {
+    this.pageHeader = pageHeader;
+    this.imageTitleContainer = imageTitleContainer;
     this.recipesContainer = recipesContainer;
+    this.favoritedRecipesContainer = favoritedRecipesContainer;
     this.dietForm = dietForm
     this.dietInfo = this.dietInfo.bind(this);
     this.postImage = this.postImage.bind(this);

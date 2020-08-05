@@ -11,5 +11,9 @@ const newImageTitleContainer = new ImageTitleContainer(imageContainer, titleCont
 
 const recipesContainer = document.getElementById("recipes_container");
 const newRecipesContainer = new RecipesContainer(recipesContainer);
-const newApp = new App(newPageHeader, newImageTitleContainer, newRecipesContainer, newDietForm);
+
+const favoritedRecipesContainer = document.getElementById("favorited_recipes_container")
+const newFavoritedRecipesContainer = new FavoritedRecipesContainer(favoritedRecipesContainer);
+
+const newApp = new App(newPageHeader, newImageTitleContainer, newRecipesContainer, newFavoritedRecipesContainer, newDietForm);
 newApp.start();
