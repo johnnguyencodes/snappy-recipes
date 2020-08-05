@@ -4,7 +4,7 @@ class RecipesContainer {
   }
 
   recipeOnPage(recipes) {
-    const recipeContainer = document.getElementById("recipes_container");
+    const recipesContainer = document.getElementById("recipes_container");
     for (let i = 0; i < recipes.results.length; i++) {
       const imageURL = recipes.results[i].image;
       const title = recipes.results[i].title;
@@ -85,7 +85,7 @@ class RecipesContainer {
       anchorTag.append(img);
       recipeCard.append(anchorTag);
       recipeCard.append(cardBody);
-      recipeContainer.append(recipeCard);
+      recipesContainer.append(recipeCard);
     }
     document.getElementById("recipe_download_text").className = "text-center d-none";
   }
