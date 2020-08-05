@@ -32,29 +32,7 @@ table {
     transition: width .3s;
 }
 
-
-/* .recipe-progress-hidden {
-  position: absolute;
-  text-align: left;
-  width: 375px;
-  left:  -375px;
-  height: 3px;
-  background:blue;
-  transition: 0.3s ease-in-out;
-}
-
-.recipe-progress-visible {
-  z-index: 5;
-  position: absolute;
-  text-align: left;
-  width: 375px;
-  left: 0;
-  height: 3px;
-  background:blue;
-  transition: 3s ease-in-out;
-} */
-
-.diet-menu-hidden{
+.diet-menu-hidden {
   z-index: 3;
   height: 100vh;
   width: 350px;
@@ -77,6 +55,32 @@ table {
   transition: 0.3s ease-in-out;
   border-right: 3px black solid;
   box-shadow: 5px 5px rgba(0, 0, 0, 0.4);
+  background-color: white;
+}
+
+.favorited-recipes-hidden {
+  z-index: 3;
+  height: 100vh;
+  width: 350px;
+  position: absolute;
+  top: 0;
+  right: -355px;
+  transition: 0.3s ease-in-out;
+  border-left: 3px black solid;
+  box-shadow: 5px 5px rgba(0, 0, 0, 0.4);
+  background-color: white;
+}
+
+.favorited-recipes-visible {
+  z-index: 3;
+  height: 100vh;
+  width: 350px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  transition: 0.3s ease-in-out;
+  border-right: 3px black solid;
+  box-shadow: 5px 5px rgba (0, 0, 0, 0.4);
   background-color: white;
 }
 
