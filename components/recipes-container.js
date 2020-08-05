@@ -1,10 +1,10 @@
-class RecipesContainer {
+class RecipesHandler {
   constructor(recipesContainer, favoritedRecipesContainer) {
     this.recipesContainer = recipesContainer;
     this.favoritedRecipesContainer = favoritedRecipesContainer;
   }
 
-  recipeOnPage(recipes) {
+  displaySearchedRecipes(recipes) {
     for (let i = 0; i < recipes.results.length; i++) {
       const imageURL = recipes.results[i].image;
       const title = recipes.results[i].title;
@@ -90,7 +90,7 @@ class RecipesContainer {
     document.getElementById("recipe_download_text").className = "text-center d-none";
   }
 
-  favoritedRecipesOnPage(recipes) {
+  displayFavoritedRecipes(recipes) {
     for (let i = 0; i < recipes.length; i++) {
       const imageURL = recipes[i].image;
       const title = recipes[i].title;
