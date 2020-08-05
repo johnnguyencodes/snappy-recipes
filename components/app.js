@@ -12,6 +12,8 @@ const uploadButton = document.getElementById("upload_button");
 const searchButton = document.getElementById("search_button");
 const recipeSearchInput = document.getElementById('recipe_search_input')
 const resetButton = document.getElementById("reset_button");
+const openFavoriteButton = document.getElementById("open_favorites_button");
+const closeFavoriteButton = document.getElementById("close_favorites_button");
 const openDietMenuButton = document.getElementById("open_diet_menu_button");
 const closeDietMenuButton = document.getElementById("close_diet_menu_button");
 

@@ -5,7 +5,6 @@ class DietForm {
     closeDietMenuButton.addEventListener("click", this.closeDietMenu.bind(this));
   }
 
-
   openDietMenu() {
     event.preventDefault();
     dietMenu.className = "diet-menu-visible d-flex flex-column justify-content-center";
