@@ -64,11 +64,11 @@ class FavoritedRecipesElement {
       sodiumSpan.textContent = `${sodiumAmount}mg Sodium`;
       const cardText3 = document.createElement("div");
       cardText3.className = "card=text d-flex flex-wrap";
-      if (recipes.results[i].diets) {
-        for (var j = 0; j < recipes.results[i].diets.length; j++) {
+      if (recipes[i].diets) {
+        for (var j = 0; j < recipes[i].diets.length; j++) {
           const dietSpan = document.createElement("span");
           dietSpan.className = "badge badge-light mb-1 mr-1";
-          dietSpan.textContent = recipes.results[i].diets[j];
+          dietSpan.textContent = recipes[i].diets[j];
           cardText3.append(dietSpan);
         }
       }
@@ -87,6 +87,6 @@ class FavoritedRecipesElement {
       recipeCard.append(cardBody);
       favoritedRecipesContainer.append(recipeCard);
     }
+  }
     // document.getElementById("recipe_download_text").className = "text-center d-none";
   }
-}

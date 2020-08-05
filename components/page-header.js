@@ -1,6 +1,5 @@
 class PageHeader {
-  constructor(headerElement) {
-    this.headerElement = headerElement;
+  constructor() {
     uploadButton.addEventListener("click", this.imgValidation.bind(this));
     searchButton.addEventListener("click", this.search.bind(this));
     fileInputForm.addEventListener("change", this.handleAddImage.bind(this));
@@ -29,10 +28,6 @@ class PageHeader {
 
   clickGetRecipes(getRecipes) {
     this.getRecipes = getRecipes;
-  }
-
-  clickGetFavoritedRecipes(getFavoritedRecipes) {
-    this.getFavoritedRecipes = getFavoritedRecipes;
   }
 
   imgValidation(event) {
@@ -88,10 +83,9 @@ class PageHeader {
     for (var i = 0; i < inputs.length; i++) {
       inputs[i].disabled = true;
     }
-    recipeDownloadText.className = "text-center";
+    // recipeDownloadText.className = "text-center";
     this.dietInfo();
-    // this.getRecipes(query);
-    this.getFavoritedRecipes();
+    this.getRecipes(query);
   }
 
   resetFields() {
