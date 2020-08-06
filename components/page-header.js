@@ -1,10 +1,27 @@
+const favoritedRecipesElement = document.getElementById("favorited_recipes_element");
+
 class PageHeader {
-  constructor(headerElement) {
-    this.headerElement = headerElement;
+  constructor() {
     uploadButton.addEventListener("click", this.imgValidation.bind(this));
     searchButton.addEventListener("click", this.search.bind(this));
     fileInputForm.addEventListener("change", this.handleAddImage.bind(this));
     resetButton.addEventListener("click", this.resetFields.bind(this));
+    openFavoriteButton.addEventListener("click", this.openFavorites.bind(this));
+    closeFavoriteButton.addEventListener("click", this.closeFavorites.bind(this));
+  }
+
+  openFavorites() {
+    event.preventDefault();
+    favoritedRecipesElement.className = "favorited-recipes-visible d-flex flex-column justify-content-center";
+  }
+
+  closeFavorites() {
+    event.preventDefault();
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+    favoritedRecipesElement.className = "favorited-recipes-hidden";
   }
 
   clickDietInfo(dietInfo) {
@@ -72,7 +89,7 @@ class PageHeader {
     for (var i = 0; i < inputs.length; i++) {
       inputs[i].disabled = true;
     }
-    recipeDownloadText.className = "text-center";
+    // recipeDownloadText.className = "text-center";
     this.dietInfo();
     this.getRecipes(query);
   }

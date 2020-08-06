@@ -1,3 +1,7 @@
+body {
+  overflow-x: hidden;
+}
+
 table {
   width: 100%;
   text-align: center;
@@ -12,6 +16,10 @@ table {
   max-height: 400px;
   max-width: 100%;
   object-fit: contain;
+}
+
+.favorited-recipe-card img {
+  max-width: 312px;
 }
 
 .custom-file-label::after {
@@ -32,29 +40,7 @@ table {
     transition: width .3s;
 }
 
-
-/* .recipe-progress-hidden {
-  position: absolute;
-  text-align: left;
-  width: 375px;
-  left:  -375px;
-  height: 3px;
-  background:blue;
-  transition: 0.3s ease-in-out;
-}
-
-.recipe-progress-visible {
-  z-index: 5;
-  position: absolute;
-  text-align: left;
-  width: 375px;
-  left: 0;
-  height: 3px;
-  background:blue;
-  transition: 3s ease-in-out;
-} */
-
-.diet-menu-hidden{
+.diet-menu-hidden {
   z-index: 3;
   height: 100vh;
   width: 350px;
@@ -67,9 +53,21 @@ table {
   background-color: white;
 }
 
+.favorited-recipes-hidden {
+  z-index: 3;
+  width: 350px;
+  position: absolute;
+  top: 0;
+  right: -355px;
+  transition: 0.3s ease-in-out;
+  border-left: 3px black solid;
+  box-shadow: 5px 5px rgba(0, 0, 0, 0.4);
+  background-color: white;
+}
+
 .diet-menu-visible {
   z-index: 3;
-  height: 100vh;
+  height: 100%;
   width: 350px;
   position: absolute;
   top: 0;
@@ -77,6 +75,19 @@ table {
   transition: 0.3s ease-in-out;
   border-right: 3px black solid;
   box-shadow: 5px 5px rgba(0, 0, 0, 0.4);
+  background-color: white;
+}
+
+.favorited-recipes-visible {
+  z-index: 3;
+  min-height: 100vh;
+  width: 350px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  transition: 0.3s ease-in-out;
+  border-left: 3px black solid;
+  box-shadow: -5px 5px  rgba(0, 0, 0, 0.4);
   background-color: white;
 }
 

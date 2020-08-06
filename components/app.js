@@ -12,6 +12,8 @@ const uploadButton = document.getElementById("upload_button");
 const searchButton = document.getElementById("search_button");
 const recipeSearchInput = document.getElementById('recipe_search_input')
 const resetButton = document.getElementById("reset_button");
+const openFavoriteButton = document.getElementById("open_favorites_button");
+const closeFavoriteButton = document.getElementById("close_favorites_button");
 const openDietMenuButton = document.getElementById("open_diet_menu_button");
 const closeDietMenuButton = document.getElementById("close_diet_menu_button");
 
@@ -39,11 +41,11 @@ let spoonacularDataToSend = {
 }
 
 class App {
-  constructor(pageHeader, imageTitleContainer, recipesContainer, dietForm) {
-    this.pageHeader = pageHeader,
-    this.imageTitleContainer = imageTitleContainer,
-    this.recipesContainer = recipesContainer;
-    this.dietForm = dietForm
+  constructor(pageHeader, imageTitleContainer, recipesHandler, dietForm) {
+    this.pageHeader = pageHeader;
+    this.imageTitleContainer = imageTitleContainer;
+    this.recipesHandler = recipesHandler;
+    this.dietForm = dietForm;
     this.dietInfo = this.dietInfo.bind(this);
     this.postImage = this.postImage.bind(this);
     this.handlePostImageSuccess = this.handlePostImageSuccess.bind(this);
@@ -54,12 +56,17 @@ class App {
     this.getRecipes = this.getRecipes.bind(this);
     this.handleGetRecipesSuccess = this.handleGetRecipesSuccess.bind(this);
     this.handleGetRecipesError = this.handleGetRecipesError.bind(this);
+    this.getFavoritedRecipes = this.getFavoritedRecipes.bind(this);
+    this.handleGetFavoritedRecipesSuccess = this.handleGetFavoritedRecipesSuccess.bind(this);
+    this.handleGetFavoritedRecipesError = this.handleGetFavoritedRecipesError.bind(this);
   }
+
 
   start() {
   this.pageHeader.clickDietInfo(this.dietInfo);
   this.pageHeader.clickPostImage(this.postImage);
   this.pageHeader.clickGetRecipes(this.getRecipes);
+  this.getFavoritedRecipes();
   }
 
   dietInfo() {
@@ -160,7 +167,7 @@ class App {
   //GET request to Spoonacular's API with label from Google to get a list of up to 10 recipes containing the item from the image and other nutrition info.
   getRecipes(imageTitle) {
     document.getElementById("recipe_download_text").className = "text-center";
-    var spoonacularURL = `https://api.spoonacular.com/recipes/complexSearch?query=${imageTitle}&apiKey=${spoonacularAPIKey}&addRecipeNutrition=true`
+    let spoonacularURL = `https://api.spoonacular.com/recipes/complexSearch?query=${imageTitle}&apiKey=${spoonacularAPIKey}&addRecipeNutrition=true`
     $.ajax({
       method: "GET",
       url: spoonacularURL,
@@ -174,11 +181,31 @@ class App {
   }
 
   handleGetRecipesSuccess(recipes) {
-    this.recipesContainer.recipeOnPage(recipes);
+    this.recipesHandler.displaySearchedRecipes(recipes);
   }
 
   handleGetRecipesError(error) {
     console.error(error);
   }
 
+  getFavoritedRecipes() {
+    let spoonacularURL = `https://api.spoonacular.com/recipes/informationBulk?ids=715538,716429&apiKey=${spoonacularAPIKey}&includeNutrition=true&size=312x231`
+    $.ajax({
+      method: "GET",
+      url: spoonacularURL,
+      headers: {
+        "Content-Type": "application/json"
+      },
+      success: this.handleGetFavoritedRecipesSuccess,
+      error: this.handleGetFavoritedRecipesError
+    })
+  }
+
+  handleGetFavoritedRecipesSuccess(recipes) {
+    this.recipesHandler.displayFavoritedRecipes(recipes);
+  }
+
+  handleGetFavoritedRecipesError(error) {
+    console.error(error);
+  }
 }
