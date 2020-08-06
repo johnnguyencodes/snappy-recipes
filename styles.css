@@ -63,6 +63,7 @@ table {
 
 .favorited-recipes-hidden {
   z-index: 3;
+  min-height: 100vh;
   width: 350px;
   position: absolute;
   top: 0;
