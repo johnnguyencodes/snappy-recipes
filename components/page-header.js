@@ -10,20 +10,6 @@ class PageHeader {
     closeFavoriteButton.addEventListener("click", this.closeFavorites.bind(this));
   }
 
-  openFavorites() {
-    event.preventDefault();
-    favoritedRecipesElement.className = "favorited-recipes-visible d-flex flex-column justify-content-center";
-  }
-
-  closeFavorites() {
-    event.preventDefault();
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth"
-    });
-    favoritedRecipesElement.className = "favorited-recipes-hidden d-flex flex-column justify-content-center";
-  }
-
   clickDietInfo(dietInfo) {
     this.dietInfo = dietInfo;
   }
@@ -34,6 +20,31 @@ class PageHeader {
 
   clickGetRecipes(getRecipes) {
     this.getRecipes = getRecipes;
+  }
+
+  clickGetFavoritedRecipes(getFavoritedRecipes) {
+    this.getFavoritedRecipes = getFavoritedRecipes;
+  }
+
+  openFavorites() {
+    event.preventDefault();
+    this.getFavoritedRecipes();
+    favoritedRecipesElement.className = "favorited-recipes-visible d-flex flex-column justify-content-center";
+    // document.querySelector('body').className = "bg-light noscroll";
+    }
+
+
+  closeFavorites() {
+    event.preventDefault();
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+    favoritedRecipesElement.className = "favorited-recipes-hidden d-flex flex-column justify-content-center";
+    // document.querySelector('body').className = "bg-light";
+    while (document.getElementById("favorite_recipe")) {
+      document.getElementById("favorite_recipe").remove();
+    }
   }
 
   imgValidation(event) {
