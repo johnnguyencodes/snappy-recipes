@@ -5,13 +5,18 @@ class RecipesHandler {
   }
 
   handleFavoriteClick(id) {
-    console.log(id);
-  if (!(favoritedArray.includes(id))) {
-    favoritedArray.push(id);
-  } else {
-    favoritedArray.splice(favoritedArray.indexOf(id), 1);
+    // if (!(localStorage.getItem('favoritedArray'))) {
+    //   favoritedArray = [];
+    // } else {
+    //   favoritedArray = JSON.parse(localStorage.getItem('favoritedArray'));
+    // }
+    if (!(favoritedArray.includes(id))) {
+      favoritedArray.push(id);
+    } else {
+      favoritedArray.splice(favoritedArray.indexOf(id), 1);
+    }
+    localStorage.setItem('favoritedArray', JSON.stringify(favoritedArray));
   }
-}
 
   displaySearchedRecipes(recipes) {
     for (let i = 0; i < recipes.results.length; i++) {
