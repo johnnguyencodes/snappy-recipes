@@ -40,6 +40,8 @@ let spoonacularDataToSend = {
   "intolerances": null
 }
 
+let favoritedArray = [125533];
+
 class App {
   constructor(pageHeader, imageTitleContainer, recipesHandler, dietForm) {
     this.pageHeader = pageHeader;
