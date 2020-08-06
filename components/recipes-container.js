@@ -7,7 +7,7 @@ class RecipesHandler {
   handleFavoriteClick(id) {
     console.log(id);
   if (!(favoritedArray.includes(id))) {
-    favoritedArray.push(id)
+    favoritedArray.push(id);
   } else {
     favoritedArray.splice(favoritedArray.indexOf(id), 1);
   }
@@ -45,9 +45,9 @@ class RecipesHandler {
       const heartIcon = document.createElement("i");
       heartIcon.id = id;
       if (favoritedArray.includes(id)) {
-        heartIcon.className = "fas fa-heart text-danger heart-icon fa-lg"
+        heartIcon.className = "fas fa-heart text-danger heart-icon fa-lg";
       } else {
-        heartIcon.className = "far fa-heart text-danger heart-icon fa-lg"
+        heartIcon.className = "far fa-heart text-danger heart-icon fa-lg";
       }
       heartIconContainer.append(heartIcon);
       imageContainer.append(heartIconContainer);
@@ -115,6 +115,11 @@ class RecipesHandler {
 }
 
   displayFavoritedRecipes(recipes) {
+    if (!(document.querySelector("favorited-recipe-card"))) {
+      const noRecipeMessage = document.createElement("h3");
+      noRecipeMessage.textContent = "Your saved recipes will appear here.";
+      this.favoritedRecipesContainer.append(noRecipeMessage);
+    }
     for (let i = 0; i < recipes.length; i++) {
       const imageURL = recipes[i].image;
       const title = recipes[i].title;

@@ -40,7 +40,7 @@ let spoonacularDataToSend = {
   "intolerances": null
 }
 
-let favoritedArray = [125533];
+let favoritedArray = [];
 
 class App {
   constructor(pageHeader, imageTitleContainer, recipesHandler, dietForm) {
@@ -191,7 +191,19 @@ class App {
   }
 
   getFavoritedRecipes() {
-    let spoonacularURL = `https://api.spoonacular.com/recipes/informationBulk?ids=715538,716429&apiKey=${spoonacularAPIKey}&includeNutrition=true&size=312x231`
+    if (!(favoritedArray[0])) {
+      if (!(document.querySelector("favorited-recipe-card"))) {
+        const noRecipeMessageContainer = document.createElement("div");
+        noRecipeMessageContainer.className = "col-xs-12 d-flex justify-content-center"
+        const noRecipeMessage = document.createElement("h3");
+        noRecipeMessage.textContent = "Your saved recipes will appear here.";
+        noRecipeMessage.className = "text-center mb-5";
+        document.getElementById("favorited_recipes_container").append(noRecipeMessage);
+      }
+      return;
+    }
+    const stringifiedArray = favoritedArray.join(",")
+    let spoonacularURL = `https://api.spoonacular.com/recipes/informationBulk?ids=${stringifiedArray}&apiKey=${spoonacularAPIKey}&includeNutrition=true&size=312x231`
     $.ajax({
       method: "GET",
       url: spoonacularURL,

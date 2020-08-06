@@ -21,7 +21,7 @@ class PageHeader {
       top: 0,
       behavior: "smooth"
     });
-    favoritedRecipesElement.className = "favorited-recipes-hidden";
+    favoritedRecipesElement.className = "favorited-recipes-hidden d-flex flex-column justify-content-center";
   }
 
   clickDietInfo(dietInfo) {
