@@ -104,7 +104,7 @@ class RecipesHandler {
       const carbsAmount = Math.round(recipes[i].nutrition.nutrients[3].amount);
       const sodiumAmount = Math.round(recipes[i].nutrition.nutrients[7].amount);
       const recipeCard = document.createElement("div");
-      recipeCard.className = "recipe-card card mb-5 mx-3 pt-3 col-xs-12";
+      recipeCard.className = "favorited-recipe-card card mb-5 mx-3 pt-3 col-xs-12";
       recipeCard.id = "recipe";
       const anchorTag = document.createElement("a");
       const titleAnchorTag = document.createElement("a");

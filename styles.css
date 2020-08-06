@@ -18,6 +18,10 @@ table {
   object-fit: contain;
 }
 
+.favorited-recipe-card img {
+  max-width: 312px;
+}
+
 .custom-file-label::after {
     left: 0;
     right: auto;
@@ -51,7 +55,6 @@ table {
 
 .favorited-recipes-hidden {
   z-index: 3;
-  height: 100vh;
   width: 350px;
   position: absolute;
   top: 0;
@@ -64,7 +67,7 @@ table {
 
 .diet-menu-visible {
   z-index: 3;
-  height: 100vh;
+  height: 100%;
   width: 350px;
   position: absolute;
   top: 0;
@@ -77,7 +80,7 @@ table {
 
 .favorited-recipes-visible {
   z-index: 3;
-  height: 100vh;
+  min-height: 100vh;
   width: 350px;
   position: absolute;
   top: 0;

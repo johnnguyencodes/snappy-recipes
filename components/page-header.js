@@ -1,3 +1,5 @@
+const favoritedRecipesElement = document.getElementById("favorited_recipes_element");
+
 class PageHeader {
   constructor() {
     uploadButton.addEventListener("click", this.imgValidation.bind(this));
@@ -10,12 +12,16 @@ class PageHeader {
 
   openFavorites() {
     event.preventDefault();
-    document.getElementById("favorited_recipes_element").className = "favorited-recipes-visible d-flex flex-column justify-content-center";
+    favoritedRecipesElement.className = "favorited-recipes-visible d-flex flex-column justify-content-center";
   }
 
   closeFavorites() {
     event.preventDefault();
-    document.getElementById("favorited_recipes_element").className = "favorited-recipes-hidden d-flex flex-column justify-content-center";
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+    favoritedRecipesElement.className = "favorited-recipes-hidden";
   }
 
   clickDietInfo(dietInfo) {
