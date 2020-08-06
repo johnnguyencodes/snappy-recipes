@@ -115,11 +115,6 @@ class RecipesHandler {
 }
 
   displayFavoritedRecipes(recipes) {
-    if (!(document.querySelector("favorited-recipe-card"))) {
-      const noRecipeMessage = document.createElement("h3");
-      noRecipeMessage.textContent = "Your saved recipes will appear here.";
-      this.favoritedRecipesContainer.append(noRecipeMessage);
-    }
     for (let i = 0; i < recipes.length; i++) {
       const imageURL = recipes[i].image;
       const title = recipes[i].title;
