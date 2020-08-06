@@ -1,6 +1,12 @@
 const imgurAPIKey = config.imgurAPIKey;
 const googleAPIKey = config.googleAPIKey;
 const spoonacularAPIKey = config.spoonacularAPIKey;
+let favoritedArray;
+if (!(localStorage.getItem('favoritedArray'))) {
+  favoritedArray = [];
+} else {
+  favoritedArray = JSON.parse(localStorage.getItem('favoritedArray'));
+}
 const dietMenu = document.getElementById("diet_menu");
 let fileInputForm = document.getElementById("file_input_form");
 const fileLabel = document.getElementById("custom_file_label");
@@ -61,12 +67,12 @@ class App {
     this.handleGetFavoritedRecipesError = this.handleGetFavoritedRecipesError.bind(this);
   }
 
-
   start() {
   this.pageHeader.clickDietInfo(this.dietInfo);
   this.pageHeader.clickPostImage(this.postImage);
   this.pageHeader.clickGetRecipes(this.getRecipes);
-  this.getFavoritedRecipes();
+  this.pageHeader.clickGetFavoritedRecipes(this.getFavoritedRecipes);
+  // this.getFavoritedRecipes();
   }
 
   dietInfo() {
@@ -189,7 +195,13 @@ class App {
   }
 
   getFavoritedRecipes() {
-    let spoonacularURL = `https://api.spoonacular.com/recipes/informationBulk?ids=715538,716429&apiKey=${spoonacularAPIKey}&includeNutrition=true&size=312x231`
+    if (!(favoritedArray[0])) {
+      document.getElementById("empty_favorite_text").className = "col-xs-12 d-flex justify-content-center";
+      return;
+    }
+    document.getElementById("empty_favorite_text").className = "d-none";
+    let stringifiedArray = favoritedArray.join(",");
+    let spoonacularURL = `https://api.spoonacular.com/recipes/informationBulk?ids=${stringifiedArray}&apiKey=${spoonacularAPIKey}&includeNutrition=true&size=312x231`
     $.ajax({
       method: "GET",
       url: spoonacularURL,

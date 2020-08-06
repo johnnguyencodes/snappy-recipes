@@ -4,6 +4,15 @@ class RecipesHandler {
     this.favoritedRecipesContainer = favoritedRecipesContainer;
   }
 
+  handleFavoriteClick(id) {
+    if (!(favoritedArray.includes(id))) {
+      favoritedArray.push(id);
+    } else {
+      favoritedArray.splice(favoritedArray.indexOf(id), 1);
+    }
+    localStorage.setItem('favoritedArray', JSON.stringify(favoritedArray));
+  }
+
   displaySearchedRecipes(recipes) {
     for (let i = 0; i < recipes.results.length; i++) {
       const imageURL = recipes.results[i].image;
@@ -17,20 +26,34 @@ class RecipesHandler {
       const fatAmount = Math.round(recipes.results[i].nutrition.nutrients[1].amount);
       const carbsAmount = Math.round(recipes.results[i].nutrition.nutrients[3].amount);
       const sodiumAmount = Math.round(recipes.results[i].nutrition.nutrients[7].amount);
+      const id = recipes.results[i].id;
       const recipeCard = document.createElement("div");
       recipeCard.className = "recipe-card card mb-5 mx-3 pt-3 col-xs-12";
       recipeCard.id = "recipe";
-      const anchorTag = document.createElement("a");
+      const imageContainer = document.createElement("div");
       const titleAnchorTag = document.createElement("a");
-      anchorTag.href = recipeURL;
       titleAnchorTag.href = recipeURL;
-      anchorTag.className = "stretched-link d-flex justify-content-center"
+      imageContainer.className = "d-flex justify-content-center"
       const img = document.createElement("img");
-      img.className = "card-image-top";
+      imageContainer.className = "card-image-top d-flex justify-content-center";
       img.src = imageURL;
-      img.alt = "Recipe Image"
+      img.alt = "Recipe Image";
+      img.className = "m-0 p-0";
+      const heartIconContainer = document.createElement("span");
+      heartIconContainer.id = "heart_container";
+      heartIconContainer.className = "badge badge-light m-1 p-1 border border-danger rounded";
+      const heartIcon = document.createElement("i");
+      heartIcon.id = id;
+      if (favoritedArray.includes(id)) {
+        heartIcon.className = "fas fa-heart text-danger heart-icon fa-lg";
+      } else {
+        heartIcon.className = "far fa-heart text-danger heart-icon fa-lg";
+      }
+      heartIconContainer.append(heartIcon);
+      imageContainer.append(heartIconContainer);
+      heartIconContainer.addEventListener("click", this.handleFavoriteClick.bind(this, id));
       const cardBody = document.createElement("div");
-      cardBody.className = "card-body";
+      cardBody.className = "card-body pt-0";
       const cardTitle = document.createElement("div");
       cardTitle.className = "card-title";
       const recipeTitle = document.createElement("h3");
@@ -77,18 +100,19 @@ class RecipesHandler {
       cardText2.append(fatSpan);
       cardText2.append(proteinSpan);
       cardText2.append(sodiumSpan);
-      cardTitle.append(recipeTitle);
+      titleAnchorTag.append(recipeTitle);
+      cardTitle.append(titleAnchorTag);
       cardTitle.append(cardText1);
       cardTitle.append(cardText3);
       cardTitle.append(cardText2);
       cardBody.append(cardTitle);
-      anchorTag.append(img);
-      recipeCard.append(anchorTag);
+      imageContainer.append(img);
+      recipeCard.append(imageContainer);
       recipeCard.append(cardBody);
       this.recipesContainer.append(recipeCard);
-    }
     document.getElementById("recipe_download_text").className = "text-center d-none";
   }
+}
 
   displayFavoritedRecipes(recipes) {
     for (let i = 0; i < recipes.length; i++) {
@@ -105,12 +129,12 @@ class RecipesHandler {
       const sodiumAmount = Math.round(recipes[i].nutrition.nutrients[7].amount);
       const recipeCard = document.createElement("div");
       recipeCard.className = "favorited-recipe-card card mb-5 mx-3 pt-3 col-xs-12";
-      recipeCard.id = "recipe";
+      recipeCard.id = "favorite_recipe";
       const anchorTag = document.createElement("a");
       const titleAnchorTag = document.createElement("a");
       anchorTag.href = recipeURL;
       titleAnchorTag.href = recipeURL;
-      anchorTag.className = "stretched-link d-flex justify-content-center"
+      anchorTag.className = "d-flex justify-content-center"
       const img = document.createElement("img");
       img.className = "card-image-top";
       img.src = imageURL;
