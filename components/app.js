@@ -57,7 +57,10 @@ class App {
     this.handleGetRecipesSuccess = this.handleGetRecipesSuccess.bind(this);
     this.handleGetRecipesError = this.handleGetRecipesError.bind(this);
     this.getFavoritedRecipes = this.getFavoritedRecipes.bind(this);
+    this.handleGetFavoritedRecipesSuccess = this.handleGetFavoritedRecipesSuccess.bind(this);
+    this.handleGetFavoritedRecipesError = this.handleGetFavoritedRecipesError.bind(this);
   }
+
 
   start() {
   this.pageHeader.clickDietInfo(this.dietInfo);
@@ -186,7 +189,7 @@ class App {
   }
 
   getFavoritedRecipes() {
-    let spoonacularURL = `https://api.spoonacular.com/recipes/informationBulk?ids=715538,716429&apiKey=${spoonacularAPIKey}&includeNutrition=true`
+    let spoonacularURL = `https://api.spoonacular.com/recipes/informationBulk?ids=715538,716429&apiKey=${spoonacularAPIKey}&includeNutrition=true&size=312x231`
     $.ajax({
       method: "GET",
       url: spoonacularURL,
