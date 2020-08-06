@@ -71,7 +71,8 @@ class App {
   this.pageHeader.clickDietInfo(this.dietInfo);
   this.pageHeader.clickPostImage(this.postImage);
   this.pageHeader.clickGetRecipes(this.getRecipes);
-  this.getFavoritedRecipes();
+  this.pageHeader.clickGetFavoritedRecipes(this.getFavoritedRecipes);
+  // this.getFavoritedRecipes();
   }
 
   dietInfo() {
@@ -195,16 +196,10 @@ class App {
 
   getFavoritedRecipes() {
     if (!(favoritedArray[0])) {
-      if (!(document.querySelector("favorited-recipe-card"))) {
-        const noRecipeMessageContainer = document.createElement("div");
-        noRecipeMessageContainer.className = "col-xs-12 d-flex justify-content-center"
-        const noRecipeMessage = document.createElement("h3");
-        noRecipeMessage.textContent = "Your saved recipes will appear here.";
-        noRecipeMessage.className = "text-center mb-5";
-        document.getElementById("favorited_recipes_container").append(noRecipeMessage);
-      }
+      document.getElementById("empty_favorite_text").className = "col-xs-12 d-flex justify-content-center";
       return;
     }
+    document.getElementById("empty_favorite_text").className = "d-none";
     let stringifiedArray = favoritedArray.join(",");
     let spoonacularURL = `https://api.spoonacular.com/recipes/informationBulk?ids=${stringifiedArray}&apiKey=${spoonacularAPIKey}&includeNutrition=true&size=312x231`
     $.ajax({

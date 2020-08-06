@@ -5,11 +5,6 @@ class RecipesHandler {
   }
 
   handleFavoriteClick(id) {
-    // if (!(localStorage.getItem('favoritedArray'))) {
-    //   favoritedArray = [];
-    // } else {
-    //   favoritedArray = JSON.parse(localStorage.getItem('favoritedArray'));
-    // }
     if (!(favoritedArray.includes(id))) {
       favoritedArray.push(id);
     } else {
@@ -134,7 +129,7 @@ class RecipesHandler {
       const sodiumAmount = Math.round(recipes[i].nutrition.nutrients[7].amount);
       const recipeCard = document.createElement("div");
       recipeCard.className = "favorited-recipe-card card mb-5 mx-3 pt-3 col-xs-12";
-      recipeCard.id = "recipe";
+      recipeCard.id = "favorite_recipe";
       const anchorTag = document.createElement("a");
       const titleAnchorTag = document.createElement("a");
       anchorTag.href = recipeURL;
