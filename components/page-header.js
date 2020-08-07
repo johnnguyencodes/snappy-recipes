@@ -29,7 +29,7 @@ class PageHeader {
   openFavorites() {
     event.preventDefault();
     this.getFavoritedRecipes();
-    favoritedRecipesElement.className = "favorited-recipes-visible d-flex flex-column justify-content-center";
+    // favoritedRecipesElement.className = "favorited-recipes-visible d-flex flex-column justify-content-center";
     // document.querySelector('body').className = "bg-light noscroll";
     }
 
@@ -41,10 +41,10 @@ class PageHeader {
       behavior: "smooth"
     });
     favoritedRecipesElement.className = "favorited-recipes-hidden d-flex flex-column justify-content-center";
-    // document.querySelector('body').className = "bg-light";
-    while (document.getElementById("favorite_recipe")) {
-      document.getElementById("favorite_recipe").remove();
-    }
+    document.querySelector('body').className = "bg-light";
+    // while (document.getElementById("favorite_recipe")) {
+    //   document.getElementById("favorite_recipe").remove();
+    // }
   }
 
   imgValidation(event) {
