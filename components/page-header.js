@@ -8,6 +8,7 @@ class PageHeader {
     resetButton.addEventListener("click", this.resetFields.bind(this));
     openFavoriteButton.addEventListener("click", this.openFavorites.bind(this));
     closeFavoriteButton.addEventListener("click", this.closeFavorites.bind(this));
+    this.favoriteCheck = this.favoriteCheck.bind(this);
   }
 
   clickDietInfo(dietInfo) {
@@ -29,22 +30,35 @@ class PageHeader {
   openFavorites() {
     event.preventDefault();
     this.getFavoritedRecipes();
-    // favoritedRecipesElement.className = "favorited-recipes-visible d-flex flex-column justify-content-center";
-    // document.querySelector('body').className = "bg-light noscroll";
+    favoritedRecipesElement.className = "favorited-recipes-visible d-flex flex-column justify-content-center";
     }
 
 
   closeFavorites() {
     event.preventDefault();
+    this.favoriteCheck();
     window.scrollTo({
       top: 0,
       behavior: "smooth"
     });
     favoritedRecipesElement.className = "favorited-recipes-hidden d-flex flex-column justify-content-center";
     document.querySelector('body').className = "bg-light";
-    // while (document.getElementById("favorite_recipe")) {
-    //   document.getElementById("favorite_recipe").remove();
-    // }
+    setTimeout(() => {
+      while (document.getElementById("favorited_recipes_container").firstChild) {
+        document.getElementById("favorited_recipes_container").removeChild(document.getElementById("favorited_recipes_container").firstChild);
+      }}, 1000);
+  }
+
+  favoriteCheck() {
+    let searchedArray = document.querySelectorAll("#heart_container i");
+    let favoritedArrayToCheck = JSON.parse(localStorage.getItem("favoritedArray"));
+    for (var i = 0; i < searchedArray.length; i++) {
+      if (favoritedArrayToCheck.includes(parseInt(searchedArray[i].id))) {
+        searchedArray[i].className = "fas fa-heart text-danger heart-icon fa-lg";
+      } else {
+        searchedArray[i].className = "far fa-heart text-danger heart-icon fa-lg";
+      }
+    }
   }
 
   imgValidation(event) {

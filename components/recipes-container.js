@@ -7,8 +7,10 @@ class RecipesHandler {
   handleFavoriteClick(id) {
     if (!(favoritedArray.includes(id))) {
       favoritedArray.push(id);
+      document.getElementById(`${id}`).className = "fas fa-heart text-danger heart-icon fa-lg";
     } else {
       favoritedArray.splice(favoritedArray.indexOf(id), 1);
+      document.getElementById(`${id}`).className = "far fa-heart text-danger heart-icon fa-lg";
     }
     localStorage.setItem('favoritedArray', JSON.stringify(favoritedArray));
   }
@@ -17,6 +19,9 @@ class RecipesHandler {
     favoritedArray.splice(favoritedArray.indexOf(id), 1);
     document.getElementById(`${id}`).remove();
     localStorage.setItem('favoritedArray', JSON.stringify(favoritedArray));
+    if (localStorage.getItem('favoritedArray') === "[]") {
+      document.getElementById("empty_favorite_text").className = "col-xs-12 d-flex justify-content-center";
+    }
   }
 
   displaySearchedRecipes(recipes) {
@@ -116,9 +121,9 @@ class RecipesHandler {
       recipeCard.append(imageContainer);
       recipeCard.append(cardBody);
       this.recipesContainer.append(recipeCard);
+    }
     document.getElementById("recipe_download_text").className = "text-center d-none";
   }
-}
 
   displayFavoritedRecipes(recipes) {
     for (let i = 0; i < recipes.length; i++) {
@@ -212,5 +217,6 @@ class RecipesHandler {
       recipeCard.append(cardBody);
       this.favoritedRecipesContainer.append(recipeCard);
     }
+    document.getElementById("favorite_recipe_download_text").className = "text-center d-none";
   }
 }
