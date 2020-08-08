@@ -158,6 +158,7 @@ class App {
     if (!(response.responses[0].labelAnnotations)) {
       alert("Sorry, your image could not be recognized. Please upload a different image or enter a search");
       document.getElementById("my_image").src = "";
+      document.getElementById("title_download_text").className = "d-none";
       return;
     }
     const imageTitle = response.responses[0].labelAnnotations[0].description;
