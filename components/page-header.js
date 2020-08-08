@@ -31,7 +31,10 @@ class PageHeader {
     event.preventDefault();
     this.getFavoritedRecipes();
     favoritedRecipesElement.className = "favorited-recipes-visible d-flex flex-column justify-content-center";
+    if (localStorage.getItem('favoritedArray') !== "[]") {
+      document.getElementById("empty_favorite_text").className = "d-none";
     }
+  }
 
 
   closeFavorites() {
