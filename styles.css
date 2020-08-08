@@ -22,7 +22,7 @@ table {
   max-width: 312px;
 }
 
-#heart_container {
+#heart_container, #delete_container {
   z-index: 2;
   position: absolute;
   top: 20px;

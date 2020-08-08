@@ -7,10 +7,21 @@ class RecipesHandler {
   handleFavoriteClick(id) {
     if (!(favoritedArray.includes(id))) {
       favoritedArray.push(id);
+      document.getElementById(`${id}`).className = "fas fa-heart text-danger heart-icon fa-lg";
     } else {
       favoritedArray.splice(favoritedArray.indexOf(id), 1);
+      document.getElementById(`${id}`).className = "far fa-heart text-danger heart-icon fa-lg";
     }
     localStorage.setItem('favoritedArray', JSON.stringify(favoritedArray));
+  }
+
+  handleDeleteClick(id) {
+    favoritedArray.splice(favoritedArray.indexOf(id), 1);
+    document.getElementById(`${id}`).remove();
+    localStorage.setItem('favoritedArray', JSON.stringify(favoritedArray));
+    if (localStorage.getItem('favoritedArray') === "[]") {
+      document.getElementById("empty_favorite_text").className = "col-xs-12 d-flex justify-content-center";
+    }
   }
 
   displaySearchedRecipes(recipes) {
@@ -110,9 +121,9 @@ class RecipesHandler {
       recipeCard.append(imageContainer);
       recipeCard.append(cardBody);
       this.recipesContainer.append(recipeCard);
+    }
     document.getElementById("recipe_download_text").className = "text-center d-none";
   }
-}
 
   displayFavoritedRecipes(recipes) {
     for (let i = 0; i < recipes.length; i++) {
@@ -127,18 +138,27 @@ class RecipesHandler {
       const fatAmount = Math.round(recipes[i].nutrition.nutrients[1].amount);
       const carbsAmount = Math.round(recipes[i].nutrition.nutrients[3].amount);
       const sodiumAmount = Math.round(recipes[i].nutrition.nutrients[7].amount);
+      const id = recipes[i].id;
       const recipeCard = document.createElement("div");
       recipeCard.className = "favorited-recipe-card card mb-5 mx-3 pt-3 col-xs-12";
-      recipeCard.id = "favorite_recipe";
-      const anchorTag = document.createElement("a");
+      recipeCard.id = id;
+      const imageContainer = document.createElement("div");
       const titleAnchorTag = document.createElement("a");
-      anchorTag.href = recipeURL;
       titleAnchorTag.href = recipeURL;
-      anchorTag.className = "d-flex justify-content-center"
+      imageContainer.className = "d-flex justify-content-center"
       const img = document.createElement("img");
-      img.className = "card-image-top";
+      imageContainer.className = "card-image-top d-flex justify-content-center";
       img.src = imageURL;
       img.alt = "Recipe Image"
+      img.className = "p-1";
+      const deleteIconContainer = document.createElement("span");
+      deleteIconContainer.id = "delete_container";
+      deleteIconContainer.className = "badge badge-light m-1 p-1 border border-danger rounded";
+      const deleteIcon = document.createElement("i");
+      deleteIcon.className = "far fa-trash-alt text-danger delete-icon fa-lg";
+      deleteIconContainer.append(deleteIcon);
+      imageContainer.append(deleteIconContainer);
+      deleteIconContainer.addEventListener("click", this.handleDeleteClick.bind(this, id));
       const cardBody = document.createElement("div");
       cardBody.className = "card-body";
       const cardTitle = document.createElement("div");
@@ -192,10 +212,11 @@ class RecipesHandler {
       cardTitle.append(cardText3);
       cardTitle.append(cardText2);
       cardBody.append(cardTitle);
-      anchorTag.append(img);
-      recipeCard.append(anchorTag);
+      imageContainer.append(img);
+      recipeCard.append(imageContainer);
       recipeCard.append(cardBody);
       this.favoritedRecipesContainer.append(recipeCard);
     }
+    document.getElementById("favorite_recipe_download_text").className = "text-center d-none";
   }
 }

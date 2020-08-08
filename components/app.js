@@ -195,11 +195,12 @@ class App {
   }
 
   getFavoritedRecipes() {
-    if (!(favoritedArray[0])) {
+    if (localStorage.getItem('favoritedArray') === "[]") {
       document.getElementById("empty_favorite_text").className = "col-xs-12 d-flex justify-content-center";
       return;
     }
-    document.getElementById("empty_favorite_text").className = "d-none";
+    document.getElementById("favorite_recipe_download_text").className = "text-center";
+    favoritedArray = JSON.parse(localStorage.getItem('favoritedArray'));
     let stringifiedArray = favoritedArray.join(",");
     let spoonacularURL = `https://api.spoonacular.com/recipes/informationBulk?ids=${stringifiedArray}&apiKey=${spoonacularAPIKey}&includeNutrition=true&size=312x231`
     $.ajax({
