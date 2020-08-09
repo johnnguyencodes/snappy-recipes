@@ -86,6 +86,10 @@ class App {
   this.pageHeader.clickGetFavoritedRecipes(this.getFavoritedRecipes);
   }
 
+  savedDietInfoCheck() {
+
+  }
+
   dietInfo() {
     let restrictionValues = "";
     let intoleranceValues = "";
