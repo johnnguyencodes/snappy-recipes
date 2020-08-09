@@ -117,7 +117,6 @@ class PageHeader {
     for (var i = 0; i < inputs.length; i++) {
       inputs[i].disabled = true;
     }
-    // recipeDownloadText.className = "text-center";
     this.dietInfo();
     this.getRecipes(query);
   }
