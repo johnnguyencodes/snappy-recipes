@@ -25,6 +25,10 @@ class RecipesHandler {
   }
 
   displaySearchedRecipes(recipes) {
+    if (!(recipes[0])) {
+      //unhide text saying no results in search
+      return;
+    }
     for (let i = 0; i < recipes.results.length; i++) {
       const imageURL = recipes.results[i].image;
       const title = recipes.results[i].title;
