@@ -7,6 +7,18 @@ if (!(localStorage.getItem('favoritedArray'))) {
 } else {
   favoritedArray = JSON.parse(localStorage.getItem('favoritedArray'));
 }
+let dietArray;
+if (!(localStorage.getItem('dietArray'))) {
+  dietArray = [];
+} else {
+  dietArray = JSON.parse(localStorage.getItem('dietArray'));
+}
+let intolerancesArray;
+if (!(localStorage.getItem('intolerancesArray'))) {
+  intolerancesArray = [];
+} else {
+  dietArray = JSON.parse(localStorage.getItem('intolerancesArray'));
+}
 const dietMenu = document.getElementById("diet_menu");
 let fileInputForm = document.getElementById("file_input_form");
 const fileLabel = document.getElementById("custom_file_label");
@@ -72,26 +84,29 @@ class App {
   this.pageHeader.clickPostImage(this.postImage);
   this.pageHeader.clickGetRecipes(this.getRecipes);
   this.pageHeader.clickGetFavoritedRecipes(this.getFavoritedRecipes);
-  // this.getFavoritedRecipes();
   }
 
   dietInfo() {
     let restrictionValues = "";
     let intoleranceValues = "";
-    var restrictionCheckboxes = document.getElementsByClassName("restrictionCheckbox");
+    var restrictionCheckboxes = document.getElementsByClassName("restriction-checkbox");
     for (var i = 0; i < restrictionCheckboxes.length; i++) {
       if (restrictionCheckboxes[i].checked) {
         restrictionValues += restrictionCheckboxes[i].value + ", ";
       }
     }
-    var intoleranceCheckboxes = document.getElementsByClassName("intoleranceCheckbox");
+    var intoleranceCheckboxes = document.getElementsByClassName("intolerance-checkbox");
     for (var j = 0; j < intoleranceCheckboxes.length; j++) {
       if (intoleranceCheckboxes[j].checked) {
         intoleranceValues += intoleranceCheckboxes[j].value + ", ";
       }
     }
-    spoonacularDataToSend.diet = restrictionValues.slice(0, -2)
-    spoonacularDataToSend.intolerances = intoleranceValues.slice(0, -2);
+    spoonacularDataToSend.diet = restrictionValues.slice(0, -2).replace(/\s/g, '');
+    dietArray = spoonacularDataToSend.diet;
+    localStorage.setItem('dietArray', JSON.stringify(dietArray));
+    spoonacularDataToSend.intolerances = intoleranceValues.slice(0, -2).replace(/\s/g, '');
+    intolerancesArray = spoonacularDataToSend.intolerances;
+    localStorage.setItem('intolerancesArray', JSON.stringify(intolerancesArray));
   }
 
   //POST request to IMGUR with image id supplied
@@ -173,6 +188,7 @@ class App {
 
   //GET request to Spoonacular's API with label from Google to get a list of up to 10 recipes containing the item from the image and other nutrition info.
   getRecipes(imageTitle) {
+    console.log(spoonacularDataToSend);
     document.getElementById("recipe_download_text").className = "text-center";
     let spoonacularURL = `https://api.spoonacular.com/recipes/complexSearch?query=${imageTitle}&apiKey=${spoonacularAPIKey}&addRecipeNutrition=true`
     $.ajax({
