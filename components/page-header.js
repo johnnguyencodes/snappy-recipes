@@ -23,9 +23,9 @@ class PageHeader {
     this.getRecipes = getRecipes;
   }
 
-  clickGetFavoritedRecipes(getFavoritedRecipes) {
-    this.getFavoritedRecipes = getFavoritedRecipes;
-  }
+  // clickGetFavoritedRecipes(getFavoritedRecipes) {
+  //   this.getFavoritedRecipes = getFavoritedRecipes;
+  // }
 
   openFavorites() {
     event.preventDefault();
@@ -33,7 +33,7 @@ class PageHeader {
     if (localStorage.getItem('favoritedArray') !== "[]") {
       document.getElementById("empty_favorite_text").className = "d-none";
     }
-    this.getFavoritedRecipes();
+    // this.getFavoritedRecipes();
   }
 
 
@@ -46,17 +46,13 @@ class PageHeader {
     });
     favoritedRecipesElement.className = "favorited-recipes-hidden d-flex flex-column justify-content-center";
     document.querySelector('body').className = "bg-light";
-    setTimeout(() => {
-      while (document.getElementById("favorited_recipes_container").firstChild) {
-        document.getElementById("favorited_recipes_container").removeChild(document.getElementById("favorited_recipes_container").firstChild);
-      }}, 1000);
   }
 
   favoriteCheck() {
     let searchedArray = document.querySelectorAll("#heart_container i");
     let favoritedArrayToCheck = JSON.parse(localStorage.getItem("favoritedArray"));
     for (var i = 0; i < searchedArray.length; i++) {
-      if (favoritedArrayToCheck.includes(parseInt(searchedArray[i].id))) {
+      if (favoritedArrayToCheck.includes(parseInt(searchedArray[i].id.substring(11)))) {
         searchedArray[i].className = "fas fa-heart text-danger heart-icon fa-lg";
       } else {
         searchedArray[i].className = "far fa-heart text-danger heart-icon fa-lg";
