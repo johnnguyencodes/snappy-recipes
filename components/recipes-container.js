@@ -4,15 +4,20 @@ class RecipesHandler {
     this.favoritedRecipesContainer = favoritedRecipesContainer;
   }
 
+    clickGetFavoritedRecipes(getFavoritedRecipes) {
+    this.getFavoritedRecipes = getFavoritedRecipes;
+  }
+
   handleFavoriteClick(id) {
     if (!(favoritedArray.includes(id))) {
       favoritedArray.push(id);
-      document.getElementById(`${id}`).className = "fas fa-heart text-danger heart-icon fa-lg";
+      document.getElementById(`heart_icon_${id}`).className = "fas fa-heart text-danger heart-icon fa-lg";
     } else {
       favoritedArray.splice(favoritedArray.indexOf(id), 1);
-      document.getElementById(`${id}`).className = "far fa-heart text-danger heart-icon fa-lg";
+      document.getElementById(`heart_icon_${id}`).className = "far fa-heart text-danger heart-icon fa-lg";
     }
     localStorage.setItem('favoritedArray', JSON.stringify(favoritedArray));
+    this.getFavoritedRecipes();
   }
 
   handleDeleteClick(id) {
@@ -25,7 +30,6 @@ class RecipesHandler {
   }
 
   displaySearchedRecipes(recipes) {
-    console.log(recipes);
     if (!(recipes.results[0])) {
       document.getElementById("recipe_download_text").className = "text-center d-none";
       document.getElementById("no_recipes_text").className = "text-center";
@@ -60,7 +64,7 @@ class RecipesHandler {
       heartIconContainer.id = "heart_container";
       heartIconContainer.className = "badge badge-light m-1 p-1 border border-danger rounded";
       const heartIcon = document.createElement("i");
-      heartIcon.id = id;
+      heartIcon.id = `heart_icon_${id}`;
       if (favoritedArray.includes(id)) {
         heartIcon.className = "fas fa-heart text-danger heart-icon fa-lg";
       } else {
@@ -132,6 +136,9 @@ class RecipesHandler {
   }
 
   displayFavoritedRecipes(recipes) {
+    while (document.getElementById("favorited_recipes_container").firstChild) {
+      document.getElementById("favorited_recipes_container").removeChild(document.getElementById("favorited_recipes_container").firstChild);
+    }
     for (let i = 0; i < recipes.length; i++) {
       const imageURL = recipes[i].image;
       const title = recipes[i].title;
