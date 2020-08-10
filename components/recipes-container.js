@@ -25,7 +25,8 @@ class RecipesHandler {
   }
 
   displaySearchedRecipes(recipes) {
-    if (!(recipes[0])) {
+    console.log(recipes);
+    if (!(recipes.results[0])) {
       document.getElementById("recipe_download_text").className = "text-center d-none";
       document.getElementById("no_recipes_text").className = "text-center";
       return;
