@@ -7,11 +7,11 @@ if (!(localStorage.getItem('favoritedArray'))) {
 } else {
   favoritedArray = JSON.parse(localStorage.getItem('favoritedArray'));
 }
-let dietString;
-if (!(localStorage.getItem('dietString'))) {
-  dietString = "";
+let restrictionsString;
+if (!(localStorage.getItem('restrictionsString'))) {
+  restrictionsString = "";
 } else {
-  dietString = JSON.parse(localStorage.getItem('dietString'));
+  restrictionsString = JSON.parse(localStorage.getItem('restrictionsString'));
 }
 let intolerancesString;
 if (!(localStorage.getItem('intolerancesString'))) {
@@ -28,7 +28,7 @@ const inputs = document.querySelectorAll(".input");
 const recipeDownloadText = document.getElementById("recipe_download_text");
 const uploadButton = document.getElementById("upload_button");
 const searchButton = document.getElementById("search_button");
-const recipeSearchInput = document.getElementById('recipe_search_input')
+const recipeSearchInput = document.getElementById('recipe_search_input');
 const resetButton = document.getElementById("reset_button");
 const openFavoriteButton = document.getElementById("open_favorites_button");
 const closeFavoriteButton = document.getElementById("close_favorites_button");
@@ -77,6 +77,7 @@ class App {
     this.getFavoritedRecipes = this.getFavoritedRecipes.bind(this);
     this.handleGetFavoritedRecipesSuccess = this.handleGetFavoritedRecipesSuccess.bind(this);
     this.handleGetFavoritedRecipesError = this.handleGetFavoritedRecipesError.bind(this);
+    this.savedDietInfoCheck = this.savedDietInfoCheck.bind(this);
   }
 
   start() {
@@ -84,10 +85,25 @@ class App {
   this.pageHeader.clickPostImage(this.postImage);
   this.pageHeader.clickGetRecipes(this.getRecipes);
   this.pageHeader.clickGetFavoritedRecipes(this.getFavoritedRecipes);
+  this.dietForm.clickDietInfo(this.dietInfo);
+  this.savedDietInfoCheck();
   }
 
   savedDietInfoCheck() {
-
+    let restrictionsCheckboxes = document.getElementsByClassName("restriction-checkbox");
+    let intolerancesCheckboxes = document.getElementsByClassName("intolerance-checkbox");
+    let restrictionsArray = JSON.parse(localStorage.getItem('restrictionsString')).split(',');
+    let intolerancesArray = JSON.parse(localStorage.getItem('intolerancesString')).split(',');
+    for (var i = 0; i < restrictionsCheckboxes.length; i++) {
+      if (restrictionsArray.includes(restrictionsCheckboxes[i].id)) {
+        restrictionsCheckboxes[i].checked = true;
+      }
+    }
+    for (var j = 0; j < intolerancesCheckboxes.length; j++) {
+      if (intolerancesArray.includes(intolerancesCheckboxes[j].id)) {
+        intolerancesCheckboxes[j].checked = true;
+      }
+    }
   }
 
   dietInfo() {
@@ -106,8 +122,8 @@ class App {
       }
     }
     spoonacularDataToSend.diet = restrictionValues.slice(0, -2).replace(/\s/g, '');
-    dietString = spoonacularDataToSend.diet;
-    localStorage.setItem('dietString', JSON.stringify(dietString));
+    restrictionsString = spoonacularDataToSend.diet;
+    localStorage.setItem('restrictionsString', JSON.stringify(restrictionsString));
     spoonacularDataToSend.intolerances = intoleranceValues.slice(0, -2).replace(/\s/g, '');
     intolerancesString = spoonacularDataToSend.intolerances;
     localStorage.setItem('intolerancesString', JSON.stringify(intolerancesString));
@@ -216,7 +232,7 @@ class App {
   }
 
   getFavoritedRecipes() {
-    if (localStorage.getItem('favoritedArray') === "[]") {
+    if (localStorage.getItem('favoritedArray') === null || favoritedArray === null) {
       document.getElementById("empty_favorite_text").className = "col-xs-12 d-flex justify-content-center";
       return;
     }
