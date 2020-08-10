@@ -7,17 +7,17 @@ if (!(localStorage.getItem('favoritedArray'))) {
 } else {
   favoritedArray = JSON.parse(localStorage.getItem('favoritedArray'));
 }
-let dietArray;
-if (!(localStorage.getItem('dietArray'))) {
-  dietArray = [];
+let dietString;
+if (!(localStorage.getItem('dietString'))) {
+  dietString = "";
 } else {
-  dietArray = JSON.parse(localStorage.getItem('dietArray'));
+  dietString = JSON.parse(localStorage.getItem('dietString'));
 }
-let intolerancesArray;
-if (!(localStorage.getItem('intolerancesArray'))) {
-  intolerancesArray = [];
+let intolerancesString;
+if (!(localStorage.getItem('intolerancesString'))) {
+  intolerancesString = [];
 } else {
-  dietArray = JSON.parse(localStorage.getItem('intolerancesArray'));
+  intolerancesString = JSON.parse(localStorage.getItem('intolerancesString'));
 }
 const dietMenu = document.getElementById("diet_menu");
 let fileInputForm = document.getElementById("file_input_form");
@@ -106,11 +106,11 @@ class App {
       }
     }
     spoonacularDataToSend.diet = restrictionValues.slice(0, -2).replace(/\s/g, '');
-    dietArray = spoonacularDataToSend.diet;
-    localStorage.setItem('dietArray', JSON.stringify(dietArray));
+    dietString = spoonacularDataToSend.diet;
+    localStorage.setItem('dietString', JSON.stringify(dietString));
     spoonacularDataToSend.intolerances = intoleranceValues.slice(0, -2).replace(/\s/g, '');
-    intolerancesArray = spoonacularDataToSend.intolerances;
-    localStorage.setItem('intolerancesArray', JSON.stringify(intolerancesArray));
+    intolerancesString = spoonacularDataToSend.intolerances;
+    localStorage.setItem('intolerancesString', JSON.stringify(intolerancesString));
   }
 
   //POST request to IMGUR with image id supplied
