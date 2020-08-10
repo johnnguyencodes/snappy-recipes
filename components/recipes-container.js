@@ -25,6 +25,12 @@ class RecipesHandler {
   }
 
   displaySearchedRecipes(recipes) {
+    console.log(recipes);
+    if (!(recipes.results[0])) {
+      document.getElementById("recipe_download_text").className = "text-center d-none";
+      document.getElementById("no_recipes_text").className = "text-center";
+      return;
+    }
     for (let i = 0; i < recipes.results.length; i++) {
       const imageURL = recipes.results[i].image;
       const title = recipes.results[i].title;

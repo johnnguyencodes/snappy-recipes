@@ -29,9 +29,12 @@ class PageHeader {
 
   openFavorites() {
     event.preventDefault();
-    this.getFavoritedRecipes();
     favoritedRecipesElement.className = "favorited-recipes-visible d-flex flex-column justify-content-center";
+    if (localStorage.getItem('favoritedArray') !== "[]") {
+      document.getElementById("empty_favorite_text").className = "d-none";
     }
+    this.getFavoritedRecipes();
+  }
 
 
   closeFavorites() {
@@ -114,7 +117,6 @@ class PageHeader {
     for (var i = 0; i < inputs.length; i++) {
       inputs[i].disabled = true;
     }
-    // recipeDownloadText.className = "text-center";
     this.dietInfo();
     this.getRecipes(query);
   }
@@ -133,6 +135,9 @@ class PageHeader {
     while (document.getElementById("recipe")) {
       document.getElementById("recipe").remove();
     }
+    document.getElementById("no_recipes_text").className = "text-center d-none";
+    document.getElementById("image_not_recognized_text").className = "text-center d-none";
+
   }
 
 }
