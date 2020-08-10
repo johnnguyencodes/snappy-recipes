@@ -26,7 +26,8 @@ class RecipesHandler {
 
   displaySearchedRecipes(recipes) {
     if (!(recipes[0])) {
-      //unhide text saying no results in search
+      document.getElementById("recipe_download_text").className = "text-center d-none";
+      document.getElementById("no_recipes_text").className = "text-center";
       return;
     }
     for (let i = 0; i < recipes.results.length; i++) {

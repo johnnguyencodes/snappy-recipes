@@ -175,9 +175,9 @@ class App {
 
   handleImageRecognitionSuccess(response) {
     if (!(response.responses[0].labelAnnotations)) {
-      alert("Sorry, your image could not be recognized. Please upload a different image or enter a search");
-      document.getElementById("my_image").src = "";
       document.getElementById("title_download_text").className = "d-none";
+      document.getElementById("image_not_recognized_text").className = "text-center";
+      document.getElementById("my_image").src = "";
       return;
     }
     const imageTitle = response.responses[0].labelAnnotations[0].description;
