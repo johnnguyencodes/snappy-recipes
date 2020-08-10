@@ -84,9 +84,10 @@ class App {
   this.pageHeader.clickDietInfo(this.dietInfo);
   this.pageHeader.clickPostImage(this.postImage);
   this.pageHeader.clickGetRecipes(this.getRecipes);
-  this.pageHeader.clickGetFavoritedRecipes(this.getFavoritedRecipes);
+  this.recipesHandler.clickGetFavoritedRecipes(this.getFavoritedRecipes);
   this.dietForm.clickDietInfo(this.dietInfo);
   this.savedDietInfoCheck();
+  this.getFavoritedRecipes();
   }
 
   savedDietInfoCheck() {
@@ -232,7 +233,7 @@ class App {
   }
 
   getFavoritedRecipes() {
-    if (localStorage.getItem('favoritedArray') === null || favoritedArray === null) {
+    if (localStorage.getItem('favoritedArray') === "[]" || favoritedArray === []) {
       document.getElementById("empty_favorite_text").className = "col-xs-12 d-flex justify-content-center";
       return;
     }
