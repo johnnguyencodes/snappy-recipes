@@ -7,6 +7,18 @@ if (!(localStorage.getItem('favoritedArray'))) {
 } else {
   favoritedArray = JSON.parse(localStorage.getItem('favoritedArray'));
 }
+let restrictionsString;
+if (!(localStorage.getItem('restrictionsString'))) {
+  restrictionsString = "";
+} else {
+  restrictionsString = JSON.parse(localStorage.getItem('restrictionsString'));
+}
+let intolerancesString;
+if (!(localStorage.getItem('intolerancesString'))) {
+  intolerancesString = [];
+} else {
+  intolerancesString = JSON.parse(localStorage.getItem('intolerancesString'));
+}
 const dietMenu = document.getElementById("diet_menu");
 let fileInputForm = document.getElementById("file_input_form");
 const fileLabel = document.getElementById("custom_file_label");
@@ -16,7 +28,7 @@ const inputs = document.querySelectorAll(".input");
 const recipeDownloadText = document.getElementById("recipe_download_text");
 const uploadButton = document.getElementById("upload_button");
 const searchButton = document.getElementById("search_button");
-const recipeSearchInput = document.getElementById('recipe_search_input')
+const recipeSearchInput = document.getElementById('recipe_search_input');
 const resetButton = document.getElementById("reset_button");
 const openFavoriteButton = document.getElementById("open_favorites_button");
 const closeFavoriteButton = document.getElementById("close_favorites_button");
@@ -65,6 +77,7 @@ class App {
     this.getFavoritedRecipes = this.getFavoritedRecipes.bind(this);
     this.handleGetFavoritedRecipesSuccess = this.handleGetFavoritedRecipesSuccess.bind(this);
     this.handleGetFavoritedRecipesError = this.handleGetFavoritedRecipesError.bind(this);
+    this.savedDietInfoCheck = this.savedDietInfoCheck.bind(this);
   }
 
   start() {
@@ -72,26 +85,48 @@ class App {
   this.pageHeader.clickPostImage(this.postImage);
   this.pageHeader.clickGetRecipes(this.getRecipes);
   this.pageHeader.clickGetFavoritedRecipes(this.getFavoritedRecipes);
-  // this.getFavoritedRecipes();
+  this.dietForm.clickDietInfo(this.dietInfo);
+  this.savedDietInfoCheck();
+  }
+
+  savedDietInfoCheck() {
+    let restrictionsCheckboxes = document.getElementsByClassName("restriction-checkbox");
+    let intolerancesCheckboxes = document.getElementsByClassName("intolerance-checkbox");
+    let restrictionsArray = JSON.parse(localStorage.getItem('restrictionsString')).split(',');
+    let intolerancesArray = JSON.parse(localStorage.getItem('intolerancesString')).split(',');
+    for (var i = 0; i < restrictionsCheckboxes.length; i++) {
+      if (restrictionsArray.includes(restrictionsCheckboxes[i].id)) {
+        restrictionsCheckboxes[i].checked = true;
+      }
+    }
+    for (var j = 0; j < intolerancesCheckboxes.length; j++) {
+      if (intolerancesArray.includes(intolerancesCheckboxes[j].id)) {
+        intolerancesCheckboxes[j].checked = true;
+      }
+    }
   }
 
   dietInfo() {
     let restrictionValues = "";
     let intoleranceValues = "";
-    var restrictionCheckboxes = document.getElementsByClassName("restrictionCheckbox");
+    var restrictionCheckboxes = document.getElementsByClassName("restriction-checkbox");
     for (var i = 0; i < restrictionCheckboxes.length; i++) {
       if (restrictionCheckboxes[i].checked) {
         restrictionValues += restrictionCheckboxes[i].value + ", ";
       }
     }
-    var intoleranceCheckboxes = document.getElementsByClassName("intoleranceCheckbox");
+    var intoleranceCheckboxes = document.getElementsByClassName("intolerance-checkbox");
     for (var j = 0; j < intoleranceCheckboxes.length; j++) {
       if (intoleranceCheckboxes[j].checked) {
         intoleranceValues += intoleranceCheckboxes[j].value + ", ";
       }
     }
-    spoonacularDataToSend.diet = restrictionValues.slice(0, -2)
-    spoonacularDataToSend.intolerances = intoleranceValues.slice(0, -2);
+    spoonacularDataToSend.diet = restrictionValues.slice(0, -2).replace(/\s/g, '');
+    restrictionsString = spoonacularDataToSend.diet;
+    localStorage.setItem('restrictionsString', JSON.stringify(restrictionsString));
+    spoonacularDataToSend.intolerances = intoleranceValues.slice(0, -2).replace(/\s/g, '');
+    intolerancesString = spoonacularDataToSend.intolerances;
+    localStorage.setItem('intolerancesString', JSON.stringify(intolerancesString));
   }
 
   //POST request to IMGUR with image id supplied
@@ -156,7 +191,8 @@ class App {
 
   handleImageRecognitionSuccess(response) {
     if (!(response.responses[0].labelAnnotations)) {
-      alert("Sorry, your image could not be recognized. Please upload a different image or enter a search");
+      document.getElementById("title_download_text").className = "d-none";
+      document.getElementById("image_not_recognized_text").className = "text-center";
       document.getElementById("my_image").src = "";
       return;
     }
@@ -172,6 +208,7 @@ class App {
 
   //GET request to Spoonacular's API with label from Google to get a list of up to 10 recipes containing the item from the image and other nutrition info.
   getRecipes(imageTitle) {
+    console.log(spoonacularDataToSend);
     document.getElementById("recipe_download_text").className = "text-center";
     let spoonacularURL = `https://api.spoonacular.com/recipes/complexSearch?query=${imageTitle}&apiKey=${spoonacularAPIKey}&addRecipeNutrition=true`
     $.ajax({
@@ -195,7 +232,7 @@ class App {
   }
 
   getFavoritedRecipes() {
-    if (localStorage.getItem('favoritedArray') === "[]") {
+    if (localStorage.getItem('favoritedArray') === null || favoritedArray === null) {
       document.getElementById("empty_favorite_text").className = "col-xs-12 d-flex justify-content-center";
       return;
     }
