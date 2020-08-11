@@ -31,11 +31,15 @@ class RecipesHandler {
 
   handleExternalClick(URL) {
     document.getElementById("modal_container").className="";
-    document.querySelector("body").className = "noscroll";
-    document.getElementById("external_link_button").href = URL;
+    document.querySelector("body").className = "bg-light freeze";
+    document.getElementById("external_link_button").addEventListener("click", () => {
+      window.open(URL, "_blank"),
+      document.getElementById("modal_container").className="d-none",
+      document.querySelector("body").className = "bg-light"
+    });
     document.getElementById("go_back_button").addEventListener("click", () => {
       document.getElementById("modal_container").className = "d-none";
-      document.querySelector("body").className = "";
+      document.querySelector("body").className = "bg-light";
     });
   }
 
@@ -167,7 +171,7 @@ class RecipesHandler {
       recipeCard.id = id;
       const imageContainer = document.createElement("div");
       const titleAnchorTag = document.createElement("a");
-      titleAnchorTag.href = recipeURL;
+      // titleAnchorTag.href = recipeURL;
       titleAnchorTag.addEventListener("click", this.handleExternalClick.bind(this, recipeURL));
       imageContainer.className = "d-flex justify-content-center"
       const img = document.createElement("img");
