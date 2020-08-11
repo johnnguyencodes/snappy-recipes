@@ -23,17 +23,13 @@ class PageHeader {
     this.getRecipes = getRecipes;
   }
 
-  // clickGetFavoritedRecipes(getFavoritedRecipes) {
-  //   this.getFavoritedRecipes = getFavoritedRecipes;
-  // }
-
   openFavorites() {
     event.preventDefault();
     favoritedRecipesElement.className = "favorited-recipes-visible d-flex flex-column justify-content-center";
     if (localStorage.getItem('favoritedArray') !== "[]") {
       document.getElementById("empty_favorite_text").className = "d-none";
     }
-    // this.getFavoritedRecipes();
+    document.getElementById("content").className="noscroll";
   }
 
 
@@ -42,10 +38,11 @@ class PageHeader {
     this.favoriteCheck();
     window.scrollTo({
       top: 0,
-      behavior: "smooth"
-    });
+      behavior: "auto"
+    })
     favoritedRecipesElement.className = "favorited-recipes-hidden d-flex flex-column justify-content-center";
-    document.querySelector('body').className = "bg-light";
+    document.getElementById("content").className = "";
+
   }
 
   favoriteCheck() {

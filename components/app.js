@@ -163,7 +163,7 @@ class App {
       success: this.handlePostImageSuccess,
       error: this.handlePostImageError
     })
-    }
+  }
 
   handlePostImageSuccess(data) {
     const imageURL = data.data.link;
@@ -209,7 +209,6 @@ class App {
 
   //GET request to Spoonacular's API with label from Google to get a list of up to 10 recipes containing the item from the image and other nutrition info.
   getRecipes(imageTitle) {
-    console.log(spoonacularDataToSend);
     document.getElementById("recipe_download_text").className = "text-center";
     let spoonacularURL = `https://api.spoonacular.com/recipes/complexSearch?query=${imageTitle}&apiKey=${spoonacularAPIKey}&addRecipeNutrition=true`
     $.ajax({
