@@ -30,15 +30,19 @@ class PageHeader {
       document.getElementById("empty_favorite_text").className = "d-none";
     }
     document.getElementById("content").className="noscroll";
+    favoritedRecipesElement.style.position = "absolute";
   }
 
 
   closeFavorites() {
     event.preventDefault();
     this.favoriteCheck();
-    document.getElementById("content").scrollTop = 0;
+    window.scrollTo({
+      top: 0,
+      behavior: "auto"
+    })
     favoritedRecipesElement.className = "favorited-recipes-hidden d-flex flex-column justify-content-center";
-    setTimeout(() => favoritedRecipesElement.scrollTop = 0, 500);
+    setTimeout(() => favoritedRecipesElement.style.position = "fixed", 500);
     document.getElementById("content").className = "";
 
   }

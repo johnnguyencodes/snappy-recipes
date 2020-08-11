@@ -88,8 +88,8 @@ table {
   width: 350px;
   top: 0;
   right: -355px;
-  position: fixed;
   transition: 0.3s ease-in-out;
+  position: fixed;
   border-left: 3px black solid;
   box-shadow: 5px 5px rgba(0, 0, 0, 0.4);
   background-color: white;
