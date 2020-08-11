@@ -163,7 +163,7 @@ class App {
       success: this.handlePostImageSuccess,
       error: this.handlePostImageError
     })
-    }
+  }
 
   handlePostImageSuccess(data) {
     const imageURL = data.data.link;
