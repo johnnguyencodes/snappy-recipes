@@ -31,8 +31,11 @@ table {
 }
 
 .noscroll {
-  overflow: hidden;
+  max-height: 100vh;
+  overflow-y: hidden;
 }
+
+
 
 .custom-file-label::after {
     left: 0;
@@ -65,24 +68,9 @@ table {
   background-color: white;
 }
 
-.favorited-recipes-hidden {
-  z-index: 3;
-  min-height: 100vh;
-  height: 100%;
-  width: 350px;
-  position: absolute;
-  top: 0;
-  right: -355px;
-  transition: 0.3s ease-in-out;
-  border-left: 3px black solid;
-  box-shadow: 5px 5px rgba(0, 0, 0, 0.4);
-  background-color: white;
-  overflow: auto;
-  overscroll-behavior: contain;
-}
-
 .diet-menu-visible {
   z-index: 3;
+  min-height: 100vh;
   height: 100%;
   width: 350px;
   position: absolute;
@@ -94,9 +82,29 @@ table {
   background-color: white;
 }
 
+.favorited-recipes-hidden {
+  z-index: 3;
+  /* height: 100%;
+  min-height: 100vh;
+  max-height: 100vh; */
+  width: 350px;
+  position: absolute;
+  top: 0;
+  right: -355px;
+  transition: 0.3s ease-in-out;
+  border-left: 3px black solid;
+  box-shadow: 5px 5px rgba(0, 0, 0, 0.4);
+  background-color: white;
+  overflow: auto;
+  overscroll-behavior: contain;
+  max-height: 100vh;
+  overflow-y: hidden;
+}
+
 .favorited-recipes-visible {
   z-index: 3;
-  min-height: 100vh;
+  /* min-height: 100vh;
+  height: auto; */
   width: 350px;
   position: absolute;
   top: 0;
@@ -123,6 +131,25 @@ table {
 
 span {
   white-space: nowrap;
+}
+
+#modal_container {
+  z-index: 4;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100%;
+  background-color: rgba(0,0,0,0.3);
+}
+
+.modal-overlay {
+  z-index: 4;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 
 /* @media screen and (max-height: 450px) {
