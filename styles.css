@@ -31,8 +31,7 @@ table {
 }
 
 .noscroll {
-  max-height: 100vh;
-  overflow-y: hidden;
+  position: fixed;
 }
 
 
@@ -84,27 +83,25 @@ table {
 
 .favorited-recipes-hidden {
   z-index: 3;
-  /* height: 100%;
   min-height: 100vh;
-  max-height: 100vh; */
+  height: auto;
   width: 350px;
-  position: absolute;
   top: 0;
   right: -355px;
+  position: fixed;
   transition: 0.3s ease-in-out;
   border-left: 3px black solid;
   box-shadow: 5px 5px rgba(0, 0, 0, 0.4);
   background-color: white;
   overflow: auto;
   overscroll-behavior: contain;
-  max-height: 100vh;
   overflow-y: hidden;
 }
 
 .favorited-recipes-visible {
   z-index: 3;
-  /* min-height: 100vh;
-  height: auto; */
+  min-height: 100vh;
+  height: auto;
   width: 350px;
   position: absolute;
   top: 0;
