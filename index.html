@@ -24,8 +24,7 @@
         </div>
         <div class="modal-body text-left">
           <p class="mb-2">
-            You are now navigating to a different website.<br>
-            The website will open in a new tab.
+            You are now navigating to a different website, and it will open in a new browser tab.
           </p>
         </div>
         <div class="modal-footer d-flex justify-content-around">
@@ -45,13 +44,13 @@
       <button id="close_favorites_button" class="btn btn-danger col-3 offset-4 mb-3">Close</button>
     </div>
   </div>
-  <div id="content">
-    <header class="col-xs-12 d-flex flex-column align-items-center mb-2">
+  <div id="content" class="row">
+    <div class="section-1 col-md-6 col-lg-4 col-xl-3">
+    <header class="col-xs-12 col-sm-12 col-md-12 col-lg-12 d-flex flex-column align-items-center mb-2">
       <h1> <span class="badge badge-primary">Snappy Recipes <i class="fa fa-utensils"></i></span></h1>
-      <p class="m-2 text-center">Find recipes by uploading an <strong>image</strong>,
-        <br>or by entering a <strong>search</strong>.</p>
+      <p class="m-2 text-center">Find recipes by uploading an <strong>image</strong>, or by entering a <strong>search</strong>.</p>
     </header>
-    <form class="col-xs-12">
+    <form class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
       <div class="form-group col-xs-12 d-flex justify-content-around">
         <button id="open_diet_menu_button" class="btn btn-warning input">Diet Preferences</button>
         <button id="open_favorites_button" class="btn btn-danger">Favorites</button>
@@ -61,7 +60,7 @@
         <div class="input-group mb-3">
           <div class="custom-file">
             <input type="file" id="file_input_form" class="custom-file-input input">
-            <label id="custom_file_label" class="custom-file-label text-center input" for="file_input_form"></label>
+            <label id="custom_file_label" class="custom-file-label input text-center" for="file_input_form"></label>
           </div>
           <div class="input-group-prepend">
             <button id="upload_button" class="btn btn-primary rounded-right input">Upload</button>
@@ -183,17 +182,20 @@
         <button id="close_diet_menu_button"class="btn btn-warning col-3 offset-4">Done</button>
       </div>
     </div>
-    <div class="image-container col-xs-12 d-flex justify-content-center my-3">
+    <div class="image-container col-xs-12 col-sm-12 col-md-12 col-lg-12 d-flex justify-content-center my-3">
       <img id="my_image" src="" alt="">
     </div>
-    <div id="title_container" class="col-xs-12 d-flex justify-content-around mb-3">
+    <div id="title_container" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 d-flex justify-content-around mb-3">
       <p id="title_download_text" class="text-center d-none">Recognizing image...</p>
       <p id="image_not_recognized_text" class="text-center d-none">Your image could not be recognized. Please upload a different image or enter a search.</p>
     </div>
-    <div id="recipes_container" class="col-xs-12 d-flex flex-column align-items-center justify-content-center">
+    </div>
+    <div class="section2 col-md-6 col-lg-8 col-xl-9">
+    <div id="recipes_container" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 d-flex flex-row flex-wrap align-items-center justify-content-center">
         <p id="recipe_download_text" class="text-center d-none">Gathering recipes...</p>
         <p id="no_recipes_text" class="text-center d-none">No recipes found. Please modify your diet preferences and try again, or upload a different image, or enter a different search.</p>
     </div>
+  </div>
   </div>
   <div id="modal_overlay"></div>
   <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
