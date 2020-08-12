@@ -26,7 +26,7 @@ class PageHeader {
   openFavorites() {
     event.preventDefault();
     favoritedRecipesElement.className = "favorited-recipes-visible d-flex flex-column justify-content-center";
-    if (localStorage.getItem('favoritedArray') !== "[]") {
+    if (localStorage.getItem('favoritedArray') !== null ) {
       document.getElementById("empty_favorite_text").className = "d-none";
     }
     document.getElementById("content").className="noscroll";
@@ -98,7 +98,6 @@ class PageHeader {
       fileInputForm.disabled = true;
     }
     fileLabel.textContent = fileName;
-    console.log(fileLabel.textContent);
   }
 
   search(event) {
@@ -129,6 +128,7 @@ class PageHeader {
     while (document.getElementById("recipe")) {
       document.getElementById("recipe").remove();
     }
+    document.getElementById("recipe_download_text").className = "text-center d-none";
     document.getElementById("no_recipes_text").className = "text-center d-none";
     document.getElementById("image_not_recognized_text").className = "text-center d-none";
 
