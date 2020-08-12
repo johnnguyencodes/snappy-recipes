@@ -25,7 +25,7 @@ class RecipesHandler {
     document.getElementById(`${id}`).remove();
     localStorage.setItem('favoritedArray', JSON.stringify(favoritedArray));
     if (localStorage.getItem('favoritedArray') === "[]") {
-      document.getElementById("empty_favorite_text").className = "col-xs-12 d-flex justify-content-center";
+      document.getElementById("empty_favorite_text").className = "col-xs-12 col-sm-10 offset-sm-1 d-flex justify-content-center";
     }
   }
 
@@ -50,7 +50,7 @@ class RecipesHandler {
       return;
     }
     for (let i = 0; i < recipes.results.length; i++) {
-      const imageURL = recipes.results[i].image;
+      const imageURL = `${recipes.results[i].image.substring(0, recipes.results[i].image.length - 11)}636x393.jpg`;
       const title = recipes.results[i].title;
       const readyInMinutes = recipes.results[i].readyInMinutes;
       const servings = recipes.results[i].servings;
@@ -63,14 +63,14 @@ class RecipesHandler {
       const sodiumAmount = Math.round(recipes.results[i].nutrition.nutrients[7].amount);
       const id = recipes.results[i].id;
       const recipeCard = document.createElement("div");
-      recipeCard.className = "recipe-card card mb-5 mx-3 pt-3 col-xs-12";
+      recipeCard.className = "recipe-card card mx-3 my-3 px-0 col-xs-12 col-sm-6 col-md-6 col-lg-3 h-100";
       recipeCard.id = "recipe";
       const imageContainer = document.createElement("div");
       const titleAnchorTag = document.createElement("a");
       titleAnchorTag.addEventListener("click", this.handleExternalClick.bind(this, recipeURL));
       imageContainer.className = "d-flex justify-content-center"
       const img = document.createElement("img");
-      imageContainer.className = "card-image-top d-flex justify-content-center";
+      imageContainer.className = "card-image-top d-flex justify-content-center my-3";
       img.src = imageURL;
       img.alt = "Recipe Image";
       img.className = "m-0 p-0";
@@ -121,7 +121,7 @@ class RecipesHandler {
       sodiumSpan.className = "badge badge-secondary mb-1 mr-1";
       sodiumSpan.textContent = `${sodiumAmount}mg Sodium`;
       const cardText3 = document.createElement("div");
-      cardText3.className = "card=text d-flex flex-wrap";
+      cardText3.className = "card-text d-flex flex-wrap";
       if (recipes.results[i].diets) {
         for (var j = 0; j < recipes.results[i].diets.length; j++) {
           const dietSpan = document.createElement("span");
@@ -154,7 +154,7 @@ class RecipesHandler {
       document.getElementById("favorited_recipes_container").removeChild(document.getElementById("favorited_recipes_container").firstChild);
     }
     for (let i = 0; i < recipes.length; i++) {
-      const imageURL = recipes[i].image;
+      const imageURL = `${recipes[i].image.substring(0, recipes[i].image.length-11)}636x393.jpg`;
       const title = recipes[i].title;
       const readyInMinutes = recipes[i].readyInMinutes;
       const servings = recipes[i].servings;
@@ -167,7 +167,7 @@ class RecipesHandler {
       const sodiumAmount = Math.round(recipes[i].nutrition.nutrients[7].amount);
       const id = recipes[i].id;
       const recipeCard = document.createElement("div");
-      recipeCard.className = "favorited-recipe-card card mb-5 mx-3 pt-3 col-xs-12";
+      recipeCard.className = "favorited-recipe-card card my-3 mx-3 pt-3 col-11";
       recipeCard.id = id;
       const imageContainer = document.createElement("div");
       const titleAnchorTag = document.createElement("a");

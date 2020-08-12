@@ -210,7 +210,7 @@ class App {
   //GET request to Spoonacular's API with label from Google to get a list of up to 10 recipes containing the item from the image and other nutrition info.
   getRecipes(imageTitle) {
     document.getElementById("recipe_download_text").className = "text-center";
-    let spoonacularURL = `https://api.spoonacular.com/recipes/complexSearch?query=${imageTitle}&apiKey=${spoonacularAPIKey}&addRecipeNutrition=true`
+    let spoonacularURL = `https://api.spoonacular.com/recipes/complexSearch?query=${imageTitle}&apiKey=${spoonacularAPIKey}&addRecipeNutrition=true&636x393&number=12`
     $.ajax({
       method: "GET",
       url: spoonacularURL,
@@ -232,14 +232,14 @@ class App {
   }
 
   getFavoritedRecipes() {
-    if (localStorage.getItem('favoritedArray') === "[]" || favoritedArray === []) {
-      document.getElementById("empty_favorite_text").className = "col-xs-12 d-flex justify-content-center";
+    if (localStorage.getItem('favoritedArray') === null) {
+      document.getElementById("empty_favorite_text").className = "d-flex justify-content-center";
       return;
     }
     document.getElementById("favorite_recipe_download_text").className = "text-center";
     favoritedArray = JSON.parse(localStorage.getItem('favoritedArray'));
     let stringifiedArray = favoritedArray.join(",");
-    let spoonacularURL = `https://api.spoonacular.com/recipes/informationBulk?ids=${stringifiedArray}&apiKey=${spoonacularAPIKey}&includeNutrition=true&size=312x231`
+    let spoonacularURL = `https://api.spoonacular.com/recipes/informationBulk?ids=${stringifiedArray}&apiKey=${spoonacularAPIKey}&includeNutrition=true&size=636x393`
     $.ajax({
       method: "GET",
       url: spoonacularURL,
