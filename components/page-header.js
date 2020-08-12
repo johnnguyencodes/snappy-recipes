@@ -95,9 +95,10 @@ class PageHeader {
   handleAddImage() {
     let fileName = document.getElementById("file_input_form").files[0].name;
     if (fileName) {
-      fileInputForm = true;
+      fileInputForm.disabled = true;
     }
     fileLabel.textContent = fileName;
+    console.log(fileLabel.textContent);
   }
 
   search(event) {

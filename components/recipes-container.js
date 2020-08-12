@@ -25,7 +25,7 @@ class RecipesHandler {
     document.getElementById(`${id}`).remove();
     localStorage.setItem('favoritedArray', JSON.stringify(favoritedArray));
     if (localStorage.getItem('favoritedArray') === "[]") {
-      document.getElementById("empty_favorite_text").className = "col-xs-12 d-flex justify-content-center";
+      document.getElementById("empty_favorite_text").className = "col-xs-12 col-sm-10 offset-sm-1 d-flex justify-content-center";
     }
   }
 
@@ -50,7 +50,7 @@ class RecipesHandler {
       return;
     }
     for (let i = 0; i < recipes.results.length; i++) {
-      const imageURL = recipes.results[i].image;
+      const imageURL = `${recipes.results[i].image.substring(0, recipes.results[i].image.length - 11)}636x393.jpg`;
       const title = recipes.results[i].title;
       const readyInMinutes = recipes.results[i].readyInMinutes;
       const servings = recipes.results[i].servings;
@@ -63,7 +63,7 @@ class RecipesHandler {
       const sodiumAmount = Math.round(recipes.results[i].nutrition.nutrients[7].amount);
       const id = recipes.results[i].id;
       const recipeCard = document.createElement("div");
-      recipeCard.className = "recipe-card card mb-5 mx-3 pt-3 col-xs-12";
+      recipeCard.className = "recipe-card card mb-5 mx-3 pt-3 col-xs-12 col-sm-6 col-md-6 col-lg-3";
       recipeCard.id = "recipe";
       const imageContainer = document.createElement("div");
       const titleAnchorTag = document.createElement("a");
@@ -150,11 +150,13 @@ class RecipesHandler {
   }
 
   displayFavoritedRecipes(recipes) {
+    console.log(recipes);
     while (document.getElementById("favorited_recipes_container").firstChild) {
       document.getElementById("favorited_recipes_container").removeChild(document.getElementById("favorited_recipes_container").firstChild);
     }
     for (let i = 0; i < recipes.length; i++) {
-      const imageURL = recipes[i].image;
+      const imageURL = `${recipes[i].image.substring(0, recipes[i].image.length-11)}636x393.jpg`;
+      console.log(imageURL);
       const title = recipes[i].title;
       const readyInMinutes = recipes[i].readyInMinutes;
       const servings = recipes[i].servings;
@@ -167,7 +169,7 @@ class RecipesHandler {
       const sodiumAmount = Math.round(recipes[i].nutrition.nutrients[7].amount);
       const id = recipes[i].id;
       const recipeCard = document.createElement("div");
-      recipeCard.className = "favorited-recipe-card card mb-5 mx-3 pt-3 col-xs-12";
+      recipeCard.className = "favorited-recipe-card card mb-5 mx-3 pt-3 col-xs-12 col-sm-6 col-md-4";
       recipeCard.id = id;
       const imageContainer = document.createElement("div");
       const titleAnchorTag = document.createElement("a");

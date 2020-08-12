@@ -174,3 +174,110 @@ span {
 /* @media (min-width: @screen-lg-min) {
 
  } */
+
+ /* Extra small devices (phones, 600px and down) */
+/* @media only screen and (max-width: 600px) {...} */
+
+@media only screen and (min-width: 275px) {
+  #recipes_container img {
+    max-width: 189px;
+  }
+}
+
+@media only screen and (min-width: 375px) {
+  #recipes_container img {
+    max-width: 264px;
+  }
+}
+
+@media only screen and (min-width: 450px) {
+  #recipes_container img {
+    max-width: 339px;
+  }
+}
+
+@media only screen and (min-width: 500px) {
+  #recipes_container img {
+    max-width: 390px;
+  }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 576px) {
+  #recipes_container img {
+    max-width: 188px;
+  }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+  #recipes_container img {
+    max-width: 240px;
+  }
+  .recipe-card {
+    min-width: 268px;
+  }
+}
+
+@media only screen and (min-width: 1110px) {
+  #recipes_container img {
+    max-width: 254px;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  #recipes_container img {
+    max-width: 236px;
+  }
+}
+
+@media only screen and (min-width: 1300px) {
+  #recipes_container img {
+    max-width: 236;
+  }
+}
+
+@media only screen and (min-width: 1400px) {
+  #recipes_container img {
+    max-width: 236px;
+  }
+}
+
+
+
+@media only screen and (min-width: 1500px) {
+  #recipes_container img {
+    max-width: 236px;
+  }
+}
+
+@media only screen and (min-width: 1600px) {
+  #recipes_container img {
+    max-width: 255px;
+  }
+}
+
+@media only screen and (min-width: 1700px) {
+  #recipes_container img {
+    max-width: 274px;
+  }
+}
+
+@media only screen and (min-width: 1800px) {
+  #recipes_container img {
+    max-width: 292px;
+  }
+}
+
+@media only screen and (min-width: 1900px) {
+  #recipes_container img {
+    max-width: 311px;
+  }
+}
+
+
+/* Large devices (laptops/desktops, 992px and up) */
+/* @media only screen and (min-width: 992px) {...} */
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+/* @media only screen and (min-width: 1200px) {...} */
