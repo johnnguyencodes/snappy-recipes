@@ -172,7 +172,6 @@ class RecipesHandler {
       recipeCard.id = id;
       const imageContainer = document.createElement("div");
       const titleAnchorTag = document.createElement("a");
-      // titleAnchorTag.href = recipeURL;
       titleAnchorTag.addEventListener("click", this.handleExternalClick.bind(this, recipeURL));
       imageContainer.className = "d-flex justify-content-center"
       const img = document.createElement("img");
