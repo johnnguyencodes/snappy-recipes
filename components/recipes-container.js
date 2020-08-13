@@ -44,6 +44,7 @@ class RecipesHandler {
   }
 
   displaySearchedRecipes(recipes) {
+    console.log(recipes);
     if (!(recipes.results[0])) {
       document.getElementById("recipe_download_text").className = "text-center d-none";
       document.getElementById("no_recipes_text").className = "text-center";
@@ -63,7 +64,7 @@ class RecipesHandler {
       const sodiumAmount = Math.round(recipes.results[i].nutrition.nutrients[7].amount);
       const id = recipes.results[i].id;
       const recipeCard = document.createElement("div");
-      recipeCard.className = "recipe-card card mx-3 my-3 px-0 col-xs-12 col-sm-6 col-md-6 col-lg-3 h-100";
+      recipeCard.className = "recipe-card card mx-3 my-3 px-0 col-xs-12 col-sm-5 col-md-5 col-lg-3 col-xl-2 h-100";
       recipeCard.id = "recipe";
       const imageContainer = document.createElement("div");
       const titleAnchorTag = document.createElement("a");
@@ -171,7 +172,6 @@ class RecipesHandler {
       recipeCard.id = id;
       const imageContainer = document.createElement("div");
       const titleAnchorTag = document.createElement("a");
-      // titleAnchorTag.href = recipeURL;
       titleAnchorTag.addEventListener("click", this.handleExternalClick.bind(this, recipeURL));
       imageContainer.className = "d-flex justify-content-center"
       const img = document.createElement("img");

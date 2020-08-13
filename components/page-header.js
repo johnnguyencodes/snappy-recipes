@@ -29,7 +29,8 @@ class PageHeader {
     if (localStorage.getItem('favoritedArray') !== null ) {
       document.getElementById("empty_favorite_text").className = "d-none";
     }
-    document.getElementById("content").className="noscroll";
+    document.getElementById("content").className="row noscroll";
+    document.getElementById("overlay").className = "";
   }
 
 
@@ -41,7 +42,8 @@ class PageHeader {
       behavior: "auto"
     })
     favoritedRecipesElement.className = "favorited-recipes-hidden d-flex flex-column justify-content-center";
-    document.getElementById("content").className = "";
+    document.getElementById("content").className = "row";
+    document.getElementById("overlay").className = "d-none";
 
   }
 
