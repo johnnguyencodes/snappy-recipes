@@ -4,6 +4,7 @@ const spoonacularAPIKey = config.spoonacularAPIKey;
 let favoritedArray;
 if (!(localStorage.getItem('favoritedArray'))) {
   favoritedArray = [];
+  // localStorage.setItem('favoritedArray', JSON.stringify(favoritedArray));
 } else {
   favoritedArray = JSON.parse(localStorage.getItem('favoritedArray'));
 }
@@ -91,6 +92,9 @@ class App {
   }
 
   savedDietInfoCheck() {
+    if (!(localStorage.getItem('restrictionsString')) || !(localstorage.getItem('intolerancesString'))) {
+      return;
+    }
     let restrictionsCheckboxes = document.getElementsByClassName("restriction-checkbox");
     let intolerancesCheckboxes = document.getElementsByClassName("intolerance-checkbox");
     let restrictionsArray = JSON.parse(localStorage.getItem('restrictionsString')).split(',');
@@ -232,7 +236,7 @@ class App {
   }
 
   getFavoritedRecipes() {
-    if (localStorage.getItem('favoritedArray') === null) {
+    if (!(localStorage.getItem('favoritedArray'))) {
       document.getElementById("empty_favorite_text").className = "d-flex justify-content-center";
       return;
     }
