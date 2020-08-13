@@ -9,6 +9,7 @@ class PageHeader {
     openFavoriteButton.addEventListener("click", this.openFavorites.bind(this));
     closeFavoriteButton.addEventListener("click", this.closeFavorites.bind(this));
     this.favoriteCheck = this.favoriteCheck.bind(this);
+    document.getElementById("overlay").addEventListener("click", this.handleOverlayClick.bind(this));
   }
 
   clickDietInfo(dietInfo) {
@@ -21,6 +22,12 @@ class PageHeader {
 
   clickGetRecipes(getRecipes) {
     this.getRecipes = getRecipes;
+  }
+
+  handleOverlayClick() {
+    if (document.getElementById("favorited_recipes_element").className === "favorited-recipes-visible d-flex flex-column justify-content-center") {
+      this.closeFavorites();
+    }
   }
 
   openFavorites() {
