@@ -80,7 +80,7 @@ function startImgur(formData) {
   contentType: false,
   cache: false,
   headers: {
-    "Authorization": "Client-ID 62cbd49ff79d018"
+    "Authorization": `${imgurAPIKey}`
     },
   success: function(data) {
     console.log("Imgur:", data.data.link);
@@ -96,7 +96,7 @@ function startImgur(formData) {
 //POST request to Google's Cloud Vision API with image from IMGUR to label the object in the image
 function startGoogle(data) {
   $.ajax({
-    url: "https://vision.googleapis.com/v1/images:annotate?fields=responses&key=AIzaSyAJzv7ThEspgv8_BxX2EwCs8PUEJMtJN6c",
+    url: `https://vision.googleapis.com/v1/images:annotate?fields=responses&key=${googleAPIKey}`,
     type: "POST",
     dataType: "JSON",
     contentType: "application/json",
@@ -114,7 +114,7 @@ function startGoogle(data) {
 
 //GET request to Spoonacular's API with label from Google to get a list of up to 10 recipes containing the item from the image and other nutrition info.
 function startSpoonacular(data) {
-  var spoonacularURL = "https://api.spoonacular.com/recipes/complexSearch?query=" + data + "&apiKey=5d83fe3f2cf14616a6ea74137c2be564&addRecipeNutrition=true"
+  var spoonacularURL = `https://api.spoonacular.com/recipes/complexSearch?query=" + data + "&apiKey=${spoonacularAPIKey}&addRecipeNutrition=true`
   $.ajax({
     method: "GET",
     url: spoonacularURL,
