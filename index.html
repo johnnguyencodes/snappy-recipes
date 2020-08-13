@@ -44,9 +44,108 @@
       <button id="close_favorites_button" class="btn btn-danger col-3 offset-4 mb-3">Close</button>
     </div>
   </div>
+  <div id="diet_menu" class="diet-menu-hidden">
+    <div id="dietary_restrictions">
+      <p class="font-weight-bold text-center">Please select any dietary restrictions</p>
+      <div id="restrictions_container">
+      </div>
+      <div class="w-100 d-flex ml-3">
+        <span class="col">
+          <input type="checkbox" id="vegan" class="restriction-checkbox" value="vegan" name="vegan">
+          <label for="vegan">Vegan</label>
+        </span>
+        <span class="col">
+          <input type="checkbox" id="vegetarian" class="restriction-checkbox" value="vegetarian" name="vegetarian">
+          <label for="vegetarian">Vegetarian</label>
+        </span>
+      </div>
+      <div class="w-100 d-flex ml-3">
+        <span class="col">
+          <input type="checkbox" id="lacto-vegetarian" class="restriction-checkbox" value="lacto-vegetarian"
+            name="lacto-vegetarian">
+          <label for="lacto-vegetarian">Lacto-Vegetarian</label>
+        </span>
+        <span class="col">
+          <input type="checkbox" id="ovo-vegetarian" class="restriction-checkbox" value="ovo-vegetarian"
+            name="ovo-vegetarian">
+          <label for="ovo-vegetarian">Ovo-Vegetarian</label>
+        </span>
+      </div>
+      <div class="w-100 d-flex ml-3">
+        <span class="col">
+          <input type="checkbox" id="pescetarian" class="restriction-checkbox" value="pescetarian" name="pescetarian">
+          <label for="pescetarian">Pescetarian</label>
+        </span>
+      </div>
+    </div>
+    <div id="dietary_intolerances" class="my-5">
+      <p class="font-weight-bold text-center">Please select any food intolerances</p>
+      <div id="intolerances_container"></div>
+      <div class="w-100 d-flex ml-3">
+        <span class="col">
+          <input type="checkbox" id="dairy" class="intolerance-checkbox" value="dairy" name="dairy">
+          <label for="dairy">Dairy</label>
+        </span>
+        <span class="col">
+          <input type="checkbox" id="egg" class="intolerance-checkbox" value="egg" name="egg">
+          <label for="egg">Egg</label>
+        </span>
+      </div>
+      <div class="w-100 d-flex ml-3">
+        <span class="col">
+          <input type="checkbox" id="gluten" class="intolerance-checkbox" value="gluten" name="gluten">
+          <label for="gluten">Gluten</label>
+        </span>
+        <span class="col">
+          <input type="checkbox" id="peanut" class="intolerance-checkbox" value="peanut" name="peanut">
+          <label for="peanut">Peanut</label>
+        </span>
+      </div>
+      <div class="w-100 d-flex ml-3">
+        <span class="col">
+          <input type="checkbox" id="seafood" class="intolerance-checkbox" value="seafood" name="seafood">
+          <label for="seafood">Seafood</label>
+        </span>
+        <span class="col">
+          <input type="checkbox" id="sesame" class="intolerance-checkbox" value="sesame" name="sesame">
+          <label for="sesame">Sesame</label>
+        </span>
+      </div>
+      <div class="w-100 d-flex ml-3">
+        <span class="col">
+          <input type="checkbox" id="shellfish" class="intolerance-checkbox" value="shellfish" name="shellfish">
+          <label for="shellfish">Shellfish</label>
+        </span>
+        <span class="col">
+          <input type="checkbox" id="soy" class="intolerance-checkbox" value="soy" name="soy">
+          <label for="soy">Soy</label>
+        </span>
+      </div>
+      <div class="w-100 d-flex ml-3">
+        <span class="col">
+          <input type="checkbox" id="sulfite" class="intolerance-checkbox" value="sulfite" name="sulfite">
+          <label for="sulfite">Sulfite</label>
+        </span>
+        <span class="col">
+          <input type="checkbox" id="tree-nut" class="intolerance-checkbox" value="tree-nut" name="tree-nut">
+          <label for="tree-nut">Tree Nut</label>
+        </span>
+      </div>
+      <div class="w-100 d-flex ml-3">
+        <span class="col">
+          <input type="checkbox" id="wheat" class="intolerance-checkbox" value="wheat" name="wheat">
+          <label for="wheat">Wheat</label>
+        </span>
+      </div>
+    </div>
+    <div id="close_button" class="col-xs-12">
+      <button id="close_diet_menu_button" class="btn btn-warning col-3 offset-4">Done</button>
+    </div>
+  </div>
   <div id="content" class="row">
-    <div class="section-1 col-md-6 col-lg-4 col-xl-3">
-    <header class="col-xs-12 col-sm-12 col-md-12 col-lg-12 d-flex flex-column align-items-center mb-2">
+    <div class="placeholder col-md-6 col-lg-6 col-xl-4"></div>
+    <div class="section1 ml-3 col-md-6 col-lg-6 col-xl-4 d-flex flex-column align-items-center">
+    <header class="col-xs-12 col-sm-12 col-md-12 col-lg-12 d-flex flex-column align-items-center justify-content-center mb-2">
       <h1> <span class="badge badge-primary">Snappy Recipes <i class="fa fa-utensils"></i></span></h1>
       <p class="m-2 text-center">Find recipes by uploading an <strong>image</strong>, or by entering a <strong>search</strong>.</p>
     </header>
@@ -84,104 +183,6 @@
         <p id="image_download_text" class="text-center">Downloading image...</p>
       </div>
     </div>
-    <div id="diet_menu" class="diet-menu-hidden">
-      <div id="dietary_restrictions">
-        <p class="font-weight-bold text-center">Please select any dietary restrictions</p>
-        <div id="restrictions_container">
-        </div>
-        <div class="w-100 d-flex">
-          <span class="col">
-            <input type="checkbox" id="vegan" class="restriction-checkbox" value="vegan" name="vegan">
-            <label for="vegan">Vegan</label>
-          </span>
-          <span class="col">
-            <input type="checkbox" id="vegetarian" class="restriction-checkbox" value="vegetarian" name="vegetarian">
-            <label for="vegetarian">Vegetarian</label>
-          </span>
-        </div>
-        <div class="w-100 d-flex">
-          <span class="col">
-            <input type="checkbox" id="lacto-vegetarian" class="restriction-checkbox" value="lacto-vegetarian"
-              name="lacto-vegetarian">
-            <label for="lacto-vegetarian">Lacto-Vegetarian</label>
-          </span>
-          <span class="col">
-            <input type="checkbox" id="ovo-vegetarian" class="restriction-checkbox" value="ovo-vegetarian"
-              name="ovo-vegetarian">
-            <label for="ovo-vegetarian">Ovo-Vegetarian</label>
-          </span>
-        </div>
-        <div class="w-100 d-flex">
-          <span class="col">
-            <input type="checkbox" id="pescetarian" class="restriction-checkbox" value="pescetarian" name="pescetarian">
-            <label for="pescetarian">Pescetarian</label>
-          </span>
-        </div>
-      </div>
-      <div id="dietary_intolerances" class="my-5">
-        <p class="font-weight-bold text-center">Please select any food intolerances</p>
-        <div id="intolerances_container"></div>
-        <div class="w-100 d-flex">
-          <span class="col">
-            <input type="checkbox" id="dairy" class="intolerance-checkbox" value="dairy" name="dairy">
-            <label for="dairy">Dairy</label>
-          </span>
-          <span class="col">
-            <input type="checkbox" id="egg" class="intolerance-checkbox" value="egg" name="egg">
-            <label for="egg">Egg</label>
-          </span>
-        </div>
-        <div class="w-100 d-flex">
-          <span class="col">
-            <input type="checkbox" id="gluten" class="intolerance-checkbox" value="gluten" name="gluten">
-            <label for="gluten">Gluten</label>
-          </span>
-          <span class="col">
-            <input type="checkbox" id="peanut" class="intolerance-checkbox" value="peanut" name="peanut">
-            <label for="peanut">Peanut</label>
-          </span>
-        </div>
-        <div class="w-100 d-flex">
-          <span class="col">
-            <input type="checkbox" id="seafood" class="intolerance-checkbox" value="seafood" name="seafood">
-            <label for="seafood">Seafood</label>
-          </span>
-          <span class="col">
-            <input type="checkbox" id="sesame" class="intolerance-checkbox" value="sesame" name="sesame">
-            <label for="sesame">Sesame</label>
-          </span>
-        </div>
-        <div class="w-100 d-flex">
-          <span class="col">
-            <input type="checkbox" id="shellfish" class="intolerance-checkbox" value="shellfish" name="shellfish">
-            <label for="shellfish">Shellfish</label>
-          </span>
-          <span class="col">
-            <input type="checkbox" id="soy" class="intolerance-checkbox" value="soy" name="soy">
-            <label for="soy">Soy</label>
-          </span>
-        </div>
-        <div class="w-100 d-flex">
-          <span class="col">
-            <input type="checkbox" id="sulfite" class="intolerance-checkbox" value="sulfite" name="sulfite">
-            <label for="sulfite">Sulfite</label>
-          </span>
-          <span class="col">
-            <input type="checkbox" id="tree-nut" class="intolerance-checkbox" value="tree-nut" name="tree-nut">
-            <label for="tree-nut">Tree Nut</label>
-          </span>
-        </div>
-        <div class="w-100 d-flex">
-          <span class="col">
-            <input type="checkbox" id="wheat" class="intolerance-checkbox" value="wheat" name="wheat">
-            <label for="wheat">Wheat</label>
-          </span>
-        </div>
-      </div>
-      <div id="close_button" class="col-xs-12">
-        <button id="close_diet_menu_button"class="btn btn-warning col-3 offset-4">Done</button>
-      </div>
-    </div>
     <div class="image-container col-xs-12 col-sm-12 col-md-12 col-lg-12 d-flex justify-content-center my-3">
       <img id="my_image" src="" alt="">
     </div>
@@ -190,14 +191,14 @@
       <p id="image_not_recognized_text" class="text-center d-none">Your image could not be recognized. Please upload a different image or enter a search.</p>
     </div>
     </div>
-    <div class="section2 col-md-6 col-lg-8 col-xl-9">
-    <div id="recipes_container" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 px-0 d-flex flex-row flex-wrap align-items-center justify-content-center">
+    <div class="section2 col-md-6 col-lg-6 col-xl-8">
+    <div id="recipes_container" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 px-0 d-flex flex-row flex-wrap align-items-center justify-content-around">
         <p id="recipe_download_text" class="text-center d-none">Gathering recipes...</p>
         <p id="no_recipes_text" class="text-center d-none">No recipes found. Please modify your diet preferences and try again, or upload a different image, or enter a different search.</p>
     </div>
   </div>
   </div>
-  <div id="modal_overlay"></div>
+  <div id="overlay" class="d-none"></div>
   <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
   <script src="config.js"></script>
   <script src="components/app.js"></script>

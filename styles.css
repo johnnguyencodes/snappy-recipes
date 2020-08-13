@@ -107,6 +107,7 @@ a {
   border-right: 3px black solid;
   box-shadow: 5px 5px rgba(0, 0, 0, 0.4);
   background-color: white;
+  display: none;
 }
 
 .favorited-recipes-visible {
@@ -150,38 +151,16 @@ span {
   background-color: rgba(0,0,0,0.3);
 }
 
-.modal-overlay {
-  z-index: 90;
+#overlay {
   position: fixed;
-  top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #000;
+  opacity: 0.5;
+  z-index: 2;
 }
-
-/* @media screen and (max-height: 450px) {
-
-} */
-
-/* Extra small devices (phones, less than 768px) */
-/* No media query since this is the default in Bootstrap */
-
-/* Small devices (tablets, 768px and up) */
-/* @media (min-width: @screen-sm-min) {
- } */
-
-/* Medium devices (desktops, 992px and up) */
-/* @media (min-width: @screen-md-min) {
-
- } */
-
-/* Large devices (large desktops, 1200px and up) */
-/* @media (min-width: @screen-lg-min) {
-
- } */
-
- /* Extra small devices (phones, 600px and down) */
-/* @media only screen and (max-width: 600px) {...} */
 
 @media only screen and (min-width: 275px) {
   #recipes_container img {
@@ -191,7 +170,6 @@ span {
 
 @media only screen and (min-width: 375px) {
   #recipes_container img {
-    /* max-width: 264px; */
     max-width: 271px;
   }
 }
@@ -208,7 +186,6 @@ span {
   }
 }
 
-/* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (min-width: 576px) {
   #recipes_container img {
     max-width: 222px;
@@ -221,7 +198,6 @@ span {
   }
 }
 
-/* Medium devices (landscape tablets, 768px and up) */
 @media only screen and (min-width: 768px) {
   #recipes_container img {
     max-width: 240px;
@@ -229,11 +205,19 @@ span {
   .recipe-card {
     min-width: 268px;
   }
+  .section1 {
+    position: fixed;
+  }
 }
 
 @media only screen and (min-width: 1110px) {
   #recipes_container img {
     max-width: 254px;
+  }
+    .section1 {
+    position: fixed;
+    min-width: 556px;
+    max-width: 606px;
   }
 }
 
@@ -241,55 +225,58 @@ span {
   #recipes_container img {
     max-width: 236px;
   }
+    .section1 {
+    min-width: 404px;
+    max-width: 436px;
+    position: fixed;
+  }
 }
 
 @media only screen and (min-width: 1300px) {
-  #recipes_container img {
-    max-width: 236;
+    .section1 {
+    max-width: 437px;
+    max-width: 470px;
+    position: fixed;
   }
 }
 
 @media only screen and (min-width: 1400px) {
-  #recipes_container img {
-    max-width: 236px;
+    .section1 {
+    max-width: 471px;
+    max-width: 503px;
+    position: fixed;
   }
 }
-
-
 
 @media only screen and (min-width: 1500px) {
-  #recipes_container img {
-    max-width: 236px;
+    .section1 {
+    max-width: 504px;
+    max-width: 536px;
+    position: fixed;
   }
 }
 
+
 @media only screen and (min-width: 1600px) {
-  #recipes_container img {
-    max-width: 255px;
+    .section1 {
+    max-width: 537px;
+    max-width: 569px;
+    position: fixed;
   }
 }
 
 @media only screen and (min-width: 1700px) {
-  #recipes_container img {
-    max-width: 274px;
+    .section1 {
+    max-width: 570px;
+    max-width: 603px;
+    position: fixed;
   }
 }
 
 @media only screen and (min-width: 1800px) {
-  #recipes_container img {
-    max-width: 292px;
+    .section1 {
+    max-width: 542px;
+    max-width: 644px;
+    position: fixed;
   }
 }
-
-@media only screen and (min-width: 1900px) {
-  #recipes_container img {
-    max-width: 311px;
-  }
-}
-
-
-/* Large devices (laptops/desktops, 992px and up) */
-/* @media only screen and (min-width: 992px) {...} */
-
-/* Extra large devices (large laptops and desktops, 1200px and up) */
-/* @media only screen and (min-width: 1200px) {...} */
