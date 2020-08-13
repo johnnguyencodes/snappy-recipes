@@ -237,7 +237,6 @@ class RecipesHandler {
       cardText2.append(sodiumSpan);
       titleAnchorTag.append(recipeTitle);
       cardTitle.append(titleAnchorTag);
-      // cardTitle.append(recipeTitle);
       cardTitle.append(cardText1);
       cardTitle.append(cardText3);
       cardTitle.append(cardText2);
