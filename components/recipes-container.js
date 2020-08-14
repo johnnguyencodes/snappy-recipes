@@ -1,3 +1,8 @@
+let pageList = new Array();
+let currentPage = 1;
+let numberPerPage = 12;
+let numberOfPages = 1;
+
 class RecipesHandler {
   constructor(recipesContainer, favoritedRecipesContainer) {
     this.recipesContainer = recipesContainer;
@@ -44,7 +49,7 @@ class RecipesHandler {
   }
 
   displaySearchedRecipes(recipes) {
-    console.log(recipes);
+    numberOfPages = Math.ceil(recipes.length / numberPerPage);
     if (!(recipes.results[0])) {
       document.getElementById("recipe_download_text").className = "text-center d-none";
       document.getElementById("no_recipes_text").className = "text-center";
