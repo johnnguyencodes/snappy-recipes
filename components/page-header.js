@@ -55,6 +55,9 @@ class PageHeader {
   }
 
   favoriteCheck() {
+    if (!(localStorage.getItem('favoritedArray'))) {
+      return;
+    }
     let searchedArray = document.querySelectorAll("#heart_container i");
     let favoritedArrayToCheck = JSON.parse(localStorage.getItem("favoritedArray"));
     for (var i = 0; i < searchedArray.length; i++) {

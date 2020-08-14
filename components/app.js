@@ -92,7 +92,7 @@ class App {
   }
 
   savedDietInfoCheck() {
-    if (!(localStorage.getItem('restrictionsString')) || !(localstorage.getItem('intolerancesString'))) {
+    if (!(localStorage.getItem('restrictionsString')) || !(localStorage.getItem('intolerancesString'))) {
       return;
     }
     let restrictionsCheckboxes = document.getElementsByClassName("restriction-checkbox");
