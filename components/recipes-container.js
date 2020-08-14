@@ -49,7 +49,8 @@ class RecipesHandler {
   }
 
   displaySearchedRecipes(recipes) {
-    numberOfPages = Math.ceil(recipes.length / numberPerPage);
+    numberOfPages = Math.ceil(recipes.results.length / numberPerPage);
+    console.log(numberOfPages);
     if (!(recipes.results[0])) {
       document.getElementById("recipe_download_text").className = "text-center d-none";
       document.getElementById("no_recipes_text").className = "text-center";
