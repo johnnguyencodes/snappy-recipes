@@ -1,7 +1,4 @@
-let pageList = new Array();
-let currentPage = 1;
-let numberPerPage = 12;
-let numberOfPages = 1;
+let chunked = [];
 
 class RecipesHandler {
   constructor(recipesContainer, favoritedRecipesContainer) {
@@ -49,12 +46,15 @@ class RecipesHandler {
   }
 
   displaySearchedRecipes(recipes) {
-    numberOfPages = Math.ceil(recipes.results.length / numberPerPage);
-    console.log(numberOfPages);
     if (!(recipes.results[0])) {
       document.getElementById("recipe_download_text").className = "text-center d-none";
       document.getElementById("no_recipes_text").className = "text-center";
       return;
+    }
+    let a = 0;
+    while (a < recipes.results.length) {
+      chunked.push(recipes.results.slice(a, a+12));
+      a = a + 12;
     }
     for (let i = 0; i < recipes.results.length; i++) {
       const imageURL = `${recipes.results[i].image.substring(0, recipes.results[i].image.length - 11)}636x393.jpg`;
