@@ -5,6 +5,7 @@ class RecipesHandler {
     this.favoritedRecipesContainer = favoritedRecipesContainer;
     document.getElementById("show_more_button").addEventListener("click", this.handleShowMoreClick.bind(this));
     this.displaySearchedRecipes = this.displaySearchedRecipes.bind(this);
+    this.updateResultsShownNumber = this.updateResultsShownNumber.bind(this);
   }
 
     clickGetFavoritedRecipes(getFavoritedRecipes) {
@@ -51,9 +52,19 @@ class RecipesHandler {
     chunkedIncrementor++;
     this.displaySearchedRecipes(chunked, chunkedIncrementor);
     window.scroll(0, yPosition);
+    if (chunkedIncrementor === chunked.length - 1) {
+      document.getElementById("show_more_button").className = "d-none"
+    }
+    this.updateResultsShownNumber();
+  }
+
+  updateResultsShownNumber() {
+    document.getElementById("results_quantity_text").textContent = `${document.querySelectorAll(".recipe-card").length} of ${document.getElementById("search_results_quantity_text").textContent}`
   }
 
   chunkSearchedRecipes(recipes) {
+    document.getElementById("search_results_quantity_div").className="d-flex justify-content-center";
+    document.getElementById("search_results_quantity_text").textContent = `${recipes.results.length} recipes`;
     let a = 0;
     while (a < recipes.results.length) {
       chunked.push(recipes.results.slice(a, a+12));
@@ -61,6 +72,10 @@ class RecipesHandler {
     }
     console.log(chunked);
     this.displaySearchedRecipes(chunked, chunkedIncrementor);
+    if (recipes.results.length > 12) {
+      document.getElementById("results_quantity_container").className = "d-flex flex-column align-items-center justify-content-center"
+    }
+    this.updateResultsShownNumber();
   }
 
   displaySearchedRecipes(chunked, chunkedIncrementor) {

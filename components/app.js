@@ -231,7 +231,6 @@ class App {
   }
 
   handleGetRecipesSuccess(recipes) {
-    // this.recipesHandler.displaySearchedRecipes(recipes);
     this.recipesHandler.chunkSearchedRecipes(recipes);
   }
 
