@@ -1,9 +1,12 @@
 let chunked = [];
+let chunkedIncrementor = 0;
 
 class RecipesHandler {
   constructor(recipesContainer, favoritedRecipesContainer) {
     this.recipesContainer = recipesContainer;
     this.favoritedRecipesContainer = favoritedRecipesContainer;
+    document.getElementById("show_more_button").addEventListener("click", this.handleShowMoreClick.bind(this));
+    this.displaySearchedRecipes = this.displaySearchedRecipes.bind(this);
   }
 
     clickGetFavoritedRecipes(getFavoritedRecipes) {
@@ -45,30 +48,40 @@ class RecipesHandler {
     });
   }
 
-  displaySearchedRecipes(recipes) {
-    if (!(recipes.results[0])) {
-      document.getElementById("recipe_download_text").className = "text-center d-none";
-      document.getElementById("no_recipes_text").className = "text-center";
-      return;
-    }
+  handleShowMoreClick() {
+    chunkedIncrementor++;
+    this.displaySearchedRecipes(chunked, chunkedIncrementor);
+  }
+
+  chunkSearchedRecipes(recipes) {
     let a = 0;
     while (a < recipes.results.length) {
       chunked.push(recipes.results.slice(a, a+12));
       a = a + 12;
     }
-    for (let i = 0; i < recipes.results.length; i++) {
-      const imageURL = `${recipes.results[i].image.substring(0, recipes.results[i].image.length - 11)}636x393.jpg`;
-      const title = recipes.results[i].title;
-      const readyInMinutes = recipes.results[i].readyInMinutes;
-      const servings = recipes.results[i].servings;
-      const recipeURL = recipes.results[i].sourceUrl;
-      const healthScore = recipes.results[i].healthScore;
-      const caloriesAmount = Math.round(recipes.results[i].nutrition.nutrients[0].amount);
-      const proteinAmount = Math.round(recipes.results[i].nutrition.nutrients[8].amount);
-      const fatAmount = Math.round(recipes.results[i].nutrition.nutrients[1].amount);
-      const carbsAmount = Math.round(recipes.results[i].nutrition.nutrients[3].amount);
-      const sodiumAmount = Math.round(recipes.results[i].nutrition.nutrients[7].amount);
-      const id = recipes.results[i].id;
+    console.log(chunked);
+    this.displaySearchedRecipes(chunked, chunkedIncrementor);
+  }
+
+  displaySearchedRecipes(chunked, chunkedIncrementor) {
+    if (!(chunked[0][0])) {
+      document.getElementById("recipe_download_text").className = "text-center d-none";
+      document.getElementById("no_recipes_text").className = "text-center";
+      return;
+    }
+    for (let i = 0; i < chunked[chunkedIncrementor].length; i++) {
+      const imageURL = `${chunked[chunkedIncrementor][i].image.substring(0, chunked[chunkedIncrementor][i].image.length - 11)}636x393.jpg`;
+      const title = chunked[chunkedIncrementor][i].title;
+      const readyInMinutes = chunked[chunkedIncrementor][i].readyInMinutes;
+      const servings = chunked[chunkedIncrementor][i].servings;
+      const recipeURL = chunked[chunkedIncrementor][i].sourceUrl;
+      const healthScore = chunked[chunkedIncrementor][i].healthScore;
+      const caloriesAmount = Math.round(chunked[chunkedIncrementor][i].nutrition.nutrients[0].amount);
+      const proteinAmount = Math.round(chunked[chunkedIncrementor][i].nutrition.nutrients[8].amount);
+      const fatAmount = Math.round(chunked[chunkedIncrementor][i].nutrition.nutrients[1].amount);
+      const carbsAmount = Math.round(chunked[chunkedIncrementor][i].nutrition.nutrients[3].amount);
+      const sodiumAmount = Math.round(chunked[chunkedIncrementor][i].nutrition.nutrients[7].amount);
+      const id = chunked[chunkedIncrementor][i].id;
       const recipeCard = document.createElement("div");
       recipeCard.className = "recipe-card card mx-3 my-3 px-0 col-xs-12 col-sm-5 col-md-5 col-lg-3 col-xl-2 h-100";
       recipeCard.id = "recipe";
@@ -129,11 +142,11 @@ class RecipesHandler {
       sodiumSpan.textContent = `${sodiumAmount}mg Sodium`;
       const cardText3 = document.createElement("div");
       cardText3.className = "card-text d-flex flex-wrap";
-      if (recipes.results[i].diets) {
-        for (var j = 0; j < recipes.results[i].diets.length; j++) {
+      if (chunked[chunkedIncrementor][i].diets) {
+        for (var j = 0; j < chunked[chunkedIncrementor][i].diets.length; j++) {
           const dietSpan = document.createElement("span");
           dietSpan.className = "badge badge-light mb-1 mr-1";
-          dietSpan.textContent = recipes.results[i].diets[j];
+          dietSpan.textContent = chunked[chunkedIncrementor][i].diets[j];
           cardText3.append(dietSpan);
         }
       }
