@@ -59,12 +59,12 @@ class RecipesHandler {
   }
 
   updateResultsShownNumber() {
-    document.getElementById("results_quantity_text").textContent = `${document.querySelectorAll(".recipe-card").length} of ${document.getElementById("search_results_quantity_text").textContent}`
+    document.getElementById("results_quantity_text").textContent = `Showing ${document.querySelectorAll(".recipe-card").length} of ${document.getElementById("search_results_quantity_text").textContent.substring(0, document.getElementById("search_results_quantity_text").textContent.length - 14)}`
   }
 
   chunkSearchedRecipes(recipes) {
     document.getElementById("search_results_quantity_div").className="d-flex justify-content-center";
-    document.getElementById("search_results_quantity_text").textContent = `${recipes.results.length} recipes`;
+    document.getElementById("search_results_quantity_text").textContent = `${recipes.results.length} recipes found`;
     let a = 0;
     while (a < recipes.results.length) {
       chunked.push(recipes.results.slice(a, a+12));
