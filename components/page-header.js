@@ -143,7 +143,11 @@ class PageHeader {
     document.getElementById("recipe_download_text").className = "text-center d-none";
     document.getElementById("no_recipes_text").className = "text-center d-none";
     document.getElementById("image_not_recognized_text").className = "text-center d-none";
-
+    chunked = [];
+    chunkedIncrementor = 0;
+    document.getElementById("search_results_quantity_div").className="d-none";
+    document.getElementById("results_quantity_container").className = "d-none";
+    document.getElementById("show_more_button").className = "btn btn-secondary"
   }
 
 }

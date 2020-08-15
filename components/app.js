@@ -35,6 +35,9 @@ const openFavoriteButton = document.getElementById("open_favorites_button");
 const closeFavoriteButton = document.getElementById("close_favorites_button");
 const openDietMenuButton = document.getElementById("open_diet_menu_button");
 const closeDietMenuButton = document.getElementById("close_diet_menu_button");
+let chunked = [];
+let chunkedIncrementor = 0;
+
 
 let dataForImageRecognition = {
   "requests": [
@@ -214,7 +217,7 @@ class App {
   //GET request to Spoonacular's API with label from Google to get a list of up to 10 recipes containing the item from the image and other nutrition info.
   getRecipes(imageTitle) {
     document.getElementById("recipe_download_text").className = "text-center";
-    let spoonacularURL = `https://api.spoonacular.com/recipes/complexSearch?query=${imageTitle}&apiKey=${spoonacularAPIKey}&addRecipeNutrition=true&636x393&number=12`
+    let spoonacularURL = `https://api.spoonacular.com/recipes/complexSearch?query=${imageTitle}&apiKey=${spoonacularAPIKey}&addRecipeNutrition=true&636x393&number=100`
     $.ajax({
       method: "GET",
       url: spoonacularURL,
@@ -228,7 +231,7 @@ class App {
   }
 
   handleGetRecipesSuccess(recipes) {
-    this.recipesHandler.displaySearchedRecipes(recipes);
+    this.recipesHandler.chunkSearchedRecipes(recipes);
   }
 
   handleGetRecipesError(error) {

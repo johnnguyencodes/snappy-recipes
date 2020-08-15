@@ -192,9 +192,16 @@
     </div>
     </div>
     <div class="section2 col-md-6 col-lg-6 col-xl-8">
-    <div id="recipes_container" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 px-0 d-flex flex-row flex-wrap align-items-center justify-content-around">
+      <div id="search_results_quantity_div" class="d-none">
+        <p id="search_results_quantity_text" class="text-center"></p>
+      </div>
+      <div id="recipes_container" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 px-0 d-flex flex-row flex-wrap align-items-center justify-content-around">
         <p id="recipe_download_text" class="text-center d-none">Gathering recipes...</p>
         <p id="no_recipes_text" class="text-center d-none">No recipes found. Please modify your diet preferences and try again, or upload a different image, or enter a different search.</p>
+      </div>
+    <div id="results_quantity_container" class="d-none">
+      <p id="results_quantity_text"></p>
+      <button id="show_more_button" class="btn btn-secondary">Show more</button>
     </div>
   </div>
   </div>
@@ -205,7 +212,7 @@
   <script src="components/diet-form.js"></script>
   <script src="components/image-title-container.js"></script>
   <script src="components/page-header.js"></script>
-  <script src="components/recipes-container.js"></script>
+  <script src="components/recipes-handler.js"></script>
   <script src="main.js"></script>
 </body>
 
