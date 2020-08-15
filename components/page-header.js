@@ -143,7 +143,8 @@ class PageHeader {
     document.getElementById("recipe_download_text").className = "text-center d-none";
     document.getElementById("no_recipes_text").className = "text-center d-none";
     document.getElementById("image_not_recognized_text").className = "text-center d-none";
-
+    chunked = [];
+    chunkedIncrementor = 0;
   }
 
 }

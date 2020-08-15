@@ -1,5 +1,3 @@
-let chunked = [];
-let chunkedIncrementor = 0;
 
 class RecipesHandler {
   constructor(recipesContainer, favoritedRecipesContainer) {
@@ -49,8 +47,10 @@ class RecipesHandler {
   }
 
   handleShowMoreClick() {
+    let yPosition = window.scrollY;
     chunkedIncrementor++;
     this.displaySearchedRecipes(chunked, chunkedIncrementor);
+    window.scroll(0, yPosition);
   }
 
   chunkSearchedRecipes(recipes) {
