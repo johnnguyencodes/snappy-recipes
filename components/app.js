@@ -19,11 +19,7 @@ if (!(localStorage.getItem('intolerancesString'))) {
 } else {
   intolerancesString = JSON.parse(localStorage.getItem('intolerancesString'));
 }
-const dietMenu = document.getElementById("diet_menu");
-let fileInputForm = document.getElementById("file_input_form");
-const fileLabel = document.getElementById("custom_file_label");
 const searchInput = document.getElementById("recipe_search_input");
-const image = document.getElementById("uploaded_image");
 const inputs = document.querySelectorAll(".input");
 const recipeDownloadText = document.getElementById("recipe_download_text");
 const uploadButton = document.getElementById("upload_button");

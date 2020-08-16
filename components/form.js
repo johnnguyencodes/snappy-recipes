@@ -1,4 +1,6 @@
 const favoriteRecipesSection = document.getElementById("favorite_recipes_section");
+const fileLabel = document.getElementById("custom_file_label");
+let fileInputForm = document.getElementById("file_input_form");
 
 class Form {
   constructor() {
@@ -36,7 +38,7 @@ class Form {
     if (localStorage.getItem('favoriteArray') !== null ) {
       document.getElementById("empty_favorite_text").className = "d-none";
     }
-    document.getElementById("content").className="row noscroll";
+    document.getElementById("main_content").className="row noscroll";
     document.getElementById("overlay").className = "";
   }
 
@@ -49,7 +51,7 @@ class Form {
       behavior: "auto"
     })
     favoriteRecipesSection.className = "favorite-recipes-hidden d-flex flex-column justify-content-center";
-    document.getElementById("content").className = "row";
+    document.getElementById("main_content").className = "row";
     document.getElementById("overlay").className = "d-none";
 
   }
@@ -71,14 +73,13 @@ class Form {
 
   imgValidation(event) {
     event.preventDefault();
-    const fileInput = document.getElementById("file_input_form");
-    if (fileInput.files[1]) {
-      fileInput.files.splice(1, 1);
+    if (fileInputForm.files[1]) {
+      fileInputForm.files.splice(1, 1);
     }
-    const imageFile = fileInput.files[0];
+    const imageFile = fileInputForm.files[0];
     if (!(imageFile)) {
       alert("Error: No file selected, please select a file to upload.");
-      fileInput.value = "";
+      fileInputForm.value = "";
       return;
     }
     const inputs = document.querySelectorAll(".input");
@@ -90,22 +91,22 @@ class Form {
     const mimeTypes = ['image/jpg', 'image/png', 'image/gif'];
     if (!(mimeTypes.indexOf(fileType))) {
       alert("Error: Incorrect file type, please select a jpeg, png or gif file.");
-      fileInput.value = "";
+      fileInputForm.value = "";
       return;
     }
     if (imageFile.size > 10 * 1024 * 1024) {
       alert("Error: Image exceeds 10MB size limit");
-      fileInput.value = "";
+      fileInputForm.value = "";
       return;
     }
     formData.append("image", imageFile);
     this.dietInfo();
     this.postImage(formData);
-    fileInput.value = "";
+    fileInputForm.value = "";
   }
 
   handleAddImage() {
-    let fileName = document.getElementById("file_input_form").files[0].name;
+    let fileName = fileInputForm.files[0].name;
     if (fileName) {
       fileInputForm.disabled = true;
     }
@@ -136,7 +137,7 @@ class Form {
       document.getElementById("title").remove();
     }
     searchInput.value = "";
-    image.src = "";
+    uploadedImage.src = "";
     while (document.getElementById("recipe")) {
       document.getElementById("recipe").remove();
     }

@@ -184,8 +184,8 @@ class RecipesHandler {
   }
 
   displayFavoriteRecipes(recipes) {
-    while (document.getElementById("favorite_recipes_container").firstChild) {
-      document.getElementById("favorite_recipes_container").removeChild(document.getElementById("favorite_recipes_container").firstChild);
+    while (favoriteRecipesContainer.firstChild) {
+      favoriteRecipesContainer.removeChild(favoriteRecipesContainer.firstChild);
     }
     for (let i = 0; i < recipes.length; i++) {
       const imageURL = `${recipes[i].image.substring(0, recipes[i].image.length-11)}636x393.jpg`;

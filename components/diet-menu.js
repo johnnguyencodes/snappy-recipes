@@ -1,3 +1,5 @@
+const dietMenu = document.getElementById("diet_menu");
+
 class DietMenu {
   constructor(dietMenu) {
     this.dietMenu = dietMenu;
@@ -15,7 +17,7 @@ class DietMenu {
   }
 
   handleOverlayClick() {
-    if (document.getElementById("diet_menu").className === "diet-menu-visible d-flex flex-column justify-content-center") {
+    if (dietMenu.className === "diet-menu-visible d-flex flex-column justify-content-center") {
       this.closeDietMenu();
     }
   }
