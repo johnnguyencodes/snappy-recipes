@@ -1,12 +1,11 @@
 const imgurAPIKey = config.imgurAPIKey;
 const googleAPIKey = config.googleAPIKey;
 const spoonacularAPIKey = config.spoonacularAPIKey;
-let favoritedArray;
-if (!(localStorage.getItem('favoritedArray'))) {
-  favoritedArray = [];
-  // localStorage.setItem('favoritedArray', JSON.stringify(favoritedArray));
+let favoriteArray;
+if (!(localStorage.getItem('favoriteArray'))) {
+  favoriteArray = [];
 } else {
-  favoritedArray = JSON.parse(localStorage.getItem('favoritedArray'));
+  favoriteArray = JSON.parse(localStorage.getItem('favoriteArray'));
 }
 let restrictionsString;
 if (!(localStorage.getItem('restrictionsString'))) {
@@ -24,7 +23,7 @@ const dietMenu = document.getElementById("diet_menu");
 let fileInputForm = document.getElementById("file_input_form");
 const fileLabel = document.getElementById("custom_file_label");
 const searchInput = document.getElementById("recipe_search_input");
-const image = document.getElementById("my_image");
+const image = document.getElementById("uploaded_image");
 const inputs = document.querySelectorAll(".input");
 const recipeDownloadText = document.getElementById("recipe_download_text");
 const uploadButton = document.getElementById("upload_button");
@@ -32,7 +31,7 @@ const searchButton = document.getElementById("search_button");
 const recipeSearchInput = document.getElementById('recipe_search_input');
 const resetButton = document.getElementById("reset_button");
 const openFavoriteButton = document.getElementById("open_favorites_button");
-const closeFavoriteButton = document.getElementById("close_favorites_button");
+const closeFavoriteButton = document.getElementById("close_favorite_button");
 const openDietMenuButton = document.getElementById("open_diet_menu_button");
 const closeDietMenuButton = document.getElementById("close_diet_menu_button");
 let chunked = [];
@@ -63,11 +62,11 @@ let spoonacularDataToSend = {
 }
 
 class App {
-  constructor(pageHeader, imageTitleContainer, recipesHandler, dietForm) {
-    this.pageHeader = pageHeader;
+  constructor(form, imageTitleContainer, recipesHandler, dietMenu) {
+    this.form = form;
     this.imageTitleContainer = imageTitleContainer;
     this.recipesHandler = recipesHandler;
-    this.dietForm = dietForm;
+    this.dietMenu = dietMenu;
     this.dietInfo = this.dietInfo.bind(this);
     this.postImage = this.postImage.bind(this);
     this.handlePostImageSuccess = this.handlePostImageSuccess.bind(this);
@@ -78,20 +77,20 @@ class App {
     this.getRecipes = this.getRecipes.bind(this);
     this.handleGetRecipesSuccess = this.handleGetRecipesSuccess.bind(this);
     this.handleGetRecipesError = this.handleGetRecipesError.bind(this);
-    this.getFavoritedRecipes = this.getFavoritedRecipes.bind(this);
-    this.handleGetFavoritedRecipesSuccess = this.handleGetFavoritedRecipesSuccess.bind(this);
-    this.handleGetFavoritedRecipesError = this.handleGetFavoritedRecipesError.bind(this);
+    this.getFavoriteRecipes = this.getFavoriteRecipes.bind(this);
+    this.handleGetFavoriteRecipesSuccess = this.handleGetFavoriteRecipesSuccess.bind(this);
+    this.handleGetFavoriteRecipesError = this.handleGetFavoriteRecipesError.bind(this);
     this.savedDietInfoCheck = this.savedDietInfoCheck.bind(this);
   }
 
   start() {
-    this.pageHeader.clickDietInfo(this.dietInfo);
-    this.pageHeader.clickPostImage(this.postImage);
-    this.pageHeader.clickGetRecipes(this.getRecipes);
-    this.recipesHandler.clickGetFavoritedRecipes(this.getFavoritedRecipes);
-    this.dietForm.clickDietInfo(this.dietInfo);
+    this.form.clickDietInfo(this.dietInfo);
+    this.form.clickPostImage(this.postImage);
+    this.form.clickGetRecipes(this.getRecipes);
+    this.recipesHandler.clickGetFavoriteRecipes(this.getFavoriteRecipes);
+    this.dietMenu.clickDietInfo(this.dietInfo);
     this.savedDietInfoCheck();
-    this.getFavoritedRecipes();
+    this.getFavoriteRecipes();
   }
 
   savedDietInfoCheck() {
@@ -154,14 +153,14 @@ class App {
         xhr.upload.addEventListener("progress", function (evt) {
           if (evt.lengthComputable) {
             var percentComplete = evt.loaded / evt.total;
-            $('#upload_progress').css({
+            $('#percentage_bar_upload').css({
               width: percentComplete * 100 + '%'
             });
             if (percentComplete > 0 && percentComplete < 1) {
-              $('#image_upload_container').removeClass('d-none');
+              $('#percentage_upload_container').removeClass('d-none');
             }
             if (percentComplete === 1) {
-              $('#image_upload_container').addClass('d-none');
+              $('#percentage_upload_container').addClass('d-none');
             }
           }
         }, false);
@@ -201,7 +200,7 @@ class App {
     if (!(response.responses[0].labelAnnotations)) {
       document.getElementById("title_download_text").className = "d-none";
       document.getElementById("image_not_recognized_text").className = "text-center";
-      document.getElementById("my_image").src = "";
+      document.getElementById("uploaded_image").src = "";
       return;
     }
     const imageTitle = response.responses[0].labelAnnotations[0].description;
@@ -238,14 +237,14 @@ class App {
     console.error(error);
   }
 
-  getFavoritedRecipes() {
-    if (!(localStorage.getItem('favoritedArray'))) {
+  getFavoriteRecipes() {
+    if (!(localStorage.getItem('favoriteArray'))) {
       document.getElementById("empty_favorite_text").className = "d-flex justify-content-center";
       return;
     }
-    document.getElementById("favorite_recipe_download_text").className = "text-center";
-    favoritedArray = JSON.parse(localStorage.getItem('favoritedArray'));
-    let stringifiedArray = favoritedArray.join(",");
+    document.getElementById("favorite_recipes_status_text").className = "text-center";
+    favoriteArray = JSON.parse(localStorage.getItem('favoriteArray'));
+    let stringifiedArray = favoriteArray.join(",");
     let spoonacularURL = `https://api.spoonacular.com/recipes/informationBulk?ids=${stringifiedArray}&apiKey=${spoonacularAPIKey}&includeNutrition=true&size=636x393`
     $.ajax({
       method: "GET",
@@ -253,16 +252,16 @@ class App {
       headers: {
         "Content-Type": "application/json"
       },
-      success: this.handleGetFavoritedRecipesSuccess,
-      error: this.handleGetFavoritedRecipesError
+      success: this.handleGetFavoriteRecipesSuccess,
+      error: this.handleGetFavoriteRecipesError
     })
   }
 
-  handleGetFavoritedRecipesSuccess(recipes) {
-    this.recipesHandler.displayFavoritedRecipes(recipes);
+  handleGetFavoriteRecipesSuccess(recipes) {
+    this.recipesHandler.displayFavoriteRecipes(recipes);
   }
 
-  handleGetFavoritedRecipesError(error) {
+  handleGetFavoriteRecipesError(error) {
     console.error(error);
   }
 }

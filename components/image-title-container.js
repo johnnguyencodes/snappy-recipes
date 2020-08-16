@@ -14,14 +14,14 @@ class ImageTitleContainer {
         xhr.onprogress = function (e) {
           if (e.lengthComputable) {
             var percentComplete = e.loaded / e.total;
-            $('#download_progress').css({
+            $('#percentage_bar_download').css({
               width: percentComplete * 100 + '%'
             });
             if (percentComplete > 0 && percentComplete < 1) {
-              $("#image_download_container").removeClass("d-none");
+              $("#percentage_download_container").removeClass("d-none");
             }
             if (percentComplete === 1) {
-              $("#image_download_container").addClass("d-none");
+              $("#percentage_download_container").addClass("d-none");
             }
           }
         };
@@ -45,11 +45,11 @@ class ImageTitleContainer {
   }
 
   imageLoaderFunction(imageLoader, imageURL) {
-    let my_image = document.getElementById("my_image");
+    let uploadedImage = document.getElementById("uploaded_image");
     let downloadProgress = document.getElementById("download-progress");
     imageLoader.LoadImage("imageURL")
       .then(image => {
-        my_image.src = imageURL;
+        uploadedImage.src = imageURL;
       })
   }
 

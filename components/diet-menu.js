@@ -1,6 +1,6 @@
-class DietForm {
-  constructor(dietForm) {
-    this.dietForm = dietForm;
+class DietMenu {
+  constructor(dietMenu) {
+    this.dietMenu = dietMenu;
     openDietMenuButton.addEventListener("click", this.openDietMenu.bind(this));
     closeDietMenuButton.addEventListener("click", this.closeDietMenu.bind(this));
     document.getElementById("overlay").addEventListener("click", this.handleOverlayClick.bind(this));
@@ -11,7 +11,6 @@ class DietForm {
   }
 
   clickOverlay(closeDietMenu) {
-    console.log('hello there');
     this.closeDietMenu = closeDietMenu;
   }
 

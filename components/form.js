@@ -1,6 +1,6 @@
-const favoritedRecipesElement = document.getElementById("favorited_recipes_element");
+const favoriteRecipesSection = document.getElementById("favorite_recipes_section");
 
-class PageHeader {
+class Form {
   constructor() {
     uploadButton.addEventListener("click", this.imgValidation.bind(this));
     searchButton.addEventListener("click", this.search.bind(this));
@@ -25,15 +25,15 @@ class PageHeader {
   }
 
   handleOverlayClick() {
-    if (document.getElementById("favorited_recipes_element").className === "favorited-recipes-visible d-flex flex-column justify-content-center") {
+    if (favoriteRecipesSection.className === "favorite-recipes-visible d-flex flex-column justify-content-center") {
       this.closeFavorites();
     }
   }
 
   openFavorites() {
     event.preventDefault();
-    favoritedRecipesElement.className = "favorited-recipes-visible d-flex flex-column justify-content-center";
-    if (localStorage.getItem('favoritedArray') !== null ) {
+    favoriteRecipesSection.className = "favorite-recipes-visible d-flex flex-column justify-content-center";
+    if (localStorage.getItem('favoriteArray') !== null ) {
       document.getElementById("empty_favorite_text").className = "d-none";
     }
     document.getElementById("content").className="row noscroll";
@@ -48,20 +48,20 @@ class PageHeader {
       top: 0,
       behavior: "auto"
     })
-    favoritedRecipesElement.className = "favorited-recipes-hidden d-flex flex-column justify-content-center";
+    favoriteRecipesSection.className = "favorite-recipes-hidden d-flex flex-column justify-content-center";
     document.getElementById("content").className = "row";
     document.getElementById("overlay").className = "d-none";
 
   }
 
   favoriteCheck() {
-    if (!(localStorage.getItem('favoritedArray'))) {
+    if (!(localStorage.getItem('favoriteArray'))) {
       return;
     }
     let searchedArray = document.querySelectorAll("#heart_container i");
-    let favoritedArrayToCheck = JSON.parse(localStorage.getItem("favoritedArray"));
+    let favoriteArrayToCheck = JSON.parse(localStorage.getItem("favoriteArray"));
     for (var i = 0; i < searchedArray.length; i++) {
-      if (favoritedArrayToCheck.includes(parseInt(searchedArray[i].id.substring(11)))) {
+      if (favoriteArrayToCheck.includes(parseInt(searchedArray[i].id.substring(11)))) {
         searchedArray[i].className = "fas fa-heart text-danger heart-icon fa-lg";
       } else {
         searchedArray[i].className = "far fa-heart text-danger heart-icon fa-lg";
