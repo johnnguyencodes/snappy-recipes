@@ -12,13 +12,13 @@ table {
   max-width: 75ch;
 }
 
-#my_image {
+#uploaded_image {
   max-height: 400px;
   max-width: 100%;
   object-fit: contain;
 }
 
-.favorited-recipe-card img {
+.favorite-recipe-card img {
   max-width: 312px;
 }
 
@@ -47,8 +47,6 @@ a {
   overflow-y: hidden;
 }
 
-
-
 .custom-file-label::after {
     left: 0;
     right: auto;
@@ -56,8 +54,7 @@ a {
     border-right: inherit;
 }
 
-
-#upload_progress, #download_progress {
+#percentage_bar_upload, #percentage_bar_download {
     z-index: 5;
     display: block;
     text-align: left;
@@ -95,7 +92,7 @@ a {
   background-color: white;
 }
 
-.favorited-recipes-hidden {
+.favorite-recipes-hidden {
   z-index: 3;
   min-height: 100vh;
   height: 100%;
@@ -110,7 +107,7 @@ a {
   display: none;
 }
 
-.favorited-recipes-visible {
+.favorite-recipes-visible {
   z-index: 3;
   min-height: 100vh;
   height: auto;
@@ -125,7 +122,7 @@ a {
   overflow-x: hidden;
 }
 
-#favorited_recipes_element {
+#favorite_recipes_element {
   overflow-y: auto;
 }
 
@@ -163,58 +160,58 @@ span {
 }
 
 @media only screen and (min-width: 275px) {
-  #recipes_container img {
+  #search_recipes_container img {
     max-width: 189px;
   }
 }
 
 @media only screen and (min-width: 375px) {
-  #recipes_container img {
+  #search_recipes_container img {
     max-width: 271px;
   }
 }
 
 @media only screen and (min-width: 450px) {
-  #recipes_container img {
+  #search_recipes_container img {
     max-width: 339px;
   }
 }
 
 @media only screen and (min-width: 500px) {
-  #recipes_container img {
+  #search_recipes_container img {
     max-width: 379px;
   }
 }
 
 @media only screen and (min-width: 576px) {
-  #recipes_container img {
+  #search_recipes_container img {
     max-width: 222px;
   }
 }
 
 @media only screen and (min-width: 700px) {
-  #recipes_container img {
+  #search_recipes_container img {
     max-width: 284px;
   }
 }
 
 @media only screen and (min-width: 768px) {
-  #recipes_container img {
+  #search_recipes_container img {
     max-width: 240px;
   }
   .recipe-card {
     min-width: 268px;
   }
-  .section1 {
+  #form {
     position: fixed;
   }
 }
 
 @media only screen and (min-width: 1110px) {
-  #recipes_container img {
+  #search_recipes_container img {
     max-width: 254px;
   }
-    .section1 {
+    #form {
     position: fixed;
     min-width: 556px;
     max-width: 606px;
@@ -222,10 +219,10 @@ span {
 }
 
 @media only screen and (min-width: 1200px) {
-  #recipes_container img {
+  #search_recipes_container img {
     max-width: 236px;
   }
-    .section1 {
+    #form {
     min-width: 404px;
     max-width: 436px;
     position: fixed;
@@ -233,7 +230,7 @@ span {
 }
 
 @media only screen and (min-width: 1300px) {
-    .section1 {
+    #form {
     max-width: 437px;
     max-width: 470px;
     position: fixed;
@@ -241,7 +238,7 @@ span {
 }
 
 @media only screen and (min-width: 1400px) {
-    .section1 {
+    #form {
     max-width: 471px;
     max-width: 503px;
     position: fixed;
@@ -249,7 +246,7 @@ span {
 }
 
 @media only screen and (min-width: 1500px) {
-    .section1 {
+    #form {
     max-width: 504px;
     max-width: 536px;
     position: fixed;
@@ -258,7 +255,7 @@ span {
 
 
 @media only screen and (min-width: 1600px) {
-    .section1 {
+    #form {
     max-width: 537px;
     max-width: 569px;
     position: fixed;
@@ -266,7 +263,7 @@ span {
 }
 
 @media only screen and (min-width: 1700px) {
-    .section1 {
+    #form {
     max-width: 570px;
     max-width: 603px;
     position: fixed;
@@ -274,7 +271,7 @@ span {
 }
 
 @media only screen and (min-width: 1800px) {
-    .section1 {
+    #form {
     max-width: 542px;
     max-width: 644px;
     position: fixed;

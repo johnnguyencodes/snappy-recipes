@@ -1,9 +1,13 @@
-class DietForm {
-  constructor(dietForm) {
-    this.dietForm = dietForm;
+const dietMenu = document.getElementById("diet_menu");
+const openDietMenuButton = document.getElementById("open_diet_menu_button");
+const closeDietMenuButton = document.getElementById("close_diet_menu_button");
+
+class DietMenu {
+  constructor(dietMenu) {
+    this.dietMenu = dietMenu;
     openDietMenuButton.addEventListener("click", this.openDietMenu.bind(this));
     closeDietMenuButton.addEventListener("click", this.closeDietMenu.bind(this));
-    document.getElementById("overlay").addEventListener("click", this.handleOverlayClick.bind(this));
+    overlay.addEventListener("click", this.handleOverlayClick.bind(this));
   }
 
   clickDietInfo(dietInfo) {
@@ -11,12 +15,11 @@ class DietForm {
   }
 
   clickOverlay(closeDietMenu) {
-    console.log('hello there');
     this.closeDietMenu = closeDietMenu;
   }
 
   handleOverlayClick() {
-    if (document.getElementById("diet_menu").className === "diet-menu-visible d-flex flex-column justify-content-center") {
+    if (dietMenu.classList.contains("diet-menu-visible")) {
       this.closeDietMenu();
     }
   }
@@ -24,13 +27,13 @@ class DietForm {
   openDietMenu() {
     event.preventDefault();
     dietMenu.className = "diet-menu-visible d-flex flex-column justify-content-center";
-    document.getElementById("overlay").className = "";
+    overlay.className = "";
   }
 
   closeDietMenu() {
     event.preventDefault();
     dietMenu.className = "diet-menu-hidden d-flex flex-column justify-content-center";
     this.dietInfo();
-    document.getElementById("overlay").className = "d-none";
+    overlay.className = "d-none";
   }
 }

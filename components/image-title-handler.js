@@ -1,31 +1,31 @@
-class ImageTitleContainer {
+class ImageTitleHandler {
   constructor(titleContainer) {
     this.titleContainer = titleContainer;
   }
 
-  imageOnPage(imageURL) {
+  postedImageDownloadProgress(imageURL) {
     let imageURLParameter = imageURL;
     let imageLoader = {};
-    imageLoader['LoadImage'] = function (imageURLParameter, progressUpdateCallback) {
-      return new Promise((resolve, reject) => {
+    imageLoader['LoadImage'] = (imageURLParameter, progressUpdateCallback) => {
+      return new Promise((resolve) => {
         var xhr = new XMLHttpRequest();
         xhr.open('GET', imageURL, true);
         xhr.responseType = 'arraybuffer';
-        xhr.onprogress = function (e) {
-          if (e.lengthComputable) {
-            var percentComplete = e.loaded / e.total;
-            $('#download_progress').css({
+        xhr.onprogress = (progressEvent) => {
+          if (progressEvent.lengthComputable) {
+            var percentComplete = progressEvent.loaded / progressEvent.total;
+            $('#percentage_bar_download').css({
               width: percentComplete * 100 + '%'
             });
             if (percentComplete > 0 && percentComplete < 1) {
-              $("#image_download_container").removeClass("d-none");
+              $("#percentage_download_container").removeClass("d-none");
             }
             if (percentComplete === 1) {
-              $("#image_download_container").addClass("d-none");
+              $("#percentage_download_container").addClass("d-none");
             }
           }
         };
-        xhr.onloadend = function () {
+        xhr.onloadend = () => {
           var options = {};
           var headers = xhr.getAllResponseHeaders();
           var typeMatch = headers.match(/^Content-Type:\s*(.*?)$/mi);
@@ -45,17 +45,15 @@ class ImageTitleContainer {
   }
 
   imageLoaderFunction(imageLoader, imageURL) {
-    let my_image = document.getElementById("my_image");
-    let downloadProgress = document.getElementById("download-progress");
     imageLoader.LoadImage("imageURL")
       .then(image => {
-        my_image.src = imageURL;
+        uploadedImage.src = imageURL;
       })
   }
 
   imageTitleOnPage(imageTitle) {
     const h1 = document.createElement("h1");
-    h1.id = "title";
+    h1.id = "image_title";
     h1.textContent = imageTitle;
     this.titleContainer.append(h1);
   }

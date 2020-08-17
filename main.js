@@ -1,15 +1,13 @@
-const newPageHeader = new PageHeader();
+const newForm = new Form();
 
-// const dietaryRestrictions = document.getElementById("dietary_restrictions");
-// const dietaryIntolerances = document.getElementById("dietary_intolerances");
-const newDietForm = new DietForm(dietMenu);
+const newDietMenu = new DietMenu();
 
 const titleContainer = document.getElementById("title_container");
-const newImageTitleContainer = new ImageTitleContainer(titleContainer);
+const newImageTitleHandler = new ImageTitleHandler(titleContainer);
 
-const recipesContainer = document.getElementById("recipes_container");
-const favoritedRecipesContainer = document.getElementById("favorited_recipes_container");
-const newRecipesHandler = new RecipesHandler(recipesContainer, favoritedRecipesContainer);
+const searchRecipesContainer = document.getElementById("search_recipes_container");
+const favoriteRecipesContainer = document.getElementById("favorite_recipes_container");
+const newRecipesHandler = new RecipesHandler(searchRecipesContainer, favoriteRecipesContainer);
 
-const newApp = new App(newPageHeader, newImageTitleContainer, newRecipesHandler, newDietForm);
+const newApp = new App(newForm, newDietMenu, newImageTitleHandler, newRecipesHandler);
 newApp.start();

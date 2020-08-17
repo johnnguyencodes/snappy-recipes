@@ -34,14 +34,14 @@
       </div>
     </div>
   </div>
-  <div id="favorited_recipes_element" class="favorited-recipes-hidden d-flex flex-column justify-content-center">
-    <p id="favorite_recipe_download_text" class="text-center d-none">Gathering recipes...</p>
-    <div id="favorited_recipes_container"></div>
-    <div id="empty_favorite_text" class="justify-content-center d-none">
+  <div id="favorite_recipes_section" class="favorite-recipes-hidden d-flex flex-column justify-content-center">
+    <p id="favorite_recipes_status_text" class="text-center d-none">Gathering recipes...</p>
+    <div id="favorite_recipes_container"></div>
+    <div id="empty_favorite_text_container" class="justify-content-center d-none">
       <h3 class="text-center mb-5">Your saved recipes will appear here.</h3>
     </div>
     <div>
-      <button id="close_favorites_button" class="btn btn-danger col-3 offset-4 mb-3">Close</button>
+      <button id="close_favorite_button" class="btn btn-danger col-3 offset-4 mb-3">Close</button>
     </div>
   </div>
   <div id="diet_menu" class="diet-menu-hidden">
@@ -142,9 +142,9 @@
       <button id="close_diet_menu_button" class="btn btn-warning col-3 offset-4">Done</button>
     </div>
   </div>
-  <div id="content" class="row">
-    <div class="placeholder col-md-6 col-lg-6 col-xl-4"></div>
-    <div class="section1 ml-3 col-md-6 col-lg-6 col-xl-4 d-flex flex-column align-items-center">
+  <div id="main_content" class="row">
+    <div class="form_spaceholder col-md-6 col-lg-6 col-xl-4"></div>
+    <div id="form" class="ml-3 col-md-6 col-lg-6 col-xl-4 d-flex flex-column align-items-center">
     <header class="col-xs-12 col-sm-12 col-md-12 col-lg-12 d-flex flex-column align-items-center justify-content-center mb-2">
       <h1> <span class="badge badge-primary">Snappy Recipes <i class="fa fa-utensils"></i></span></h1>
       <p class="m-2 text-center">Find recipes by uploading an <strong>image</strong>, or by entering a <strong>search</strong>.</p>
@@ -173,29 +173,29 @@
           </button>
         </div>
     </form>
-    <div class="image-percentage-bar-container d-flex flex-column justify-content-center">
-      <div id="image_upload_container" class="d-none">
-        <div id="upload_progress"></div>
+    <div id="percentage_bar_container" class="d-flex flex-column justify-content-center">
+      <div id="percentage_upload_container" class="d-none">
+        <div id="percentage_bar_upload"></div>
         <p id="image_upload_text" class="text-center">Uploading image...</p>
       </div>
-      <div id="image_download_container" class="d-none">
-        <div id="download_progress"></div>
+      <div id="percentage_download_container" class="d-none">
+        <div id="percentage_bar_download"></div>
         <p id="image_download_text" class="text-center">Downloading image...</p>
       </div>
     </div>
-    <div class="image-container col-xs-12 col-sm-12 col-md-12 col-lg-12 d-flex justify-content-center my-3">
-      <img id="my_image" src="" alt="">
+    <div id="uploaded_image_container" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 d-flex justify-content-center my-3">
+      <img id="uploaded_image" src="" alt="">
     </div>
     <div id="title_container" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 d-flex justify-content-around">
-      <p id="title_download_text" class="text-center d-none">Recognizing image...</p>
-      <p id="image_not_recognized_text" class="text-center d-none">Your image could not be recognized. Please upload a different image or enter a search.</p>
+      <p id="image_recognition_status" class="text-center d-none">Recognizing image...</p>
+      <p id="image_recognition_failed" class="text-center d-none">Your image could not be recognized. Please upload a different image or enter a search.</p>
     </div>
     </div>
-    <div class="section2 col-md-6 col-lg-6 col-xl-8">
+    <div id="search_results_section" class="col-md-6 col-lg-6 col-xl-8">
       <div id="search_results_quantity_div" class="d-none">
         <p id="search_results_quantity_text" class="text-center"></p>
       </div>
-      <div id="recipes_container" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 px-0 d-flex flex-row flex-wrap align-items-center justify-content-around">
+      <div id="search_recipes_container" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 px-0 d-flex flex-row flex-wrap align-items-center justify-content-around">
         <p id="recipe_download_text" class="text-center d-none">Gathering recipes...</p>
         <p id="no_recipes_text" class="text-center d-none">No recipes found. Please modify your diet preferences and try again, or upload a different image, or enter a different search.</p>
       </div>
@@ -209,11 +209,10 @@
   <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
   <script src="config.js"></script>
   <script src="components/app.js"></script>
-  <script src="components/diet-form.js"></script>
-  <script src="components/image-title-container.js"></script>
-  <script src="components/page-header.js"></script>
+  <script src="components/diet-menu.js"></script>
+  <script src="components/image-title-handler.js"></script>
+  <script src="components/form.js"></script>
   <script src="components/recipes-handler.js"></script>
   <script src="main.js"></script>
 </body>
-
 </html>
