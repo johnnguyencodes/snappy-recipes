@@ -30,6 +30,21 @@ class RecipesHandler {
     this.updateResultsQuantityShown();
   }
 
+  handleShowMoreClick() {
+    let yPosition = window.scrollY;
+    chunkedRecipeArrayIndex++;
+    this.displaySearchedRecipes(chunkedRecipeArray, chunkedRecipeArrayIndex);
+    window.scroll(0, yPosition);
+    if (chunkedRecipeArrayIndex === chunkedRecipeArray.length - 1) {
+      document.getElementById("show_more_button").className = "d-none"
+    }
+    this.updateResultsQuantityShown();
+  }
+
+  updateResultsQuantityShown() {
+    searchResultsQuantityText.textContent = `Showing ${document.querySelectorAll(".recipe-card").length} of ${searchResultsQuantityText.textContent.substring(0, searchResultsQuantityText.textContent.length - 14)}`
+  }
+
   handleFavoriteClick(id) {
     if (!(favoriteArray.includes(id))) {
       favoriteArray.push(id);
@@ -79,21 +94,6 @@ class RecipesHandler {
       modalContainer.className = "d-none";
       document.querySelector("body").className = "bg-light";
     });
-  }
-
-  handleShowMoreClick() {
-    let yPosition = window.scrollY;
-    chunkedRecipeArrayIndex++;
-    this.displaySearchedRecipes(chunkedRecipeArray, chunkedRecipeArrayIndex);
-    window.scroll(0, yPosition);
-    if (chunkedRecipeArrayIndex === chunkedRecipeArray.length - 1) {
-      document.getElementById("show_more_button").className = "d-none"
-    }
-    this.updateResultsQuantityShown();
-  }
-
-  updateResultsQuantityShown() {
-    searchResultsQuantityText.textContent = `Showing ${document.querySelectorAll(".recipe-card").length} of ${searchResultsQuantityText.textContent.substring(0, searchResultsQuantityText.textContent.length - 14)}`
   }
 
   displaySearchedRecipes(chunkedRecipeArray, chunkedRecipeArrayIndex) {

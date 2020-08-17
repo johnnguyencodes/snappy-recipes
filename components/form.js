@@ -33,12 +33,6 @@ class Form {
     this.getRecipes = getRecipes;
   }
 
-  handleOverlayClick() {
-    if (favoriteRecipesSection.classList.contains("favorite-recipes-visible")) {
-      this.closeFavorites();
-    }
-  }
-
   openFavorites() {
     event.preventDefault();
     favoriteRecipesSection.className = "favorite-recipes-visible d-flex flex-column justify-content-center";
@@ -58,7 +52,12 @@ class Form {
     favoriteRecipesSection.className = "favorite-recipes-hidden d-flex flex-column justify-content-center";
     mainContent.className = "row";
     overlay.className = "d-none";
+  }
 
+  handleOverlayClick() {
+    if (favoriteRecipesSection.classList.contains("favorite-recipes-visible")) {
+      this.closeFavorites();
+    }
   }
 
   imgValidation(event) {
