@@ -47,15 +47,12 @@ a {
   overflow-y: hidden;
 }
 
-
-
 .custom-file-label::after {
     left: 0;
     right: auto;
     border-left-width: 0;
     border-right: inherit;
 }
-
 
 #percentage_bar_upload, #percentage_bar_download {
     z-index: 5;

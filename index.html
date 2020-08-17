@@ -37,7 +37,7 @@
   <div id="favorite_recipes_section" class="favorite-recipes-hidden d-flex flex-column justify-content-center">
     <p id="favorite_recipes_status_text" class="text-center d-none">Gathering recipes...</p>
     <div id="favorite_recipes_container"></div>
-    <div id="empty_favorite_text" class="justify-content-center d-none">
+    <div id="empty_favorite_text_container" class="justify-content-center d-none">
       <h3 class="text-center mb-5">Your saved recipes will appear here.</h3>
     </div>
     <div>
@@ -187,8 +187,8 @@
       <img id="uploaded_image" src="" alt="">
     </div>
     <div id="title_container" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 d-flex justify-content-around">
-      <p id="title_download_text" class="text-center d-none">Recognizing image...</p>
-      <p id="image_not_recognized_text" class="text-center d-none">Your image could not be recognized. Please upload a different image or enter a search.</p>
+      <p id="image_recognition_status" class="text-center d-none">Recognizing image...</p>
+      <p id="image_recognition_failed" class="text-center d-none">Your image could not be recognized. Please upload a different image or enter a search.</p>
     </div>
     </div>
     <div id="search_results_section" class="col-md-6 col-lg-6 col-xl-8">
@@ -210,7 +210,7 @@
   <script src="config.js"></script>
   <script src="components/app.js"></script>
   <script src="components/diet-menu.js"></script>
-  <script src="components/image-title-container.js"></script>
+  <script src="components/image-title-handler.js"></script>
   <script src="components/form.js"></script>
   <script src="components/recipes-handler.js"></script>
   <script src="main.js"></script>

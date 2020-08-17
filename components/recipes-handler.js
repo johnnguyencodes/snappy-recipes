@@ -1,3 +1,5 @@
+const searchResultsQuantityText = document.getElementById("search_results_quantity_text");
+const modalContainer = document.getElementById("modal_container");
 
 class RecipesHandler {
   constructor(recipesContainer, favoriteRecipesContainer) {
@@ -5,11 +7,27 @@ class RecipesHandler {
     this.favoriteRecipesContainer = favoriteRecipesContainer;
     document.getElementById("show_more_button").addEventListener("click", this.handleShowMoreClick.bind(this));
     this.displaySearchedRecipes = this.displaySearchedRecipes.bind(this);
-    this.updateResultsShownNumber = this.updateResultsShownNumber.bind(this);
+    this.updateResultsQuantityShown = this.updateResultsQuantityShown.bind(this);
+    this.favoriteCheck = this.favoriteCheck.bind(this);
   }
 
     clickGetFavoriteRecipes(getFavoriteRecipes) {
     this.getFavoriteRecipes = getFavoriteRecipes;
+  }
+
+  chunkSearchedRecipes(recipes) {
+    document.getElementById("search_results_quantity_div").className = "d-flex justify-content-center";
+    searchResultsQuantityText.textContent = `${recipes.results.length} recipes found`;
+    let a = 0;
+    while (a < recipes.results.length) {
+      chunkedRecipeArray.push(recipes.results.slice(a, a + 12));
+      a = a + 12;
+    }
+    this.displaySearchedRecipes(chunkedRecipeArray, chunkedRecipeArrayIndex);
+    if (recipes.results.length > 12) {
+      document.getElementById("results_quantity_container").className = "d-flex flex-column align-items-center justify-content-center"
+    }
+    this.updateResultsQuantityShown();
   }
 
   handleFavoriteClick(id) {
@@ -29,73 +47,74 @@ class RecipesHandler {
     document.getElementById(`${id}`).remove();
     localStorage.setItem('favoriteArray', JSON.stringify(favoriteArray));
     if (localStorage.getItem('favoriteArray') === "[]") {
-      document.getElementById("empty_favorite_text").className = "col-xs-12 col-sm-10 offset-sm-1 d-flex justify-content-center";
+      emptyFavoriteTextContainer.className = "d-flex justify-content-center";
+    }
+    this.favoriteCheck();
+  }
+
+  favoriteCheck() {
+    if (!(localStorage.getItem('favoriteArray'))) {
+      return;
+    }
+    let searchedArray = document.querySelectorAll("#heart_container i");
+    let favoriteArrayToCheck = JSON.parse(localStorage.getItem("favoriteArray"));
+    for (var i = 0; i < searchedArray.length; i++) {
+      if (favoriteArrayToCheck.includes(parseInt(searchedArray[i].id.substring(11)))) {
+        searchedArray[i].className = "fas fa-heart text-danger heart-icon fa-lg";
+      } else {
+        searchedArray[i].className = "far fa-heart text-danger heart-icon fa-lg";
+      }
     }
   }
 
   handleExternalClick(URL) {
-    document.getElementById("modal_container").className="";
+    modalContainer.className="";
     document.querySelector("body").className = "bg-light freeze";
     document.getElementById("external_link_button").addEventListener("click", () => {
       window.open(URL, "_blank"),
-      document.getElementById("modal_container").className="d-none",
+        modalContainer.className="d-none",
       document.querySelector("body").className = "bg-light"
     });
     document.getElementById("go_back_button").addEventListener("click", () => {
-      document.getElementById("modal_container").className = "d-none";
+      modalContainer.className = "d-none";
       document.querySelector("body").className = "bg-light";
     });
   }
 
   handleShowMoreClick() {
     let yPosition = window.scrollY;
-    chunkedIncrementor++;
-    this.displaySearchedRecipes(chunked, chunkedIncrementor);
+    chunkedRecipeArrayIndex++;
+    this.displaySearchedRecipes(chunkedRecipeArray, chunkedRecipeArrayIndex);
     window.scroll(0, yPosition);
-    if (chunkedIncrementor === chunked.length - 1) {
+    if (chunkedRecipeArrayIndex === chunkedRecipeArray.length - 1) {
       document.getElementById("show_more_button").className = "d-none"
     }
-    this.updateResultsShownNumber();
+    this.updateResultsQuantityShown();
   }
 
-  updateResultsShownNumber() {
-    document.getElementById("results_quantity_text").textContent = `Showing ${document.querySelectorAll(".recipe-card").length} of ${document.getElementById("search_results_quantity_text").textContent.substring(0, document.getElementById("search_results_quantity_text").textContent.length - 14)}`
+  updateResultsQuantityShown() {
+    searchResultsQuantityText.textContent = `Showing ${document.querySelectorAll(".recipe-card").length} of ${searchResultsQuantityText.textContent.substring(0, searchResultsQuantityText.textContent.length - 14)}`
   }
 
-  chunkSearchedRecipes(recipes) {
-    document.getElementById("search_results_quantity_div").className="d-flex justify-content-center";
-    document.getElementById("search_results_quantity_text").textContent = `${recipes.results.length} recipes found`;
-    let a = 0;
-    while (a < recipes.results.length) {
-      chunked.push(recipes.results.slice(a, a+12));
-      a = a + 12;
-    }
-    this.displaySearchedRecipes(chunked, chunkedIncrementor);
-    if (recipes.results.length > 12) {
-      document.getElementById("results_quantity_container").className = "d-flex flex-column align-items-center justify-content-center"
-    }
-    this.updateResultsShownNumber();
-  }
-
-  displaySearchedRecipes(chunked, chunkedIncrementor) {
-    if (!(chunked[0][0])) {
+  displaySearchedRecipes(chunkedRecipeArray, chunkedRecipeArrayIndex) {
+    if (!(chunkedRecipeArray[0][0])) {
       document.getElementById("recipe_download_text").className = "text-center d-none";
       document.getElementById("no_recipes_text").className = "text-center";
       return;
     }
-    for (let i = 0; i < chunked[chunkedIncrementor].length; i++) {
-      const imageURL = `${chunked[chunkedIncrementor][i].image.substring(0, chunked[chunkedIncrementor][i].image.length - 11)}636x393.jpg`;
-      const title = chunked[chunkedIncrementor][i].title;
-      const readyInMinutes = chunked[chunkedIncrementor][i].readyInMinutes;
-      const servings = chunked[chunkedIncrementor][i].servings;
-      const recipeURL = chunked[chunkedIncrementor][i].sourceUrl;
-      const healthScore = chunked[chunkedIncrementor][i].healthScore;
-      const caloriesAmount = Math.round(chunked[chunkedIncrementor][i].nutrition.nutrients[0].amount);
-      const proteinAmount = Math.round(chunked[chunkedIncrementor][i].nutrition.nutrients[8].amount);
-      const fatAmount = Math.round(chunked[chunkedIncrementor][i].nutrition.nutrients[1].amount);
-      const carbsAmount = Math.round(chunked[chunkedIncrementor][i].nutrition.nutrients[3].amount);
-      const sodiumAmount = Math.round(chunked[chunkedIncrementor][i].nutrition.nutrients[7].amount);
-      const id = chunked[chunkedIncrementor][i].id;
+    for (let i = 0; i < chunkedRecipeArray[chunkedRecipeArrayIndex].length; i++) {
+      const imageURL = `${chunkedRecipeArray[chunkedRecipeArrayIndex][i].image.substring(0, chunkedRecipeArray[chunkedRecipeArrayIndex][i].image.length - 11)}636x393.jpg`;
+      const title = chunkedRecipeArray[chunkedRecipeArrayIndex][i].title;
+      const readyInMinutes = chunkedRecipeArray[chunkedRecipeArrayIndex][i].readyInMinutes;
+      const servings = chunkedRecipeArray[chunkedRecipeArrayIndex][i].servings;
+      const recipeURL = chunkedRecipeArray[chunkedRecipeArrayIndex][i].sourceUrl;
+      const healthScore = chunkedRecipeArray[chunkedRecipeArrayIndex][i].healthScore;
+      const caloriesAmount = Math.round(chunkedRecipeArray[chunkedRecipeArrayIndex][i].nutrition.nutrients[0].amount);
+      const proteinAmount = Math.round(chunkedRecipeArray[chunkedRecipeArrayIndex][i].nutrition.nutrients[8].amount);
+      const fatAmount = Math.round(chunkedRecipeArray[chunkedRecipeArrayIndex][i].nutrition.nutrients[1].amount);
+      const carbsAmount = Math.round(chunkedRecipeArray[chunkedRecipeArrayIndex][i].nutrition.nutrients[3].amount);
+      const sodiumAmount = Math.round(chunkedRecipeArray[chunkedRecipeArrayIndex][i].nutrition.nutrients[7].amount);
+      const id = chunkedRecipeArray[chunkedRecipeArrayIndex][i].id;
       const recipeCard = document.createElement("div");
       recipeCard.className = "recipe-card card mx-3 my-3 px-0 col-xs-12 col-sm-5 col-md-5 col-lg-3 col-xl-2 h-100";
       recipeCard.id = "recipe";
@@ -156,11 +175,11 @@ class RecipesHandler {
       sodiumSpan.textContent = `${sodiumAmount}mg Sodium`;
       const cardText3 = document.createElement("div");
       cardText3.className = "card-text d-flex flex-wrap";
-      if (chunked[chunkedIncrementor][i].diets) {
-        for (var j = 0; j < chunked[chunkedIncrementor][i].diets.length; j++) {
+      if (chunkedRecipeArray[chunkedRecipeArrayIndex][i].diets) {
+        for (var j = 0; j < chunkedRecipeArray[chunkedRecipeArrayIndex][i].diets.length; j++) {
           const dietSpan = document.createElement("span");
           dietSpan.className = "badge badge-light mb-1 mr-1";
-          dietSpan.textContent = chunked[chunkedIncrementor][i].diets[j];
+          dietSpan.textContent = chunkedRecipeArray[chunkedRecipeArrayIndex][i].diets[j];
           cardText3.append(dietSpan);
         }
       }
@@ -279,6 +298,6 @@ class RecipesHandler {
       recipeCard.append(cardBody);
       this.favoriteRecipesContainer.append(recipeCard);
     }
-    document.getElementById("favorite_recipes_status_text").className = "text-center d-none";
+    favoriteRecipesStatusText.className = "text-center d-none";
   }
 }

@@ -1,6 +1,14 @@
 const favoriteRecipesSection = document.getElementById("favorite_recipes_section");
 const fileLabel = document.getElementById("custom_file_label");
 let fileInputForm = document.getElementById("file_input_form");
+const recipeSearchInput = document.getElementById('recipe_search_input');
+const resetButton = document.getElementById("reset_button");
+const inputs = document.querySelectorAll(".input");
+const uploadButton = document.getElementById("upload_button");
+const searchButton = document.getElementById("search_button");
+const openFavoriteButton = document.getElementById("open_favorites_button");
+const closeFavoriteButton = document.getElementById("close_favorite_button");
+const mainContent = document.getElementById("main_content");
 
 class Form {
   constructor() {
@@ -10,8 +18,7 @@ class Form {
     resetButton.addEventListener("click", this.resetFields.bind(this));
     openFavoriteButton.addEventListener("click", this.openFavorites.bind(this));
     closeFavoriteButton.addEventListener("click", this.closeFavorites.bind(this));
-    this.favoriteCheck = this.favoriteCheck.bind(this);
-    document.getElementById("overlay").addEventListener("click", this.handleOverlayClick.bind(this));
+    overlay.addEventListener("click", this.handleOverlayClick.bind(this));
   }
 
   clickDietInfo(dietInfo) {
@@ -27,7 +34,7 @@ class Form {
   }
 
   handleOverlayClick() {
-    if (favoriteRecipesSection.className === "favorite-recipes-visible d-flex flex-column justify-content-center") {
+    if (favoriteRecipesSection.classList.contains("favorite-recipes-visible")) {
       this.closeFavorites();
     }
   }
@@ -35,40 +42,23 @@ class Form {
   openFavorites() {
     event.preventDefault();
     favoriteRecipesSection.className = "favorite-recipes-visible d-flex flex-column justify-content-center";
-    if (localStorage.getItem('favoriteArray') !== null ) {
-      document.getElementById("empty_favorite_text").className = "d-none";
+    if (!(localStorage.getItem('favoriteArray')) || localStorage.getItem('favoriteArray') !== "[]" ) {
+      emptyFavoriteTextContainer.className = "d-none";
     }
-    document.getElementById("main_content").className="row noscroll";
-    document.getElementById("overlay").className = "";
+    mainContent.className="row noscroll";
+    overlay.className = "";
   }
-
 
   closeFavorites() {
     event.preventDefault();
-    this.favoriteCheck();
     window.scrollTo({
       top: 0,
       behavior: "auto"
     })
     favoriteRecipesSection.className = "favorite-recipes-hidden d-flex flex-column justify-content-center";
-    document.getElementById("main_content").className = "row";
-    document.getElementById("overlay").className = "d-none";
+    mainContent.className = "row";
+    overlay.className = "d-none";
 
-  }
-
-  favoriteCheck() {
-    if (!(localStorage.getItem('favoriteArray'))) {
-      return;
-    }
-    let searchedArray = document.querySelectorAll("#heart_container i");
-    let favoriteArrayToCheck = JSON.parse(localStorage.getItem("favoriteArray"));
-    for (var i = 0; i < searchedArray.length; i++) {
-      if (favoriteArrayToCheck.includes(parseInt(searchedArray[i].id.substring(11)))) {
-        searchedArray[i].className = "fas fa-heart text-danger heart-icon fa-lg";
-      } else {
-        searchedArray[i].className = "far fa-heart text-danger heart-icon fa-lg";
-      }
-    }
   }
 
   imgValidation(event) {
@@ -82,7 +72,6 @@ class Form {
       fileInputForm.value = "";
       return;
     }
-    const inputs = document.querySelectorAll(".input");
     for (var i = 0; i < inputs.length; i++) {
       inputs[i].disabled = true;
     }
@@ -133,22 +122,21 @@ class Form {
       inputs[i].disabled = false;
     }
     fileLabel.textContent = "";
-    if (document.getElementById("title")) {
-      document.getElementById("title").remove();
+    if (document.getElementById("image_title")) {
+      document.getElementById("image_title").remove();
     }
-    searchInput.value = "";
+    recipeSearchInput.value = "";
     uploadedImage.src = "";
     while (document.getElementById("recipe")) {
       document.getElementById("recipe").remove();
     }
-    document.getElementById("recipe_download_text").className = "text-center d-none";
-    document.getElementById("no_recipes_text").className = "text-center d-none";
-    document.getElementById("image_not_recognized_text").className = "text-center d-none";
+    recipeDownloadText.className = "d-none";
+    emptyFavoriteTextContainer.className = "d-none";
+    imageRecognitionFailedText.className = "d-none";
     chunked = [];
     chunkedIncrementor = 0;
     document.getElementById("search_results_quantity_div").className="d-none";
     document.getElementById("results_quantity_container").className = "d-none";
     document.getElementById("show_more_button").className = "btn btn-secondary"
   }
-
 }
