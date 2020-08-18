@@ -4,7 +4,8 @@ const spoonacularAPIKey = config.spoonacularAPIKey;
 let favoriteArray;
 let restrictionsString;
 let intolerancesString;
-const recipeDownloadText = document.getElementById("recipe_download_text");
+const searchRecipesDownloadText = document.getElementById("search_recipes_download_text");
+const noSearchRecipesText = document.getElementById("no_search_recipes_text");
 const uploadedImage = document.getElementById("uploaded_image");
 let chunkedRecipeArray = [];
 let chunkedRecipeArrayIndex = 0;
@@ -211,7 +212,7 @@ class App {
 
   //GET request to Spoonacular's API with label from Google to get a list of up to 10 recipes containing the item from the image and other nutrition info.
   getRecipes(imageTitle) {
-    recipeDownloadText.className = "text-center";
+    searchRecipesDownloadText.className = "text-center mt-3";
     let spoonacularURL = `https://api.spoonacular.com/recipes/complexSearch?query=${imageTitle}&apiKey=${spoonacularAPIKey}&addRecipeNutrition=true&636x393&number=100`
     $.ajax({
       method: "GET",

@@ -129,7 +129,8 @@ class Form {
     while (document.getElementById("recipe")) {
       document.getElementById("recipe").remove();
     }
-    recipeDownloadText.className = "d-none";
+    searchRecipesDownloadText.className = "d-none";
+    noSearchRecipesText.className = "d-none";
     emptyFavoriteTextContainer.className = "d-none";
     imageRecognitionFailedText.className = "d-none";
     chunkedRecipeArray = [];
