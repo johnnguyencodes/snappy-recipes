@@ -132,10 +132,10 @@ class Form {
     recipeDownloadText.className = "d-none";
     emptyFavoriteTextContainer.className = "d-none";
     imageRecognitionFailedText.className = "d-none";
-    chunked = [];
-    chunkedIncrementor = 0;
-    document.getElementById("search_results_quantity_div").className="d-none";
-    document.getElementById("results_quantity_container").className = "d-none";
-    document.getElementById("show_more_button").className = "btn btn-secondary"
+    chunkedRecipeArray = [];
+    chunkedRecipeArrayIndex = 0;
+    searchResultsQuantityDiv.className="d-none";
+    resultsShownQuantityDiv.className = "d-none";
+    showMoreButton.className = "btn btn-secondary my-2"
   }
 }
