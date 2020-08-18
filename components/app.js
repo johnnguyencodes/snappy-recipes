@@ -5,6 +5,7 @@ let favoriteArray;
 let restrictionsString;
 let intolerancesString;
 const recipeDownloadText = document.getElementById("recipe_download_text");
+const noSearchResultsText = document.getElementById("no_recipes_text");
 const uploadedImage = document.getElementById("uploaded_image");
 let chunkedRecipeArray = [];
 let chunkedRecipeArrayIndex = 0;

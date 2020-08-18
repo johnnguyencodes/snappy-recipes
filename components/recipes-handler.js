@@ -100,8 +100,8 @@ class RecipesHandler {
 
   displaySearchedRecipes(chunkedRecipeArray, chunkedRecipeArrayIndex) {
     if (!(chunkedRecipeArray[0][0])) {
-      document.getElementById("recipe_download_text").className = "d-none";
-      document.getElementById("no_recipes_text").className = "text-center";
+      recipeDownloadText.className = "d-none";
+      noSearchResultsText.className = "text-center mt-3";
       return;
     }
     for (let i = 0; i < chunkedRecipeArray[chunkedRecipeArrayIndex].length; i++) {
