@@ -92,6 +92,11 @@ a {
   background-color: white;
 }
 
+.recipe-card > .card-body {
+  height: 250px;
+  overflow-y: auto;
+}
+
 .favorite-recipes-hidden {
   z-index: 3;
   min-height: 100vh;

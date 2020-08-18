@@ -125,7 +125,7 @@ class RecipesHandler {
       titleAnchorTag.addEventListener("click", this.handleExternalClick.bind(this, recipeURL));
       imageContainer.className = "d-flex justify-content-center"
       const img = document.createElement("img");
-      imageContainer.className = "card-image-top d-flex justify-content-center my-3";
+      imageContainer.className = "card-image-top d-flex justify-content-center mt-3";
       img.src = imageURL;
       img.alt = "Recipe Image";
       img.className = "m-0 p-0";
@@ -143,7 +143,7 @@ class RecipesHandler {
       imageContainer.append(heartIconContainer);
       heartIconContainer.addEventListener("click", this.handleFavoriteClick.bind(this, id));
       const cardBody = document.createElement("div");
-      cardBody.className = "card-body pt-0";
+      cardBody.className = "card-body py-0";
       const cardTitle = document.createElement("div");
       cardTitle.className = "card-title";
       const recipeTitle = document.createElement("h3");
