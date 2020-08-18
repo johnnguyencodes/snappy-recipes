@@ -130,7 +130,7 @@ class Form {
       document.getElementById("recipe").remove();
     }
     searchRecipesDownloadText.className = "d-none";
-    noSearchResultsText.className = "d-none";
+    noSearchRecipesText.className = "d-none";
     emptyFavoriteTextContainer.className = "d-none";
     imageRecognitionFailedText.className = "d-none";
     chunkedRecipeArray = [];

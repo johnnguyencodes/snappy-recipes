@@ -17,6 +17,11 @@ class RecipesHandler {
   }
 
   chunkSearchedRecipes(recipes) {
+    if (!(recipes.results[0])) {
+      searchRecipesDownloadText.className = "d-none";
+      noSearchRecipesText.className = "text-center mt-3";
+      return;
+    }
     searchResultsQuantityDiv.className = "d-flex justify-content-center mt-3";
     searchResultsQuantityText.textContent = `${recipes.results.length} recipes found`;
     let a = 0;
@@ -99,11 +104,6 @@ class RecipesHandler {
   }
 
   displaySearchedRecipes(chunkedRecipeArray, chunkedRecipeArrayIndex) {
-    if (!(chunkedRecipeArray[0][0])) {
-      searchRecipesDownloadText.className = "d-none";
-      noSearchRecipesText.className = "text-center mt-3";
-      return;
-    }
     for (let i = 0; i < chunkedRecipeArray[chunkedRecipeArrayIndex].length; i++) {
       const imageURL = `${chunkedRecipeArray[chunkedRecipeArrayIndex][i].image.substring(0, chunkedRecipeArray[chunkedRecipeArrayIndex][i].image.length - 11)}636x393.jpg`;
       const title = chunkedRecipeArray[chunkedRecipeArrayIndex][i].title;
