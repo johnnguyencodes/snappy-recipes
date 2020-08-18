@@ -92,6 +92,26 @@ a {
   background-color: white;
 }
 
+.recipe-card > .card-body {
+  height: 250px;
+  overflow-y: auto;
+}
+
+#heart_container:hover, #delete_container:hover {
+  box-shadow: inset 0 0 0 2px red;
+}
+
+.recipe-card, .favorite-recipe-card {
+  box-shadow: 0 0 5px rgba(33,33,33,.2);
+  transition: all 0.25s ease-in-out;
+}
+
+.recipe-card:hover, .favorite-recipe-card:hover {
+  transform: translateY(-.5rem);
+  box-shadow: 0 0 15px rgba(33,33,33,.2);
+  transition: all .25s ease-in-out;
+}
+
 .favorite-recipes-hidden {
   z-index: 3;
   min-height: 100vh;
@@ -157,6 +177,10 @@ span {
   background-color: #000;
   opacity: 0.5;
   z-index: 2;
+}
+
+#favorite_recipes_container img {
+  max-width: 286px;
 }
 
 @media only screen and (min-width: 275px) {
