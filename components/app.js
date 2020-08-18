@@ -19,6 +19,7 @@ const overlay = document.getElementById("overlay");
 const searchResultsQuantityDiv = document.getElementById("search_results_quantity_div");
 const resultsShownQuantityDiv = document.getElementById("results_shown_quantity_div");
 const showMoreButton = document.getElementById("show_more_button");
+let recipeInformation = null;
 
 let dataForImageRecognition = {
   "requests": [

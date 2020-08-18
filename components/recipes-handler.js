@@ -18,6 +18,7 @@ class RecipesHandler {
   }
 
   chunkSearchedRecipes(recipes) {
+    recipeInformation = recipes;
     if (!(recipes.results[0])) {
       searchRecipesDownloadText.className = "d-none";
       noSearchRecipesText.className = "text-center mt-3";
@@ -89,11 +90,13 @@ class RecipesHandler {
     }
   }
 
-  modalHandler(URL) {
+  modalHandler(imageURL,
+    title, readyInMinutes, servings, recipeURL, caloriesAmount, proteinAmount,
+    fatAmount, carbsAmount, sodiumAmount, id, dietSpan, instructions, ingredients, summary) {
     modalContainer.className="";
     body.className = "bg-light freeze";
     document.getElementById("external_link_button").addEventListener("click", () => {
-      window.open(URL, "_blank"),
+      window.open(recipeURL, "_blank"),
         modalContainer.className="d-none",
         body.className = "bg-light"
     });
@@ -114,19 +117,27 @@ class RecipesHandler {
       const readyInMinutes = chunkedRecipeArray[chunkedRecipeArrayIndex][i].readyInMinutes;
       const servings = chunkedRecipeArray[chunkedRecipeArrayIndex][i].servings;
       const recipeURL = chunkedRecipeArray[chunkedRecipeArrayIndex][i].sourceUrl;
-      const healthScore = chunkedRecipeArray[chunkedRecipeArrayIndex][i].healthScore;
       const caloriesAmount = Math.round(chunkedRecipeArray[chunkedRecipeArrayIndex][i].nutrition.nutrients[0].amount);
       const proteinAmount = Math.round(chunkedRecipeArray[chunkedRecipeArrayIndex][i].nutrition.nutrients[8].amount);
       const fatAmount = Math.round(chunkedRecipeArray[chunkedRecipeArrayIndex][i].nutrition.nutrients[1].amount);
       const carbsAmount = Math.round(chunkedRecipeArray[chunkedRecipeArrayIndex][i].nutrition.nutrients[3].amount);
       const sodiumAmount = Math.round(chunkedRecipeArray[chunkedRecipeArrayIndex][i].nutrition.nutrients[7].amount);
       const id = chunkedRecipeArray[chunkedRecipeArrayIndex][i].id;
+      let instructions = [];
+      if (!(chunkedRecipeArray[chunkedRecipeArrayIndex][i].analyzedInstructions[0].steps[0])) {
+        instructions = "Instructions are not available for this recipe."
+      } else {
+        for (let k = 0; k < chunkedRecipeArray[chunkedRecipeArrayIndex][i].analyzedInstructions[0].steps.length; k++) {
+          instructions.push(chunkedRecipeArray[chunkedRecipeArrayIndex][i].analyzedInstructions[0].steps[k].step);
+        }
+      }
+      const ingredients = chunkedRecipeArray[chunkedRecipeArrayIndex][i].nutrition.ingredients;
+      const summary = chunkedRecipeArray[chunkedRecipeArrayIndex][i].summary;
       const recipeCard = document.createElement("div");
       recipeCard.className = "recipe-card card col-xs-12 col-sm-5 col-md-5 col-lg-3 col-xl-2 m-3 px-0 h-100";
       recipeCard.id = "recipe";
       const imageContainer = document.createElement("div");
       const titleAnchorTag = document.createElement("a");
-      titleAnchorTag.addEventListener("click", this.modalHandler.bind(this, recipeURL));
       imageContainer.className = "d-flex justify-content-center"
       const img = document.createElement("img");
       imageContainer.className = "card-image-top d-flex justify-content-center mt-3";
@@ -189,6 +200,9 @@ class RecipesHandler {
           cardText3.append(dietSpan);
         }
       }
+      titleAnchorTag.addEventListener("click", this.modalHandler.bind(this, imageURL,
+        title, readyInMinutes, servings, recipeURL, caloriesAmount, proteinAmount,
+        fatAmount, carbsAmount, sodiumAmount, id, dietSpan, instructions, ingredients, summary));
       cardText2.append(calorieSpan);
       cardText2.append(carbsSpan);
       cardText2.append(fatSpan);
@@ -218,7 +232,6 @@ class RecipesHandler {
       const readyInMinutes = recipes[i].readyInMinutes;
       const servings = recipes[i].servings;
       const recipeURL = recipes[i].sourceUrl;
-      const healthScore = recipes[i].healthScore;
       const caloriesAmount = Math.round(recipes[i].nutrition.nutrients[0].amount);
       const proteinAmount = Math.round(recipes[i].nutrition.nutrients[8].amount);
       const fatAmount = Math.round(recipes[i].nutrition.nutrients[1].amount);
