@@ -118,7 +118,7 @@ class RecipesHandler {
       const sodiumAmount = Math.round(chunkedRecipeArray[chunkedRecipeArrayIndex][i].nutrition.nutrients[7].amount);
       const id = chunkedRecipeArray[chunkedRecipeArrayIndex][i].id;
       const recipeCard = document.createElement("div");
-      recipeCard.className = "recipe-card card mx-3 my-3 px-0 col-xs-12 col-sm-5 col-md-5 col-lg-3 col-xl-2 h-100";
+      recipeCard.className = "recipe-card card col-xs-12 col-sm-5 col-md-5 col-lg-3 col-xl-2 m-3 px-0 h-100";
       recipeCard.id = "recipe";
       const imageContainer = document.createElement("div");
       const titleAnchorTag = document.createElement("a");
@@ -128,7 +128,7 @@ class RecipesHandler {
       imageContainer.className = "card-image-top d-flex justify-content-center mt-3";
       img.src = imageURL;
       img.alt = "Recipe Image";
-      img.className = "m-0 p-0";
+      img.className = "mb-1 p-0";
       const heartIconContainer = document.createElement("span");
       heartIconContainer.id = "heart_container";
       heartIconContainer.className = "badge badge-light m-1 p-1 border border-danger rounded";
@@ -145,7 +145,7 @@ class RecipesHandler {
       const cardBody = document.createElement("div");
       cardBody.className = "card-body py-0";
       const cardTitle = document.createElement("div");
-      cardTitle.className = "card-title";
+      cardTitle.className = "card-title mb-0";
       const recipeTitle = document.createElement("h3");
       recipeTitle.textContent = title;
       const cardText1 = document.createElement("div");
@@ -222,7 +222,7 @@ class RecipesHandler {
       const sodiumAmount = Math.round(recipes[i].nutrition.nutrients[7].amount);
       const id = recipes[i].id;
       const recipeCard = document.createElement("div");
-      recipeCard.className = "favorite-recipe-card card my-3 mx-3 pt-3 col-11";
+      recipeCard.className = "favorite-recipe-card card mx-3 my-4 pt-3 col-11";
       recipeCard.id = id;
       const imageContainer = document.createElement("div");
       const titleAnchorTag = document.createElement("a");
@@ -232,7 +232,7 @@ class RecipesHandler {
       imageContainer.className = "card-image-top d-flex justify-content-center";
       img.src = imageURL;
       img.alt = "Recipe Image"
-      img.className = "p-1";
+      img.className = "m-0 p-0";
       const deleteIconContainer = document.createElement("span");
       deleteIconContainer.id = "delete_container";
       deleteIconContainer.className = "badge badge-light m-1 p-1 border border-danger rounded";
@@ -242,7 +242,7 @@ class RecipesHandler {
       imageContainer.append(deleteIconContainer);
       deleteIconContainer.addEventListener("click", this.handleDeleteClick.bind(this, id));
       const cardBody = document.createElement("div");
-      cardBody.className = "card-body";
+      cardBody.className = "card-body p-0 m-0";
       const cardTitle = document.createElement("div");
       cardTitle.className = "card-title";
       const recipeTitle = document.createElement("h3");
