@@ -1,11 +1,12 @@
 const searchResultsQuantityText = document.getElementById("search_results_quantity_text");
 const modalContainer = document.getElementById("modal_container");
+const resultsShownQuantityText = document.getElementById("results_shown_quantity_text");
 
 class RecipesHandler {
   constructor(recipesContainer, favoriteRecipesContainer) {
     this.recipesContainer = recipesContainer;
     this.favoriteRecipesContainer = favoriteRecipesContainer;
-    document.getElementById("show_more_button").addEventListener("click", this.handleShowMoreClick.bind(this));
+    showMoreButton.addEventListener("click", this.handleShowMoreClick.bind(this));
     this.displaySearchedRecipes = this.displaySearchedRecipes.bind(this);
     this.updateResultsQuantityShown = this.updateResultsQuantityShown.bind(this);
     this.favoriteCheck = this.favoriteCheck.bind(this);
@@ -16,7 +17,7 @@ class RecipesHandler {
   }
 
   chunkSearchedRecipes(recipes) {
-    document.getElementById("search_results_quantity_div").className = "d-flex justify-content-center";
+    searchResultsQuantityDiv.className = "d-flex justify-content-center mt-3";
     searchResultsQuantityText.textContent = `${recipes.results.length} recipes found`;
     let a = 0;
     while (a < recipes.results.length) {
@@ -25,7 +26,7 @@ class RecipesHandler {
     }
     this.displaySearchedRecipes(chunkedRecipeArray, chunkedRecipeArrayIndex);
     if (recipes.results.length > 12) {
-      document.getElementById("results_quantity_container").className = "d-flex flex-column align-items-center justify-content-center"
+      resultsShownQuantityDiv.className = "d-flex flex-column align-items-center justify-content-center mb-3"
     }
     this.updateResultsQuantityShown();
   }
@@ -36,13 +37,13 @@ class RecipesHandler {
     this.displaySearchedRecipes(chunkedRecipeArray, chunkedRecipeArrayIndex);
     window.scroll(0, yPosition);
     if (chunkedRecipeArrayIndex === chunkedRecipeArray.length - 1) {
-      document.getElementById("show_more_button").className = "d-none"
+      showMoreButton.className = "d-none"
     }
     this.updateResultsQuantityShown();
   }
 
   updateResultsQuantityShown() {
-    searchResultsQuantityText.textContent = `Showing ${document.querySelectorAll(".recipe-card").length} of ${searchResultsQuantityText.textContent.substring(0, searchResultsQuantityText.textContent.length - 14)}`
+    resultsShownQuantityText.textContent = `Showing ${document.querySelectorAll(".recipe-card").length} of ${searchResultsQuantityText.textContent.substring(0, searchResultsQuantityText.textContent.length - 14)}`
   }
 
   handleFavoriteClick(id) {
@@ -83,16 +84,17 @@ class RecipesHandler {
   }
 
   handleExternalClick(URL) {
+    const body = document.querySelector("body");
     modalContainer.className="";
-    document.querySelector("body").className = "bg-light freeze";
+    body.className = "bg-light freeze";
     document.getElementById("external_link_button").addEventListener("click", () => {
       window.open(URL, "_blank"),
         modalContainer.className="d-none",
-      document.querySelector("body").className = "bg-light"
+        body.className = "bg-light"
     });
     document.getElementById("go_back_button").addEventListener("click", () => {
       modalContainer.className = "d-none";
-      document.querySelector("body").className = "bg-light";
+      body.className = "bg-light";
     });
   }
 
