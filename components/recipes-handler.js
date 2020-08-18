@@ -100,8 +100,8 @@ class RecipesHandler {
 
   displaySearchedRecipes(chunkedRecipeArray, chunkedRecipeArrayIndex) {
     if (!(chunkedRecipeArray[0][0])) {
-      recipeDownloadText.className = "d-none";
-      noSearchResultsText.className = "text-center mt-3";
+      searchRecipesDownloadText.className = "d-none";
+      noSearchRecipesText.className = "text-center mt-3";
       return;
     }
     for (let i = 0; i < chunkedRecipeArray[chunkedRecipeArrayIndex].length; i++) {
@@ -201,7 +201,7 @@ class RecipesHandler {
       recipeCard.append(cardBody);
       this.recipesContainer.append(recipeCard);
     }
-    document.getElementById("recipe_download_text").className = "text-center d-none";
+    searchRecipesDownloadText.className = "text-center d-none";
   }
 
   displayFavoriteRecipes(recipes) {

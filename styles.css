@@ -31,10 +31,9 @@ table {
   position: absolute;
   top: 20px;
   right: 20px;
-  cursor: pointer;
 }
 
-a {
+a:hover, #heart_container:hover, #delete_container:hover {
   cursor: pointer;
 }
 
@@ -152,7 +151,16 @@ a {
 
 .card-title h3 {
   text-decoration: underline;
+  color: black;
+  transition: 0.3s ease-in-out;
 }
+
+.card-title h3:hover {
+  color: blue;
+  text-decoration: underline;
+  transition: 0.3s ease-in-out;
+}
+
 
 span {
   white-space: nowrap;
