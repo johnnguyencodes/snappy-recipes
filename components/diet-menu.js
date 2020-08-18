@@ -14,11 +14,8 @@ class DietMenu {
     this.dietInfo = dietInfo;
   }
 
-  clickOverlay(closeDietMenu) {
-    this.closeDietMenu = closeDietMenu;
-  }
-
   handleOverlayClick() {
+    console.log("hello");
     if (dietMenu.classList.contains("diet-menu-visible")) {
       this.closeDietMenu();
     }
