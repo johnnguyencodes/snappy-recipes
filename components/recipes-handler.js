@@ -120,7 +120,6 @@ class RecipesHandler {
     const recipeInstructions = document.getElementById("recipe_instructions");
     const favoriteButton = document.getElementById("favorite_button");
     const recipeIngredients = document.getElementById("recipe_ingredients");
-    const recipeGlance = document.getElementById("recipe_at_a_glance");
     const cleanSummary = DOMPurify.sanitize(summary);
     modalContainer.className = "";
     recipeTitle.textContent = `Recipe Preview: ${title}`;
@@ -142,9 +141,6 @@ class RecipesHandler {
       }
       while (recipeIngredients.firstChild) {
         recipeIngredients.removeChild(recipeIngredients.firstChild);
-      }
-      while (recipeGlance.firstChild) {
-        recipeGlance.removeChild(recipeGlance.firstChild);
       }
     });
     favoriteButton.addEventListener("click", this.handleFavoriteButtonClick.bind(this, id));
@@ -289,6 +285,16 @@ class RecipesHandler {
       const carbsAmount = Math.round(recipes[i].nutrition.nutrients[3].amount);
       const sodiumAmount = Math.round(recipes[i].nutrition.nutrients[7].amount);
       const id = recipes[i].id;
+      let instructions = [];
+      if (!(recipes[i].analyzedInstructions.length)) {
+        instructions.push("Instructions are available on the Recipe Page.");
+      } else {
+        for (let k = 0; k < recipes[i].analyzedInstructions[0].steps.length; k++) {
+          instructions.push(recipes[i].analyzedInstructions[0].steps[k].step);
+        }
+      }
+      const ingredients = recipes[i].nutrition.ingredients;
+      const summary = recipes[i].summary;
       const recipeCard = document.createElement("div");
       recipeCard.className = "favorite-recipe-card card mx-3 my-4 pt-3 col-11";
       recipeCard.id = id;
@@ -367,6 +373,8 @@ class RecipesHandler {
       recipeCard.append(imageContainer);
       recipeCard.append(cardBody);
       this.favoriteRecipesContainer.append(recipeCard);
+      titleAnchorTag.addEventListener("click", this.modalHandler.bind(this, imageURL,
+        title, recipeURL, id, instructions, ingredients, summary));
     }
     favoriteRecipesStatusText.className = "text-center d-none";
   }

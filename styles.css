@@ -98,7 +98,7 @@ a:hover, #heart_container:hover, #delete_container:hover {
 }
 
 .recipe-card > .card-body {
-  height: 250px;
+  height: 200px;
   overflow-y: auto;
 }
 
@@ -213,7 +213,10 @@ span {
   max-width: 286px;
 }
 
-@media only screen and (min-width: 275px) {
+#search_recipes_container img {
+  max-width: 90%;
+}
+/* @media only screen and (min-width: 275px) {
   #search_recipes_container img {
     max-width: 189px;
   }
@@ -247,12 +250,12 @@ span {
   #search_recipes_container img {
     max-width: 284px;
   }
-}
+} */
 
 @media only screen and (min-width: 768px) {
-  #search_recipes_container img {
+  /* #search_recipes_container img {
     max-width: 240px;
-  }
+  } */
   .recipe-card {
     min-width: 268px;
   }
@@ -262,9 +265,9 @@ span {
 }
 
 @media only screen and (min-width: 1110px) {
-  #search_recipes_container img {
+  /* #search_recipes_container img {
     max-width: 254px;
-  }
+  } */
     #form {
     position: fixed;
     min-width: 556px;
@@ -273,9 +276,9 @@ span {
 }
 
 @media only screen and (min-width: 1200px) {
-  #search_recipes_container img {
+  /* #search_recipes_container img {
     max-width: 236px;
-  }
+  } */
     #form {
     min-width: 404px;
     max-width: 436px;
