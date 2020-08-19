@@ -80,6 +80,7 @@ class App {
   localStorageCheck() {
     if (!(localStorage.getItem('favoriteArray'))) {
       favoriteArray = [];
+      localStorage.setItem('favoriteArray', JSON.stringify(favoriteArray));
     } else {
       favoriteArray = JSON.parse(localStorage.getItem('favoriteArray'));
     }
@@ -94,6 +95,7 @@ class App {
       intolerancesString = JSON.parse(localStorage.getItem('intolerancesString'));
     }
   }
+
 
   savedDietInfoCheck() {
     if (!(localStorage.getItem('restrictionsString')) || !(localStorage.getItem('intolerancesString'))) {
