@@ -112,16 +112,16 @@ class RecipesHandler {
     }
   }
 
-  modalHandler(imageURL,
-    title, readyInMinutes, servings, recipeURL, caloriesAmount, proteinAmount,
-    fatAmount, carbsAmount, sodiumAmount, id, dietSpan, instructions, ingredients, summary) {
-    console.log(ingredients);
+  modalHandler(imageURL, title, recipeURL, id, instructions, ingredients, summary, cardText1,
+    cardText2, cardText3) {
+    const recipeBody = document.getElementById("recipe_body");
     const recipeTitle = document.getElementById("recipe_title");
     const recipeImage = document.getElementById("recipe_image");
     const recipeSummary = document.getElementById("recipe_summary");
     const recipeInstructions = document.getElementById("recipe_instructions");
     const favoriteButton = document.getElementById("favorite_button");
     const recipeIngredients = document.getElementById("recipe_ingredients");
+    const recipeGlance = document.getElementById("recipe_at_a_glance");
     const cleanSummary = DOMPurify.sanitize(summary);
     modalContainer.className = "";
     recipeTitle.textContent = `Recipe Preview: ${title}`;
@@ -132,10 +132,20 @@ class RecipesHandler {
       window.open(recipeURL, "_blank");
     });
     document.getElementById("go_back_button").addEventListener("click", () => {
+      document.querySelector(".modal-body").scrollTo({
+        top: 0,
+        behavior: "auto"
+      });
       modalContainer.className = "d-none";
       body.className = "bg-light";
       while (recipeInstructions.firstChild) {
         recipeInstructions.removeChild(recipeInstructions.firstChild);
+      }
+      while (recipeIngredients.firstChild) {
+        recipeIngredients.removeChild(recipeIngredients.firstChild);
+      }
+      while (recipeGlance.firstChild) {
+        recipeGlance.removeChild(recipeGlance.firstChild);
       }
     });
     favoriteButton.addEventListener("click", this.handleFavoriteButtonClick.bind(this, id));
@@ -145,6 +155,12 @@ class RecipesHandler {
       ingredient.textContent = `${ingredients[x].amount} ${ingredients[x].unit} ${ingredients[x].name}`
       recipeIngredients.append(ingredient);
     }
+    let recipeCardText1 = cardText1.cloneNode(true);
+    let recipeCardText2 = cardText2.cloneNode(true);
+    let recipeCardText3 = cardText3.cloneNode(true);
+    recipeGlance.append(recipeCardText1);
+    recipeGlance.append(recipeCardText2);
+    recipeGlance.append(recipeCardText3);
     for (var i = 0; i < instructions.length; i++) {
       if (instructions[i] === "var article") {
         return;
@@ -170,7 +186,7 @@ class RecipesHandler {
       const id = chunkedRecipeArray[chunkedRecipeArrayIndex][i].id;
       let instructions = [];
       if (!(chunkedRecipeArray[chunkedRecipeArrayIndex][i].analyzedInstructions.length)) {
-        instructions.push("The Spoonacular API did not include instructions for this recipe. Please click the 'Go to recipe page' button for more details.");
+        instructions.push("Instructions are available on the Recipe Page.");
       } else {
         for (let k = 0; k < chunkedRecipeArray[chunkedRecipeArrayIndex][i].analyzedInstructions[0].steps.length; k++) {
           instructions.push(chunkedRecipeArray[chunkedRecipeArrayIndex][i].analyzedInstructions[0].steps[k].step);
@@ -246,9 +262,6 @@ class RecipesHandler {
           cardText3.append(dietSpan);
         }
       }
-      titleAnchorTag.addEventListener("click", this.modalHandler.bind(this, imageURL,
-          title, readyInMinutes, servings, recipeURL, caloriesAmount, proteinAmount,
-          fatAmount, carbsAmount, sodiumAmount, id, dietSpan, instructions, ingredients, summary));
       cardText2.append(calorieSpan);
       cardText2.append(carbsSpan);
       cardText2.append(fatSpan);
@@ -264,6 +277,9 @@ class RecipesHandler {
       recipeCard.append(imageContainer);
       recipeCard.append(cardBody);
       this.recipesContainer.append(recipeCard);
+      titleAnchorTag.addEventListener("click", this.modalHandler.bind(this, imageURL,
+        title, recipeURL, id, instructions, ingredients, summary, cardText1,
+        cardText2, cardText3));
     }
     searchRecipesDownloadText.className = "d-none";
   }
