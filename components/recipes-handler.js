@@ -123,6 +123,7 @@ class RecipesHandler {
     const recipeIngredients = document.getElementById("recipe_ingredients");
     const recipeGlance = document.getElementById("recipe_at_a_glance");
     const cleanSummary = DOMPurify.sanitize(summary);
+    console.log(cleanSummary);
     modalContainer.className = "";
     recipeTitle.textContent = `Recipe Preview: ${title}`;
     recipeImage.src = imageURL;
