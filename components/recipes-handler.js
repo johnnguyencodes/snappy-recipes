@@ -112,8 +112,7 @@ class RecipesHandler {
     }
   }
 
-  modalHandler(imageURL, title, recipeURL, id, instructions, ingredients, summary, cardText1,
-    cardText2, cardText3) {
+  modalHandler(imageURL, title, recipeURL, id, instructions, ingredients, summary) {
     const recipeBody = document.getElementById("recipe_body");
     const recipeTitle = document.getElementById("recipe_title");
     const recipeImage = document.getElementById("recipe_image");
@@ -123,7 +122,6 @@ class RecipesHandler {
     const recipeIngredients = document.getElementById("recipe_ingredients");
     const recipeGlance = document.getElementById("recipe_at_a_glance");
     const cleanSummary = DOMPurify.sanitize(summary);
-    console.log(cleanSummary);
     modalContainer.className = "";
     recipeTitle.textContent = `Recipe Preview: ${title}`;
     recipeImage.src = imageURL;
@@ -156,12 +154,6 @@ class RecipesHandler {
       ingredient.textContent = `${ingredients[x].amount} ${ingredients[x].unit} ${ingredients[x].name}`
       recipeIngredients.append(ingredient);
     }
-    let recipeCardText1 = cardText1.cloneNode(true);
-    let recipeCardText2 = cardText2.cloneNode(true);
-    let recipeCardText3 = cardText3.cloneNode(true);
-    recipeGlance.append(recipeCardText1);
-    recipeGlance.append(recipeCardText2);
-    recipeGlance.append(recipeCardText3);
     for (var i = 0; i < instructions.length; i++) {
       if (instructions[i] === "var article") {
         return;
@@ -279,8 +271,7 @@ class RecipesHandler {
       recipeCard.append(cardBody);
       this.recipesContainer.append(recipeCard);
       titleAnchorTag.addEventListener("click", this.modalHandler.bind(this, imageURL,
-        title, recipeURL, id, instructions, ingredients, summary, cardText1,
-        cardText2, cardText3));
+        title, recipeURL, id, instructions, ingredients, summary));
     }
     searchRecipesDownloadText.className = "d-none";
   }

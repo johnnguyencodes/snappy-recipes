@@ -194,6 +194,10 @@ span {
     overflow-y: scroll;
 }
 
+#modal_container img {
+  max-width: 90%;
+}
+
 #overlay {
   position: fixed;
   left: 0;
