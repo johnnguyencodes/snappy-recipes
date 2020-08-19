@@ -2,6 +2,7 @@ const searchResultsQuantityText = document.getElementById("search_results_quanti
 const modalContainer = document.getElementById("modal_container");
 const resultsShownQuantityText = document.getElementById("results_shown_quantity_text");
 const body = document.querySelector("body");
+const favoriteButton = document.getElementById("favorite_button");
 
 class RecipesHandler {
   constructor(recipesContainer, favoriteRecipesContainer) {
@@ -13,12 +14,11 @@ class RecipesHandler {
     this.favoriteCheck = this.favoriteCheck.bind(this);
   }
 
-    clickGetFavoriteRecipes(getFavoriteRecipes) {
+  clickGetFavoriteRecipes(getFavoriteRecipes) {
     this.getFavoriteRecipes = getFavoriteRecipes;
   }
 
   chunkSearchedRecipes(recipes) {
-    console.log(recipes);
     recipeInformation = recipes;
     if (!(recipes.results[0])) {
       searchRecipesDownloadText.className = "d-none";
@@ -66,6 +66,22 @@ class RecipesHandler {
     this.getFavoriteRecipes();
   }
 
+  handleFavoriteButtonClick(id) {
+    if (!(favoriteArray.includes(id))) {
+      favoriteArray.push(id);
+      favoriteButton.className = "btn btn-danger";
+      favoriteButton.textContent = "Remove from Favorites";
+      document.getElementById(`heart_icon_${id}`).className = "fas fa-heart text-danger heart-icon fa-lg";
+    } else {
+      favoriteArray.splice(favoriteArray.indexOf(id), 1);
+      favoriteButton.className = "btn btn-outline-danger";
+      favoriteButton.textContent = "Save to Favorites";
+      document.getElementById(`heart_icon_${id}`).className = "far fa-heart text-danger heart-icon fa-lg";
+    }
+    localStorage.setItem('favoriteArray', JSON.stringify(favoriteArray));
+    this.getFavoriteRecipes();
+  }
+
   handleDeleteClick(id) {
     favoriteArray.splice(favoriteArray.indexOf(id), 1);
     document.getElementById(`${id}`).remove();
@@ -85,8 +101,12 @@ class RecipesHandler {
     for (var i = 0; i < searchedArray.length; i++) {
       if (favoriteArrayToCheck.includes(parseInt(searchedArray[i].id.substring(11)))) {
         searchedArray[i].className = "fas fa-heart text-danger heart-icon fa-lg";
+        favoriteButton.className = "btn btn-danger";
+        favoriteButton.textContent = "Remove from Favorites";
       } else {
         searchedArray[i].className = "far fa-heart text-danger heart-icon fa-lg";
+        favoriteButton.className = "btn btn-outline-danger";
+        favoriteButton.textContent = "Save to Favorites";
       }
     }
   }
@@ -98,6 +118,7 @@ class RecipesHandler {
     const recipeImage = document.getElementById("recipe_image");
     const recipeSummary = document.getElementById("recipe_summary");
     const recipeInstructions = document.getElementById("recipe_instructions");
+    const favoriteButton = document.getElementById("favorite_button");
     const cleanSummary = DOMPurify.sanitize(summary);
     modalContainer.className = "";
     recipeTitle.textContent = `Recipe Preview: ${title}`;
@@ -114,13 +135,8 @@ class RecipesHandler {
         recipeInstructions.removeChild(recipeInstructions.firstChild);
       }
     });
-    modalContainer.addEventListener("click", () => {
-      modalContainer.className = "d-none";
-      body.className = "bg-light";
-      while (recipeInstructions.firstChild) {
-        recipeInstructions.removeChild(recipeInstructions.firstChild);
-      }
-    });
+    favoriteButton.addEventListener("click", this.handleFavoriteButtonClick.bind(this, id));
+    this.favoriteCheck();
     for (var i = 0; i < instructions.length; i++) {
       if (instructions[i] === "var article") {
         return;
@@ -223,8 +239,8 @@ class RecipesHandler {
         }
       }
       titleAnchorTag.addEventListener("click", this.modalHandler.bind(this, imageURL,
-        title, readyInMinutes, servings, recipeURL, caloriesAmount, proteinAmount,
-        fatAmount, carbsAmount, sodiumAmount, id, dietSpan, instructions, ingredients, summary));
+          title, readyInMinutes, servings, recipeURL, caloriesAmount, proteinAmount,
+          fatAmount, carbsAmount, sodiumAmount, id, dietSpan, instructions, ingredients, summary));
       cardText2.append(calorieSpan);
       cardText2.append(carbsSpan);
       cardText2.append(fatSpan);
@@ -241,15 +257,12 @@ class RecipesHandler {
       recipeCard.append(cardBody);
       this.recipesContainer.append(recipeCard);
     }
-    searchRecipesDownloadText.className = "text-center d-none";
+    searchRecipesDownloadText.className = "d-none";
   }
 
   displayFavoriteRecipes(recipes) {
-    while (favoriteRecipesContainer.firstChild) {
-      favoriteRecipesContainer.removeChild(favoriteRecipesContainer.firstChild);
-    }
     for (let i = 0; i < recipes.length; i++) {
-      const imageURL = `${recipes[i].image.substring(0, recipes[i].image.length-11)}556x370.jpg`;
+      const imageURL = `${recipes[i].image.substring(0, recipes[i].image.length - 11)}556x370.jpg`;
       const title = recipes[i].title;
       const readyInMinutes = recipes[i].readyInMinutes;
       const servings = recipes[i].servings;

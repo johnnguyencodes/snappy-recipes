@@ -148,7 +148,7 @@ class App {
       },
       xhr: function () {
         var xhr = new window.XMLHttpRequest();
-        xhr.upload.addEventListener("progress", function (evt) {
+        xhr.upload.addEventListener("progress", (evt) => {
           if (evt.lengthComputable) {
             var percentComplete = evt.loaded / evt.total;
             $('#percentage_bar_upload').css({
@@ -236,6 +236,9 @@ class App {
   }
 
   getFavoriteRecipes() {
+    while (favoriteRecipesContainer.firstChild) {
+      favoriteRecipesContainer.removeChild(favoriteRecipesContainer.firstChild);
+    }
     if (!(localStorage.getItem('favoriteArray')) || localStorage.getItem('favoriteArray') === "[]") {
       emptyFavoriteTextContainer.className = "d-flex justify-content-center";
       return;
