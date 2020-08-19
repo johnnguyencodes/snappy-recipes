@@ -15,21 +15,36 @@
 </head>
 <body class="bg-light">
   <div id="modal_container" class="d-none">
-    <div class="modal-dialog modal-dialog-centered rounded">
+    <div class="modal-dialog modal-lg modal-dialog-centered rounded">
       <div class="modal-content">
         <div class="modal-header text-center">
           <div class="modal-title w-100">
-            <h1 id="recipe_title" class="text-left">Notice</h1>
+            <h1 id="recipe_title" class="text-left"></h1>
           </div>
         </div>
-        <div class="modal-body text-left">
-          <p class="mb-2">
-            You are now navigating to a different website, and it will open in a new browser tab.
-          </p>
+        <div class="modal-body">
+          <div class="d-flex justify-content-center">
+            <img id="recipe_image" src="" alt="">
+          </div>
+          <div class="mt-3">
+            <h3>Summary</h3>
+            <div id="recipe_summary" class="">
+          </div>
+          </div>
+          <div class="mt-3">
+            <h3>Instructions</h3>
+            <ol id="recipe_instructions" class="">
+            </ol>
+          </div>
         </div>
-        <div class="modal-footer d-flex justify-content-around">
-          <a type="button" id="external_link_button" class="btn btn-primary text-white">Continue</a>
-          <button type="button" id="go_back_button" class="btn btn-secondary">Go Back</button>
+        <div class="modal-title d-flex flex-column justify-content-between">
+          <p class="mb-2 text-center border-top pt-3 pb-2">
+            Go to recipe page?  It will open in a new browser tab.  Snappy Recipes is not responsible for the content of external websites.
+          </p>
+          <div class="form-group col-xs-12 d-flex justify-content-around">
+            <a type="button" id="external_link_button" class="btn btn-primary text-white">Go to recipe page</a>
+            <button type="button" id="go_back_button" class="btn btn-secondary">Go Back</button>
+          </div>
         </div>
       </div>
     </div>
@@ -207,6 +222,7 @@
   </div>
   <div id="overlay" class="d-none"></div>
   <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.0.12/purify.min.js"></script>
   <script src="config.js"></script>
   <script src="components/app.js"></script>
   <script src="components/diet-menu.js"></script>
