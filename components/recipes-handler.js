@@ -14,9 +14,10 @@ class RecipesHandler {
     this.favoriteCheck = this.favoriteCheck.bind(this);
   }
 
-  clickGetFavoriteRecipes(getFavoriteRecipes) {
-    this.getFavoriteRecipes = getFavoriteRecipes;
-  }
+  // clickGetFavoriteRecipes(getFavoriteRecipes) {
+  //   this.getFavoriteRecipes = getFavoriteRecipes;
+  // }
+
 
   chunkSearchedRecipes(recipes) {
     recipeInformation = recipes;
@@ -63,7 +64,7 @@ class RecipesHandler {
       document.getElementById(`heart_icon_${id}`).className = "far fa-heart text-danger heart-icon fa-lg";
     }
     localStorage.setItem('favoriteArray', JSON.stringify(favoriteArray));
-    this.getFavoriteRecipes();
+    // this.getFavoriteRecipes();
   }
 
   handleFavoriteButtonClick(id) {
@@ -80,7 +81,7 @@ class RecipesHandler {
     }
     localStorage.setItem('favoriteArray', JSON.stringify(favoriteArray));
     this.favoriteCheck();
-    this.getFavoriteRecipes();
+    // this.getFavoriteRecipes();
   }
 
   handleDeleteClick(id) {

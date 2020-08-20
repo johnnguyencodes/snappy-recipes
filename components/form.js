@@ -33,6 +33,10 @@ class Form {
     this.getRecipes = getRecipes;
   }
 
+    clickGetFavoriteRecipes(getFavoriteRecipes) {
+    this.getFavoriteRecipes = getFavoriteRecipes;
+  }
+
   openFavorites() {
     event.preventDefault();
     favoriteRecipesSection.className = "favorite-recipes-visible d-flex flex-column justify-content-center";
@@ -41,6 +45,7 @@ class Form {
     }
     mainContent.className="row noscroll";
     overlay.className = "";
+    this.getFavoriteRecipes();
   }
 
   closeFavorites() {
