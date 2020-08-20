@@ -69,7 +69,7 @@ class App {
   start() {
     this.localStorageCheck();
     this.savedDietInfoCheck();
-    this.getFavoriteRecipes();
+    // this.getFavoriteRecipes();
     this.form.clickDietInfo(this.dietInfo);
     this.form.clickPostImage(this.postImage);
     this.form.clickGetRecipes(this.getRecipes);
@@ -246,6 +246,7 @@ class App {
       emptyFavoriteTextContainer.className = "d-flex justify-content-center";
       return;
     }
+    emptyFavoriteTextContainer.className = "d-none";
     favoriteRecipesStatusText.className = "text-center";
     favoriteArray = JSON.parse(localStorage.getItem('favoriteArray'));
     let stringifiedArray = favoriteArray.join(",");
