@@ -13,6 +13,8 @@
 
 * The user can add to and remove from the favorite recipes list. This list is also stored locally.
 
+* The user can view a preview of the recipe.
+
 * The app is mobile responsive and can be used on the following devices:
   * iPhone 6/7/8: Portrait and Landscape
   * iPhone 6/7/8 Plus: Portrait and Landscape
@@ -21,12 +23,11 @@
   * iPad Pro: Portrait and Landscape
 
 ### Planned Features
-* The user can view a detailed look at the recipe without having to navigate to a different page.
 * The user can use the app on the iPhone X in Landscape Mode.
 
 ## Lessons Learned
 1. Chaining multiple API calls using jQuery AJAX to send, manipulate, and display data using vanilla JavaScript.
-2. Creating a basic UI with Bootstrap.
+2. Creating a basic yet responsive user interface with Bootstrap and Window.localStorage.
 3. Leveraging Object Oriented Programming to organize code into individual modules for code reusability and maintenance.
 5. Experienced the full development process of a static website: Planning, Development, Implementation, Deployment, Publishing.
 
