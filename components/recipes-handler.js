@@ -14,10 +14,9 @@ class RecipesHandler {
     this.favoriteCheck = this.favoriteCheck.bind(this);
   }
 
-  // clickGetFavoriteRecipes(getFavoriteRecipes) {
-  //   this.getFavoriteRecipes = getFavoriteRecipes;
-  // }
-
+  clickGetFavoriteRecipes(getFavoriteRecipes) {
+    this.getFavoriteRecipes = getFavoriteRecipes;
+  }
 
   chunkSearchedRecipes(recipes) {
     recipeInformation = recipes;
@@ -64,25 +63,29 @@ class RecipesHandler {
       document.getElementById(`heart_icon_${id}`).className = "far fa-heart text-danger heart-icon fa-lg";
     }
     localStorage.setItem('favoriteArray', JSON.stringify(favoriteArray));
-    // this.getFavoriteRecipes();
   }
 
   handleFavoriteButtonClick(id) {
+    console.log(id);
     if (!(favoriteArray.includes(id))) {
       favoriteArray.push(id);
       favoriteButton.className = "btn btn-danger";
       favoriteButton.textContent = "Remove from Favorites";
       document.getElementById(`heart_icon_${id}`).className = "fas fa-heart text-danger heart-icon fa-lg";
+      this.getFavoriteRecipes();
     } else {
       favoriteArray.splice(favoriteArray.indexOf(id), 1);
       favoriteButton.className = "btn btn-outline-danger";
       favoriteButton.textContent = "Save to Favorites";
       document.getElementById(`heart_icon_${id}`).className = "far fa-heart text-danger heart-icon fa-lg";
-    }
+      document.getElementById(`${id}`).remove();
+      this.getFavoriteRecipes();
+      if (!(localStorage.getItem('favoriteArray')) || localStorage.getItem('favoriteArray') === "[]") {
+        emptyFavoriteTextContainer.className = "d-flex justify-content-center";
+      }
     localStorage.setItem('favoriteArray', JSON.stringify(favoriteArray));
-    this.favoriteCheck();
-    // this.getFavoriteRecipes();
   }
+}
 
   handleDeleteClick(id) {
     favoriteArray.splice(favoriteArray.indexOf(id), 1);
@@ -103,12 +106,8 @@ class RecipesHandler {
     for (var i = 0; i < searchedArray.length; i++) {
       if (favoriteArrayToCheck.includes(parseInt(searchedArray[i].id.substring(11)))) {
         searchedArray[i].className = "fas fa-heart text-danger heart-icon fa-lg";
-        // favoriteButton.className = "btn btn-danger";
-        // favoriteButton.textContent = "Remove from Favorites";
       } else {
         searchedArray[i].className = "far fa-heart text-danger heart-icon fa-lg";
-        // favoriteButton.className = "btn btn-outline-danger";
-        // favoriteButton.textContent = "Save to Favorites";
       }
     }
   }
@@ -150,7 +149,6 @@ class RecipesHandler {
       }
     });
     favoriteButton.addEventListener("click", this.handleFavoriteButtonClick.bind(this, id));
-    this.favoriteCheck();
     if (favoriteArray.includes(id)) {
       favoriteButton.className = "btn btn-danger";
       favoriteButton.textContent = "Remove from Favorites";

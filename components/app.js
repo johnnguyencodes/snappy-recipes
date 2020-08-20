@@ -75,7 +75,7 @@ class App {
     this.form.clickGetRecipes(this.getRecipes);
     this.dietMenu.clickDietInfo(this.dietInfo);
     this.form.clickGetFavoriteRecipes(this.getFavoriteRecipes);
-    // this.recipesHandler.clickGetFavoriteRecipes(this.getFavoriteRecipes);
+    this.recipesHandler.clickGetFavoriteRecipes(this.getFavoriteRecipes);
   }
 
   localStorageCheck() {
