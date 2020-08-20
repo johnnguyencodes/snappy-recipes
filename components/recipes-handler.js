@@ -2,6 +2,7 @@ const searchResultsQuantityText = document.getElementById("search_results_quanti
 const modalContainer = document.getElementById("modal_container");
 const resultsShownQuantityText = document.getElementById("results_shown_quantity_text");
 const body = document.querySelector("body");
+const favoriteButton = document.getElementById("favorite_button");
 
 class RecipesHandler {
   constructor(recipesContainer, favoriteRecipesContainer) {
@@ -13,11 +14,12 @@ class RecipesHandler {
     this.favoriteCheck = this.favoriteCheck.bind(this);
   }
 
-    clickGetFavoriteRecipes(getFavoriteRecipes) {
+  clickGetFavoriteRecipes(getFavoriteRecipes) {
     this.getFavoriteRecipes = getFavoriteRecipes;
   }
 
   chunkSearchedRecipes(recipes) {
+    recipeInformation = recipes;
     if (!(recipes.results[0])) {
       searchRecipesDownloadText.className = "d-none";
       noSearchRecipesText.className = "text-center mt-3";
@@ -61,8 +63,29 @@ class RecipesHandler {
       document.getElementById(`heart_icon_${id}`).className = "far fa-heart text-danger heart-icon fa-lg";
     }
     localStorage.setItem('favoriteArray', JSON.stringify(favoriteArray));
-    this.getFavoriteRecipes();
   }
+
+  handleFavoriteButtonClick(id) {
+    console.log(id);
+    if (!(favoriteArray.includes(id))) {
+      favoriteArray.push(id);
+      favoriteButton.className = "btn btn-danger";
+      favoriteButton.textContent = "Remove from Favorites";
+      document.getElementById(`heart_icon_${id}`).className = "fas fa-heart text-danger heart-icon fa-lg";
+      this.getFavoriteRecipes();
+    } else {
+      favoriteArray.splice(favoriteArray.indexOf(id), 1);
+      favoriteButton.className = "btn btn-outline-danger";
+      favoriteButton.textContent = "Save to Favorites";
+      document.getElementById(`heart_icon_${id}`).className = "far fa-heart text-danger heart-icon fa-lg";
+      document.getElementById(`${id}`).remove();
+      this.getFavoriteRecipes();
+      if (!(localStorage.getItem('favoriteArray')) || localStorage.getItem('favoriteArray') === "[]") {
+        emptyFavoriteTextContainer.className = "d-flex justify-content-center";
+      }
+    localStorage.setItem('favoriteArray', JSON.stringify(favoriteArray));
+  }
+}
 
   handleDeleteClick(id) {
     favoriteArray.splice(favoriteArray.indexOf(id), 1);
@@ -71,7 +94,7 @@ class RecipesHandler {
     if (localStorage.getItem('favoriteArray') === "[]") {
       emptyFavoriteTextContainer.className = "d-flex justify-content-center";
     }
-    this.favoriteCheck();
+    this.favoriteCheck(id);
   }
 
   favoriteCheck() {
@@ -89,44 +112,88 @@ class RecipesHandler {
     }
   }
 
-  modalHandler(URL) {
-    modalContainer.className="";
+  modalHandler(imageURL, title, recipeURL, id, instructions, ingredients, summary) {
+    const recipeBody = document.getElementById("recipe_body");
+    const recipeTitle = document.getElementById("recipe_title");
+    const recipeImage = document.getElementById("recipe_image");
+    const recipeSummary = document.getElementById("recipe_summary");
+    const recipeInstructions = document.getElementById("recipe_instructions");
+    const recipeIngredients = document.getElementById("recipe_ingredients");
+    for (var x = 0; x < ingredients.length; x++) {
+      const ingredient = document.createElement("li");
+      ingredient.textContent = `${ingredients[x].amount} ${ingredients[x].unit} ${ingredients[x].name}`
+      recipeIngredients.append(ingredient);
+    }
+    const cleanSummary = DOMPurify.sanitize(summary);
+
+    modalContainer.className = "";
+    recipeTitle.textContent = `Recipe Preview: ${title}`;
+    recipeImage.src = imageURL;
+    recipeSummary.innerHTML = cleanSummary;
     body.className = "bg-light freeze";
     document.getElementById("external_link_button").addEventListener("click", () => {
-      window.open(URL, "_blank"),
-        modalContainer.className="d-none",
-        body.className = "bg-light"
+      window.open(recipeURL, "_blank");
     });
     document.getElementById("go_back_button").addEventListener("click", () => {
+      document.querySelector(".modal-body").scrollTo({
+        top: 0,
+        behavior: "auto"
+      });
       modalContainer.className = "d-none";
       body.className = "bg-light";
+      while (recipeInstructions.firstChild) {
+        recipeInstructions.removeChild(recipeInstructions.firstChild);
+      }
+      while (recipeIngredients.firstChild) {
+        recipeIngredients.removeChild(recipeIngredients.firstChild);
+      }
     });
-    modalContainer.addEventListener("click", () => {
-      modalContainer.className = "d-none";
-      body.className = "bg-light";
-    })
+    favoriteButton.addEventListener("click", this.handleFavoriteButtonClick.bind(this, id));
+    if (favoriteArray.includes(id)) {
+      favoriteButton.className = "btn btn-danger";
+      favoriteButton.textContent = "Remove from Favorites";
+    } else {
+      favoriteButton.className = "btn btn-outline-danger";
+      favoriteButton.textContent = "Save to Favorites";
+    }
+    for (var i = 0; i < instructions.length; i++) {
+      if (instructions[i] === "var article") {
+        return;
+      }
+      const step = document.createElement("li");
+      step.textContent = instructions[i];
+      recipeInstructions.append(step);
+    }
   }
 
   displaySearchedRecipes(chunkedRecipeArray, chunkedRecipeArrayIndex) {
     for (let i = 0; i < chunkedRecipeArray[chunkedRecipeArrayIndex].length; i++) {
-      const imageURL = `${chunkedRecipeArray[chunkedRecipeArrayIndex][i].image.substring(0, chunkedRecipeArray[chunkedRecipeArrayIndex][i].image.length - 11)}636x393.jpg`;
+      const imageURL = `${chunkedRecipeArray[chunkedRecipeArrayIndex][i].image.substring(0, chunkedRecipeArray[chunkedRecipeArrayIndex][i].image.length - 11)}480x360.jpg`;
       const title = chunkedRecipeArray[chunkedRecipeArrayIndex][i].title;
       const readyInMinutes = chunkedRecipeArray[chunkedRecipeArrayIndex][i].readyInMinutes;
       const servings = chunkedRecipeArray[chunkedRecipeArrayIndex][i].servings;
       const recipeURL = chunkedRecipeArray[chunkedRecipeArrayIndex][i].sourceUrl;
-      const healthScore = chunkedRecipeArray[chunkedRecipeArrayIndex][i].healthScore;
       const caloriesAmount = Math.round(chunkedRecipeArray[chunkedRecipeArrayIndex][i].nutrition.nutrients[0].amount);
       const proteinAmount = Math.round(chunkedRecipeArray[chunkedRecipeArrayIndex][i].nutrition.nutrients[8].amount);
       const fatAmount = Math.round(chunkedRecipeArray[chunkedRecipeArrayIndex][i].nutrition.nutrients[1].amount);
       const carbsAmount = Math.round(chunkedRecipeArray[chunkedRecipeArrayIndex][i].nutrition.nutrients[3].amount);
       const sodiumAmount = Math.round(chunkedRecipeArray[chunkedRecipeArrayIndex][i].nutrition.nutrients[7].amount);
       const id = chunkedRecipeArray[chunkedRecipeArrayIndex][i].id;
+      let instructions = [];
+      if (!(chunkedRecipeArray[chunkedRecipeArrayIndex][i].analyzedInstructions.length)) {
+        instructions.push("Instructions are available on the Recipe Page.");
+      } else {
+        for (let k = 0; k < chunkedRecipeArray[chunkedRecipeArrayIndex][i].analyzedInstructions[0].steps.length; k++) {
+          instructions.push(chunkedRecipeArray[chunkedRecipeArrayIndex][i].analyzedInstructions[0].steps[k].step);
+        }
+      }
+      const ingredients = chunkedRecipeArray[chunkedRecipeArrayIndex][i].nutrition.ingredients;
+      const summary = chunkedRecipeArray[chunkedRecipeArrayIndex][i].summary;
       const recipeCard = document.createElement("div");
       recipeCard.className = "recipe-card card col-xs-12 col-sm-5 col-md-5 col-lg-3 col-xl-2 m-3 px-0 h-100";
       recipeCard.id = "recipe";
       const imageContainer = document.createElement("div");
       const titleAnchorTag = document.createElement("a");
-      titleAnchorTag.addEventListener("click", this.modalHandler.bind(this, recipeURL));
       imageContainer.className = "d-flex justify-content-center"
       const img = document.createElement("img");
       imageContainer.className = "card-image-top d-flex justify-content-center mt-3";
@@ -181,9 +248,10 @@ class RecipesHandler {
       sodiumSpan.textContent = `${sodiumAmount}mg Sodium`;
       const cardText3 = document.createElement("div");
       cardText3.className = "card-text d-flex flex-wrap";
+      let dietSpan;
       if (chunkedRecipeArray[chunkedRecipeArrayIndex][i].diets) {
         for (var j = 0; j < chunkedRecipeArray[chunkedRecipeArrayIndex][i].diets.length; j++) {
-          const dietSpan = document.createElement("span");
+          dietSpan = document.createElement("span");
           dietSpan.className = "badge badge-light mb-1 mr-1";
           dietSpan.textContent = chunkedRecipeArray[chunkedRecipeArrayIndex][i].diets[j];
           cardText3.append(dietSpan);
@@ -204,27 +272,35 @@ class RecipesHandler {
       recipeCard.append(imageContainer);
       recipeCard.append(cardBody);
       this.recipesContainer.append(recipeCard);
+      titleAnchorTag.addEventListener("click", this.modalHandler.bind(this, imageURL,
+        title, recipeURL, id, instructions, ingredients, summary));
     }
-    searchRecipesDownloadText.className = "text-center d-none";
+    searchRecipesDownloadText.className = "d-none";
   }
 
   displayFavoriteRecipes(recipes) {
-    while (favoriteRecipesContainer.firstChild) {
-      favoriteRecipesContainer.removeChild(favoriteRecipesContainer.firstChild);
-    }
     for (let i = 0; i < recipes.length; i++) {
-      const imageURL = `${recipes[i].image.substring(0, recipes[i].image.length-11)}636x393.jpg`;
+      const imageURL = `${recipes[i].image.substring(0, recipes[i].image.length - 11)}556x370.jpg`;
       const title = recipes[i].title;
       const readyInMinutes = recipes[i].readyInMinutes;
       const servings = recipes[i].servings;
       const recipeURL = recipes[i].sourceUrl;
-      const healthScore = recipes[i].healthScore;
       const caloriesAmount = Math.round(recipes[i].nutrition.nutrients[0].amount);
       const proteinAmount = Math.round(recipes[i].nutrition.nutrients[8].amount);
       const fatAmount = Math.round(recipes[i].nutrition.nutrients[1].amount);
       const carbsAmount = Math.round(recipes[i].nutrition.nutrients[3].amount);
       const sodiumAmount = Math.round(recipes[i].nutrition.nutrients[7].amount);
       const id = recipes[i].id;
+      let instructions = [];
+      if (!(recipes[i].analyzedInstructions.length)) {
+        instructions.push("Instructions are available on the Recipe Page.");
+      } else {
+        for (let k = 0; k < recipes[i].analyzedInstructions[0].steps.length; k++) {
+          instructions.push(recipes[i].analyzedInstructions[0].steps[k].step);
+        }
+      }
+      const ingredients = recipes[i].nutrition.ingredients;
+      const summary = recipes[i].summary;
       const recipeCard = document.createElement("div");
       recipeCard.className = "favorite-recipe-card card mx-3 my-4 pt-3 col-11";
       recipeCard.id = id;
@@ -303,6 +379,8 @@ class RecipesHandler {
       recipeCard.append(imageContainer);
       recipeCard.append(cardBody);
       this.favoriteRecipesContainer.append(recipeCard);
+      titleAnchorTag.addEventListener("click", this.modalHandler.bind(this, imageURL,
+        title, recipeURL, id, instructions, ingredients, summary));
     }
     favoriteRecipesStatusText.className = "text-center d-none";
   }

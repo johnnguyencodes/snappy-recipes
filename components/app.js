@@ -19,6 +19,7 @@ const overlay = document.getElementById("overlay");
 const searchResultsQuantityDiv = document.getElementById("search_results_quantity_div");
 const resultsShownQuantityDiv = document.getElementById("results_shown_quantity_div");
 const showMoreButton = document.getElementById("show_more_button");
+let recipeInformation = null;
 
 let dataForImageRecognition = {
   "requests": [
@@ -73,12 +74,14 @@ class App {
     this.form.clickPostImage(this.postImage);
     this.form.clickGetRecipes(this.getRecipes);
     this.dietMenu.clickDietInfo(this.dietInfo);
+    this.form.clickGetFavoriteRecipes(this.getFavoriteRecipes);
     this.recipesHandler.clickGetFavoriteRecipes(this.getFavoriteRecipes);
   }
 
   localStorageCheck() {
     if (!(localStorage.getItem('favoriteArray'))) {
       favoriteArray = [];
+      localStorage.setItem('favoriteArray', JSON.stringify(favoriteArray));
     } else {
       favoriteArray = JSON.parse(localStorage.getItem('favoriteArray'));
     }
@@ -93,6 +96,7 @@ class App {
       intolerancesString = JSON.parse(localStorage.getItem('intolerancesString'));
     }
   }
+
 
   savedDietInfoCheck() {
     if (!(localStorage.getItem('restrictionsString')) || !(localStorage.getItem('intolerancesString'))) {
@@ -147,7 +151,7 @@ class App {
       },
       xhr: function () {
         var xhr = new window.XMLHttpRequest();
-        xhr.upload.addEventListener("progress", function (evt) {
+        xhr.upload.addEventListener("progress", (evt) => {
           if (evt.lengthComputable) {
             var percentComplete = evt.loaded / evt.total;
             $('#percentage_bar_upload').css({
@@ -235,6 +239,9 @@ class App {
   }
 
   getFavoriteRecipes() {
+    while (favoriteRecipesContainer.firstChild) {
+      favoriteRecipesContainer.removeChild(favoriteRecipesContainer.firstChild);
+    }
     if (!(localStorage.getItem('favoriteArray')) || localStorage.getItem('favoriteArray') === "[]") {
       emptyFavoriteTextContainer.className = "d-flex justify-content-center";
       return;
