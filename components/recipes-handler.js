@@ -19,7 +19,6 @@ class RecipesHandler {
   }
 
   chunkSearchedRecipes(recipes) {
-    console.log(recipes);
     recipeInformation = recipes;
     if (!(recipes.results[0])) {
       searchRecipesDownloadText.className = "d-none";
@@ -113,13 +112,18 @@ class RecipesHandler {
   }
 
   modalHandler(imageURL, title, recipeURL, id, instructions, ingredients, summary) {
+    this.favoriteCheck();
     const recipeBody = document.getElementById("recipe_body");
     const recipeTitle = document.getElementById("recipe_title");
     const recipeImage = document.getElementById("recipe_image");
     const recipeSummary = document.getElementById("recipe_summary");
     const recipeInstructions = document.getElementById("recipe_instructions");
-    const favoriteButton = document.getElementById("favorite_button");
     const recipeIngredients = document.getElementById("recipe_ingredients");
+    for (var x = 0; x < ingredients.length; x++) {
+      const ingredient = document.createElement("li");
+      ingredient.textContent = `${ingredients[x].amount} ${ingredients[x].unit} ${ingredients[x].name}`
+      recipeIngredients.append(ingredient);
+    }
     const cleanSummary = DOMPurify.sanitize(summary);
     modalContainer.className = "";
     recipeTitle.textContent = `Recipe Preview: ${title}`;
@@ -144,12 +148,6 @@ class RecipesHandler {
       }
     });
     favoriteButton.addEventListener("click", this.handleFavoriteButtonClick.bind(this, id));
-    this.favoriteCheck();
-    for (var x = 0; x < ingredients.length; x++) {
-      const ingredient = document.createElement("li");
-      ingredient.textContent = `${ingredients[x].amount} ${ingredients[x].unit} ${ingredients[x].name}`
-      recipeIngredients.append(ingredient);
-    }
     for (var i = 0; i < instructions.length; i++) {
       if (instructions[i] === "var article") {
         return;
