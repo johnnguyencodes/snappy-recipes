@@ -217,6 +217,21 @@ span {
   max-width: 90%;
 }
 
+@media only screen and (max-width: 414px) {
+  #modal_button_container button {
+    font-size: 12px;
+  }
+
+}
+
+@media only screen and (max-width: 812px) {
+.modal-dialog,
+.modal-content {
+    top: -5px;
+    height: 95%;
+  }
+}
+
 @media only screen and (min-width: 768px) {
   .recipe-card {
     min-width: 268px;
