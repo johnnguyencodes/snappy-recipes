@@ -79,6 +79,7 @@ class RecipesHandler {
       document.getElementById(`heart_icon_${id}`).className = "far fa-heart text-danger heart-icon fa-lg";
     }
     localStorage.setItem('favoriteArray', JSON.stringify(favoriteArray));
+    this.favoriteCheck();
     this.getFavoriteRecipes();
   }
 
@@ -89,7 +90,7 @@ class RecipesHandler {
     if (localStorage.getItem('favoriteArray') === "[]") {
       emptyFavoriteTextContainer.className = "d-flex justify-content-center";
     }
-    this.favoriteCheck();
+    this.favoriteCheck(id);
   }
 
   favoriteCheck() {
@@ -101,18 +102,17 @@ class RecipesHandler {
     for (var i = 0; i < searchedArray.length; i++) {
       if (favoriteArrayToCheck.includes(parseInt(searchedArray[i].id.substring(11)))) {
         searchedArray[i].className = "fas fa-heart text-danger heart-icon fa-lg";
-        favoriteButton.className = "btn btn-danger";
-        favoriteButton.textContent = "Remove from Favorites";
+        // favoriteButton.className = "btn btn-danger";
+        // favoriteButton.textContent = "Remove from Favorites";
       } else {
         searchedArray[i].className = "far fa-heart text-danger heart-icon fa-lg";
-        favoriteButton.className = "btn btn-outline-danger";
-        favoriteButton.textContent = "Save to Favorites";
+        // favoriteButton.className = "btn btn-outline-danger";
+        // favoriteButton.textContent = "Save to Favorites";
       }
     }
   }
 
   modalHandler(imageURL, title, recipeURL, id, instructions, ingredients, summary) {
-    this.favoriteCheck();
     const recipeBody = document.getElementById("recipe_body");
     const recipeTitle = document.getElementById("recipe_title");
     const recipeImage = document.getElementById("recipe_image");
@@ -125,6 +125,7 @@ class RecipesHandler {
       recipeIngredients.append(ingredient);
     }
     const cleanSummary = DOMPurify.sanitize(summary);
+
     modalContainer.className = "";
     recipeTitle.textContent = `Recipe Preview: ${title}`;
     recipeImage.src = imageURL;
@@ -148,6 +149,14 @@ class RecipesHandler {
       }
     });
     favoriteButton.addEventListener("click", this.handleFavoriteButtonClick.bind(this, id));
+    this.favoriteCheck();
+    if (favoriteArray.includes(id)) {
+      favoriteButton.className = "btn btn-danger";
+      favoriteButton.textContent = "Remove from Favorites";
+    } else {
+      favoriteButton.className = "btn btn-outline-danger";
+      favoriteButton.textContent = "Save to Favorites";
+    }
     for (var i = 0; i < instructions.length; i++) {
       if (instructions[i] === "var article") {
         return;
