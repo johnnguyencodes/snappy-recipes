@@ -66,25 +66,34 @@ class RecipesHandler {
   }
 
   handleFavoriteButtonClick(id) {
-    console.log(id);
-    if (!(favoriteArray.includes(id))) {
+    const favoriteButton = document.getElementById("favorite_button");
+    if ((favoriteArray.includes(id) === false)) {
       favoriteArray.push(id);
       favoriteButton.className = "btn btn-danger";
       favoriteButton.textContent = "Remove from Favorites";
-      document.getElementById(`heart_icon_${id}`).className = "fas fa-heart text-danger heart-icon fa-lg";
+      if (document.getElementById(`heart_icon_${id}`)) {
+        document.getElementById(`heart_icon_${id}`).className = "fas fa-heart text-danger heart-icon fa-lg";
+      }
+      localStorage.setItem('favoriteArray', JSON.stringify(favoriteArray));
       this.getFavoriteRecipes();
+      return;
     } else {
       favoriteArray.splice(favoriteArray.indexOf(id), 1);
+      localStorage.setItem('favoriteArray', JSON.stringify(favoriteArray));
       favoriteButton.className = "btn btn-outline-danger";
       favoriteButton.textContent = "Save to Favorites";
-      document.getElementById(`heart_icon_${id}`).className = "far fa-heart text-danger heart-icon fa-lg";
-      document.getElementById(`${id}`).remove();
-      this.getFavoriteRecipes();
+      if (document.getElementById(`heart_icon_${id}`)) {
+        document.getElementById(`heart_icon_${id}`).className = "far fa-heart text-danger heart-icon fa-lg";
+      }
+      if (document.getElementById(`${id}`)) {
+        document.getElementById(`${id}`).remove();
+      }
+      localStorage.setItem('favoriteArray', JSON.stringify(favoriteArray));
       if (!(localStorage.getItem('favoriteArray')) || localStorage.getItem('favoriteArray') === "[]") {
         emptyFavoriteTextContainer.className = "d-flex justify-content-center";
+        return;
       }
-    localStorage.setItem('favoriteArray', JSON.stringify(favoriteArray));
-  }
+    }
 }
 
   handleDeleteClick(id) {
@@ -113,12 +122,30 @@ class RecipesHandler {
   }
 
   modalHandler(imageURL, title, recipeURL, id, instructions, ingredients, summary) {
+    console.log(ingredients);
+    if (!ingredients) {
+      return;
+    }
     const recipeBody = document.getElementById("recipe_body");
     const recipeTitle = document.getElementById("recipe_title");
     const recipeImage = document.getElementById("recipe_image");
     const recipeSummary = document.getElementById("recipe_summary");
     const recipeInstructions = document.getElementById("recipe_instructions");
     const recipeIngredients = document.getElementById("recipe_ingredients");
+    const externalLinkButton = document.createElement("button");
+    const modalButtonContainer = document.getElementById("modal_button_container");
+    externalLinkButton.id = "external_link_button";
+    externalLinkButton.className = "btn btn-primary text-white";
+    externalLinkButton.textContent = "Recipe Page";
+    const favoriteButton = document.createElement("button");
+    favoriteButton.id = "favorite_button";
+    const closePreviewButton = document.createElement("button");
+    closePreviewButton.id = "go_back_button";
+    closePreviewButton.className = "btn btn-secondary";
+    closePreviewButton.textContent = "Close Preview";
+    modalButtonContainer.append(externalLinkButton);
+    modalButtonContainer.append(favoriteButton);
+    modalButtonContainer.append(closePreviewButton);
     for (var x = 0; x < ingredients.length; x++) {
       const ingredient = document.createElement("li");
       ingredient.textContent = `${ingredients[x].amount} ${ingredients[x].unit} ${ingredients[x].name}`
@@ -131,10 +158,18 @@ class RecipesHandler {
     recipeImage.src = imageURL;
     recipeSummary.innerHTML = cleanSummary;
     body.className = "bg-light freeze";
-    document.getElementById("external_link_button").addEventListener("click", () => {
+    externalLinkButton.addEventListener("click", () => {
       window.open(recipeURL, "_blank");
     });
-    document.getElementById("go_back_button").addEventListener("click", () => {
+    favoriteButton.addEventListener("click", this.handleFavoriteButtonClick.bind(this, id));
+    if (favoriteArray.includes(id)) {
+      favoriteButton.className = "btn btn-danger";
+      favoriteButton.textContent = "Remove from Favorites";
+    } else {
+      favoriteButton.className = "btn btn-outline-danger";
+      favoriteButton.textContent = "Save to Favorites";
+    }
+    closePreviewButton.addEventListener("click", () => {
       document.querySelector(".modal-body").scrollTo({
         top: 0,
         behavior: "auto"
@@ -147,15 +182,10 @@ class RecipesHandler {
       while (recipeIngredients.firstChild) {
         recipeIngredients.removeChild(recipeIngredients.firstChild);
       }
+      while (modalButtonContainer.firstChild) {
+        modalButtonContainer.removeChild(modalButtonContainer.firstChild);
+      }
     });
-    favoriteButton.addEventListener("click", this.handleFavoriteButtonClick.bind(this, id));
-    if (favoriteArray.includes(id)) {
-      favoriteButton.className = "btn btn-danger";
-      favoriteButton.textContent = "Remove from Favorites";
-    } else {
-      favoriteButton.className = "btn btn-outline-danger";
-      favoriteButton.textContent = "Save to Favorites";
-    }
     for (var i = 0; i < instructions.length; i++) {
       if (instructions[i] === "var article") {
         return;
@@ -300,6 +330,7 @@ class RecipesHandler {
         }
       }
       const ingredients = recipes[i].nutrition.ingredients;
+      console.log(ingredients);
       const summary = recipes[i].summary;
       const recipeCard = document.createElement("div");
       recipeCard.className = "favorite-recipe-card card mx-3 my-4 pt-3 col-11";
@@ -383,5 +414,6 @@ class RecipesHandler {
         title, recipeURL, id, instructions, ingredients, summary));
     }
     favoriteRecipesStatusText.className = "text-center d-none";
+    emptyFavoriteTextContainer.className = "d-none";
   }
 }
