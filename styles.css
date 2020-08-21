@@ -72,7 +72,6 @@ a:hover, #heart_container:hover, #delete_container:hover {
 .diet-menu-hidden {
   z-index: 3;
   height: 100vh;
-  height: 100%;
   width: 350px;
   top: 0;
   left: -355px;
@@ -86,7 +85,7 @@ a:hover, #heart_container:hover, #delete_container:hover {
 
 .diet-menu-visible {
   z-index: 3;
-  min-height: 667px;
+  min-height: 100vh;
   width: 350px;
   position: absolute;
   top: 0;
