@@ -220,7 +220,7 @@ class App {
 
   //GET request to Spoonacular's API with label from Google to get a list of up to 10 recipes containing the item from the image and other nutrition info.
   getRecipes(imageTitle) {
-    searchRecipesDownloadProgress.className = "recipe-progress-visible mt-3";
+    searchRecipesDownloadProgress.className = "recipe-progress-visible text-left mt-3";
     searchRecipesDownloadText.className = "text-center mt-3";
     let spoonacularURL = `https://api.spoonacular.com/recipes/complexSearch?query=${imageTitle}&apiKey=${spoonacularAPIKey}&addRecipeNutrition=true&636x393&number=100`
     $.ajax({
@@ -240,7 +240,7 @@ class App {
   }
 
   handleGetRecipesError(error) {
-    searchRecipesDownloadProgress.className = "recipe-progress-hidden mt-3";
+    searchRecipesDownloadProgress.className = "recipe-progress-hidden text-left mt-3";
     searchRecipesDownloadText.className = "d-none";
     spoonacularSearchError.className = "mt-3 text-center";
   }

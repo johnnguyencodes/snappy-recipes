@@ -136,7 +136,7 @@ class Form {
     while (document.getElementById("recipe")) {
       document.getElementById("recipe").remove();
     }
-    searchRecipesDownloadProgress.className = "recipe-progress-hidden mt-3";
+    searchRecipesDownloadProgress.className = "recipe-progress-hidden text-left mt-3";
     searchRecipesDownloadText.className = "d-none";
     noSearchRecipesText.className = "d-none";
     emptyFavoriteTextContainer.className = "d-none";
