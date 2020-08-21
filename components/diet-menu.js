@@ -23,14 +23,20 @@ class DietMenu {
 
   openDietMenu() {
     event.preventDefault();
+    mainContent.className = "row noscroll";
     dietMenu.className = "diet-menu-visible d-flex flex-column justify-content-center";
     overlay.className = "";
   }
 
   closeDietMenu() {
     event.preventDefault();
+    mainContent.className = "row";
     dietMenu.className = "diet-menu-hidden d-flex flex-column justify-content-center";
     this.dietInfo();
     overlay.className = "d-none";
+    window.scrollTo({
+      top: 0,
+      behavior: "auto"
+    })
   }
 }
