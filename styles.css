@@ -44,7 +44,7 @@ a:hover, #heart_container:hover, #delete_container:hover {
 }
 
 .noscroll {
-  position: fixed;
+  position: absolute;
 }
 
 .freeze {
@@ -95,6 +95,7 @@ a:hover, #heart_container:hover, #delete_container:hover {
   border-right: 3px black solid;
   box-shadow: 5px 5px rgba(0, 0, 0, 0.4);
   background-color: white;
+  overflow-y: auto;
 }
 
 .recipe-card > .card-body {
@@ -135,7 +136,7 @@ a:hover, #heart_container:hover, #delete_container:hover {
 .favorite-recipes-visible {
   z-index: 3;
   min-height: 100vh;
-  height: auto;
+  /* height: auto; */
   width: 350px;
   position: absolute;
   top: 0;
@@ -145,6 +146,7 @@ a:hover, #heart_container:hover, #delete_container:hover {
   box-shadow: 5px 5px  rgba(0, 0, 0, 0.4);
   background-color: white;
   overflow-x: hidden;
+  overflow-y: auto;
 }
 
 #favorite_recipes_element {
@@ -221,14 +223,11 @@ span {
   #modal_button_container button {
     font-size: 12px;
   }
-
 }
 
-@media only screen and (max-width: 812px) {
-.modal-dialog,
-.modal-content {
-    top: -5px;
-    height: 95%;
+@media only screen and (max-width: 736px) {
+  #form {
+    width: 100vw;
   }
 }
 
@@ -238,6 +237,14 @@ span {
   }
   #form {
     position: fixed;
+  }
+}
+
+@media only screen and (max-width: 812px) {
+.modal-dialog,
+.modal-content {
+    top: -5px;
+    height: 95%;
   }
 }
 
