@@ -21,6 +21,7 @@ class RecipesHandler {
   chunkSearchedRecipes(recipes) {
     recipeInformation = recipes;
     if (!(recipes.results[0])) {
+      searchRecipeDownloadProgress.className = "recipe-progress-hidden";
       searchRecipesDownloadText.className = "d-none";
       noSearchRecipesText.className = "text-center mt-3";
       return;
@@ -305,6 +306,7 @@ class RecipesHandler {
       titleAnchorTag.addEventListener("click", this.modalHandler.bind(this, imageURL,
         title, recipeURL, id, instructions, ingredients, summary));
     }
+    searchRecipeDownloadProgress.className = "recipe-progress-hidden";
     searchRecipesDownloadText.className = "d-none";
   }
 
@@ -414,6 +416,7 @@ class RecipesHandler {
         title, recipeURL, id, instructions, ingredients, summary));
     }
     favoriteRecipesStatusText.className = "text-center d-none";
+    favoriteRecipesDownloadProgress.className = "recipe-progress-hidden mt-3";
     emptyFavoriteTextContainer.className = "d-none";
   }
 }

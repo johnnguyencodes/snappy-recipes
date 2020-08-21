@@ -50,6 +50,10 @@
     </div>
   </div>
   <div id="favorite_recipes_section" class="favorite-recipes-hidden d-flex flex-column justify-content-center">
+    <p id="spoonacular_favorite_error" class="d-none">The Spoonacular API has reached its daily quota for the current API Key.
+      Please notify <a href="mailto:john@johnnguyencodes.com?subject=Snappy%20Recipes%20API%20Key%20Refresh">john@johnnguyencodes.com</a>,
+      thank you.</p>
+    <div id="favorite_recipes_download_progress" class="recipe-progress-hidden mt-3"></div>
     <p id="favorite_recipes_status_text" class="text-center d-none">Gathering recipes...</p>
     <div id="favorite_recipes_container"></div>
     <div id="empty_favorite_text_container" class="justify-content-center d-none">
@@ -211,7 +215,11 @@
         <p id="search_results_quantity_text" class="text-center mb-0"></p>
       </div>
       <div id="search_recipes_container" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 px-0 d-flex flex-row flex-wrap align-items-center justify-content-around">
-        <p id="search_recipes_download_text" class="d-none">Gathering recipes...</p>
+        <div class="d-flex flex-column align-items-center">
+          <div id="search_recipes_download_progress" class="recipe-progress-hidden mt-3"></div>
+          <p id="search_recipes_download_text" class="d-none">Gathering recipes...</p>
+        </div>
+        <p id="spoonacular_search_error" class="d-none">The Spoonacular API has reached its daily quota for the current API Key. Please notify <a href="mailto:john@johnnguyencodes.com?subject=Snappy%20Recipes%20API%20Key%20Refresh">john@johnnguyencodes.com</a>, thank you.</p>
         <p id="no_search_recipes_text" class="d-none">No recipes found. Please modify your diet preferences and try again, or upload a different image, or enter a different search.</p>
       </div>
     <div id="results_shown_quantity_div" class="d-none">

@@ -5,6 +5,8 @@ let favoriteArray;
 let restrictionsString;
 let intolerancesString;
 const searchRecipesDownloadText = document.getElementById("search_recipes_download_text");
+const searchRecipesDownloadProgress = document.getElementById("search_recipes_download_progress");
+const favoriteRecipesDownloadProgress = document.getElementById("favorite_recipes_download_progress");
 const noSearchRecipesText = document.getElementById("no_search_recipes_text");
 const uploadedImage = document.getElementById("uploaded_image");
 let chunkedRecipeArray = [];
@@ -15,10 +17,12 @@ const imageRecognitionStatusText = document.getElementById("image_recognition_st
 const imageRecognitionFailedText = document.getElementById("image_recognition_failed");
 const emptyFavoriteTextContainer = document.getElementById("empty_favorite_text_container");
 const favoriteRecipesStatusText = document.getElementById("favorite_recipes_status_text");
-// const overlay = document.getElementById("overlay");
 const searchResultsQuantityDiv = document.getElementById("search_results_quantity_div");
 const resultsShownQuantityDiv = document.getElementById("results_shown_quantity_div");
 const showMoreButton = document.getElementById("show_more_button");
+const spoonacularSearchError = document.getElementById("spoonacular_search_error");
+const spoonacularFavoriteError = document.getElementById("spoonacular_favorite_error");
+const percentageBarContainer = document.getElementById("percentage_bar_container");
 let recipeInformation = null;
 
 let dataForImageRecognition = {
@@ -216,6 +220,7 @@ class App {
 
   //GET request to Spoonacular's API with label from Google to get a list of up to 10 recipes containing the item from the image and other nutrition info.
   getRecipes(imageTitle) {
+    searchRecipesDownloadProgress.className = "recipe-progress-visible mt-3";
     searchRecipesDownloadText.className = "text-center mt-3";
     let spoonacularURL = `https://api.spoonacular.com/recipes/complexSearch?query=${imageTitle}&apiKey=${spoonacularAPIKey}&addRecipeNutrition=true&636x393&number=100`
     $.ajax({
@@ -235,7 +240,9 @@ class App {
   }
 
   handleGetRecipesError(error) {
-    console.error(error);
+    searchRecipesDownloadProgress.className = "recipe-progress-hidden mt-3";
+    searchRecipesDownloadText.className = "d-none";
+    spoonacularSearchError.className = "mt-3 text-center";
   }
 
   getFavoriteRecipes() {
@@ -247,6 +254,7 @@ class App {
       return;
     }
     emptyFavoriteTextContainer.className = "d-none";
+    favoriteRecipesDownloadProgress.className = "recipe-progress-visible mt-3"
     favoriteRecipesStatusText.className = "text-center";
     favoriteArray = JSON.parse(localStorage.getItem('favoriteArray'));
     let stringifiedArray = favoriteArray.join(",");
@@ -267,6 +275,8 @@ class App {
   }
 
   handleGetFavoriteRecipesError(error) {
-    console.error(error);
-  }
+    favoriteRecipesDownloadProgress.className = "recipe-progress-hidden mt-3 d-none";
+    favoriteRecipesStatusText.className = "d-none";
+    spoonacularFavoriteError.className = "mt-3 text-center";
+    }
 }
