@@ -57,6 +57,8 @@ class Form {
     favoriteRecipesSection.className = "favorite-recipes-hidden d-flex flex-column justify-content-center";
     mainContent.className = "row";
     overlay.className = "d-none";
+    favoriteRecipesDownloadProgress.className = "recipe-progress-hidden mt-3";
+    spoonacularFavoriteError.className = "d-none";
   }
 
   handleOverlayClick() {
@@ -134,6 +136,7 @@ class Form {
     while (document.getElementById("recipe")) {
       document.getElementById("recipe").remove();
     }
+    searchRecipesDownloadProgress.className = "recipe-progress-hidden text-left mt-3";
     searchRecipesDownloadText.className = "d-none";
     noSearchRecipesText.className = "d-none";
     emptyFavoriteTextContainer.className = "d-none";
@@ -143,5 +146,6 @@ class Form {
     searchResultsQuantityDiv.className="d-none";
     resultsShownQuantityDiv.className = "d-none";
     showMoreButton.className = "btn btn-secondary my-2"
+    spoonacularSearchError.className = "d-none";
   }
 }
