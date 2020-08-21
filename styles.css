@@ -103,7 +103,7 @@ a:hover, #heart_container:hover, #delete_container:hover {
     width: 0%;
     height: 3px;
     background:blue;
-    transition: 3s ease-in-out;
+    /* transition: 3s ease-in-out; */
 }
 
 .recipe-progress-visible {
