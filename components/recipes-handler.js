@@ -416,6 +416,7 @@ class RecipesHandler {
         title, recipeURL, id, instructions, ingredients, summary));
     }
     favoriteRecipesStatusText.className = "text-center d-none";
+    favoriteRecipesDownloadProgress.className = "d-none";
     favoriteRecipesDownloadProgress.className = "recipe-progress-hidden mt-3";
     emptyFavoriteTextContainer.className = "d-none";
   }
