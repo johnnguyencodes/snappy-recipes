@@ -306,7 +306,7 @@ class RecipesHandler {
       titleAnchorTag.addEventListener("click", this.modalHandler.bind(this, imageURL,
         title, recipeURL, id, instructions, ingredients, summary));
     }
-    searchRecipeDownloadProgress.className = "recipe-progress-hidden";
+    searchRecipesDownloadProgress.className = "recipe-progress-hidden";
     searchRecipesDownloadText.className = "d-none";
   }
 
