@@ -1,6 +1,5 @@
 class ImageTitleHandler {
-  constructor(titleContainer) {
-    this.titleContainer = titleContainer;
+  constructor() {
   }
 
   postedImageDownloadProgress(imageURL) {
@@ -55,6 +54,6 @@ class ImageTitleHandler {
     const h1 = document.createElement("h1");
     h1.id = "image_title";
     h1.textContent = imageTitle;
-    this.titleContainer.append(h1);
+    titleContainer.append(h1);
   }
 }

@@ -22,7 +22,9 @@ const resultsShownQuantityDiv = document.getElementById("results_shown_quantity_
 const showMoreButton = document.getElementById("show_more_button");
 const spoonacularSearchError = document.getElementById("spoonacular_search_error");
 const spoonacularFavoriteError = document.getElementById("spoonacular_favorite_error");
+const titleContainer = document.getElementById("title_container");
 const percentageBarContainer = document.getElementById("percentage_bar_container");
+const uploadedImageContainer = document.getElementById("uploaded_image_container");
 let recipeInformation = null;
 
 let dataForImageRecognition = {
@@ -73,7 +75,6 @@ class App {
   start() {
     this.localStorageCheck();
     this.savedDietInfoCheck();
-    // this.getFavoriteRecipes();
     this.form.clickDietInfo(this.dietInfo);
     this.form.clickPostImage(this.postImage);
     this.form.clickGetRecipes(this.getRecipes);
