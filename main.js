@@ -2,8 +2,7 @@ const newForm = new Form();
 
 const newDietMenu = new DietMenu();
 
-const titleContainer = document.getElementById("title_container");
-const newImageTitleHandler = new ImageTitleHandler(titleContainer);
+const newImageTitleHandler = new ImageTitleHandler();
 
 const searchRecipesContainer = document.getElementById("search_recipes_container");
 const favoriteRecipesContainer = document.getElementById("favorite_recipes_container");

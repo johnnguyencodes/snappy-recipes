@@ -118,6 +118,9 @@ class Form {
     for (var i = 0; i < inputs.length; i++) {
       inputs[i].disabled = true;
     }
+    titleContainer.className = "d-none";
+    percentageBarContainer.className = "d-none";
+    uploadedImageContainer.className = "d-none";
     this.dietInfo();
     this.getRecipes(query);
   }
@@ -147,5 +150,8 @@ class Form {
     resultsShownQuantityDiv.className = "d-none";
     showMoreButton.className = "btn btn-secondary my-2"
     spoonacularSearchError.className = "d-none";
+    titleContainer.className = "col-xs-12 col-sm-12 col-md-12 col-lg-12 d-flex justify-content-around";
+    percentageBarContainer.className = "col-12 d-flex flex-column justify-content-center my-3";
+    uploadedImageContainer.className = "col-xs-12 col-sm-12 col-md-12 col-lg-12 d-flex justify-content-center my-3";
   }
 }
