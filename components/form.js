@@ -19,7 +19,8 @@ class Form {
     openFavoriteButton.addEventListener("click", this.openFavorites.bind(this));
     closeFavoriteButton.addEventListener("click", this.closeFavorites.bind(this));
     overlay.addEventListener("click", this.handleOverlayClick.bind(this));
-  }
+    recipeSearchInput.addEventListener("keyup", this.enterSearch.bind(this));
+    }
 
   clickDietInfo(dietInfo) {
     this.dietInfo = dietInfo;
@@ -35,6 +36,13 @@ class Form {
 
     clickGetFavoriteRecipes(getFavoriteRecipes) {
     this.getFavoriteRecipes = getFavoriteRecipes;
+  }
+
+  enterSearch() {
+    if (event.keyCode === 13) {
+      event.preventDefault();
+      this.search(event);
+    }
   }
 
   openFavorites() {
