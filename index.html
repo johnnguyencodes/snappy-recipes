@@ -49,18 +49,18 @@
       </div>
     </div>
   </div>
-  <div id="favorite_recipes_section" class="favorite-recipes-hidden d-flex flex-column justify-content-center">
+  <div id="favorite_recipes_section" class="favorite-recipes-hidden d-flex flex-column justify-content-center align-items-center">
     <p id="spoonacular_favorite_error" class="d-none">The Spoonacular API has reached its daily quota for the current API Key.
       Please notify <a href="mailto:john@johnnguyencodes.com?subject=Snappy%20Recipes%20API%20Key%20Refresh">john@johnnguyencodes.com</a>,
       thank you.</p>
     <div id="favorite_recipes_download_progress" class="recipe-progress-hidden mt-3"></div>
     <p id="favorite_recipes_status_text" class="text-center d-none">Gathering recipes...</p>
-    <div id="favorite_recipes_container"></div>
+    <div id="favorite_recipes_container" class="d-flex flex-column align-items-center"></div>
     <div id="empty_favorite_text_container" class="justify-content-center d-none">
       <h3 class="text-center mb-5">Your saved recipes will appear here.</h3>
     </div>
     <div>
-      <button id="close_favorite_button" class="btn btn-danger col-3 offset-4 mb-3">Close</button>
+      <button id="close_favorite_button" class="btn btn-danger col-4 offset-4 my-3">Close</button>
     </div>
   </div>
   <div id="diet_menu" class="diet-menu-hidden">
