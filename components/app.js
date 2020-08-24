@@ -155,6 +155,7 @@ class App {
         "Authorization": `${imgurAPIKey}`
       },
       xhr: function () {
+        console.log("postImage");
         var xhr = new window.XMLHttpRequest();
         xhr.upload.addEventListener("progress", (evt) => {
           if (evt.lengthComputable) {

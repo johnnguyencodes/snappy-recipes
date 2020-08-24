@@ -53,6 +53,7 @@ class ImageTitleHandler {
   imageTitleOnPage(imageTitle) {
     const h1 = document.createElement("h1");
     h1.id = "image_title";
+    h1.className = "text-center";
     h1.textContent = imageTitle;
     titleContainer.append(h1);
   }

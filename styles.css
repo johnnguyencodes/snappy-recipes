@@ -118,6 +118,10 @@ a:hover, #heart_container:hover, #delete_container:hover {
   overflow-y: auto;
 }
 
+.card-image-top {
+  height: 15vh;
+}
+
 .d-none {
   display: none;
 }
