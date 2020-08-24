@@ -231,6 +231,8 @@ class RecipesHandler {
       img.src = imageURL;
       img.alt = "Recipe Image";
       img.className = "mb-1 p-0";
+      img.width = "240";
+      img.height = "180";
       const heartIconContainer = document.createElement("span");
       heartIconContainer.id = "heart_container";
       heartIconContainer.className = "badge badge-light m-1 p-1 border border-danger rounded";
@@ -335,7 +337,7 @@ class RecipesHandler {
       console.log(ingredients);
       const summary = recipes[i].summary;
       const recipeCard = document.createElement("div");
-      recipeCard.className = "favorite-recipe-card card mx-3 my-4 pt-3 col-11";
+      recipeCard.className = "favorite-recipe-card card mt-3 pt-3 col-12";
       recipeCard.id = id;
       const imageContainer = document.createElement("div");
       const titleAnchorTag = document.createElement("a");
@@ -346,6 +348,8 @@ class RecipesHandler {
       img.src = imageURL;
       img.alt = "Recipe Image"
       img.className = "m-0 p-0";
+      img.width = "240";
+      img.height = "180";
       const deleteIconContainer = document.createElement("span");
       deleteIconContainer.id = "delete_container";
       deleteIconContainer.className = "badge badge-light m-1 p-1 border border-danger rounded";
@@ -417,7 +421,7 @@ class RecipesHandler {
     }
     favoriteRecipesStatusText.className = "text-center d-none";
     favoriteRecipesDownloadProgress.className = "d-none";
-    favoriteRecipesDownloadProgress.className = "recipe-progress-hidden mt-3";
+    favoriteRecipesDownloadProgress.className = "recipe-progress-hidden mt-3 d-none";
     emptyFavoriteTextContainer.className = "d-none";
   }
 }

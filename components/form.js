@@ -65,7 +65,7 @@ class Form {
     favoriteRecipesSection.className = "favorite-recipes-hidden d-flex flex-column justify-content-center";
     mainContent.className = "row";
     overlay.className = "d-none";
-    favoriteRecipesDownloadProgress.className = "recipe-progress-hidden mt-3";
+    favoriteRecipesDownloadProgress.className = "recipe-progress-hidden mt-3 d-none";
     spoonacularFavoriteError.className = "d-none";
   }
 
