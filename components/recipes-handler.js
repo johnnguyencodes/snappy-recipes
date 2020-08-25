@@ -123,7 +123,6 @@ class RecipesHandler {
   }
 
   modalHandler(imageURL, title, recipeURL, id, instructions, ingredients, summary) {
-    console.log(ingredients);
     if (!ingredients) {
       return;
     }
@@ -334,7 +333,6 @@ class RecipesHandler {
         }
       }
       const ingredients = recipes[i].nutrition.ingredients;
-      console.log(ingredients);
       const summary = recipes[i].summary;
       const recipeCard = document.createElement("div");
       recipeCard.className = "favorite-recipe-card card mt-3 pt-3 col-12";
