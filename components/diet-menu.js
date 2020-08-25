@@ -15,7 +15,6 @@ class DietMenu {
   }
 
   handleOverlayClick() {
-    console.log("hello");
     if (dietMenu.classList.contains("diet-menu-visible")) {
       this.closeDietMenu();
     }
