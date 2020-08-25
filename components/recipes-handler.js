@@ -21,7 +21,7 @@ class RecipesHandler {
   chunkSearchedRecipes(recipes) {
     recipeInformation = recipes;
     if (!(recipes.results[0])) {
-      searchRecipeDownloadProgress.className = "recipe-progress-hidden";
+      searchRecipesDownloadProgress.className = "recipe-progress-hidden";
       searchRecipesDownloadText.className = "d-none";
       noSearchRecipesText.className = "text-center mt-3";
       return;
