@@ -9,6 +9,12 @@ const searchButton = document.getElementById("search_button");
 const openFavoriteButton = document.getElementById("open_favorites_button");
 const closeFavoriteButton = document.getElementById("close_favorite_button");
 const mainContent = document.getElementById("main_content");
+const errorContainer = document.getElementById("error_container");
+const errorNoFile = document.getElementById("error_no_file");
+const errorIncorrectFile = document.getElementById("error_incorrect_file");
+const errorFileExceedsSize = document.getElementById("error_file_exceeds_size");
+const errorNoSearch = document.getElementById("error_no_search");
+
 
 class Form {
   constructor() {
@@ -77,28 +83,32 @@ class Form {
 
   imgValidation(event) {
     event.preventDefault();
+    for (var i = 0; i < inputs.length; i++) {
+      inputs[i].disabled = true;
+    }
     if (fileInputForm.files[1]) {
       fileInputForm.files.splice(1, 1);
     }
     const imageFile = fileInputForm.files[0];
     if (!(imageFile)) {
-      alert("Error: No file selected, please select a file to upload.");
+      errorContainer.className="col-12 mt-2";
+      errorNoFile.className ="text-danger text-center";
       fileInputForm.value = "";
       return;
-    }
-    for (var i = 0; i < inputs.length; i++) {
-      inputs[i].disabled = true;
     }
     const fileType = imageFile.type;
     const formData = new FormData();
-    const mimeTypes = ['image/jpg', 'image/png', 'image/gif'];
-    if (!(mimeTypes.indexOf(fileType))) {
-      alert("Error: Incorrect file type, please select a jpeg, png or gif file.");
+    const mimeTypes = ['image/jpeg', 'image/png', 'image/gif'];
+    if (!(mimeTypes.includes(fileType))) {
+      errorContainer.className = "col-12 mt-2";
+      errorIncorrectFile.className = "text-danger text-center";
       fileInputForm.value = "";
       return;
     }
-    if (imageFile.size > 10 * 1024 * 1024) {
-      alert("Error: Image exceeds 10MB size limit");
+    console.log(imageFile.size);
+    if (imageFile.size > 10485760) {
+      errorContainer.className = "col-12 mt-2";
+      errorFileExceedsSize.className = "text-danger text-center";
       fileInputForm.value = "";
       return;
     }
@@ -118,13 +128,14 @@ class Form {
 
   search(event) {
     event.preventDefault();
-    let query = (recipeSearchInput.value)
-    if (query === "") {
-      alert("Error: No search query entered. Please enter a search query.");
-      return;
-    }
     for (var i = 0; i < inputs.length; i++) {
       inputs[i].disabled = true;
+    }
+    let query = (recipeSearchInput.value)
+    if (query === "") {
+      errorContainer.className = "col-12 mt-2";
+      errorNoSearch.className = "text-danger text-center";
+      return;
     }
     titleContainer.className = "d-none";
     percentageBarContainer.className = "d-none";
@@ -161,5 +172,10 @@ class Form {
     titleContainer.className = "col-xs-12 col-sm-12 col-md-12 col-lg-12 d-flex justify-content-around";
     percentageBarContainer.className = "col-12 d-flex flex-column justify-content-center my-3";
     uploadedImageContainer.className = "col-xs-12 col-sm-12 col-md-12 col-lg-12 d-flex justify-content-center my-3";
+    errorContainer.className = "d-none";
+    errorNoFile.className = "d-none";
+    errorIncorrectFile.className = "d-none";
+    errorFileExceedsSize.className = "d-none";
+    errorNoSearch.className = "d-none";
   }
 }

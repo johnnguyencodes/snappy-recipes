@@ -185,13 +185,19 @@
           </div>
         </div>
       </div>
-        <div class="input-group col-xs-12">
-          <input type="text" id="recipe_search_input" class="form-control ml-2 input rounded-left" placeholder="Search for recipes">
-          <button id="search_button" class="btn btn-primary rounded-right mr-2 input" type="button">
-            <i class="fa fa-search"></i>
-          </button>
-        </div>
+      <div class="input-group col-xs-12">
+        <input type="text" id="recipe_search_input" class="form-control ml-2 input rounded-left" placeholder="Search for recipes">
+        <button id="search_button" class="btn btn-primary rounded-right mr-2 input" type="button">
+          <i class="fa fa-search"></i>
+        </button>
       </div>
+    </div>
+    <div id="error_container" class="d-none">
+      <p id="error_no_file" class="d-none">No file selected, please reset and then select an image to upload.</p>
+      <p id="error_incorrect_file" class="d-none">Incorrect file type, please reset and select a jpeg, png or gif file.</p>
+      <p id="error_file_exceeds_size" class="d-none">Image exceeds 10MB  size limit, please reset and select a smaller image.</p>
+      <p id="error_no_search" class="d-none">No search query entered. Please reset and enter a search query.</p>
+    </div>
     <div id="percentage_bar_container" class="col-12 d-flex flex-column justify-content-center my-3">
       <div id="percentage_upload_container" class="d-none">
         <div id="percentage_bar_upload"></div>
