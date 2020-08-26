@@ -53,7 +53,7 @@ class Form {
   openFavorites() {
     event.preventDefault();
     yPosition = window.scrollY;
-    favoriteRecipesSection.className = "favorite-recipes-visible d-flex flex-column justify-content-center align-items-center";
+    favoriteRecipesSection.className = "favorite-recipes-visible d-flex flex-column align-items-center";
     if (!(localStorage.getItem('favoriteArray')) || localStorage.getItem('favoriteArray') !== "[]" ) {
       emptyFavoriteTextContainer.className = "d-none";
     }
@@ -67,7 +67,7 @@ class Form {
 
   closeFavorites() {
     event.preventDefault();
-    favoriteRecipesSection.className = "favorite-recipes-hidden d-flex flex-column justify-content-center align-items-center";
+    favoriteRecipesSection.className = "favorite-recipes-hidden d-flex flex-column align-items-center";
     mainContent.className = "row";
     overlay.className = "d-none";
     window.scroll(0, yPosition);
