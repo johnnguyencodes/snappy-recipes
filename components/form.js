@@ -67,12 +67,14 @@ class Form {
 
   closeFavorites() {
     event.preventDefault();
+    let favoriteYPosition = window.scrollY;
     favoriteRecipesSection.className = "favorite-recipes-hidden d-flex flex-column justify-content-center";
     mainContent.className = "row";
     overlay.className = "d-none";
     window.scroll(0, yPosition);
     formElement.className = "ml-3 col-md-6 col-lg-6 col-xl-4 d-flex flex-column align-items-center";
-    favoriteRecipesDownloadProgress.className = "recipe-progress-hidden mt-3 d-none";
+    favoriteRecipesDownloadProgress.className = "recipe-progress-hidden mt-3";
+    favoriteRecipesContainer.style.top = `${favoriteYPosition}px`;
     spoonacularFavoriteError.className = "d-none";
   }
 
@@ -106,7 +108,6 @@ class Form {
       fileInputForm.value = "";
       return;
     }
-    console.log(imageFile.size);
     if (imageFile.size > 10485760) {
       errorContainer.className = "col-12 mt-2";
       errorFileExceedsSize.className = "text-danger text-center";

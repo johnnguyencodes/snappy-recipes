@@ -165,7 +165,6 @@ a:hover, #heart_container:hover, #delete_container:hover {
   box-shadow: 5px 5px  rgba(0, 0, 0, 0.4);
   background-color: white;
   overflow-x: hidden;
-  /* overflow-y: auto; */
 }
 
 #favorite_recipes_element {
