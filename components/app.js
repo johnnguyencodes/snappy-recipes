@@ -256,7 +256,7 @@ class App {
       return;
     }
     emptyFavoriteTextContainer.className = "d-none";
-    favoriteRecipesDownloadProgress.className = "recipe-progress-visible mt-3"
+    favoriteRecipesDownloadProgress.className = "recipe-progress-visible mt-3 text-left"
     favoriteRecipesStatusText.className = "text-center";
     favoriteArray = JSON.parse(localStorage.getItem('favoriteArray'));
     let stringifiedArray = favoriteArray.join(",");
