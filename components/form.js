@@ -61,7 +61,7 @@ class Form {
     mainContent.className="row noscroll scrollbar";
     mainContent.style.top = `-${yPosition}px`;
     mainContent.style.right = "17px";
-    formElement.style.left = "-17px";
+    formElement.style.left = "-15px";
     overlay.className = "";
     this.getFavoriteRecipes();
   }
@@ -72,6 +72,7 @@ class Form {
     mainContent.className = "row";
     overlay.className = "d-none";
     window.scroll(0, yPosition);
+    formElement.style.left = "";
     favoriteRecipesDownloadProgress.className = "recipe-progress-hidden mt-3 d-none";
     spoonacularFavoriteError.className = "d-none";
   }
