@@ -25,6 +25,7 @@ const spoonacularFavoriteError = document.getElementById("spoonacular_favorite_e
 const titleContainer = document.getElementById("title_container");
 const percentageBarContainer = document.getElementById("percentage_bar_container");
 const uploadedImageContainer = document.getElementById("uploaded_image_container");
+const formElement = document.getElementById("form");
 let recipeInformation = null;
 
 let dataForImageRecognition = {

@@ -54,20 +54,20 @@ class Form {
   openFavorites() {
     event.preventDefault();
     yPosition = window.scrollY;
-    window.scroll(0, yPosition);
-    console.log(yPosition);
     favoriteRecipesSection.className = "favorite-recipes-visible d-flex flex-column justify-content-center";
     if (!(localStorage.getItem('favoriteArray')) || localStorage.getItem('favoriteArray') !== "[]" ) {
       emptyFavoriteTextContainer.className = "d-none";
     }
-    mainContent.className="row noscroll";
+    mainContent.className="row noscroll scrollbar";
+    mainContent.style.top = `-${yPosition}px`;
+    mainContent.style.right = "17px";
+    formElement.style.left = "-17px";
     overlay.className = "";
     this.getFavoriteRecipes();
   }
 
   closeFavorites() {
     event.preventDefault();
-    console.log(yPosition);
     favoriteRecipesSection.className = "favorite-recipes-hidden d-flex flex-column justify-content-center";
     mainContent.className = "row";
     overlay.className = "d-none";
