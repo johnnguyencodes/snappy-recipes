@@ -14,7 +14,7 @@ const errorNoFile = document.getElementById("error_no_file");
 const errorIncorrectFile = document.getElementById("error_incorrect_file");
 const errorFileExceedsSize = document.getElementById("error_file_exceeds_size");
 const errorNoSearch = document.getElementById("error_no_search");
-
+let yPosition;
 
 class Form {
   constructor() {
@@ -53,6 +53,9 @@ class Form {
 
   openFavorites() {
     event.preventDefault();
+    yPosition = window.scrollY;
+    window.scroll(0, yPosition);
+    console.log(yPosition);
     favoriteRecipesSection.className = "favorite-recipes-visible d-flex flex-column justify-content-center";
     if (!(localStorage.getItem('favoriteArray')) || localStorage.getItem('favoriteArray') !== "[]" ) {
       emptyFavoriteTextContainer.className = "d-none";
@@ -64,13 +67,11 @@ class Form {
 
   closeFavorites() {
     event.preventDefault();
-    window.scrollTo({
-      top: 0,
-      behavior: "auto"
-    })
+    console.log(yPosition);
     favoriteRecipesSection.className = "favorite-recipes-hidden d-flex flex-column justify-content-center";
     mainContent.className = "row";
     overlay.className = "d-none";
+    window.scroll(0, yPosition);
     favoriteRecipesDownloadProgress.className = "recipe-progress-hidden mt-3 d-none";
     spoonacularFavoriteError.className = "d-none";
   }
