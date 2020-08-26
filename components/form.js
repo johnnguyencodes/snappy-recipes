@@ -58,10 +58,9 @@ class Form {
     if (!(localStorage.getItem('favoriteArray')) || localStorage.getItem('favoriteArray') !== "[]" ) {
       emptyFavoriteTextContainer.className = "d-none";
     }
-    mainContent.className="row noscroll scrollbar";
+    mainContent.className="row main-content-right";
     mainContent.style.top = `-${yPosition}px`;
-    mainContent.style.right = "17px";
-    formElement.style.left = "-15px";
+    formElement.className = "ml-3 col-md-6 col-lg-6 col-xl-4 d-flex flex-column align-items-center form-element-left";
     overlay.className = "";
     this.getFavoriteRecipes();
   }
@@ -72,7 +71,7 @@ class Form {
     mainContent.className = "row";
     overlay.className = "d-none";
     window.scroll(0, yPosition);
-    formElement.style.left = "";
+    formElement.className = "ml-3 col-md-6 col-lg-6 col-xl-4 d-flex flex-column align-items-center";
     favoriteRecipesDownloadProgress.className = "recipe-progress-hidden mt-3 d-none";
     spoonacularFavoriteError.className = "d-none";
   }

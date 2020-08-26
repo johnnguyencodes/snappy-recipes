@@ -103,7 +103,6 @@ a:hover, #heart_container:hover, #delete_container:hover {
     width: 0%;
     height: 3px;
     background:blue;
-    /* transition: 2s ease-in; */
 }
 
 .recipe-progress-visible {
@@ -118,10 +117,6 @@ a:hover, #heart_container:hover, #delete_container:hover {
   height: 200px;
   overflow-y: auto;
 }
-
-/* .card-image-top {
-  height: 15vh;
-} */
 
 .d-none {
   display: none;
@@ -243,10 +238,24 @@ span {
   max-width: 90%;
 }
 
-  .recipe-card, .favorite-recipe-card {
-    min-width: 268px;
-    max-width: 268px;
-  }
+.recipe-card, .favorite-recipe-card {
+  min-width: 268px;
+  max-width: 268px;
+}
+
+/* iPhone 6, 6S, 7, 8 Portrait and Landscape */
+@media only screen
+  and (min-device-width: 375px)
+  and (max-device-width: 667px)
+  and (-webkit-min-device-pixel-ratio: 2) {
+    main-content-right {
+      right: 0px;
+    }
+
+    form-element-left {
+      left: 0px;
+    }
+}
 
 @media only screen and (max-width: 414px) {
   #modal_button_container button {
@@ -269,9 +278,6 @@ span {
 }
 
 @media only screen and (min-width: 768px) {
-  /* .recipe-card {
-    min-width: 268px;
-  } */
   #form {
     position: fixed;
   }
