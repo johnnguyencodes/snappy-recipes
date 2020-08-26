@@ -13,6 +13,7 @@
     integrity="sha256-YLGeXaapI0/5IgZopewRJcFXomhRMlYYjugPLSyNjTY=" crossorigin="anonymous" />
   <link rel="stylesheet" href="styles.css">
 </head>
+
 <body class="bg-light">
   <div id="modal_container" class="d-none">
     <div class="modal-dialog modal-lg modal-dialog-centered rounded">
@@ -23,9 +24,9 @@
           </div>
         </div>
         <div id="recipe_body" class="modal-body">
-            <div class="d-flex justify-content-center">
-              <img id="recipe_image" src="" alt="">
-            </div>
+          <div class="d-flex justify-content-center">
+            <img id="recipe_image" src="" alt="">
+          </div>
           <div class="mt-3">
             <h3>Summary</h3>
             <div id="recipe_summary" class=""></div>
@@ -49,17 +50,20 @@
       </div>
     </div>
   </div>
-  <div id="favorite_recipes_section" class="favorite-recipes-hidden d-flex flex-column justify-content-center align-items-center">
-    <p id="spoonacular_favorite_error" class="d-none">The Spoonacular API has reached its daily quota for the current API Key.
-      Please notify <a href="mailto:john@johnnguyencodes.com?subject=Snappy%20Recipes%20API%20Key%20Refresh">john@johnnguyencodes.com</a>,
+  <div id="favorite_recipes_section"
+    class="favorite-recipes-hidden d-flex flex-column justify-content-center align-items-center">
+    <p id="spoonacular_favorite_error" class="d-none">The Spoonacular API has reached its daily quota for the current
+      API Key.
+      Please notify <a
+        href="mailto:john@johnnguyencodes.com?subject=Snappy%20Recipes%20API%20Key%20Refresh">john@johnnguyencodes.com</a>,
       thank you.</p>
     <div id="favorite_recipes_download_progress" class="recipe-progress-hidden mt-3 text-left"></div>
     <p id="favorite_recipes_status_text" class="text-center d-none">Gathering recipes...</p>
-    <div id="favorite_recipes_container" class="d-flex flex-column align-items-center"></div>
+    <div id="favorite_recipes_container" class="d-flex flex-column justify-content-center"></div>
     <div id="empty_favorite_text_container" class="justify-content-center d-none">
       <h3 class="text-center mb-5">Your saved recipes will appear here.</h3>
     </div>
-    <button id="close_favorite_button" class="btn btn-danger my-3">Close</button>
+    <button id="close_favorite_button" class="btn btn-danger mt-2 mb-4">Close</button>
   </div>
   <div id="diet_menu" class="diet-menu-hidden d-flex flex-column justify-content-center">
     <div id="dietary_restrictions">
@@ -162,75 +166,87 @@
   <div id="main_content" class="row">
     <div class="form_spaceholder col-md-6 col-lg-6 col-xl-4"></div>
     <div id="form" class="ml-3 col-md-6 col-lg-6 col-xl-4 d-flex flex-column align-items-center">
-    <header class="col-xs-12 col-sm-12 col-md-12 col-lg-12 d-flex flex-column align-items-center justify-content-center my-2 px-0">
-      <h1> <span class="badge badge-primary">Snappy Recipes <i class="fa fa-utensils"></i></span></h1>
-      <p class="m-2 text-center">Find recipes by uploading an <strong>image</strong>, or by entering a <strong>search</strong>.</p>
-    </header>
-    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 px-0">
-      <div class="form-group col-xs-12 d-flex justify-content-around">
-        <button id="open_diet_menu_button" class="btn btn-warning input">Diet Preferences</button>
-        <button id="open_favorites_button" class="btn btn-danger">Favorites</button>
-        <button id="reset_button" class="btn btn-secondary">Reset</button>
-      </div>
-      <div class="form-group col-xs-12 mx-2">
-        <div class="input-group mb-3">
-          <div class="custom-file">
-            <input type="file" id="file_input_form" class="custom-file-input input">
-            <label id="custom_file_label" class="custom-file-label input text-center" for="file_input_form"></label>
-          </div>
-          <div class="input-group-prepend">
-            <button id="upload_button" class="btn btn-primary rounded-right input">Upload</button>
+      <header
+        class="col-xs-12 col-sm-12 col-md-12 col-lg-12 d-flex flex-column align-items-center justify-content-center my-2 px-0">
+        <h1> <span class="badge badge-primary">Snappy Recipes <i class="fa fa-utensils"></i></span></h1>
+        <p class="m-2 text-center">Find recipes by uploading an <strong>image</strong>, or by entering a
+          <strong>search</strong>.</p>
+      </header>
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 px-0">
+        <div class="form-group col-xs-12 d-flex justify-content-around">
+          <button id="open_diet_menu_button" class="btn btn-warning input">Diet Preferences</button>
+          <button id="open_favorites_button" class="btn btn-danger">Favorites</button>
+          <button id="reset_button" class="btn btn-secondary">Reset</button>
+        </div>
+        <div class="form-group col-xs-12 mx-2">
+          <div class="input-group mb-3">
+            <div class="custom-file">
+              <input type="file" id="file_input_form" class="custom-file-input input">
+              <label id="custom_file_label" class="custom-file-label input text-center" for="file_input_form"></label>
+            </div>
+            <div class="input-group-prepend">
+              <button id="upload_button" class="btn btn-primary rounded-right input">Upload</button>
+            </div>
           </div>
         </div>
+        <div class="input-group col-xs-12">
+          <input type="text" id="recipe_search_input" class="form-control ml-2 input rounded-left"
+            placeholder="Search for recipes">
+          <button id="search_button" class="btn btn-primary rounded-right mr-2 input" type="button">
+            <i class="fa fa-search"></i>
+          </button>
+        </div>
       </div>
-      <div class="input-group col-xs-12">
-        <input type="text" id="recipe_search_input" class="form-control ml-2 input rounded-left" placeholder="Search for recipes">
-        <button id="search_button" class="btn btn-primary rounded-right mr-2 input" type="button">
-          <i class="fa fa-search"></i>
-        </button>
+      <div id="error_container" class="d-none">
+        <p id="error_no_file" class="d-none">No file selected, please reset and then select an image to upload.</p>
+        <p id="error_incorrect_file" class="d-none">Incorrect file type, please reset and select a jpeg, png or gif
+          file.</p>
+        <p id="error_file_exceeds_size" class="d-none">Image exceeds 10MB size limit, please reset and select a smaller
+          image.</p>
+        <p id="error_no_search" class="d-none">No search query entered. Please reset and enter a search query.</p>
       </div>
-    </div>
-    <div id="error_container" class="d-none">
-      <p id="error_no_file" class="d-none">No file selected, please reset and then select an image to upload.</p>
-      <p id="error_incorrect_file" class="d-none">Incorrect file type, please reset and select a jpeg, png or gif file.</p>
-      <p id="error_file_exceeds_size" class="d-none">Image exceeds 10MB  size limit, please reset and select a smaller image.</p>
-      <p id="error_no_search" class="d-none">No search query entered. Please reset and enter a search query.</p>
-    </div>
-    <div id="percentage_bar_container" class="col-12 d-flex flex-column justify-content-center my-3">
-      <div id="percentage_upload_container" class="d-none">
-        <div id="percentage_bar_upload"></div>
-        <p id="image_upload_text" class="text-center">Uploading image...</p>
+      <div id="percentage_bar_container" class="col-12 d-flex flex-column justify-content-center my-3">
+        <div id="percentage_upload_container" class="d-none">
+          <div id="percentage_bar_upload"></div>
+          <p id="image_upload_text" class="text-center">Uploading image...</p>
+        </div>
+        <div id="percentage_download_container" class="d-none">
+          <div id="percentage_bar_download"></div>
+          <p id="image_download_text" class="text-center">Downloading image...</p>
+        </div>
       </div>
-      <div id="percentage_download_container" class="d-none">
-        <div id="percentage_bar_download"></div>
-        <p id="image_download_text" class="text-center">Downloading image...</p>
+      <div id="uploaded_image_container"
+        class="col-xs-12 col-sm-12 col-md-12 col-lg-12 d-flex justify-content-center my-3">
+        <img id="uploaded_image" src="" alt="">
       </div>
-    </div>
-    <div id="uploaded_image_container" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 d-flex justify-content-center my-3">
-      <img id="uploaded_image" src="" alt="">
-    </div>
-    <div id="title_container" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 d-flex justify-content-around">
-      <p id="image_recognition_status" class="text-center d-none">Recognizing image...</p>
-      <p id="image_recognition_failed" class="text-center d-none">Your image could not be recognized. Please upload a different image or enter a search.</p>
-    </div>
+      <div id="title_container" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 d-flex justify-content-around">
+        <p id="image_recognition_status" class="text-center d-none">Recognizing image...</p>
+        <p id="image_recognition_failed" class="text-center d-none">Your image could not be recognized. Please upload a
+          different image or enter a search.</p>
+      </div>
     </div>
     <div id="search_results_section" class="col-md-6 col-lg-6 col-xl-8">
       <div id="search_results_quantity_div" class="d-none">
         <p id="search_results_quantity_text" class="text-center mb-0"></p>
       </div>
-      <div id="search_recipes_container" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 px-0 d-flex flex-row flex-wrap align-items-center justify-content-around">
+      <div id="search_recipes_container"
+        class="col-xs-12 col-sm-12 col-md-12 col-lg-12 px-0 d-flex flex-row flex-wrap align-items-center justify-content-around">
         <div class="col-12 d-flex flex-column justify-content-center">
           <div id="search_recipes_download_progress" class="recipe-progress-hidden mt-3 text-left"></div>
           <p id="search_recipes_download_text" class="d-none">Gathering recipes...</p>
         </div>
-        <p id="spoonacular_search_error" class="d-none">The Spoonacular API has reached its daily quota for the current API Key. Please notify <a href="mailto:john@johnnguyencodes.com?subject=Snappy%20Recipes%20API%20Key%20Refresh">john@johnnguyencodes.com</a>, thank you.</p>
-        <p id="no_search_recipes_text" class="d-none">No recipes found. Please modify your diet preferences and try again, or upload a different image, or enter a different search.</p>
+        <p id="spoonacular_search_error" class="d-none">The Spoonacular API has reached its daily quota for the current
+          API Key. Please notify <a
+            href="mailto:john@johnnguyencodes.com?subject=Snappy%20Recipes%20API%20Key%20Refresh">john@johnnguyencodes.com</a>,
+          thank you.</p>
+        <p id="no_search_recipes_text" class="d-none">No recipes found. Please modify your diet preferences and try
+          again, or upload a different image, or enter a different search.</p>
       </div>
-    <div id="results_shown_quantity_div" class="d-none">
-      <p id="results_shown_quantity_text"></p>
-      <button id="show_more_button" class="btn btn-secondary">Show more</button>
+      <div id="results_shown_quantity_div" class="d-none">
+        <p id="results_shown_quantity_text"></p>
+        <button id="show_more_button" class="btn btn-secondary">Show more</button>
+      </div>
     </div>
-  </div>
   </div>
   <div id="overlay" class="d-none"></div>
   <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
@@ -243,4 +259,5 @@
   <script src="components/recipes-handler.js"></script>
   <script src="main.js"></script>
 </body>
+
 </html>
