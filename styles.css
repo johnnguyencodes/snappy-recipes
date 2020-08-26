@@ -243,11 +243,11 @@ span {
   max-width: 268px;
 }
 
-main-content-right {
+.main-content-right {
   right: 17px;
 }
 
-form-element-left {
+.form-element-left {
   left: -15px;
 }
 
@@ -256,11 +256,11 @@ form-element-left {
   and (min-device-width: 375px)
   and (max-device-width: 667px)
   and (-webkit-min-device-pixel-ratio: 2) {
-    main-content-right {
+    .main-content-right {
       right: 0px;
     }
 
-    form-element-left {
+    .form-element-left {
       left: 0px;
     }
 }
