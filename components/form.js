@@ -58,7 +58,7 @@ class Form {
     if (!(localStorage.getItem('favoriteArray')) || localStorage.getItem('favoriteArray') !== "[]" ) {
       emptyFavoriteTextContainer.className = "d-none";
     }
-    mainContent.className="row main-content-right";
+    mainContent.className="row noscroll main-content-right";
     mainContent.style.top = `-${yPosition}px`;
     formElement.className = "ml-3 col-md-6 col-lg-6 col-xl-4 d-flex flex-column align-items-center form-element-left";
     overlay.className = "";
