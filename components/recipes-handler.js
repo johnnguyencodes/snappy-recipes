@@ -335,7 +335,7 @@ class RecipesHandler {
       const ingredients = recipes[i].nutrition.ingredients;
       const summary = recipes[i].summary;
       const recipeCard = document.createElement("div");
-      recipeCard.className = "favorite-recipe-card card mt-3 pt-3 col-12";
+      recipeCard.className = "favorite-recipe-card card m-3 pt-3 col-12";
       recipeCard.id = id;
       const imageContainer = document.createElement("div");
       const titleAnchorTag = document.createElement("a");

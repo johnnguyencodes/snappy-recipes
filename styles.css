@@ -75,7 +75,7 @@ a:hover, #heart_container:hover, #delete_container:hover {
   width: 350px;
   top: 0;
   left: -355px;
-  position: absolute;
+  position: fixed;
   transition: 0.3s ease-in-out;
   border-right: 3px black solid;
   box-shadow: 5px 5px rgba(0, 0, 0, 0.4);

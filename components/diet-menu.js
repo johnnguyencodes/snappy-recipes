@@ -33,9 +33,5 @@ class DietMenu {
     dietMenu.className = "diet-menu-hidden d-flex flex-column justify-content-center";
     this.dietInfo();
     overlay.className = "d-none";
-    window.scrollTo({
-      top: 0,
-      behavior: "auto"
-    })
   }
 }
