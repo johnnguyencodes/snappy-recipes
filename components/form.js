@@ -1,4 +1,3 @@
-const favoriteRecipesSection = document.getElementById("favorite_recipes_section");
 const fileLabel = document.getElementById("custom_file_label");
 let fileInputForm = document.getElementById("file_input_form");
 const recipeSearchInput = document.getElementById('recipe_search_input');
@@ -14,7 +13,7 @@ const errorNoFile = document.getElementById("error_no_file");
 const errorIncorrectFile = document.getElementById("error_incorrect_file");
 const errorFileExceedsSize = document.getElementById("error_file_exceeds_size");
 const errorNoSearch = document.getElementById("error_no_search");
-
+let yPosition;
 
 class Form {
   constructor() {
@@ -50,28 +49,29 @@ class Form {
       this.search(event);
     }
   }
-
   openFavorites() {
     event.preventDefault();
+    yPosition = window.scrollY;
     favoriteRecipesSection.className = "favorite-recipes-visible d-flex flex-column justify-content-center";
     if (!(localStorage.getItem('favoriteArray')) || localStorage.getItem('favoriteArray') !== "[]" ) {
       emptyFavoriteTextContainer.className = "d-none";
     }
-    mainContent.className="row noscroll";
+    mainContent.className="row main-content-right noscroll";
+    mainContent.style.top = `-${yPosition}px`;
+    formElement.style.top = "0px";
+    formElement.className = "ml-3 col-md-6 col-lg-6 col-xl-4 d-flex flex-column align-items-center form-element-left";
     overlay.className = "";
     this.getFavoriteRecipes();
   }
 
   closeFavorites() {
     event.preventDefault();
-    window.scrollTo({
-      top: 0,
-      behavior: "auto"
-    })
     favoriteRecipesSection.className = "favorite-recipes-hidden d-flex flex-column justify-content-center";
     mainContent.className = "row";
     overlay.className = "d-none";
-    favoriteRecipesDownloadProgress.className = "recipe-progress-hidden mt-3 d-none";
+    window.scroll(0, yPosition);
+    formElement.className = "ml-3 col-md-6 col-lg-6 col-xl-4 d-flex flex-column align-items-center";
+    favoriteRecipesDownloadProgress.className = "recipe-progress-hidden mt-3";
     spoonacularFavoriteError.className = "d-none";
   }
 
@@ -105,7 +105,6 @@ class Form {
       fileInputForm.value = "";
       return;
     }
-    console.log(imageFile.size);
     if (imageFile.size > 10485760) {
       errorContainer.className = "col-12 mt-2";
       errorFileExceedsSize.className = "text-danger text-center";

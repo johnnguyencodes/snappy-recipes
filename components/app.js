@@ -25,6 +25,8 @@ const spoonacularFavoriteError = document.getElementById("spoonacular_favorite_e
 const titleContainer = document.getElementById("title_container");
 const percentageBarContainer = document.getElementById("percentage_bar_container");
 const uploadedImageContainer = document.getElementById("uploaded_image_container");
+const formElement = document.getElementById("form");
+const favoriteRecipesSection = document.getElementById("favorite_recipes_section");
 let recipeInformation = null;
 
 let dataForImageRecognition = {
@@ -255,7 +257,7 @@ class App {
       return;
     }
     emptyFavoriteTextContainer.className = "d-none";
-    favoriteRecipesDownloadProgress.className = "recipe-progress-visible mt-3"
+    favoriteRecipesDownloadProgress.className = "favorite-recipe-progress-visible mt-3"
     favoriteRecipesStatusText.className = "text-center";
     favoriteArray = JSON.parse(localStorage.getItem('favoriteArray'));
     let stringifiedArray = favoriteArray.join(",");
@@ -276,7 +278,7 @@ class App {
   }
 
   handleGetFavoriteRecipesError(error) {
-    favoriteRecipesDownloadProgress.className = "recipe-progress-hidden mt-3 d-none";
+    favoriteRecipesDownloadProgress.className = "recipe-progress-hidden";
     favoriteRecipesStatusText.className = "d-none";
     spoonacularFavoriteError.className = "mt-3 text-center";
     }

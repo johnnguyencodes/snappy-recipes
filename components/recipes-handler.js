@@ -66,6 +66,22 @@ class RecipesHandler {
     localStorage.setItem('favoriteArray', JSON.stringify(favoriteArray));
   }
 
+  handleDeleteClick(id) {
+    favoriteArray.splice(favoriteArray.indexOf(id), 1);
+    document.getElementById(`${id}`).remove();
+    localStorage.setItem('favoriteArray', JSON.stringify(favoriteArray));
+    if (localStorage.getItem('favoriteArray') === "[]") {
+      emptyFavoriteTextContainer.className = "d-flex justify-content-center";
+      favoriteRecipesSection.className = "favorite-recipes-visible d-flex flex-column justify-content-center";
+    }
+    if (favoriteRecipesSection.scrollHeight > favoriteRecipesSection.clientHeight) {
+      favoriteRecipesSection.className = "favorite-recipes-visible d-flex flex-column justify-content-start";
+    } else {
+      favoriteRecipesSection.className = "favorite-recipes-visible d-flex flex-column justify-content-center";
+    }
+    this.favoriteCheck(id);
+  }
+
   handleFavoriteButtonClick(id) {
     const favoriteButton = document.getElementById("favorite_button");
     if ((favoriteArray.includes(id) === false)) {
@@ -76,7 +92,9 @@ class RecipesHandler {
         document.getElementById(`heart_icon_${id}`).className = "fas fa-heart text-danger heart-icon fa-lg";
       }
       localStorage.setItem('favoriteArray', JSON.stringify(favoriteArray));
-      this.getFavoriteRecipes();
+      if (favoriteRecipesSection.classList.contains("favorite-recipes-visible")) {
+        this.getFavoriteRecipes();
+      }
       return;
     } else {
       favoriteArray.splice(favoriteArray.indexOf(id), 1);
@@ -89,22 +107,15 @@ class RecipesHandler {
       if (document.getElementById(`${id}`)) {
         document.getElementById(`${id}`).remove();
       }
+      if (favoriteRecipesSection.scrollHeight > favoriteRecipesSection.clientHeight && favoriteRecipesSection.classList.contains("favorite-recipes-visible")) {
+        favoriteRecipesSection.className = "favorite-recipes-visible d-flex flex-column justify-content-start";
+      }
       localStorage.setItem('favoriteArray', JSON.stringify(favoriteArray));
       if (!(localStorage.getItem('favoriteArray')) || localStorage.getItem('favoriteArray') === "[]") {
         emptyFavoriteTextContainer.className = "d-flex justify-content-center";
         return;
       }
     }
-}
-
-  handleDeleteClick(id) {
-    favoriteArray.splice(favoriteArray.indexOf(id), 1);
-    document.getElementById(`${id}`).remove();
-    localStorage.setItem('favoriteArray', JSON.stringify(favoriteArray));
-    if (localStorage.getItem('favoriteArray') === "[]") {
-      emptyFavoriteTextContainer.className = "d-flex justify-content-center";
-    }
-    this.favoriteCheck(id);
   }
 
   favoriteCheck() {
@@ -152,7 +163,6 @@ class RecipesHandler {
       recipeIngredients.append(ingredient);
     }
     const cleanSummary = DOMPurify.sanitize(summary);
-
     modalContainer.className = "";
     recipeTitle.textContent = `Recipe Preview: ${title}`;
     recipeImage.src = imageURL;
@@ -312,6 +322,7 @@ class RecipesHandler {
   }
 
   displayFavoriteRecipes(recipes) {
+
     for (let i = 0; i < recipes.length; i++) {
       const imageURL = `${recipes[i].image.substring(0, recipes[i].image.length - 11)}556x370.jpg`;
       const title = recipes[i].title;
@@ -335,7 +346,7 @@ class RecipesHandler {
       const ingredients = recipes[i].nutrition.ingredients;
       const summary = recipes[i].summary;
       const recipeCard = document.createElement("div");
-      recipeCard.className = "favorite-recipe-card card mt-3 pt-3 col-12";
+      recipeCard.className = "favorite-recipe-card card m-3 pt-3 col-12";
       recipeCard.id = id;
       const imageContainer = document.createElement("div");
       const titleAnchorTag = document.createElement("a");
@@ -417,9 +428,13 @@ class RecipesHandler {
       titleAnchorTag.addEventListener("click", this.modalHandler.bind(this, imageURL,
         title, recipeURL, id, instructions, ingredients, summary));
     }
+    if (favoriteRecipesSection.scrollHeight > favoriteRecipesSection.clientHeight) {
+      favoriteRecipesSection.className = "favorite-recipes-visible d-flex flex-column justify-content-start";
+    } else {
+      favoriteRecipesSection.className = "favorite-recipes-visible d-flex flex-column justify-content-center";
+    }
     favoriteRecipesStatusText.className = "text-center d-none";
-    favoriteRecipesDownloadProgress.className = "d-none";
-    favoriteRecipesDownloadProgress.className = "recipe-progress-hidden mt-3 d-none";
+    favoriteRecipesDownloadProgress.className = "recipe-progress-hidden";
     emptyFavoriteTextContainer.className = "d-none";
   }
 }
