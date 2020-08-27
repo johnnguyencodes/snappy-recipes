@@ -103,6 +103,12 @@ class RecipesHandler {
     localStorage.setItem('favoriteArray', JSON.stringify(favoriteArray));
     if (localStorage.getItem('favoriteArray') === "[]") {
       emptyFavoriteTextContainer.className = "d-flex justify-content-center";
+      favoriteRecipesSection.className = "favorite-recipes-visible d-flex flex-column justify-content-center";
+    }
+    if (favoriteRecipesSection.scrollHeight > favoriteRecipesSection.clientHeight) {
+      favoriteRecipesSection.className = "favorite-recipes-visible d-flex flex-column justify-content-start";
+    } else {
+      favoriteRecipesSection.className = "favorite-recipes-visible d-flex flex-column justify-content-center";
     }
     this.favoriteCheck(id);
   }
