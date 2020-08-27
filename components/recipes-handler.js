@@ -95,7 +95,7 @@ class RecipesHandler {
         return;
       }
     }
-    if (favoriteRecipesSection.scrollHeight > favoriteRecipesSection.clientHeight) {
+    if (favoriteRecipesSection.scrollHeight > favoriteRecipesSection.clientHeight && favoriteRecipesSection.classList.contains("favorite-recipes-visible")) {
       favoriteRecipesSection.className = "favorite-recipes-visible d-flex flex-column justify-content-start";
     } else {
       favoriteRecipesSection.className = "favorite-recipes-visible d-flex flex-column justify-content-center";
