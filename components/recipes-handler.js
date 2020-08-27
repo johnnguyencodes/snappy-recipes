@@ -312,6 +312,7 @@ class RecipesHandler {
   }
 
   displayFavoriteRecipes(recipes) {
+
     for (let i = 0; i < recipes.length; i++) {
       const imageURL = `${recipes[i].image.substring(0, recipes[i].image.length - 11)}556x370.jpg`;
       const title = recipes[i].title;
@@ -416,6 +417,11 @@ class RecipesHandler {
       this.favoriteRecipesContainer.append(recipeCard);
       titleAnchorTag.addEventListener("click", this.modalHandler.bind(this, imageURL,
         title, recipeURL, id, instructions, ingredients, summary));
+    }
+    if (favoriteRecipesSection.scrollHeight > favoriteRecipesSection.clientHeight) {
+      favoriteRecipesSection.className = "favorite-recipes-visible d-flex flex-column justify-content-start";
+    } else {
+      favoriteRecipesSection.className = "favorite-recipes-visible d-flex flex-column justify-content-center";
     }
     favoriteRecipesStatusText.className = "text-center d-none";
     favoriteRecipesDownloadProgress.className = "d-none";

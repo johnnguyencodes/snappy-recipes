@@ -1,4 +1,3 @@
-const favoriteRecipesSection = document.getElementById("favorite_recipes_section");
 const fileLabel = document.getElementById("custom_file_label");
 let fileInputForm = document.getElementById("file_input_form");
 const recipeSearchInput = document.getElementById('recipe_search_input');
@@ -53,7 +52,7 @@ class Form {
   openFavorites() {
     event.preventDefault();
     yPosition = window.scrollY;
-    favoriteRecipesSection.className = "favorite-recipes-visible d-flex flex-column align-items-center";
+    favoriteRecipesSection.className = "favorite-recipes-visible d-flex flex-column justify-content-center";
     if (!(localStorage.getItem('favoriteArray')) || localStorage.getItem('favoriteArray') !== "[]" ) {
       emptyFavoriteTextContainer.className = "d-none";
     }
@@ -67,7 +66,7 @@ class Form {
 
   closeFavorites() {
     event.preventDefault();
-    favoriteRecipesSection.className = "favorite-recipes-hidden d-flex flex-column align-items-center";
+    favoriteRecipesSection.className = "favorite-recipes-hidden d-flex flex-column justify-content-center";
     mainContent.className = "row";
     overlay.className = "d-none";
     window.scroll(0, yPosition);

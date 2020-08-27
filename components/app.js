@@ -26,6 +26,7 @@ const titleContainer = document.getElementById("title_container");
 const percentageBarContainer = document.getElementById("percentage_bar_container");
 const uploadedImageContainer = document.getElementById("uploaded_image_container");
 const formElement = document.getElementById("form");
+const favoriteRecipesSection = document.getElementById("favorite_recipes_section");
 let recipeInformation = null;
 
 let dataForImageRecognition = {
@@ -252,6 +253,7 @@ class App {
       favoriteRecipesContainer.removeChild(favoriteRecipesContainer.firstChild);
     }
     if (!(localStorage.getItem('favoriteArray')) || localStorage.getItem('favoriteArray') === "[]") {
+      favoriteRecipesSection.className = "favorite-recipes-visible d-flex flex-column justify-content-center";
       emptyFavoriteTextContainer.className = "d-flex justify-content-center";
       return;
     }
