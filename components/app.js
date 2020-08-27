@@ -253,12 +253,11 @@ class App {
       favoriteRecipesContainer.removeChild(favoriteRecipesContainer.firstChild);
     }
     if (!(localStorage.getItem('favoriteArray')) || localStorage.getItem('favoriteArray') === "[]") {
-      // favoriteRecipesSection.className = "favorite-recipes-visible d-flex flex-column justify-content-center";
       emptyFavoriteTextContainer.className = "d-flex justify-content-center";
       return;
     }
     emptyFavoriteTextContainer.className = "d-none";
-    favoriteRecipesDownloadProgress.className = "recipe-progress-visible mt-3 text-left"
+    favoriteRecipesDownloadProgress.className = "favorite-recipe-progress-visible mt-3"
     favoriteRecipesStatusText.className = "text-center";
     favoriteArray = JSON.parse(localStorage.getItem('favoriteArray'));
     let stringifiedArray = favoriteArray.join(",");
@@ -279,7 +278,7 @@ class App {
   }
 
   handleGetFavoriteRecipesError(error) {
-    favoriteRecipesDownloadProgress.className = "recipe-progress-hidden mt-3 d-none";
+    favoriteRecipesDownloadProgress.className = "recipe-progress-hidden";
     favoriteRecipesStatusText.className = "d-none";
     spoonacularFavoriteError.className = "mt-3 text-center";
     }

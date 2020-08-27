@@ -33,7 +33,7 @@ table {
   right: 20px;
 }
 
-a:hover, #heart_container:hover, #delete_container:hover {
+a:hover, #heart_container:hover, #delete_container:hover, #file_input_form:hover {
   cursor: pointer;
 }
 
@@ -111,6 +111,14 @@ a:hover, #heart_container:hover, #delete_container:hover {
     height: 3px;
     background:blue;
     transition: 10s ease-in-out;
+}
+
+.favorite-recipe-progress-visible {
+  visibility: visible;
+  width: 100%;
+  height: 3px;
+  background:blue;
+  transition: 5s ease-in-out;
 }
 
 .recipe-card > .card-body {

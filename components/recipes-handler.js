@@ -83,7 +83,6 @@ class RecipesHandler {
   }
 
   handleFavoriteButtonClick(id) {
-    debugger;
     const favoriteButton = document.getElementById("favorite_button");
     if ((favoriteArray.includes(id) === false)) {
       favoriteArray.push(id);
@@ -435,8 +434,7 @@ class RecipesHandler {
       favoriteRecipesSection.className = "favorite-recipes-visible d-flex flex-column justify-content-center";
     }
     favoriteRecipesStatusText.className = "text-center d-none";
-    favoriteRecipesDownloadProgress.className = "d-none";
-    favoriteRecipesDownloadProgress.className = "recipe-progress-hidden mt-3 d-none";
+    favoriteRecipesDownloadProgress.className = "recipe-progress-hidden";
     emptyFavoriteTextContainer.className = "d-none";
   }
 }
