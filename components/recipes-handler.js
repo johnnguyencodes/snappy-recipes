@@ -95,6 +95,11 @@ class RecipesHandler {
         return;
       }
     }
+    if (favoriteRecipesSection.scrollHeight > favoriteRecipesSection.clientHeight) {
+      favoriteRecipesSection.className = "favorite-recipes-visible d-flex flex-column justify-content-start";
+    } else {
+      favoriteRecipesSection.className = "favorite-recipes-visible d-flex flex-column justify-content-center";
+    }
 }
 
   handleDeleteClick(id) {
@@ -158,7 +163,6 @@ class RecipesHandler {
       recipeIngredients.append(ingredient);
     }
     const cleanSummary = DOMPurify.sanitize(summary);
-
     modalContainer.className = "";
     recipeTitle.textContent = `Recipe Preview: ${title}`;
     recipeImage.src = imageURL;
