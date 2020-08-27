@@ -66,42 +66,6 @@ class RecipesHandler {
     localStorage.setItem('favoriteArray', JSON.stringify(favoriteArray));
   }
 
-  handleFavoriteButtonClick(id) {
-    const favoriteButton = document.getElementById("favorite_button");
-    if ((favoriteArray.includes(id) === false)) {
-      favoriteArray.push(id);
-      favoriteButton.className = "btn btn-danger";
-      favoriteButton.textContent = "Remove from Favorites";
-      if (document.getElementById(`heart_icon_${id}`)) {
-        document.getElementById(`heart_icon_${id}`).className = "fas fa-heart text-danger heart-icon fa-lg";
-      }
-      localStorage.setItem('favoriteArray', JSON.stringify(favoriteArray));
-      this.getFavoriteRecipes();
-      return;
-    } else {
-      favoriteArray.splice(favoriteArray.indexOf(id), 1);
-      localStorage.setItem('favoriteArray', JSON.stringify(favoriteArray));
-      favoriteButton.className = "btn btn-outline-danger";
-      favoriteButton.textContent = "Save to Favorites";
-      if (document.getElementById(`heart_icon_${id}`)) {
-        document.getElementById(`heart_icon_${id}`).className = "far fa-heart text-danger heart-icon fa-lg";
-      }
-      if (document.getElementById(`${id}`)) {
-        document.getElementById(`${id}`).remove();
-      }
-      localStorage.setItem('favoriteArray', JSON.stringify(favoriteArray));
-      if (!(localStorage.getItem('favoriteArray')) || localStorage.getItem('favoriteArray') === "[]") {
-        emptyFavoriteTextContainer.className = "d-flex justify-content-center";
-        return;
-      }
-    }
-    if (favoriteRecipesSection.scrollHeight > favoriteRecipesSection.clientHeight && favoriteRecipesSection.classList.contains("favorite-recipes-visible")) {
-      favoriteRecipesSection.className = "favorite-recipes-visible d-flex flex-column justify-content-start";
-    } else {
-      favoriteRecipesSection.className = "favorite-recipes-visible d-flex flex-column justify-content-center";
-    }
-}
-
   handleDeleteClick(id) {
     favoriteArray.splice(favoriteArray.indexOf(id), 1);
     document.getElementById(`${id}`).remove();
@@ -116,6 +80,43 @@ class RecipesHandler {
       favoriteRecipesSection.className = "favorite-recipes-visible d-flex flex-column justify-content-center";
     }
     this.favoriteCheck(id);
+  }
+
+  handleFavoriteButtonClick(id) {
+    debugger;
+    const favoriteButton = document.getElementById("favorite_button");
+    if ((favoriteArray.includes(id) === false)) {
+      favoriteArray.push(id);
+      favoriteButton.className = "btn btn-danger";
+      favoriteButton.textContent = "Remove from Favorites";
+      if (document.getElementById(`heart_icon_${id}`)) {
+        document.getElementById(`heart_icon_${id}`).className = "fas fa-heart text-danger heart-icon fa-lg";
+      }
+      localStorage.setItem('favoriteArray', JSON.stringify(favoriteArray));
+      if (favoriteRecipesSection.classList.contains("favorite-recipes-visible")) {
+        this.getFavoriteRecipes();
+      }
+      return;
+    } else {
+      favoriteArray.splice(favoriteArray.indexOf(id), 1);
+      localStorage.setItem('favoriteArray', JSON.stringify(favoriteArray));
+      favoriteButton.className = "btn btn-outline-danger";
+      favoriteButton.textContent = "Save to Favorites";
+      if (document.getElementById(`heart_icon_${id}`)) {
+        document.getElementById(`heart_icon_${id}`).className = "far fa-heart text-danger heart-icon fa-lg";
+      }
+      if (document.getElementById(`${id}`)) {
+        document.getElementById(`${id}`).remove();
+      }
+      if (favoriteRecipesSection.scrollHeight > favoriteRecipesSection.clientHeight && favoriteRecipesSection.classList.contains("favorite-recipes-visible")) {
+        favoriteRecipesSection.className = "favorite-recipes-visible d-flex flex-column justify-content-start";
+      }
+      localStorage.setItem('favoriteArray', JSON.stringify(favoriteArray));
+      if (!(localStorage.getItem('favoriteArray')) || localStorage.getItem('favoriteArray') === "[]") {
+        emptyFavoriteTextContainer.className = "d-flex justify-content-center";
+        return;
+      }
+    }
   }
 
   favoriteCheck() {

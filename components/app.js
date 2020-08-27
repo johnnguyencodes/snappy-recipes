@@ -253,7 +253,7 @@ class App {
       favoriteRecipesContainer.removeChild(favoriteRecipesContainer.firstChild);
     }
     if (!(localStorage.getItem('favoriteArray')) || localStorage.getItem('favoriteArray') === "[]") {
-      favoriteRecipesSection.className = "favorite-recipes-visible d-flex flex-column justify-content-center";
+      // favoriteRecipesSection.className = "favorite-recipes-visible d-flex flex-column justify-content-center";
       emptyFavoriteTextContainer.className = "d-flex justify-content-center";
       return;
     }
