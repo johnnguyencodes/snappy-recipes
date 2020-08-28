@@ -37,7 +37,7 @@
 ### Demos
 
 * Desktop\
-<img src="https://user-images.githubusercontent.com/61361957/91505848-7b96db80-e885-11ea-9ba5-3d980654431c.gif" width="400" alt="Desktop Demo Gif"/>
+<img src="https://user-images.githubusercontent.com/61361957/91505848-7b96db80-e885-11ea-9ba5-3d980654431c.gif" width="600" alt="Desktop Demo Gif"/>
 
 * iPhone 6/7/8 - Portrait\
 <img src="https://user-images.githubusercontent.com/61361957/91505881-8f424200-e885-11ea-8148-5e202c100890.gif" width="400" alt="iPhone 6/7/8 - Portrait - Demo Gif"/>
