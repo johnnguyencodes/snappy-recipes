@@ -13,7 +13,7 @@
 
 * The user can add to and remove from the favorite recipes list. This list is also stored locally.
 
-* The user can view a preview of the recipe.
+* The user can view a preview of the recipe, and can navigate to its webpage in a new browser tab.
 
 * The app is mobile responsive and can be used on the following devices:
   * iPhone 6/7/8: Portrait and Landscape
@@ -27,7 +27,7 @@
 
 ## Lessons Learned
 1. Chaining multiple API calls using jQuery AJAX to send, manipulate, and display data using vanilla JavaScript.
-2. Creating a basic yet responsive user interface with Bootstrap and Window.localStorage.
+2. Creating a basic yet responsive user interface with Bootstrap 4 and Window.localStorage.
 3. Leveraging Object Oriented Programming to organize code into individual modules for code reusability and maintenance.
 5. Experienced the full development process of a static website: Planning, Development, Implementation, Deployment, Publishing.
 
@@ -36,4 +36,18 @@
 
 ### Demos
 
-* Gifs of the app in action will be displayed here.
+* Desktop\
+<img src="https://user-images.githubusercontent.com/61361957/91505848-7b96db80-e885-11ea-9ba5-3d980654431c.gif" width="400" alt="Desktop Demo Gif"/>
+
+* iPhone 6/7/8 - Portrait\
+<img src="https://user-images.githubusercontent.com/61361957/91505881-8f424200-e885-11ea-8148-5e202c100890.gif" width="400" alt="iPhone 6/7/8 - Portrait - Demo Gif"/>
+
+
+* iPhone 6/7/8 - Lansdscape\
+<img src="https://user-images.githubusercontent.com/61361957/91505875-89e4f780-e885-11ea-92fc-53cf4a0e2140.gif" width="400" alt="iPhone 6/7/8 - Landscape - Demo Gif"/>
+
+* iPad - Portrait\
+<img src="https://user-images.githubusercontent.com/61361957/91505866-8487ad00-e885-11ea-8fde-aa1d2046319c.gif" width="400" alt="iPad - Portrait - Demo Gif"/>
+
+* iPad - Landscape\
+<img src="https://user-images.githubusercontent.com/61361957/91505860-7fc2f900-e885-11ea-8c7f-37514f3e439f.gif" width="400" alt="iPad - Landscape - Demo Gif"/>
