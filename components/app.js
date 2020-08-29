@@ -72,11 +72,13 @@ class App {
     this.handleGetFavoriteRecipesError = this.handleGetFavoriteRecipesError.bind(this);
     this.savedDietInfoCheck = this.savedDietInfoCheck.bind(this);
     this.localStorageCheck = this.localStorageCheck.bind(this);
+    this.getRandomRecipes = this.getRandomRecipes.bind(this);
   }
 
   start() {
     this.localStorageCheck();
     this.savedDietInfoCheck();
+    this.getRandomRecipes();
     this.form.clickDietInfo(this.dietInfo);
     this.form.clickPostImage(this.postImage);
     this.form.clickGetRecipes(this.getRecipes);
@@ -86,6 +88,7 @@ class App {
   }
 
   localStorageCheck() {
+    console.log("hello");
     if (!(localStorage.getItem('favoriteArray'))) {
       favoriteArray = [];
       localStorage.setItem('favoriteArray', JSON.stringify(favoriteArray));
@@ -222,6 +225,23 @@ class App {
   }
 
   //GET request to Spoonacular's API with label from Google to get a list of up to 10 recipes containing the item from the image and other nutrition info.
+
+  getRandomRecipes() {
+    searchRecipesDownloadProgress.className = "recipe-progress-visible text-left mt-3";
+    searchRecipesDownloadText.className = "text-center mt-3";
+    let spoonacularURL = `https://api.spoonacular.com/recipes/random?apiKey=${spoonacularAPIKey}&addRecipeNutrition=true&636x393&number=100`
+    $.ajax({
+      method: "GET",
+      url: spoonacularURL,
+      data: spoonacularDataToSend,
+      headers: {
+        "Content-Type": "application/json"
+      },
+      success: this.handleGetRecipesSuccess,
+      error: this.handleGetRecipesError
+    })
+  }
+
   getRecipes(imageTitle) {
     searchRecipesDownloadProgress.className = "recipe-progress-visible text-left mt-3";
     searchRecipesDownloadText.className = "text-center mt-3";
@@ -239,6 +259,7 @@ class App {
   }
 
   handleGetRecipesSuccess(recipes) {
+    console.log(recipes);
     this.recipesHandler.chunkSearchedRecipes(recipes);
   }
 
