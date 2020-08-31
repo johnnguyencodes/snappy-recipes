@@ -27,6 +27,7 @@ const percentageBarContainer = document.getElementById("percentage_bar_container
 const uploadedImageContainer = document.getElementById("uploaded_image_container");
 const formElement = document.getElementById("form");
 const favoriteRecipesSection = document.getElementById("favorite_recipes_section");
+const inputs = document.querySelectorAll(".input");
 let recipeInformation = null;
 
 let dataForImageRecognition = {
@@ -229,6 +230,7 @@ class App {
   getRandomRecipes() {
     searchRecipesDownloadProgress.className = "recipe-progress-visible text-left mt-3";
     searchRecipesDownloadText.className = "text-center mt-3";
+    searchRecipesDownloadText.textContent = "Gathering random recipes..."
     titleContainer.className = "d-none";
     percentageBarContainer.className = "d-none";
     uploadedImageContainer.className = "d-none";
@@ -252,6 +254,9 @@ class App {
   getRecipes(imageTitle) {
     searchRecipesDownloadProgress.className = "recipe-progress-visible text-left mt-3";
     searchRecipesDownloadText.className = "text-center mt-3";
+    searchRecipesDownloadText.textContent = "Gathering recipes..."
+    chunkedRecipeArray = [];
+    chunkedRecipeArrayIndex = 0;
     let spoonacularURL = `https://api.spoonacular.com/recipes/complexSearch?query=${imageTitle}&apiKey=${spoonacularAPIKey}&addRecipeNutrition=true&636x393&number=100`
     $.ajax({
       method: "GET",

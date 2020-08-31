@@ -342,6 +342,11 @@ class RecipesHandler {
     }
     searchRecipesDownloadProgress.className = "recipe-progress-hidden";
     searchRecipesDownloadText.className = "d-none";
+    for (var i = 0; i < inputs.length; i++) {
+      inputs[i].disabled = false;
+    }
+    fileLabel.textContent = "";
+    // recipeSearchInput.value = "";
   }
 
   displayFavoriteRecipes(recipes) {
