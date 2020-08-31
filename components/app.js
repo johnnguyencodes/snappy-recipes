@@ -88,7 +88,6 @@ class App {
   }
 
   localStorageCheck() {
-    console.log("hello");
     if (!(localStorage.getItem('favoriteArray'))) {
       favoriteArray = [];
       localStorage.setItem('favoriteArray', JSON.stringify(favoriteArray));
@@ -229,7 +228,7 @@ class App {
   getRandomRecipes() {
     searchRecipesDownloadProgress.className = "recipe-progress-visible text-left mt-3";
     searchRecipesDownloadText.className = "text-center mt-3";
-    let spoonacularURL = `https://api.spoonacular.com/recipes/random?apiKey=${spoonacularAPIKey}&addRecipeNutrition=true&636x393&number=100`
+    let spoonacularURL = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${spoonacularAPIKey}&addRecipeNutrition=true&636x393&number=100&sort=random`
     $.ajax({
       method: "GET",
       url: spoonacularURL,
@@ -259,7 +258,6 @@ class App {
   }
 
   handleGetRecipesSuccess(recipes) {
-    console.log(recipes);
     this.recipesHandler.chunkSearchedRecipes(recipes);
   }
 
