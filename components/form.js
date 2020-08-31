@@ -19,7 +19,7 @@ class Form {
     uploadButton.addEventListener("click", this.imgValidation.bind(this));
     searchButton.addEventListener("click", this.search.bind(this));
     fileInputForm.addEventListener("change", this.handleAddImage.bind(this));
-    resetButton.addEventListener("click", this.resetFields.bind(this));
+    // resetButton.addEventListener("click", this.resetFields.bind(this));
     openFavoriteButton.addEventListener("click", this.openFavorites.bind(this));
     closeFavoriteButton.addEventListener("click", this.closeFavorites.bind(this));
     overlay.addEventListener("click", this.handleOverlayClick.bind(this));
@@ -92,6 +92,12 @@ class Form {
     uploadedImage.src = "";
     searchResultsQuantityDiv.className = "d-none";
     resultsShownQuantityDiv.className = "d-none";
+    imageRecognitionFailedText.className = "d-none";
+    errorContainer.className = "d-none";
+    errorNoFile.className = "d-none";
+    errorIncorrectFile.className = "d-none";
+    errorFileExceedsSize.className = "d-none";
+    errorNoSearch.className = "d-none";
     titleContainer.className = "col-xs-12 col-sm-12 col-md-12 col-lg-12 d-flex justify-content-around";
     percentageBarContainer.className = "col-12 d-flex flex-column justify-content-center my-3";
     uploadedImageContainer.className = "col-xs-12 col-sm-12 col-md-12 col-lg-12 d-flex justify-content-center my-3";
@@ -106,6 +112,9 @@ class Form {
       errorContainer.className="col-12 mt-2";
       errorNoFile.className ="text-danger text-center";
       fileInputForm.value = "";
+      for (var i = 0; i < inputs.length; i++) {
+        inputs[i].disabled = false;
+      }
       return;
     }
     const fileType = imageFile.type;
@@ -115,12 +124,18 @@ class Form {
       errorContainer.className = "col-12 mt-2";
       errorIncorrectFile.className = "text-danger text-center";
       fileInputForm.value = "";
+      for (var i = 0; i < inputs.length; i++) {
+        inputs[i].disabled = false;
+      }
       return;
     }
     if (imageFile.size > 10485760) {
       errorContainer.className = "col-12 mt-2";
       errorFileExceedsSize.className = "text-danger text-center";
       fileInputForm.value = "";
+      for (var i = 0; i < inputs.length; i++) {
+        inputs[i].disabled = false;
+      }
       return;
     }
     formData.append("image", imageFile);
@@ -130,13 +145,11 @@ class Form {
   }
 
   handleAddImage() {
+    fileLabel.textContent = "";
     if (!(fileInputForm.files[0])) {
       return;
     }
     let fileName = fileInputForm.files[0].name;
-    if (fileName) {
-      fileInputForm.disabled = true;
-    }
     fileLabel.textContent = fileName;
   }
 
@@ -147,6 +160,12 @@ class Form {
     }
     searchResultsQuantityDiv.className = "d-none";
     resultsShownQuantityDiv.className = "d-none";
+    imageRecognitionFailedText.className = "d-none";
+    errorContainer.className = "d-none";
+    errorNoFile.className = "d-none";
+    errorIncorrectFile.className = "d-none";
+    errorFileExceedsSize.className = "d-none";
+    errorNoSearch.className = "d-none";
     for (var i = 0; i < inputs.length; i++) {
       inputs[i].disabled = true;
     }
@@ -154,6 +173,9 @@ class Form {
     if (query === "") {
       errorContainer.className = "col-12 mt-2";
       errorNoSearch.className = "text-danger text-center";
+      for (var i = 0; i < inputs.length; i++) {
+        inputs[i].disabled = false;
+      }
       return;
     }
     titleContainer.className = "d-none";
@@ -163,12 +185,12 @@ class Form {
     this.getRecipes(query);
   }
 
-  resetFields() {
-    event.preventDefault();
-    for (var i = 0; i < inputs.length; i++) {
-      inputs[i].disabled = false;
-    }
-    fileLabel.textContent = "";
+  // resetFields() {
+    // event.preventDefault();
+    // for (var i = 0; i < inputs.length; i++) {
+    //   inputs[i].disabled = false;
+    // }
+    // fileLabel.textContent = "";
     // if (document.getElementById("image_title")) {
     //   document.getElementById("image_title").remove();
     // }
@@ -190,5 +212,5 @@ class Form {
     // errorIncorrectFile.className = "d-none";
     // errorFileExceedsSize.className = "d-none";
     // errorNoSearch.className = "d-none";
-  }
+  // }
 }

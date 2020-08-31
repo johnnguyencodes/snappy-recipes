@@ -213,6 +213,9 @@ class App {
       imageRecognitionStatusText.className = "d-none";
       imageRecognitionFailedText.className = "text-center";
       uploadedImage.src = "";
+      for (var i = 0; i < inputs.length; i++) {
+        inputs[i].disabled = false;
+      }
       return;
     }
     const imageTitle = response.responses[0].labelAnnotations[0].description;
@@ -278,6 +281,9 @@ class App {
     searchRecipesDownloadProgress.className = "recipe-progress-hidden text-left mt-3";
     searchRecipesDownloadText.className = "d-none";
     spoonacularSearchError.className = "mt-3 text-center";
+    for (var i = 0; i < inputs.length; i++) {
+      inputs[i].disabled = true;
+    }
   }
 
   getFavoriteRecipes() {
