@@ -19,7 +19,6 @@ class Form {
     uploadButton.addEventListener("click", this.imgValidation.bind(this));
     searchButton.addEventListener("click", this.search.bind(this));
     fileInputForm.addEventListener("change", this.handleAddImage.bind(this));
-    // resetButton.addEventListener("click", this.resetFields.bind(this));
     openFavoriteButton.addEventListener("click", this.openFavorites.bind(this));
     closeFavoriteButton.addEventListener("click", this.closeFavorites.bind(this));
     overlay.addEventListener("click", this.handleOverlayClick.bind(this));
