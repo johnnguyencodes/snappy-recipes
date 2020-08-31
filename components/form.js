@@ -2,7 +2,6 @@ const fileLabel = document.getElementById("custom_file_label");
 let fileInputForm = document.getElementById("file_input_form");
 const recipeSearchInput = document.getElementById('recipe_search_input');
 const resetButton = document.getElementById("reset_button");
-const inputs = document.querySelectorAll(".input");
 const uploadButton = document.getElementById("upload_button");
 const searchButton = document.getElementById("search_button");
 const openFavoriteButton = document.getElementById("open_favorites_button");
@@ -20,7 +19,6 @@ class Form {
     uploadButton.addEventListener("click", this.imgValidation.bind(this));
     searchButton.addEventListener("click", this.search.bind(this));
     fileInputForm.addEventListener("change", this.handleAddImage.bind(this));
-    resetButton.addEventListener("click", this.resetFields.bind(this));
     openFavoriteButton.addEventListener("click", this.openFavorites.bind(this));
     closeFavoriteButton.addEventListener("click", this.closeFavorites.bind(this));
     overlay.addEventListener("click", this.handleOverlayClick.bind(this));
@@ -49,6 +47,7 @@ class Form {
       this.search(event);
     }
   }
+
   openFavorites() {
     event.preventDefault();
     yPosition = window.scrollY;
@@ -83,6 +82,24 @@ class Form {
 
   imgValidation(event) {
     event.preventDefault();
+    while (document.getElementById("recipe")) {
+      document.getElementById("recipe").remove();
+    }
+    if (document.getElementById("image_title")) {
+      document.getElementById("image_title").remove();
+    }
+    uploadedImage.src = "";
+    searchResultsQuantityDiv.className = "d-none";
+    resultsShownQuantityDiv.className = "d-none";
+    imageRecognitionFailedText.className = "d-none";
+    errorContainer.className = "d-none";
+    errorNoFile.className = "d-none";
+    errorIncorrectFile.className = "d-none";
+    errorFileExceedsSize.className = "d-none";
+    errorNoSearch.className = "d-none";
+    titleContainer.className = "col-xs-12 col-sm-12 col-md-12 col-lg-12 d-flex justify-content-around";
+    percentageBarContainer.className = "col-12 d-flex flex-column justify-content-center my-3";
+    uploadedImageContainer.className = "col-xs-12 col-sm-12 col-md-12 col-lg-12 d-flex justify-content-center my-3";
     for (var i = 0; i < inputs.length; i++) {
       inputs[i].disabled = true;
     }
@@ -94,6 +111,9 @@ class Form {
       errorContainer.className="col-12 mt-2";
       errorNoFile.className ="text-danger text-center";
       fileInputForm.value = "";
+      for (var i = 0; i < inputs.length; i++) {
+        inputs[i].disabled = false;
+      }
       return;
     }
     const fileType = imageFile.type;
@@ -103,12 +123,18 @@ class Form {
       errorContainer.className = "col-12 mt-2";
       errorIncorrectFile.className = "text-danger text-center";
       fileInputForm.value = "";
+      for (var i = 0; i < inputs.length; i++) {
+        inputs[i].disabled = false;
+      }
       return;
     }
     if (imageFile.size > 10485760) {
       errorContainer.className = "col-12 mt-2";
       errorFileExceedsSize.className = "text-danger text-center";
       fileInputForm.value = "";
+      for (var i = 0; i < inputs.length; i++) {
+        inputs[i].disabled = false;
+      }
       return;
     }
     formData.append("image", imageFile);
@@ -118,15 +144,27 @@ class Form {
   }
 
   handleAddImage() {
-    let fileName = fileInputForm.files[0].name;
-    if (fileName) {
-      fileInputForm.disabled = true;
+    fileLabel.textContent = "";
+    if (!(fileInputForm.files[0])) {
+      return;
     }
+    let fileName = fileInputForm.files[0].name;
     fileLabel.textContent = fileName;
   }
 
   search(event) {
     event.preventDefault();
+    while (document.getElementById("recipe")) {
+      document.getElementById("recipe").remove();
+    }
+    searchResultsQuantityDiv.className = "d-none";
+    resultsShownQuantityDiv.className = "d-none";
+    imageRecognitionFailedText.className = "d-none";
+    errorContainer.className = "d-none";
+    errorNoFile.className = "d-none";
+    errorIncorrectFile.className = "d-none";
+    errorFileExceedsSize.className = "d-none";
+    errorNoSearch.className = "d-none";
     for (var i = 0; i < inputs.length; i++) {
       inputs[i].disabled = true;
     }
@@ -134,6 +172,9 @@ class Form {
     if (query === "") {
       errorContainer.className = "col-12 mt-2";
       errorNoSearch.className = "text-danger text-center";
+      for (var i = 0; i < inputs.length; i++) {
+        inputs[i].disabled = false;
+      }
       return;
     }
     titleContainer.className = "d-none";
@@ -143,38 +184,32 @@ class Form {
     this.getRecipes(query);
   }
 
-  resetFields() {
-    event.preventDefault();
-    for (var i = 0; i < inputs.length; i++) {
-      inputs[i].disabled = false;
-    }
-    fileLabel.textContent = "";
-    if (document.getElementById("image_title")) {
-      document.getElementById("image_title").remove();
-    }
-    recipeSearchInput.value = "";
-    uploadedImage.src = "";
-    while (document.getElementById("recipe")) {
-      document.getElementById("recipe").remove();
-    }
-    searchRecipesDownloadProgress.className = "recipe-progress-hidden text-left mt-3";
-    searchRecipesDownloadText.className = "d-none";
-    noSearchRecipesText.className = "d-none";
-    emptyFavoriteTextContainer.className = "d-none";
-    imageRecognitionFailedText.className = "d-none";
-    chunkedRecipeArray = [];
-    chunkedRecipeArrayIndex = 0;
-    searchResultsQuantityDiv.className="d-none";
-    resultsShownQuantityDiv.className = "d-none";
-    showMoreButton.className = "btn btn-secondary my-2"
-    spoonacularSearchError.className = "d-none";
-    titleContainer.className = "col-xs-12 col-sm-12 col-md-12 col-lg-12 d-flex justify-content-around";
-    percentageBarContainer.className = "col-12 d-flex flex-column justify-content-center my-3";
-    uploadedImageContainer.className = "col-xs-12 col-sm-12 col-md-12 col-lg-12 d-flex justify-content-center my-3";
-    errorContainer.className = "d-none";
-    errorNoFile.className = "d-none";
-    errorIncorrectFile.className = "d-none";
-    errorFileExceedsSize.className = "d-none";
-    errorNoSearch.className = "d-none";
-  }
+  // resetFields() {
+    // event.preventDefault();
+    // for (var i = 0; i < inputs.length; i++) {
+    //   inputs[i].disabled = false;
+    // }
+    // fileLabel.textContent = "";
+    // if (document.getElementById("image_title")) {
+    //   document.getElementById("image_title").remove();
+    // }
+    // recipeSearchInput.value = "";
+    // uploadedImage.src = "";
+    // searchRecipesDownloadProgress.className = "recipe-progress-hidden text-left mt-3";
+    // searchRecipesDownloadText.className = "d-none";
+    // noSearchRecipesText.className = "d-none";
+    // emptyFavoriteTextContainer.className = "d-none";
+    // resultsShownQuantityDiv.className = "d-none";
+    // showMoreButton.className = "btn btn-secondary my-2"
+    // spoonacularSearchError.className = "d-none";
+    // titleContainer.className = "d-none";
+    // percentageBarContainer.className = "d-none";
+    // uploadedImageContainer.className = "d-none";
+    // imageRecognitionFailedText.className = "d-none";
+    // errorContainer.className = "d-none";
+    // errorNoFile.className = "d-none";
+    // errorIncorrectFile.className = "d-none";
+    // errorFileExceedsSize.className = "d-none";
+    // errorNoSearch.className = "d-none";
+  // }
 }

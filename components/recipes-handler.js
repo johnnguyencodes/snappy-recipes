@@ -40,6 +40,29 @@ class RecipesHandler {
     this.updateResultsQuantityShown();
   }
 
+  chunkRandomRecipes(recipes) {
+    recipeInformation = recipes;
+    if (!(recipes.results[0])) {
+      searchRecipesDownloadProgress.className = "recipe-progress-hidden";
+      searchRecipesDownloadText.className = "d-none";
+      noSearchRecipesText.className = "text-center mt-3";
+      return;
+    }
+    searchResultsQuantityDiv.className = "d-flex justify-content-center mt-3";
+    searchResultsQuantityText.textContent = `${recipes.results.length} random recipes found`;
+    let a = 0;
+    while (a < recipes.results.length) {
+      chunkedRecipeArray.push(recipes.results.slice(a, a + 12));
+      a = a + 12;
+    }
+    this.displaySearchedRecipes(chunkedRecipeArray, chunkedRecipeArrayIndex);
+    if (recipes.results.length > 12) {
+      resultsShownQuantityDiv.className = "d-flex flex-column align-items-center justify-content-center mb-3"
+    }
+    this.updateResultsQuantityShown();
+  }
+
+
   handleShowMoreClick() {
     let yPosition = window.scrollY;
     chunkedRecipeArrayIndex++;
@@ -52,7 +75,7 @@ class RecipesHandler {
   }
 
   updateResultsQuantityShown() {
-    resultsShownQuantityText.textContent = `Showing ${document.querySelectorAll(".recipe-card").length} of ${searchResultsQuantityText.textContent.substring(0, searchResultsQuantityText.textContent.length - 14)}`
+    resultsShownQuantityText.textContent = `Showing ${document.querySelectorAll(".recipe-card").length} of ${searchResultsQuantityText.textContent.substring(0, 3)}`
   }
 
   handleFavoriteClick(id) {
@@ -319,6 +342,11 @@ class RecipesHandler {
     }
     searchRecipesDownloadProgress.className = "recipe-progress-hidden";
     searchRecipesDownloadText.className = "d-none";
+    for (var i = 0; i < inputs.length; i++) {
+      inputs[i].disabled = false;
+    }
+    fileLabel.textContent = "";
+    // recipeSearchInput.value = "";
   }
 
   displayFavoriteRecipes(recipes) {

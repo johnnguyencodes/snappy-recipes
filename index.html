@@ -177,7 +177,6 @@
         <div class="form-group col-xs-12 d-flex justify-content-around">
           <button id="open_diet_menu_button" class="btn btn-warning input">Diet Preferences</button>
           <button id="open_favorites_button" class="btn btn-danger">Favorites</button>
-          <button id="reset_button" class="btn btn-secondary">Reset</button>
         </div>
         <div class="form-group col-xs-12 mx-2">
           <div class="input-group mb-3">
@@ -199,12 +198,12 @@
         </div>
       </div>
       <div id="error_container" class="d-none">
-        <p id="error_no_file" class="d-none">No file selected, please reset and then select an image to upload.</p>
-        <p id="error_incorrect_file" class="d-none">Incorrect file type, please reset and select a jpeg, png or gif
+        <p id="error_no_file" class="d-none">No file selected, please select an image to upload.</p>
+        <p id="error_incorrect_file" class="d-none">Incorrect file type, please select a jpeg, png or gif
           file.</p>
-        <p id="error_file_exceeds_size" class="d-none">Image exceeds 10MB size limit, please reset and select a smaller
+        <p id="error_file_exceeds_size" class="d-none">Image exceeds 10MB size limit, please select a smaller
           image.</p>
-        <p id="error_no_search" class="d-none">No search query entered. Please reset and enter a search query.</p>
+        <p id="error_no_search" class="d-none">No search query entered. Please enter a search query.</p>
       </div>
       <div id="percentage_bar_container" class="col-12 d-flex flex-column justify-content-center my-3">
         <div id="percentage_upload_container" class="d-none">
@@ -236,11 +235,11 @@
           <div id="search_recipes_download_progress" class="recipe-progress-hidden mt-3 text-left"></div>
           <p id="search_recipes_download_text" class="d-none">Gathering recipes...</p>
         </div>
-        <p id="spoonacular_search_error" class="d-none">The Spoonacular API has reached its daily quota for the current
+        <p id="spoonacular_search_error" class="d-none">The Spoonacular API has reached its daily quota for this app's current
           API Key. Please notify <a
             href="mailto:john@johnnguyencodes.com?subject=Snappy%20Recipes%20API%20Key%20Refresh">john@johnnguyencodes.com</a>,
           thank you.</p>
-        <p id="no_search_recipes_text" class="d-none">No recipes found. Please modify your diet preferences and try
+        <p id="no_search_recipes_text" class="d-none">No recipes found with the given parameters. Please modify your diet preferences and try
           again, or upload a different image, or enter a different search.</p>
       </div>
       <div id="results_shown_quantity_div" class="d-none">

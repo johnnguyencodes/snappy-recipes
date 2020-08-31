@@ -27,6 +27,7 @@ const percentageBarContainer = document.getElementById("percentage_bar_container
 const uploadedImageContainer = document.getElementById("uploaded_image_container");
 const formElement = document.getElementById("form");
 const favoriteRecipesSection = document.getElementById("favorite_recipes_section");
+const inputs = document.querySelectorAll(".input");
 let recipeInformation = null;
 
 let dataForImageRecognition = {
@@ -72,11 +73,14 @@ class App {
     this.handleGetFavoriteRecipesError = this.handleGetFavoriteRecipesError.bind(this);
     this.savedDietInfoCheck = this.savedDietInfoCheck.bind(this);
     this.localStorageCheck = this.localStorageCheck.bind(this);
+    this.getRandomRecipes = this.getRandomRecipes.bind(this);
+    this.handleGetRandomRecipesSuccess = this.handleGetRandomRecipesSuccess.bind(this);
   }
 
   start() {
     this.localStorageCheck();
     this.savedDietInfoCheck();
+    this.getRandomRecipes();
     this.form.clickDietInfo(this.dietInfo);
     this.form.clickPostImage(this.postImage);
     this.form.clickGetRecipes(this.getRecipes);
@@ -209,6 +213,9 @@ class App {
       imageRecognitionStatusText.className = "d-none";
       imageRecognitionFailedText.className = "text-center";
       uploadedImage.src = "";
+      for (var i = 0; i < inputs.length; i++) {
+        inputs[i].disabled = false;
+      }
       return;
     }
     const imageTitle = response.responses[0].labelAnnotations[0].description;
@@ -222,9 +229,37 @@ class App {
   }
 
   //GET request to Spoonacular's API with label from Google to get a list of up to 10 recipes containing the item from the image and other nutrition info.
+
+  getRandomRecipes() {
+    searchRecipesDownloadProgress.className = "recipe-progress-visible text-left mt-3";
+    searchRecipesDownloadText.className = "text-center mt-3";
+    searchRecipesDownloadText.textContent = "Gathering random recipes..."
+    titleContainer.className = "d-none";
+    percentageBarContainer.className = "d-none";
+    uploadedImageContainer.className = "d-none";
+    let spoonacularURL = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${spoonacularAPIKey}&addRecipeNutrition=true&636x393&number=100&sort=random`
+    $.ajax({
+      method: "GET",
+      url: spoonacularURL,
+      data: spoonacularDataToSend,
+      headers: {
+        "Content-Type": "application/json"
+      },
+      success: this.handleGetRandomRecipesSuccess,
+      error: this.handleGetRecipesError
+    })
+  }
+
+  handleGetRandomRecipesSuccess(recipes) {
+    this.recipesHandler.chunkRandomRecipes(recipes);
+  }
+
   getRecipes(imageTitle) {
     searchRecipesDownloadProgress.className = "recipe-progress-visible text-left mt-3";
     searchRecipesDownloadText.className = "text-center mt-3";
+    searchRecipesDownloadText.textContent = "Gathering recipes..."
+    chunkedRecipeArray = [];
+    chunkedRecipeArrayIndex = 0;
     let spoonacularURL = `https://api.spoonacular.com/recipes/complexSearch?query=${imageTitle}&apiKey=${spoonacularAPIKey}&addRecipeNutrition=true&636x393&number=100`
     $.ajax({
       method: "GET",
@@ -246,6 +281,9 @@ class App {
     searchRecipesDownloadProgress.className = "recipe-progress-hidden text-left mt-3";
     searchRecipesDownloadText.className = "d-none";
     spoonacularSearchError.className = "mt-3 text-center";
+    for (var i = 0; i < inputs.length; i++) {
+      inputs[i].disabled = true;
+    }
   }
 
   getFavoriteRecipes() {
