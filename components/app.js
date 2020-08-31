@@ -73,6 +73,7 @@ class App {
     this.savedDietInfoCheck = this.savedDietInfoCheck.bind(this);
     this.localStorageCheck = this.localStorageCheck.bind(this);
     this.getRandomRecipes = this.getRandomRecipes.bind(this);
+    this.handleGetRandomRecipesSuccess = this.handleGetRandomRecipesSuccess.bind(this);
   }
 
   start() {
@@ -228,6 +229,9 @@ class App {
   getRandomRecipes() {
     searchRecipesDownloadProgress.className = "recipe-progress-visible text-left mt-3";
     searchRecipesDownloadText.className = "text-center mt-3";
+    titleContainer.className = "d-none";
+    percentageBarContainer.className = "d-none";
+    uploadedImageContainer.className = "d-none";
     let spoonacularURL = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${spoonacularAPIKey}&addRecipeNutrition=true&636x393&number=100&sort=random`
     $.ajax({
       method: "GET",
@@ -236,9 +240,13 @@ class App {
       headers: {
         "Content-Type": "application/json"
       },
-      success: this.handleGetRecipesSuccess,
+      success: this.handleGetRandomRecipesSuccess,
       error: this.handleGetRecipesError
     })
+  }
+
+  handleGetRandomRecipesSuccess(recipes) {
+    this.recipesHandler.chunkRandomRecipes(recipes);
   }
 
   getRecipes(imageTitle) {

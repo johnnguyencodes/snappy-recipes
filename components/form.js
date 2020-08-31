@@ -83,6 +83,14 @@ class Form {
 
   imgValidation(event) {
     event.preventDefault();
+    while (document.getElementById("recipe")) {
+      document.getElementById("recipe").remove();
+    }
+    searchResultsQuantityDiv.className = "d-none";
+    resultsShownQuantityDiv.className = "d-none";
+    titleContainer.className = "col-xs-12 col-sm-12 col-md-12 col-lg-12 d-flex justify-content-around";
+    percentageBarContainer.className = "col-12 d-flex flex-column justify-content-center my-3";
+    uploadedImageContainer.className = "col-xs-12 col-sm-12 col-md-12 col-lg-12 d-flex justify-content-center my-3";
     for (var i = 0; i < inputs.length; i++) {
       inputs[i].disabled = true;
     }
@@ -127,6 +135,11 @@ class Form {
 
   search(event) {
     event.preventDefault();
+    while (document.getElementById("recipe")) {
+      document.getElementById("recipe").remove();
+    }
+    searchResultsQuantityDiv.className = "d-none";
+    resultsShownQuantityDiv.className = "d-none";
     for (var i = 0; i < inputs.length; i++) {
       inputs[i].disabled = true;
     }
@@ -154,9 +167,6 @@ class Form {
     }
     recipeSearchInput.value = "";
     uploadedImage.src = "";
-    while (document.getElementById("recipe")) {
-      document.getElementById("recipe").remove();
-    }
     searchRecipesDownloadProgress.className = "recipe-progress-hidden text-left mt-3";
     searchRecipesDownloadText.className = "d-none";
     noSearchRecipesText.className = "d-none";
@@ -164,13 +174,12 @@ class Form {
     imageRecognitionFailedText.className = "d-none";
     chunkedRecipeArray = [];
     chunkedRecipeArrayIndex = 0;
-    searchResultsQuantityDiv.className="d-none";
     resultsShownQuantityDiv.className = "d-none";
     showMoreButton.className = "btn btn-secondary my-2"
     spoonacularSearchError.className = "d-none";
-    titleContainer.className = "col-xs-12 col-sm-12 col-md-12 col-lg-12 d-flex justify-content-around";
-    percentageBarContainer.className = "col-12 d-flex flex-column justify-content-center my-3";
-    uploadedImageContainer.className = "col-xs-12 col-sm-12 col-md-12 col-lg-12 d-flex justify-content-center my-3";
+    titleContainer.className = "d-none";
+    percentageBarContainer.className = "d-none";
+    uploadedImageContainer.className = "d-none";
     errorContainer.className = "d-none";
     errorNoFile.className = "d-none";
     errorIncorrectFile.className = "d-none";
