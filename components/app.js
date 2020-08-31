@@ -28,6 +28,7 @@ const uploadedImageContainer = document.getElementById("uploaded_image_container
 const formElement = document.getElementById("form");
 const favoriteRecipesSection = document.getElementById("favorite_recipes_section");
 const inputs = document.querySelectorAll(".input");
+const searchRecipesDownloadContainer = document.getElementById("search_recipes_download_container");
 let recipeInformation = null;
 
 let dataForImageRecognition = {
@@ -80,7 +81,7 @@ class App {
   start() {
     this.localStorageCheck();
     this.savedDietInfoCheck();
-    this.getRandomRecipes();
+    // this.getRandomRecipes();
     this.form.clickDietInfo(this.dietInfo);
     this.form.clickPostImage(this.postImage);
     this.form.clickGetRecipes(this.getRecipes);
@@ -255,6 +256,7 @@ class App {
   }
 
   getRecipes(imageTitle) {
+    searchRecipesDownloadContainer.className = "col-12 d-flex flex-column justify-content-center"
     searchRecipesDownloadProgress.className = "recipe-progress-visible text-left mt-3";
     searchRecipesDownloadText.className = "text-center mt-3";
     searchRecipesDownloadText.textContent = "Gathering recipes..."
@@ -278,9 +280,11 @@ class App {
   }
 
   handleGetRecipesError(error) {
+    console.log(error);
+    searchRecipesDownloadContainer.className = "d-none";
     searchRecipesDownloadProgress.className = "recipe-progress-hidden text-left mt-3";
     searchRecipesDownloadText.className = "d-none";
-    spoonacularSearchError.className = "mt-3 text-center";
+    spoonacularSearchError.className = "text-center mt-3";
     for (var i = 0; i < inputs.length; i++) {
       inputs[i].disabled = true;
     }

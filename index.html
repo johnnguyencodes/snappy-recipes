@@ -178,8 +178,15 @@
           <button id="open_diet_menu_button" class="btn btn-warning input">Diet Preferences</button>
           <button id="open_favorites_button" class="btn btn-danger">Favorites</button>
         </div>
+        <div class="input-group col-xs-12">
+          <input type="text" id="recipe_search_input" class="form-control ml-2 input rounded-left"
+            placeholder="Search for recipes">
+          <button id="search_button" class="btn btn-primary rounded-right mr-2 input" type="button">
+            <i class="fa fa-search"></i>
+          </button>
+        </div>
         <div class="form-group col-xs-12 mx-2">
-          <div class="input-group mb-3">
+          <div class="input-group mt-3">
             <div class="custom-file">
               <input type="file" id="file_input_form" class="custom-file-input input">
               <label id="custom_file_label" class="custom-file-label input text-center" for="file_input_form"></label>
@@ -189,13 +196,23 @@
             </div>
           </div>
         </div>
-        <div class="input-group col-xs-12">
-          <input type="text" id="recipe_search_input" class="form-control ml-2 input rounded-left"
-            placeholder="Search for recipes">
-          <button id="search_button" class="btn btn-primary rounded-right mr-2 input" type="button">
-            <i class="fa fa-search"></i>
-          </button>
-        </div>
+        <!-- <div class="row d-flex justify-content-center mt-100">
+          <div class="col-md-8">
+            <div class="card">
+              <div class="card-header">
+                <h5>File Upload</h5>
+              </div>
+              <div class="card-block">
+                <form action="#" class="dropzone dz-clickable">
+                  <div class="dz-default dz-message"><span>Drop files here to upload</span></div>
+                </form>
+                <div class="text-center m-t-20">
+                  <button class="btn btn-primary">Upload Now</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> -->
       </div>
       <div id="error_container" class="d-none">
         <p id="error_no_file" class="d-none">No file selected, please select an image to upload.</p>
@@ -231,7 +248,7 @@
       </div>
       <div id="search_recipes_container"
         class="col-xs-12 col-sm-12 col-md-12 col-lg-12 px-0 d-flex flex-row flex-wrap align-items-center justify-content-around">
-        <div class="col-12 d-flex flex-column justify-content-center">
+        <div id="search_recipes_download_container" class="col-12 d-flex flex-column justify-content-center">
           <div id="search_recipes_download_progress" class="recipe-progress-hidden mt-3 text-left"></div>
           <p id="search_recipes_download_text" class="d-none">Gathering recipes...</p>
         </div>

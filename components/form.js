@@ -88,6 +88,7 @@ class Form {
     if (document.getElementById("image_title")) {
       document.getElementById("image_title").remove();
     }
+    document.getElementById("percentage_bar_container").className = "col-12 d-flex flex-column justify-content-center my-3";
     uploadedImage.src = "";
     searchResultsQuantityDiv.className = "d-none";
     resultsShownQuantityDiv.className = "d-none";
