@@ -20,6 +20,7 @@ const favoriteRecipesStatusText = document.getElementById("favorite_recipes_stat
 const searchResultsQuantityDiv = document.getElementById("search_results_quantity_div");
 const resultsShownQuantityDiv = document.getElementById("results_shown_quantity_div");
 const showMoreButton = document.getElementById("show_more_button");
+const imgurAPIError = document.getElementById("imgur_api_error");
 const spoonacularSearchError = document.getElementById("spoonacular_search_error");
 const spoonacularFavoriteError = document.getElementById("spoonacular_favorite_error");
 const titleContainer = document.getElementById("title_container");
@@ -159,10 +160,7 @@ class App {
       contentType: false,
       cache: false,
       headers: {
-        "Authorization": `${imgurAPIKey}`,
-        'Access-Control-Allow-Origin': 'http://snappy-recipes.johnnguyencodes.com',
-        'Cache-Control': null,
-        'X-Requested-With': null
+        "Authorization": `${imgurAPIKey}`
       },
       xhr: function () {
         var xhr = new window.XMLHttpRequest();
@@ -195,7 +193,10 @@ class App {
   }
 
   handlePostImageError(error) {
-    console.error(error)
+    imgurAPIError.className = "text-center mt-3";
+    for (var i = 0; i < inputs.length; i++) {
+      inputs[i].disabled = true;
+    }
   }
 
   //POST request to Google's Cloud Vision API with image from IMGUR to label the object in the image
