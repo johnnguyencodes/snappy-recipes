@@ -235,9 +235,9 @@ class App {
     searchRecipesDownloadProgress.className = "recipe-progress-visible text-left mt-3";
     searchRecipesDownloadText.className = "text-center mt-3";
     searchRecipesDownloadText.textContent = "Gathering random recipes..."
-    titleContainer.className = "d-none";
-    percentageBarContainer.className = "d-none";
-    uploadedImageContainer.className = "d-none";
+    titleContainer.className = "d-none desktop-space-form";
+    percentageBarContainer.className = "d-none desktop-space-form";
+    uploadedImageContainer.className = "d-none desktop-space-form";
     let spoonacularURL = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${spoonacularAPIKey}&addRecipeNutrition=true&636x393&number=100&sort=random`
     $.ajax({
       method: "GET",

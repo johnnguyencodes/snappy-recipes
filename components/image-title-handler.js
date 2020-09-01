@@ -44,7 +44,6 @@ class ImageTitleHandler {
   }
 
   imageLoaderFunction(imageLoader, imageURL) {
-    document.getElementById("percentage_bar_container").className = "d-none";
     imageLoader.LoadImage("imageURL")
       .then(image => {
         uploadedImage.src = imageURL;

@@ -13,7 +13,6 @@ table {
 }
 
 #uploaded_image {
-  top:
   max-height: 400px;
   max-width: 100%;
   object-fit: contain;
@@ -84,12 +83,20 @@ a:hover, #heart_container:hover, #delete_container:hover, #file_input_form:hover
   font-family: "Font Awesome 5 Free", "Helvetica Neue", Helvetica, Arial, sans-serif;
   content: "\f03e  Choose an image or drag it here";
   width: 100%;
-  color: white;
-  background-color:#007bff;
+  color:#007bff;
+  background-color: white;
   border-radius: 4px;
-  border: 2px white dashed;
-  height: 100%;
+  border: 2px #007bff dashed;
+  height: 250px;
   outline-offset: -10px;
+}
+
+.desktop-space-form {
+  top: 200px;
+}
+
+#file_input_form {
+  height: 500px;
 }
 
 .custom-file-input.input ~ .custom-file-label::after-dragover {
@@ -303,13 +310,16 @@ span {
     }
   .custom-file-input.input ~ .custom-file-label::after {
   font-family: "Font Awesome 5 Free", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  content: "\f03e  Choose Image";
+  content: "\f03e   Choose Image";
   width: 100%;
   color: white;
   background-color:#007bff;
   border-radius: 4px;
   border: none;
   height: 100%;
+  }
+  .desktop-space-form {
+    top: 0px;
   }
 }
 

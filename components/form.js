@@ -22,9 +22,19 @@ class Form {
     overlay.addEventListener("click", this.handleOverlayClick.bind(this));
     recipeSearchInput.addEventListener("keyup", this.enterSearch.bind(this));
     fileLabel.addEventListener("dragover", this.imgValidation.bind(this));
-    document.addEventListener("dragover", function(event) {
-      event.preventDefault();
-    }, false);
+    // document.addEventListener("dragover", function(event) {
+    // //   event.preventDefault();
+    // // }, false);
+    //   console.log(event.target);
+    //   if (event.target !== fileInputForm) {
+    //     event.preventDefault();
+    //   }
+    // });
+    document.addEventListener("drop", function (event) {
+      console.log(event.target);
+      if (event.target !== fileInputForm) {
+        event.preventDefault();
+      }});
   }
 
 
@@ -89,6 +99,7 @@ class Form {
     if (!(fileInputForm.files[0])) {
       return;
     }
+    console.log("imgValidation");
     let fileName = fileInputForm.files[0].name;
     fileLabel.textContent = fileName;
     while (document.getElementById("recipe")) {
@@ -97,19 +108,19 @@ class Form {
     if (document.getElementById("image_title")) {
       document.getElementById("image_title").remove();
     }
-    document.getElementById("percentage_bar_container").className = "col-12 d-flex flex-column justify-content-center my-3";
+    percentageBarContainer.className = "col-12 d-flex flex-column justify-content-center my-3 desktop-space-form";
     uploadedImage.src = "";
     searchResultsQuantityDiv.className = "d-none";
     resultsShownQuantityDiv.className = "d-none";
     imageRecognitionFailedText.className = "d-none";
-    errorContainer.className = "d-none";
+    errorContainer.className = "d-none desktop-space-form";
     errorNoFile.className = "d-none";
     errorIncorrectFile.className = "d-none";
     errorFileExceedsSize.className = "d-none";
     errorNoSearch.className = "d-none";
-    titleContainer.className = "col-xs-12 col-sm-12 col-md-12 col-lg-12 d-flex justify-content-around";
-    percentageBarContainer.className = "col-12 d-flex flex-column justify-content-center my-3";
-    uploadedImageContainer.className = "col-xs-12 col-sm-12 col-md-12 col-lg-12 d-flex justify-content-center my-3";
+    titleContainer.className = "col-xs-12 col-sm-12 col-md-12 col-lg-12 d-flex justify-content-around desktop-space-form";
+    percentageBarContainer.className = "col-12 d-flex flex-column justify-content-center my-3 desktop-space-form";
+    uploadedImageContainer.className = "col-xs-12 col-sm-12 col-md-12 col-lg-12 d-flex justify-content-center my-3 desktop-space-form";
     for (var i = 0; i < inputs.length; i++) {
       inputs[i].disabled = true;
     }
@@ -121,7 +132,7 @@ class Form {
     }
     const imageFile = fileInputForm.files[0];
     if (!(imageFile)) {
-      errorContainer.className="col-12 mt-2";
+      errorContainer.className="col-12 mt-2 desktop-space-form";
       errorNoFile.className ="text-danger text-center";
       fileInputForm.value = "";
       for (var i = 0; i < inputs.length; i++) {
@@ -133,7 +144,7 @@ class Form {
     const formData = new FormData();
     const mimeTypes = ['image/jpeg', 'image/png', 'image/gif'];
     if (!(mimeTypes.includes(fileType))) {
-      errorContainer.className = "col-12 mt-2";
+      errorContainer.className = "col-12 mt-2 desktop-space-form";
       errorIncorrectFile.className = "text-danger text-center";
       fileInputForm.value = "";
       for (var i = 0; i < inputs.length; i++) {
@@ -142,7 +153,7 @@ class Form {
       return;
     }
     if (imageFile.size > 10485760) {
-      errorContainer.className = "col-12 mt-2";
+      errorContainer.className = "col-12 mt-2 desktop-space-form";
       errorFileExceedsSize.className = "text-danger text-center";
       fileInputForm.value = "";
       for (var i = 0; i < inputs.length; i++) {
@@ -183,16 +194,16 @@ class Form {
     }
     let query = (recipeSearchInput.value)
     if (query === "") {
-      errorContainer.className = "col-12 mt-2";
+      errorContainer.className = "col-12 mt-2 desktop-space-form";
       errorNoSearch.className = "text-danger text-center";
       for (var i = 0; i < inputs.length; i++) {
         inputs[i].disabled = false;
       }
       return;
     }
-    titleContainer.className = "d-none";
-    percentageBarContainer.className = "d-none";
-    uploadedImageContainer.className = "d-none";
+    titleContainer.className = "d-none desktop-space-form";
+    percentageBarContainer.className = "d-none desktop-space-form";
+    uploadedImageContainer.className = "d-none desktop-space-form";
     this.dietInfo();
     this.getRecipes(query);
   }
