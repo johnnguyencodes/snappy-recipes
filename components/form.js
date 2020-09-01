@@ -22,21 +22,12 @@ class Form {
     overlay.addEventListener("click", this.handleOverlayClick.bind(this));
     recipeSearchInput.addEventListener("keyup", this.enterSearch.bind(this));
     fileLabel.addEventListener("dragover", this.imgValidation.bind(this));
-    // document.addEventListener("dragover", function(event) {
-    // //   event.preventDefault();
-    // // }, false);
-    //   console.log(event.target);
-    //   if (event.target !== fileInputForm) {
-    //     event.preventDefault();
-    //   }
-    // });
     document.addEventListener("drop", function (event) {
       console.log(event.target);
       if (event.target !== fileInputForm) {
         event.preventDefault();
       }});
   }
-
 
   clickDietInfo(dietInfo) {
     this.dietInfo = dietInfo;

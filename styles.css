@@ -89,7 +89,8 @@ a:hover, #heart_container:hover, #delete_container:hover, #file_input_form:hover
 }
 
 #file_input_form {
-  height: 400px;
+  height: 125px;
+  top: 50px;
 }
 
 .custom-file-input.input ~ .custom-file-label::after-dragover {
