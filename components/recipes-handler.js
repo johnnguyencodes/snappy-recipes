@@ -346,7 +346,6 @@ class RecipesHandler {
       inputs[i].disabled = false;
     }
     fileLabel.textContent = "";
-    // recipeSearchInput.value = "";
   }
 
   displayFavoriteRecipes(recipes) {
