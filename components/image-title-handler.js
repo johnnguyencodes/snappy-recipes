@@ -21,6 +21,7 @@ class ImageTitleHandler {
             }
             if (percentComplete === 1) {
               $("#percentage_download_container").addClass("d-none");
+              percentageBarContainer.className = "d-none desktop-space-form";
             }
           }
         };

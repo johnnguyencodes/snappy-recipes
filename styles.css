@@ -52,11 +52,8 @@ a:hover, #heart_container:hover, #delete_container:hover, #file_input_form:hover
   overflow-y: hidden;
 }
 
-.custom-file-label::after {
-    left: 0;
-    right: auto;
-    border-left-width: 0;
-    border-right: inherit;
+#custom_file_label {
+  height: 100;
 }
 
 #percentage_bar_upload, #percentage_bar_download {
@@ -67,6 +64,37 @@ a:hover, #heart_container:hover, #delete_container:hover, #file_input_form:hover
     height: 3px;
     background:blue;
     transition: width .3s;
+}
+
+#custom_file_label {
+  height: 100%;
+}
+
+.custom-file-input.input ~ .custom-file-label::after {
+  flex-direction: column;
+  align-items: center;
+  font-family: "Font Awesome 5 Free", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  content: "\f03e  Choose an image or drag it here";
+  width: 100%;
+  color:#007bff;
+  background-color: white;
+  border-radius: 4px;
+  border: 2px #007bff dashed;
+  height: 125px;
+  outline-offset: -10px;
+}
+
+.desktop-space-form {
+  top: 100px;
+}
+
+#file_input_form {
+  height: 125px;
+  top: 50px;
+}
+
+.custom-file-input.input ~ .custom-file-label::after-dragover {
+  background-color: gray;
 }
 
 .diet-menu-hidden {
@@ -271,10 +299,42 @@ span {
     .form-element-left {
       left: 0px;
     }
-.favorite-recipes-visible {
-  height: auto;
+    .favorite-recipes-visible {
+      height: auto;
+    }
+  .custom-file-input.input ~ .custom-file-label::after {
+  font-family: "Font Awesome 5 Free", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  content: "\f03e   Choose Image";
+  width: 100%;
+  color: white;
+  background-color:#007bff;
+  border-radius: 4px;
+  border: none;
+  height: 100%;
   }
+  .desktop-space-form {
+    top: 0px;
   }
+}
+
+@media only screen
+    and (min-device-width: 601px)
+    and (max-width: 768px) {
+    .search-results-space {
+      top: 175px;
+    }
+}
+
+/* iPhone 6, 7, 8 Landscape Only */
+@media only screen
+  and (min-device-width: 375px)
+  and (max-device-width: 667px)
+  and (-webkit-min-device-pixel-ratio: 2)
+  and (orientation: landscape) {
+      .search-results-space {
+        top: 0px;
+    }
+}
 
 /* iPad Portrait and Landscape */
 @media only screen
@@ -291,6 +351,21 @@ span {
     .favorite-recipes-visible {
     height: auto;
     }
+
+        .custom-file-input.input ~ .custom-file-label::after {
+  font-family: "Font Awesome 5 Free", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  content: "\f03e   Choose Image";
+  width: 100%;
+  color: white;
+  background-color:#007bff;
+  border-radius: 4px;
+  border: none;
+  height: 100%;
+  }
+
+  .desktop-space-form {
+    top: 0px;
+  }
 }
 
 @media only screen and (max-width: 414px) {

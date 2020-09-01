@@ -2,7 +2,6 @@ const fileLabel = document.getElementById("custom_file_label");
 let fileInputForm = document.getElementById("file_input_form");
 const recipeSearchInput = document.getElementById('recipe_search_input');
 const resetButton = document.getElementById("reset_button");
-const uploadButton = document.getElementById("upload_button");
 const searchButton = document.getElementById("search_button");
 const openFavoriteButton = document.getElementById("open_favorites_button");
 const closeFavoriteButton = document.getElementById("close_favorite_button");
@@ -16,14 +15,19 @@ let yPosition;
 
 class Form {
   constructor() {
-    uploadButton.addEventListener("click", this.imgValidation.bind(this));
     searchButton.addEventListener("click", this.search.bind(this));
-    fileInputForm.addEventListener("change", this.handleAddImage.bind(this));
+    fileInputForm.addEventListener("change", this.imgValidation.bind(this));
     openFavoriteButton.addEventListener("click", this.openFavorites.bind(this));
     closeFavoriteButton.addEventListener("click", this.closeFavorites.bind(this));
     overlay.addEventListener("click", this.handleOverlayClick.bind(this));
     recipeSearchInput.addEventListener("keyup", this.enterSearch.bind(this));
-    }
+    fileLabel.addEventListener("dragover", this.imgValidation.bind(this));
+    document.addEventListener("drop", function (event) {
+      console.log(event.target);
+      if (event.target !== fileInputForm) {
+        event.preventDefault();
+      }});
+  }
 
   clickDietInfo(dietInfo) {
     this.dietInfo = dietInfo;
@@ -82,33 +86,44 @@ class Form {
 
   imgValidation(event) {
     event.preventDefault();
+    fileLabel.textContent = "";
+    if (!(fileInputForm.files[0])) {
+      return;
+    }
+    console.log("imgValidation");
+    let fileName = fileInputForm.files[0].name;
+    fileLabel.textContent = fileName;
     while (document.getElementById("recipe")) {
       document.getElementById("recipe").remove();
     }
     if (document.getElementById("image_title")) {
       document.getElementById("image_title").remove();
     }
+    percentageBarContainer.className = "col-12 d-flex flex-column justify-content-center my-3 desktop-space-form";
     uploadedImage.src = "";
     searchResultsQuantityDiv.className = "d-none";
     resultsShownQuantityDiv.className = "d-none";
     imageRecognitionFailedText.className = "d-none";
-    errorContainer.className = "d-none";
+    errorContainer.className = "d-none desktop-space-form";
     errorNoFile.className = "d-none";
     errorIncorrectFile.className = "d-none";
     errorFileExceedsSize.className = "d-none";
     errorNoSearch.className = "d-none";
-    titleContainer.className = "col-xs-12 col-sm-12 col-md-12 col-lg-12 d-flex justify-content-around";
-    percentageBarContainer.className = "col-12 d-flex flex-column justify-content-center my-3";
-    uploadedImageContainer.className = "col-xs-12 col-sm-12 col-md-12 col-lg-12 d-flex justify-content-center my-3";
+    titleContainer.className = "col-xs-12 col-sm-12 col-md-12 col-lg-12 d-flex justify-content-around desktop-space-form";
+    percentageBarContainer.className = "col-12 d-flex flex-column justify-content-center my-3 desktop-space-form";
+    uploadedImageContainer.className = "col-xs-12 col-sm-12 col-md-12 col-lg-12 d-flex justify-content-center my-3 desktop-space-form";
     for (var i = 0; i < inputs.length; i++) {
       inputs[i].disabled = true;
     }
+    // if (fileLabel.disabled === true) {
+    //   document.querySelector(".custom-file-input.input ~ .custom-file-label::after").style.backgroundColor = "red";
+    // }
     if (fileInputForm.files[1]) {
       fileInputForm.files.splice(1, 1);
     }
     const imageFile = fileInputForm.files[0];
     if (!(imageFile)) {
-      errorContainer.className="col-12 mt-2";
+      errorContainer.className="col-12 mt-2 desktop-space-form";
       errorNoFile.className ="text-danger text-center";
       fileInputForm.value = "";
       for (var i = 0; i < inputs.length; i++) {
@@ -120,7 +135,7 @@ class Form {
     const formData = new FormData();
     const mimeTypes = ['image/jpeg', 'image/png', 'image/gif'];
     if (!(mimeTypes.includes(fileType))) {
-      errorContainer.className = "col-12 mt-2";
+      errorContainer.className = "col-12 mt-2 desktop-space-form";
       errorIncorrectFile.className = "text-danger text-center";
       fileInputForm.value = "";
       for (var i = 0; i < inputs.length; i++) {
@@ -129,7 +144,7 @@ class Form {
       return;
     }
     if (imageFile.size > 10485760) {
-      errorContainer.className = "col-12 mt-2";
+      errorContainer.className = "col-12 mt-2 desktop-space-form";
       errorFileExceedsSize.className = "text-danger text-center";
       fileInputForm.value = "";
       for (var i = 0; i < inputs.length; i++) {
@@ -170,16 +185,16 @@ class Form {
     }
     let query = (recipeSearchInput.value)
     if (query === "") {
-      errorContainer.className = "col-12 mt-2";
+      errorContainer.className = "col-12 mt-2 desktop-space-form";
       errorNoSearch.className = "text-danger text-center";
       for (var i = 0; i < inputs.length; i++) {
         inputs[i].disabled = false;
       }
       return;
     }
-    titleContainer.className = "d-none";
-    percentageBarContainer.className = "d-none";
-    uploadedImageContainer.className = "d-none";
+    titleContainer.className = "d-none desktop-space-form";
+    percentageBarContainer.className = "d-none desktop-space-form";
+    uploadedImageContainer.className = "d-none desktop-space-form";
     this.dietInfo();
     this.getRecipes(query);
   }
