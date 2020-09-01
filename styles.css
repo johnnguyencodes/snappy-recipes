@@ -73,6 +73,10 @@ a:hover, #heart_container:hover, #delete_container:hover, #file_input_form:hover
     transition: width .3s;
 }
 
+.custom-file-input ~ .custom-file-label::after {
+    content: "Hello";
+}
+
 .diet-menu-hidden {
   z-index: 3;
   height: 100vh;

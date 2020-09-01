@@ -2,7 +2,6 @@ const fileLabel = document.getElementById("custom_file_label");
 let fileInputForm = document.getElementById("file_input_form");
 const recipeSearchInput = document.getElementById('recipe_search_input');
 const resetButton = document.getElementById("reset_button");
-const uploadButton = document.getElementById("upload_button");
 const searchButton = document.getElementById("search_button");
 const openFavoriteButton = document.getElementById("open_favorites_button");
 const closeFavoriteButton = document.getElementById("close_favorite_button");
@@ -16,9 +15,8 @@ let yPosition;
 
 class Form {
   constructor() {
-    uploadButton.addEventListener("click", this.imgValidation.bind(this));
     searchButton.addEventListener("click", this.search.bind(this));
-    fileInputForm.addEventListener("change", this.handleAddImage.bind(this));
+    fileInputForm.addEventListener("change", this.imgValidation.bind(this));
     openFavoriteButton.addEventListener("click", this.openFavorites.bind(this));
     closeFavoriteButton.addEventListener("click", this.closeFavorites.bind(this));
     overlay.addEventListener("click", this.handleOverlayClick.bind(this));
@@ -87,6 +85,12 @@ class Form {
 
   imgValidation(event) {
     event.preventDefault();
+    fileLabel.textContent = "";
+    if (!(fileInputForm.files[0])) {
+      return;
+    }
+    let fileName = fileInputForm.files[0].name;
+    fileLabel.textContent = fileName;
     while (document.getElementById("recipe")) {
       document.getElementById("recipe").remove();
     }
