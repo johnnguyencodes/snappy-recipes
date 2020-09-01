@@ -159,7 +159,8 @@ class App {
       contentType: false,
       cache: false,
       headers: {
-        "Authorization": `${imgurAPIKey}`
+        "Authorization": `${imgurAPIKey}`,
+        'Access-Control-Allow-Origin': 'http://snappy-recipes.johnnguyencodes.com'
       },
       xhr: function () {
         var xhr = new window.XMLHttpRequest();
