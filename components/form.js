@@ -23,7 +23,12 @@ class Form {
     closeFavoriteButton.addEventListener("click", this.closeFavorites.bind(this));
     overlay.addEventListener("click", this.handleOverlayClick.bind(this));
     recipeSearchInput.addEventListener("keyup", this.enterSearch.bind(this));
-    }
+    fileLabel.addEventListener("dragover", this.imgValidation.bind(this));
+    document.addEventListener("dragover", function(event) {
+      event.preventDefault();
+    }, false);
+  }
+
 
   clickDietInfo(dietInfo) {
     this.dietInfo = dietInfo;

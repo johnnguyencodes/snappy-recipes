@@ -59,6 +59,10 @@ a:hover, #heart_container:hover, #delete_container:hover, #file_input_form:hover
     border-right: inherit;
 }
 
+#custom_file_label {
+  height: 100;
+}
+
 #percentage_bar_upload, #percentage_bar_download {
     z-index: 5;
     display: block;
