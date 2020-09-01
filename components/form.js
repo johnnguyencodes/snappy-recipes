@@ -113,6 +113,9 @@ class Form {
     for (var i = 0; i < inputs.length; i++) {
       inputs[i].disabled = true;
     }
+    // if (fileLabel.disabled === true) {
+    //   document.querySelector(".custom-file-input.input ~ .custom-file-label::after").style.backgroundColor = "red";
+    // }
     if (fileInputForm.files[1]) {
       fileInputForm.files.splice(1, 1);
     }
