@@ -23,7 +23,6 @@ class Form {
     recipeSearchInput.addEventListener("keyup", this.enterSearch.bind(this));
     fileLabel.addEventListener("dragover", this.imgValidation.bind(this));
     document.addEventListener("drop", function (event) {
-      console.log(event.target);
       if (event.target !== fileInputForm) {
         event.preventDefault();
       }});
@@ -90,7 +89,6 @@ class Form {
     if (!(fileInputForm.files[0])) {
       return;
     }
-    console.log("imgValidation");
     let fileName = fileInputForm.files[0].name;
     fileLabel.textContent = fileName;
     while (document.getElementById("recipe")) {
@@ -115,9 +113,6 @@ class Form {
     for (var i = 0; i < inputs.length; i++) {
       inputs[i].disabled = true;
     }
-    // if (fileLabel.disabled === true) {
-    //   document.querySelector(".custom-file-input.input ~ .custom-file-label::after").style.backgroundColor = "red";
-    // }
     if (fileInputForm.files[1]) {
       fileInputForm.files.splice(1, 1);
     }
@@ -198,33 +193,4 @@ class Form {
     this.dietInfo();
     this.getRecipes(query);
   }
-
-  // resetFields() {
-    // event.preventDefault();
-    // for (var i = 0; i < inputs.length; i++) {
-    //   inputs[i].disabled = false;
-    // }
-    // fileLabel.textContent = "";
-    // if (document.getElementById("image_title")) {
-    //   document.getElementById("image_title").remove();
-    // }
-    // recipeSearchInput.value = "";
-    // uploadedImage.src = "";
-    // searchRecipesDownloadProgress.className = "recipe-progress-hidden text-left mt-3";
-    // searchRecipesDownloadText.className = "d-none";
-    // noSearchRecipesText.className = "d-none";
-    // emptyFavoriteTextContainer.className = "d-none";
-    // resultsShownQuantityDiv.className = "d-none";
-    // showMoreButton.className = "btn btn-secondary my-2"
-    // spoonacularSearchError.className = "d-none";
-    // titleContainer.className = "d-none";
-    // percentageBarContainer.className = "d-none";
-    // uploadedImageContainer.className = "d-none";
-    // imageRecognitionFailedText.className = "d-none";
-    // errorContainer.className = "d-none";
-    // errorNoFile.className = "d-none";
-    // errorIncorrectFile.className = "d-none";
-    // errorFileExceedsSize.className = "d-none";
-    // errorNoSearch.className = "d-none";
-  // }
 }

@@ -133,6 +133,11 @@ a:hover, #heart_container:hover, #delete_container:hover, #file_input_form:hover
     background:blue;
 }
 
+.custom-file:focus {
+  outline: none;
+  box-shadow: none;
+}
+
 .recipe-progress-visible {
     visibility: visible;
     width: 100%;
