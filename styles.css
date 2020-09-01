@@ -13,6 +13,7 @@ table {
 }
 
 #uploaded_image {
+  top:
   max-height: 400px;
   max-width: 100%;
   object-fit: contain;
@@ -52,12 +53,12 @@ a:hover, #heart_container:hover, #delete_container:hover, #file_input_form:hover
   overflow-y: hidden;
 }
 
-.custom-file-label::after {
+/* .custom-file-label::after {
     left: 0;
     right: auto;
     border-left-width: 0;
     border-right: inherit;
-}
+} */
 
 #custom_file_label {
   height: 100;
@@ -73,8 +74,26 @@ a:hover, #heart_container:hover, #delete_container:hover, #file_input_form:hover
     transition: width .3s;
 }
 
-.custom-file-input ~ .custom-file-label::after {
-    content: "Hello";
+#custom_file_label {
+  height: 100%;
+}
+
+.custom-file-input.input ~ .custom-file-label::after {
+  flex-direction: column;
+  align-items: center;
+  font-family: "Font Awesome 5 Free", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  content: "\f03e  Choose an image or drag it here";
+  width: 100%;
+  color: white;
+  background-color:#007bff;
+  border-radius: 4px;
+  border: 2px white dashed;
+  height: 100%;
+  outline-offset: -10px;
+}
+
+.custom-file-input.input ~ .custom-file-label::after-dragover {
+  background-color: gray;
 }
 
 .diet-menu-hidden {
@@ -279,10 +298,20 @@ span {
     .form-element-left {
       left: 0px;
     }
-.favorite-recipes-visible {
-  height: auto;
+    .favorite-recipes-visible {
+      height: auto;
+    }
+  .custom-file-input.input ~ .custom-file-label::after {
+  font-family: "Font Awesome 5 Free", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  content: "\f03e  Choose Image";
+  width: 100%;
+  color: white;
+  background-color:#007bff;
+  border-radius: 4px;
+  border: none;
+  height: 100%;
   }
-  }
+}
 
 /* iPad Portrait and Landscape */
 @media only screen
