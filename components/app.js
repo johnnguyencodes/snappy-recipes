@@ -30,6 +30,7 @@ const formElement = document.getElementById("form");
 const favoriteRecipesSection = document.getElementById("favorite_recipes_section");
 const inputs = document.querySelectorAll(".input");
 const searchRecipesDownloadContainer = document.getElementById("search_recipes_download_container");
+const imageProcessingContainer = document.getElementById("image_processing_container");
 let recipeInformation = null;
 
 let dataForImageRecognition = {
@@ -82,7 +83,7 @@ class App {
   start() {
     this.localStorageCheck();
     this.savedDietInfoCheck();
-    this.getRandomRecipes();
+    // this.getRandomRecipes();
     this.form.clickDietInfo(this.dietInfo);
     this.form.clickPostImage(this.postImage);
     this.form.clickGetRecipes(this.getRecipes);
@@ -175,6 +176,7 @@ class App {
             }
             if (percentComplete === 1) {
               $('#percentage_upload_container').addClass('d-none');
+              imageProcessingContainer.className = "d-flex col-12 flex-column align-items-center justify-content-center desktop-space-form";
             }
           }
         }, false);
