@@ -3,6 +3,7 @@ class ImageTitleHandler {
   }
 
   postedImageDownloadProgress(imageURL) {
+    imageProcessingContainer.className = "d-none desktop-space-form";
     let imageURLParameter = imageURL;
     let imageLoader = {};
     imageLoader['LoadImage'] = (imageURLParameter, progressUpdateCallback) => {
