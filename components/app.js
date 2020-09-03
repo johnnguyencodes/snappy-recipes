@@ -83,7 +83,7 @@ class App {
   start() {
     this.localStorageCheck();
     this.savedDietInfoCheck();
-    // this.getRandomRecipes();
+    this.getRandomRecipes();
     this.form.clickDietInfo(this.dietInfo);
     this.form.clickPostImage(this.postImage);
     this.form.clickGetRecipes(this.getRecipes);

@@ -320,6 +320,10 @@ span {
   .desktop-space-form {
     top: 0px;
   }
+  #file_input_form {
+    height: 0px;
+    top: 0px;
+  }
 }
 
 @media only screen
