@@ -52,11 +52,17 @@ class ImageTitleHandler {
       })
   }
 
-  imageTitleOnPage(imageTitle) {
-    const h1 = document.createElement("h1");
-    h1.id = "image_title";
-    h1.className = "text-center";
-    h1.textContent = imageTitle;
-    titleContainer.append(h1);
+  imageTitleOnPage(imageTitle, score) {
+    const h2 = document.createElement("h1");
+    h2.id = "image_title";
+    h2.className = "text-center";
+    h2.textContent = imageTitle;
+    titleContainer.append(h2);
+    const p = document.createElement("p");
+    p.id = "title_score";
+    p.className = "text-center";
+    const percent = (score * 100).toFixed(2);
+    p.textContent = `Confidence: ${percent}%`;
+    titleContainer.append(p);
   }
 }

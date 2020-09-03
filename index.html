@@ -210,18 +210,18 @@
       <div id="percentage_bar_container" class="col-12 d-flex flex-column justify-content-center my-3 desktop-space-form">
         <div id="percentage_upload_container" class="d-none">
           <div id="percentage_bar_upload"></div>
-          <p id="image_upload_text" class="text-center">Uploading image...</p>
+          <p id="image_upload_text" class="text-center mt-1">Uploading image...</p>
         </div>
         <div id="percentage_download_container" class="d-none">
           <div id="percentage_bar_download"></div>
-          <p id="image_download_text" class="text-center">Downloading image...</p>
+          <p id="image_download_text" class="text-center mt-1">Downloading image...</p>
         </div>
       </div>
       <div id="uploaded_image_container"
         class="col-xs-12 col-sm-12 col-md-12 col-lg-12 d-flex justify-content-center my-3 desktop-space-form">
         <img id="uploaded_image" src="" alt="">
       </div>
-      <div id="title_container" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 d-flex justify-content-around desktop-space-forms">
+      <div id="title_container" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 d-flex flex-column justify-content-around desktop-space-forms">
         <p id="image_recognition_status" class="text-center d-none">Recognizing image...</p>
         <p id="image_recognition_failed" class="text-center d-none">Your image could not be recognized. Please upload a
           different image or enter a search.</p>
@@ -249,7 +249,10 @@
       </div>
       <div id="results_shown_quantity_div" class="d-none">
         <p id="results_shown_quantity_text"></p>
-        <button id="show_more_button" class="btn btn-secondary">Show more</button>
+        <div class="row">
+          <button id="show_more_button" class="btn btn-primary mr-3">Show more</button>
+          <button id="back_to_top_button" class="btn btn-secondary ml-3">Back to top</button>
+        </div>
       </div>
     </div>
   </div>
