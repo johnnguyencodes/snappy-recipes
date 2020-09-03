@@ -85,12 +85,9 @@ class Form {
 
   imgValidation(event) {
     event.preventDefault();
-    fileLabel.textContent = "";
     if (!(fileInputForm.files[0])) {
       return;
     }
-    let fileName = fileInputForm.files[0].name;
-    fileLabel.textContent = fileName;
     while (document.getElementById("recipe")) {
       document.getElementById("recipe").remove();
     }
@@ -113,9 +110,6 @@ class Form {
     titleContainer.className = "col-xs-12 col-sm-12 col-md-12 col-lg-12 d-flex justify-content-around flex-column desktop-space-form";
     percentageBarContainer.className = "col-12 d-flex flex-column justify-content-center my-3 desktop-space-form";
     uploadedImageContainer.className = "col-xs-12 col-sm-12 col-md-12 col-lg-12 d-flex justify-content-center my-3 desktop-space-form";
-    for (var i = 0; i < inputs.length; i++) {
-      inputs[i].disabled = true;
-    }
     if (fileInputForm.files[1]) {
       fileInputForm.files.splice(1, 1);
     }
@@ -154,15 +148,6 @@ class Form {
     this.dietInfo();
     this.postImage(formData);
     fileInputForm.value = "";
-  }
-
-  handleAddImage() {
-    fileLabel.textContent = "";
-    if (!(fileInputForm.files[0])) {
-      return;
-    }
-    let fileName = fileInputForm.files[0].name;
-    fileLabel.textContent = fileName;
   }
 
   search(event) {

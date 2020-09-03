@@ -352,7 +352,6 @@ class RecipesHandler {
     for (var i = 0; i < inputs.length; i++) {
       inputs[i].disabled = false;
     }
-    fileLabel.textContent = "";
   }
 
   displayFavoriteRecipes(recipes) {
