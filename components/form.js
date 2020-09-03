@@ -97,6 +97,9 @@ class Form {
     if (document.getElementById("image_title")) {
       document.getElementById("image_title").remove();
     }
+    if (document.getElementById("title_score")) {
+      document.getElementById("title_score").remove();
+    }
     percentageBarContainer.className = "col-12 d-flex flex-column justify-content-center my-3 desktop-space-form";
     uploadedImage.src = "";
     searchResultsQuantityDiv.className = "d-none";
@@ -107,7 +110,7 @@ class Form {
     errorIncorrectFile.className = "d-none";
     errorFileExceedsSize.className = "d-none";
     errorNoSearch.className = "d-none";
-    titleContainer.className = "col-xs-12 col-sm-12 col-md-12 col-lg-12 d-flex justify-content-around desktop-space-form";
+    titleContainer.className = "col-xs-12 col-sm-12 col-md-12 col-lg-12 d-flex justify-content-around flex-column desktop-space-form";
     percentageBarContainer.className = "col-12 d-flex flex-column justify-content-center my-3 desktop-space-form";
     uploadedImageContainer.className = "col-xs-12 col-sm-12 col-md-12 col-lg-12 d-flex justify-content-center my-3 desktop-space-form";
     for (var i = 0; i < inputs.length; i++) {

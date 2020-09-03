@@ -3,12 +3,15 @@ const modalContainer = document.getElementById("modal_container");
 const resultsShownQuantityText = document.getElementById("results_shown_quantity_text");
 const body = document.querySelector("body");
 const favoriteButton = document.getElementById("favorite_button");
+const showMoreButton = document.getElementById("show_more_button");
+const backToTopButton = document.getElementById("back_to_top_button");
 
 class RecipesHandler {
   constructor(recipesContainer, favoriteRecipesContainer) {
     this.recipesContainer = recipesContainer;
     this.favoriteRecipesContainer = favoriteRecipesContainer;
     showMoreButton.addEventListener("click", this.handleShowMoreClick.bind(this));
+    backToTopButton.addEventListener("click", this.handleBackToTopClick.bind(this));
     this.displaySearchedRecipes = this.displaySearchedRecipes.bind(this);
     this.updateResultsQuantityShown = this.updateResultsQuantityShown.bind(this);
     this.favoriteCheck = this.favoriteCheck.bind(this);
@@ -72,6 +75,10 @@ class RecipesHandler {
       showMoreButton.className = "d-none"
     }
     this.updateResultsQuantityShown();
+  }
+
+  handleBackToTopClick() {
+    window.scroll(0, 0);
   }
 
   updateResultsQuantityShown() {

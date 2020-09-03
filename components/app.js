@@ -19,7 +19,6 @@ const emptyFavoriteTextContainer = document.getElementById("empty_favorite_text_
 const favoriteRecipesStatusText = document.getElementById("favorite_recipes_status_text");
 const searchResultsQuantityDiv = document.getElementById("search_results_quantity_div");
 const resultsShownQuantityDiv = document.getElementById("results_shown_quantity_div");
-const showMoreButton = document.getElementById("show_more_button");
 const imgurAPIError = document.getElementById("imgur_api_error");
 const spoonacularSearchError = document.getElementById("spoonacular_search_error");
 const spoonacularFavoriteError = document.getElementById("spoonacular_favorite_error");
@@ -216,6 +215,7 @@ class App {
   }
 
   handleImageRecognitionSuccess(response) {
+    console.log(response);
     if (!(response.responses[0].labelAnnotations)) {
       imageRecognitionStatusText.className = "d-none";
       imageRecognitionFailedText.className = "text-center";
@@ -226,7 +226,8 @@ class App {
       return;
     }
     const imageTitle = response.responses[0].labelAnnotations[0].description;
-    this.imageTitleHandler.imageTitleOnPage(imageTitle);
+    const score = response.responses[0].labelAnnotations[0].score;
+    this.imageTitleHandler.imageTitleOnPage(imageTitle, score);
     imageRecognitionStatusText.className = "text-center d-none";
     this.getRecipes(imageTitle);
   }
@@ -238,9 +239,12 @@ class App {
   //GET request to Spoonacular's API with label from Google to get a list of up to 10 recipes containing the item from the image and other nutrition info.
 
   getRandomRecipes() {
+    for (var i = 0; i < inputs.length; i++) {
+      inputs[i].disabled = true;
+    }
     searchRecipesDownloadProgress.className = "recipe-progress-visible text-left mt-3";
     searchRecipesDownloadText.className = "text-center mt-3";
-    searchRecipesDownloadText.textContent = "Gathering random recipes..."
+    searchRecipesDownloadText.textContent = "Gathering random recipes, please wait..."
     titleContainer.className = "d-none desktop-space-form";
     percentageBarContainer.className = "d-none desktop-space-form";
     uploadedImageContainer.className = "d-none desktop-space-form";
@@ -262,7 +266,7 @@ class App {
   }
 
   getRecipes(imageTitle) {
-    searchRecipesDownloadContainer.className = "col-12 d-flex flex-column justify-content-center"
+    searchRecipesDownloadContainer.className = "col-12 d-flex flex-column justify-content-center mt-3"
     searchRecipesDownloadProgress.className = "recipe-progress-visible text-left mt-3";
     searchRecipesDownloadText.className = "text-center mt-3";
     searchRecipesDownloadText.textContent = "Gathering recipes..."

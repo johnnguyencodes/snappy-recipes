@@ -258,6 +258,7 @@ span {
 
 #modal_container img {
   max-width: 90%;
+  height: 250px;
 }
 
 #overlay {
@@ -323,6 +324,18 @@ span {
   #file_input_form {
     height: 0px;
     top: 0px;
+  }
+
+  .modal-dialog,
+  .modal-content {
+    /* 80% of window height */
+    height: 80%;
+  }
+
+  .modal-body {
+    /* 100% = dialog height, 120px = header + footer */
+    max-height: calc(100% - 250px);
+    overflow-y: scroll;
   }
 }
 
