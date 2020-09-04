@@ -215,7 +215,6 @@ class App {
   }
 
   handleImageRecognitionSuccess(response) {
-    console.log(response);
     if (!(response.responses[0].labelAnnotations)) {
       imageRecognitionStatusText.className = "d-none";
       imageRecognitionFailedText.className = "text-center";

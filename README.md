@@ -1,13 +1,15 @@
 # Snappy Recipes
 > * Maintained by: `John Nguyen`
 
+A web application that helps users find recipes by identifying an image of a food item using machine learning.
+
 ## Feature Overview
 ### The user can interact with the app in two ways
   1. Uploading an image will send requests to the following APIs using jQuery AJAX to find recipes:
       * POST request to Imgur's API to upload and generate the image's URL (https://apidocs.imgur.com/).
       * POST request to Google's Cloud Vision API to utilize machine learning to label the dominant object within the image at the generated URL (https://cloud.google.com/vision/docs).
       * GET request to Spoonacular's API with the label as a search query which will respond with a list of related recipes (https://spoonacular.com/food-api).  This list is then dynamically created on the DOM.
-  2. Entering a search query will only send a GET request to Spoonacular's API which will respond with a list of related recipes.
+  2. Entering a search query will send a GET request to Spoonacular's API which will respond with a list of related recipes.
 ### Other features
 * The user can specify diet preferences to modify the search query. These preferences are stored locally and will persist after the browser window is closed.
 
@@ -22,8 +24,8 @@
   * iPad: Portrait and Landscape
   * iPad Pro: Portrait and Landscape
 
-### Planned Features
-* The user can use the app on the iPhone X in Landscape Mode.
+### Issues
+* App layout is not optimized for iPhone X in Landscape
 
 ## Lessons Learned
 1. Chaining multiple API calls using jQuery AJAX to send, manipulate, and display data using vanilla JavaScript.
