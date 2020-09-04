@@ -22,7 +22,7 @@ class DietMenu {
 
   openDietMenu() {
     event.preventDefault();
-    mainContent.className = "row noscroll";
+    mainContent.className = "row main-content-right noscroll";
     dietMenu.className = "diet-menu-visible d-flex flex-column justify-content-center";
     overlay.className = "";
   }

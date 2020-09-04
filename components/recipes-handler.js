@@ -289,7 +289,7 @@ class RecipesHandler {
       cardBody.className = "card-body py-0";
       const cardTitle = document.createElement("div");
       cardTitle.className = "card-title mb-0";
-      const recipeTitle = document.createElement("h3");
+      const recipeTitle = document.createElement("h5");
       recipeTitle.textContent = title;
       const cardText1 = document.createElement("div");
       cardText1.className = "card-text";
@@ -404,7 +404,7 @@ class RecipesHandler {
       cardBody.className = "card-body p-0 m-0";
       const cardTitle = document.createElement("div");
       cardTitle.className = "card-title";
-      const recipeTitle = document.createElement("h3");
+      const recipeTitle = document.createElement("h5");
       recipeTitle.textContent = title;
       const cardText1 = document.createElement("div");
       cardText1.className = "card-text";
