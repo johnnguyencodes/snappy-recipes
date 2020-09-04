@@ -1,6 +1,8 @@
 const dietMenu = document.getElementById("diet_menu");
 const openDietMenuButton = document.getElementById("open_diet_menu_button");
 const closeDietMenuButton = document.getElementById("close_diet_menu_button");
+let dietYPosition;
+
 
 class DietMenu {
   constructor(dietMenu) {
@@ -22,7 +24,9 @@ class DietMenu {
 
   openDietMenu() {
     event.preventDefault();
+    dietYPosition = window.scrollY;
     mainContent.className = "row main-content-right noscroll";
+    mainContent.style.top = `-${dietYPosition}px`;
     dietMenu.className = "diet-menu-visible d-flex flex-column justify-content-center";
     overlay.className = "";
   }
@@ -33,5 +37,6 @@ class DietMenu {
     dietMenu.className = "diet-menu-hidden d-flex flex-column justify-content-center";
     this.dietInfo();
     overlay.className = "d-none";
+    window.scroll(0, dietYPosition);
   }
 }
