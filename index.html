@@ -20,7 +20,7 @@
       <div class="modal-content">
         <div class="modal-header text-center">
           <div class="modal-title w-100">
-            <h3 id="recipe_title" class="text-left"></h3>
+            <p id="recipe_title" class="text-left m-0 font-weight-bold"></p>
           </div>
         </div>
         <div id="recipe_body" class="modal-body">
@@ -41,10 +41,7 @@
           </div>
         </div>
         <div class="modal-title d-flex flex-column justify-content-between">
-          <p class="mb-2 text-center border-top pt-3 pb-2 mx-1">
-            The Recipe Page button will open an external website on a new browser tab.
-          </p>
-          <div id="modal_button_container" class="form-group col-xs-12 d-flex justify-content-around">
+          <div id="modal_button_container" class="form-group col-xs-12 d-flex justify-content-around mt-3">
           </div>
         </div>
       </div>
@@ -168,7 +165,7 @@
     <div class="form_spaceholder col-md-6 col-lg-6 col-xl-4"></div>
     <div id="form" class="ml-3 col-md-6 col-lg-6 col-xl-4 d-flex flex-column align-items-center">
       <header
-        class="col-xs-12 col-sm-12 col-md-12 col-lg-12 d-flex flex-column align-items-center justify-content-center my-2 px-0">
+        class="d-flex flex-column align-items-center justify-content-center my-2 px-0">
         <h1> <span class="badge badge-primary">Snappy Recipes <i class="fa fa-utensils"></i></span></h1>
         <p class="m-2 text-center">Find recipes by entering a
         <strong>search</strong>, or by choosing an <strong>image</strong>.</p>
@@ -185,7 +182,7 @@
             <i class="fa fa-search"></i>
           </button>
         </div>
-        <div class="form-group col-xs-12 mx-2">
+        <div class="form-group mx-2">
           <div class="input-group mt-3">
             <div class="custom-file">
               <input type="file" id="file_input_form" class="custom-file-input input">
@@ -229,7 +226,7 @@
     </div>
     <div id="search_results_section" class="col-md-6 col-lg-6 col-xl-8 search-results-space">
       <div id="search_results_quantity_div" class="d-none">
-        <p id="search_results_quantity_text" class="text-center mb-0"></p>
+        <p id="search_results_quantity_text" class="text-center font-weight-bold mb-0"></p>
       </div>
       <div id="search_recipes_container"
         class="col-xs-12 col-sm-12 col-md-12 col-lg-12 px-0 d-flex flex-row flex-wrap align-items-center justify-content-around">
@@ -237,12 +234,9 @@
           <div id="search_recipes_download_progress" class="recipe-progress-hidden mt-3 text-left"></div>
           <p id="search_recipes_download_text" class="d-none">Gathering recipes...</p>
         </div>
-        <p id="spoonacular_search_error" class="d-none">The Spoonacular API has reached its daily quota for this app's current
-          API Key. Please notify <a
-            href="mailto:john@johnnguyencodes.com?subject=Snappy%20Recipes%20API%20Key%20Refresh">john@johnnguyencodes.com</a>,
-          thank you.</p>
+        <p id="spoonacular_search_error" class="d-none"></p>
         <p id="imgur_api_error" class="d-none">There is a CORS issue with the Imgur's API.  This issue will usually resolve itself in ten minutes.  If it does not, please notify <a
-          href="mailto:john@johnnguyencodes.com?subject=Snappy%20Recipes%20API%20Key%20Refresh">john@johnnguyencodes.com</a>,
+          href="mailto:john@johnnguyencodes.com?subject=Snappy%20Recipes%20CORS%20Issue">john@johnnguyencodes.com</a>,
         thank you.</p>
         <p id="no_search_recipes_text" class="d-none">No recipes found with the given parameters. Please modify your diet preferences and try
           again, or choose a different image, or enter a different search.</p>

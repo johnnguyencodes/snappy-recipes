@@ -31,6 +31,7 @@ const inputs = document.querySelectorAll(".input");
 const searchRecipesDownloadContainer = document.getElementById("search_recipes_download_container");
 const imageProcessingContainer = document.getElementById("image_processing_container");
 let recipeInformation = null;
+let spoonacularError = null;
 
 let dataForImageRecognition = {
   "requests": [
@@ -196,7 +197,7 @@ class App {
   handlePostImageError(error) {
     imgurAPIError.className = "text-center mt-3";
     for (var i = 0; i < inputs.length; i++) {
-      inputs[i].disabled = true;
+      inputs[i].disabled = false;
     }
   }
 
@@ -215,7 +216,6 @@ class App {
   }
 
   handleImageRecognitionSuccess(response) {
-    console.log(response);
     if (!(response.responses[0].labelAnnotations)) {
       imageRecognitionStatusText.className = "d-none";
       imageRecognitionFailedText.className = "text-center";
@@ -290,12 +290,19 @@ class App {
   }
 
   handleGetRecipesError(error) {
+    console.log(error);
     searchRecipesDownloadContainer.className = "d-none";
     searchRecipesDownloadProgress.className = "recipe-progress-hidden text-left mt-3";
     searchRecipesDownloadText.className = "d-none";
     spoonacularSearchError.className = "text-center mt-3";
+    if ('responseJSON' in error) {
+      spoonacularSearchError.innerHTML = "The Spoonacular API has reached its daily quota for this app's current API Key. Please notify <a href = 'mailto:john@johnnguyencodes.com?subject=Snappy%20Recipes%20API%20Key%20Refresh'> john@johnnguyencodes.com</a>, thank you."
+    }
+    else {
+      spoonacularSearchError.innerHTML = "There is a CORS issue with the Spoonacular's API.  This issue will usually resolve itself in ten minutes.  If it does not, please notify <a href = 'mailto:john@johnnguyencodes.com?subject=Snappy%20Recipes%20API%20Key%20Refresh'> john@johnnguyencodes.com</a >, thank you."
+    }
     for (var i = 0; i < inputs.length; i++) {
-      inputs[i].disabled = true;
+      inputs[i].disabled = false;
     }
   }
 
