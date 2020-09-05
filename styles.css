@@ -78,6 +78,8 @@ a:hover, #heart_container:hover, #delete_container:hover, #file_input_form:hover
 
 #custom_file_label {
   height: 100%;
+  border: white;
+  border-radius: 15px;
 }
 
 .custom-file-input.input ~ .custom-file-label::after {
@@ -93,7 +95,7 @@ a:hover, #heart_container:hover, #delete_container:hover, #file_input_form:hover
   width: 100%;
   color:#007bff;
   background-color: white;
-  border-radius: 4px;
+  border-radius: 5px;
   border: 2px #007bff dashed;
   height: 125px;
   padding-top: 45px;
@@ -107,10 +109,6 @@ a:hover, #heart_container:hover, #delete_container:hover, #file_input_form:hover
 #file_input_form {
   height: 125px;
   top: 50px;
-}
-
-.custom-file-input.input ~ .custom-file-label::after-dragover {
-  background-color: gray;
 }
 
 .diet-menu-hidden {
@@ -259,7 +257,7 @@ a:hover, #heart_container:hover, #delete_container:hover, #file_input_form:hover
   z-index: 1;
 }
 
-.card-title h3 {
+.card-title {
   text-decoration: underline;
   color: black;
   -webkit-transition: 0.3s ease-in-out;
@@ -435,6 +433,26 @@ span {
 
   .desktop-space-form {
     top: 0px;
+  }
+}
+
+/* iPad Portrait Only */
+@media only screen
+  and (min-device-width: 768px)
+  and (max-device-width: 1024px)
+  and (orientation: portrait)
+  and (-webkit-min-device-pixel-ratio: 2) {
+  .recipe-card, .favorite-recipe-card {
+    min-width: 215px;
+    max-width: 215px;
+    min-height: 323px;
+  }
+  #favorite_recipes_container img {
+    max-width: 193px;
+  }
+
+  #search_recipes_container img {
+    max-width: 90%;
   }
 }
 

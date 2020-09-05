@@ -27,6 +27,9 @@ class RecipesHandler {
       searchRecipesDownloadProgress.className = "recipe-progress-hidden";
       searchRecipesDownloadText.className = "d-none";
       noSearchRecipesText.className = "text-center mt-3";
+      for (var i = 0; i < inputs.length; i++) {
+        inputs[i].disabled = false;
+      }
       return;
     }
     searchResultsQuantityDiv.className = "d-flex justify-content-center mt-3";
@@ -49,6 +52,9 @@ class RecipesHandler {
       searchRecipesDownloadProgress.className = "recipe-progress-hidden";
       searchRecipesDownloadText.className = "d-none";
       noSearchRecipesText.className = "text-center mt-3";
+      for (var i = 0; i < inputs.length; i++) {
+        inputs[i].disabled = false;
+      }
       return;
     }
     searchResultsQuantityDiv.className = "d-flex justify-content-center mt-3";
@@ -355,9 +361,14 @@ class RecipesHandler {
   }
 
   displayFavoriteRecipes(recipes) {
-
+    console.log(recipes);
     for (let i = 0; i < recipes.length; i++) {
-      const imageURL = `${recipes[i].image.substring(0, recipes[i].image.length - 11)}556x370.jpg`;
+      let imageURL = null;
+      if ("image" in recipes[i]) {
+        imageURL = imageURL = `${recipes[i].image.substring(0, recipes[i].image.length - 11)}556x370.jpg`;
+      } else {
+        imageURL = "https://spoonacular.com/recipeImages/342447-3480x360.jpg";
+      }
       const title = recipes[i].title;
       const readyInMinutes = recipes[i].readyInMinutes;
       const servings = recipes[i].servings;
