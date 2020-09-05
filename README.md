@@ -39,18 +39,18 @@ A web application that helps users find recipes by identifying an image of a foo
 
 ### Demos
 
-* Desktop\
+* Desktop
 <img src="https://user-images.githubusercontent.com/61361957/92297145-06647f80-eef1-11ea-9fd8-0f5733dcf8a0.gif" width="600" alt="Desktop Demo Gif"/>
 
-* iPhone 6/7/8 - Portrait\
-<img src="https://user-images.githubusercontent.com/61361957/92297158-2c8a1f80-eef1-11ea-8b68-49b6d1e2c515.gif" width="400" alt="iPhone 6/7/8 - Portrait - Demo Gif"/>
+* iPhone 6/7/8 - Portrait
+<img src="https://user-images.githubusercontent.com/61361957/92297158-2c8a1f80-eef1-11ea-8b68-49b6d1e2c515.gif" width="600" alt="iPhone 6/7/8 - Portrait - Demo Gif"/>
 
 
-* iPhone 6/7/8 - Lansdscape\
-<img src="https://user-images.githubusercontent.com/61361957/92297147-095f7000-eef1-11ea-9179-fe6ae5f86991.gif" width="400" alt="iPhone 6/7/8 - Landscape - Demo Gif"/>
+* iPhone 6/7/8 - Lansdscape
+<img src="https://user-images.githubusercontent.com/61361957/92297147-095f7000-eef1-11ea-9179-fe6ae5f86991.gif" width="600" alt="iPhone 6/7/8 - Landscape - Demo Gif"/>
 
-* iPad - Portrait\
-<img src="https://user-images.githubusercontent.com/61361957/92297148-0bc1ca00-eef1-11ea-9795-cce70c226739.gif" width="400" alt="iPad - Portrait - Demo Gif"/>
+* iPad - Portrait
+<img src="https://user-images.githubusercontent.com/61361957/92297148-0bc1ca00-eef1-11ea-9795-cce70c226739.gif" width="600" alt="iPad - Portrait - Demo Gif"/>
 
-* iPad - Landscape\
-<img src="https://user-images.githubusercontent.com/61361957/92297149-0c5a6080-eef1-11ea-9a1e-aa3499ddd722.gif" width="400" alt="iPad - Landscape - Demo Gif"/>
+* iPad - Landscape
+<img src="https://user-images.githubusercontent.com/61361957/92297149-0c5a6080-eef1-11ea-9a1e-aa3499ddd722.gif" width="600" alt="iPad - Landscape - Demo Gif"/>
