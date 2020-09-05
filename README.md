@@ -25,7 +25,8 @@ A web application that helps users find recipes by identifying an image of a foo
   * iPad Pro: Portrait and Landscape
 
 ### Issues
-* App layout is not optimized for iPhone X in Landscape
+* App layout is not (yet) optimized for iPhone X in Landscape
+* Using the app on an iPhone causes the form's layout to temporarily break when an image is being processed
 
 ## Lessons Learned
 1. Chaining multiple API calls using jQuery AJAX to send, manipulate, and display data using vanilla JavaScript.
@@ -39,17 +40,17 @@ A web application that helps users find recipes by identifying an image of a foo
 ### Demos
 
 * Desktop\
-<img src="https://user-images.githubusercontent.com/61361957/91505848-7b96db80-e885-11ea-9ba5-3d980654431c.gif" width="600" alt="Desktop Demo Gif"/>
+<img src="https://user-images.githubusercontent.com/61361957/92297145-06647f80-eef1-11ea-9fd8-0f5733dcf8a0.gif" width="600" alt="Desktop Demo Gif"/>
 
 * iPhone 6/7/8 - Portrait\
-<img src="https://user-images.githubusercontent.com/61361957/91505881-8f424200-e885-11ea-8148-5e202c100890.gif" width="400" alt="iPhone 6/7/8 - Portrait - Demo Gif"/>
+<img src="https://user-images.githubusercontent.com/61361957/92297158-2c8a1f80-eef1-11ea-8b68-49b6d1e2c515.gif" width="400" alt="iPhone 6/7/8 - Portrait - Demo Gif"/>
 
 
 * iPhone 6/7/8 - Lansdscape\
-<img src="https://user-images.githubusercontent.com/61361957/91505875-89e4f780-e885-11ea-92fc-53cf4a0e2140.gif" width="400" alt="iPhone 6/7/8 - Landscape - Demo Gif"/>
+<img src="https://user-images.githubusercontent.com/61361957/92297147-095f7000-eef1-11ea-9179-fe6ae5f86991.gif" width="400" alt="iPhone 6/7/8 - Landscape - Demo Gif"/>
 
 * iPad - Portrait\
-<img src="https://user-images.githubusercontent.com/61361957/91505866-8487ad00-e885-11ea-8fde-aa1d2046319c.gif" width="400" alt="iPad - Portrait - Demo Gif"/>
+<img src="https://user-images.githubusercontent.com/61361957/92297148-0bc1ca00-eef1-11ea-9795-cce70c226739.gif" width="400" alt="iPad - Portrait - Demo Gif"/>
 
 * iPad - Landscape\
-<img src="https://user-images.githubusercontent.com/61361957/91505860-7fc2f900-e885-11ea-8c7f-37514f3e439f.gif" width="400" alt="iPad - Landscape - Demo Gif"/>
+<img src="https://user-images.githubusercontent.com/61361957/92297149-0c5a6080-eef1-11ea-9a1e-aa3499ddd722.gif" width="400" alt="iPad - Landscape - Demo Gif"/>
