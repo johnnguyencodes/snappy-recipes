@@ -25,8 +25,8 @@ A web application that helps users find recipes by identifying an image of a foo
   * iPad Pro: Portrait and Landscape
 
 ### Issues
-* App layout is not (yet) optimized for iPhone X in Landscape
-* Using the app on an iPhone causes the form's layout to temporarily break when an image is being processed
+* App layout is not (yet) optimized for iPhone X in Landscape.
+* Using the app on an iPhone causes the form's layout to temporarily break when an image is being processed.
 
 ## Lessons Learned
 1. Chaining multiple API calls using jQuery AJAX to send, manipulate, and display data using vanilla JavaScript.
