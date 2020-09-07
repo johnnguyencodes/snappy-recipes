@@ -1,7 +1,7 @@
 # Snappy Recipes
 > * Maintained by: `John Nguyen`
 
-A web application that helps users find recipes by identifying an image of a food item using machine learning.
+A web application that helps users find and save recipes by identifying an image of a food item using machine learning.
 
 ## Feature Overview
 ### The user can interact with the app in two ways
