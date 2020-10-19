@@ -46,7 +46,7 @@ A web application that helps users find and save recipes by identifying an image
 <img src="https://user-images.githubusercontent.com/61361957/92297158-2c8a1f80-eef1-11ea-8b68-49b6d1e2c515.gif" width="600" alt="iPhone 6/7/8 - Portrait - Demo Gif"/>
 
 
-* iPhone 6/7/8 - Lansdscape
+* iPhone 6/7/8 - Landscape
 <img src="https://user-images.githubusercontent.com/61361957/92297147-095f7000-eef1-11ea-9179-fe6ae5f86991.gif" width="600" alt="iPhone 6/7/8 - Landscape - Demo Gif"/>
 
 * iPad - Portrait
