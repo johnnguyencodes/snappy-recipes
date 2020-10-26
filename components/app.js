@@ -87,6 +87,7 @@ class App {
     this.form.clickDietInfo(this.dietInfo);
     this.form.clickPostImage(this.postImage);
     this.form.clickGetRecipes(this.getRecipes);
+    this.form.clickGetRandomRecipes(this.getRandomRecipes);
     this.dietMenu.clickDietInfo(this.dietInfo);
     this.form.clickGetFavoriteRecipes(this.getFavoriteRecipes);
     this.recipesHandler.clickGetFavoriteRecipes(this.getFavoriteRecipes);

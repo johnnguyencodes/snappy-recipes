@@ -10,7 +10,7 @@ const errorContainer = document.getElementById("error_container");
 const errorNoFile = document.getElementById("error_no_file");
 const errorIncorrectFile = document.getElementById("error_incorrect_file");
 const errorFileExceedsSize = document.getElementById("error_file_exceeds_size");
-const errorNoSearch = document.getElementById("error_no_search");
+// const errorNoSearch = document.getElementById("error_no_search");
 let favoriteYPosition;
 
 class Form {
@@ -40,8 +40,12 @@ class Form {
     this.getRecipes = getRecipes;
   }
 
-    clickGetFavoriteRecipes(getFavoriteRecipes) {
+  clickGetFavoriteRecipes(getFavoriteRecipes) {
     this.getFavoriteRecipes = getFavoriteRecipes;
+  }
+
+  clickGetRandomRecipes(getRandomRecipes) {
+    this.getRandomRecipes = getRandomRecipes;
   }
 
   enterSearch() {
@@ -106,7 +110,7 @@ class Form {
     errorNoFile.className = "d-none";
     errorIncorrectFile.className = "d-none";
     errorFileExceedsSize.className = "d-none";
-    errorNoSearch.className = "d-none";
+    // errorNoSearch.className = "d-none";
     titleContainer.className = "col-xs-12 col-sm-12 col-md-12 col-lg-12 d-flex justify-content-around flex-column desktop-space-form";
     percentageBarContainer.className = "col-12 d-flex flex-column justify-content-center my-3 desktop-space-form";
     uploadedImageContainer.className = "col-xs-12 col-sm-12 col-md-12 col-lg-12 d-flex justify-content-center my-3 desktop-space-form";
@@ -162,19 +166,24 @@ class Form {
     errorNoFile.className = "d-none";
     errorIncorrectFile.className = "d-none";
     errorFileExceedsSize.className = "d-none";
-    errorNoSearch.className = "d-none";
+    // errorNoSearch.className = "d-none";
     for (var i = 0; i < inputs.length; i++) {
       inputs[i].disabled = true;
     }
     let query = (recipeSearchInput.value)
     if (query === "") {
-      errorContainer.className = "col-12 mt-2 desktop-space-form";
-      errorNoSearch.className = "text-danger text-center";
-      for (var i = 0; i < inputs.length; i++) {
-        inputs[i].disabled = false;
+      // errorContainer.className = "col-12 mt-2 desktop-space-form";
+      // errorNoSearch.className = "text-danger text-center";
+      // for (var i = 0; i < inputs.length; i++) {
+      //   inputs[i].disabled = false;
+      titleContainer.className = "d-none desktop-space-form";
+      percentageBarContainer.className = "d-none desktop-space-form";
+      uploadedImageContainer.className = "d-none desktop-space-form";
+      this.dietInfo();
+      this.getRandomRecipes();
       }
-      return;
-    }
+      // return;
+    // }
     titleContainer.className = "d-none desktop-space-form";
     percentageBarContainer.className = "d-none desktop-space-form";
     uploadedImageContainer.className = "d-none desktop-space-form";

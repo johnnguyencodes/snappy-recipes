@@ -181,7 +181,6 @@ a:hover, #heart_container:hover, #delete_container:hover, #file_input_form:hover
 
 .recipe-card > .card-body {
   height: 200px;
-  /* overflow-y: auto; */
 }
 
 .d-none {
