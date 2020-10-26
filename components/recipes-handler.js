@@ -292,9 +292,9 @@ class RecipesHandler {
       imageContainer.append(heartIconContainer);
       heartIconContainer.addEventListener("click", this.handleFavoriteClick.bind(this, id));
       const cardBody = document.createElement("div");
-      cardBody.className = "card-body py-0";
+      cardBody.className = "card-body h-100 py-0 mb-2";
       const cardTitle = document.createElement("div");
-      cardTitle.className = "card-title mb-0";
+      cardTitle.className = "card-title mb-2";
       const recipeTitle = document.createElement("h5");
       recipeTitle.textContent = title;
       const cardText1 = document.createElement("div");
@@ -342,10 +342,10 @@ class RecipesHandler {
       cardText2.append(sodiumSpan);
       titleAnchorTag.append(recipeTitle);
       cardTitle.append(titleAnchorTag);
-      cardTitle.append(cardText1);
-      cardTitle.append(cardText3);
-      cardTitle.append(cardText2);
       cardBody.append(cardTitle);
+      cardBody.append(cardText1);
+      cardBody.append(cardText3);
+      cardBody.append(cardText2);
       imageContainer.append(img);
       recipeCard.append(imageContainer);
       recipeCard.append(cardBody);
@@ -412,7 +412,7 @@ class RecipesHandler {
       imageContainer.append(deleteIconContainer);
       deleteIconContainer.addEventListener("click", this.handleDeleteClick.bind(this, id));
       const cardBody = document.createElement("div");
-      cardBody.className = "card-body p-0 m-0";
+      cardBody.className = "card-body h-100 p-0 m-0";
       const cardTitle = document.createElement("div");
       cardTitle.className = "card-title";
       const recipeTitle = document.createElement("h5");

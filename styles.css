@@ -181,7 +181,7 @@ a:hover, #heart_container:hover, #delete_container:hover, #file_input_form:hover
 
 .recipe-card > .card-body {
   height: 200px;
-  overflow-y: auto;
+  /* overflow-y: auto; */
 }
 
 .d-none {
@@ -265,7 +265,7 @@ a:hover, #heart_container:hover, #delete_container:hover, #file_input_form:hover
   transition: 0.3s ease-in-out;
 }
 
-.card-title h3:hover {
+.card-title:hover {
   color: blue;
   text-decoration: underline;
   -webkit-transition: 0.3s ease-in-out;
