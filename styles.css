@@ -476,7 +476,7 @@ span {
   }
 }
 
-@media only screen and (max-width: 767px) {
+/* @media only screen and (max-width: 767px) {
   #search_results_section {
     top: 80px;
   }
@@ -486,6 +486,10 @@ span {
   #search_results_section {
     top: 10px;
   }
+} */
+
+#search_results_section {
+  top: 50px;
 }
 
 @media only screen and (max-width: 812px) {
@@ -502,13 +506,13 @@ span {
   }
 }
 
-@media only screen and (min-width: 1110px) {
+/* @media only screen and (min-width: 1110px) {
     #form {
     position: fixed;
     min-width: 556px;
     max-width: 606px;
   }
-}
+} */
 
 @media only screen and (min-width: 1200px) {
     #form {
