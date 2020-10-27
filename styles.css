@@ -381,6 +381,7 @@ span {
     max-height: calc(100% - 120px);
     overflow-y: scroll;
   }
+
 }
 
 @media only screen
@@ -400,6 +401,10 @@ span {
       .search-results-space {
         top: 0px;
     }
+
+  #search_results_section {
+    top: 0px !important;
+  }
 }
 
 /* iPad Portrait and Landscape */
@@ -464,6 +469,18 @@ span {
 @media only screen and (max-width: 736px) {
   #form {
     width: 100vw;
+  }
+}
+
+@media only screen and (min-width: 520px) and (max-width: 767px) {
+  #search_results_section {
+    top: 80px;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  #search_results_section {
+    top: 10px;
   }
 }
 
@@ -544,4 +561,5 @@ span {
     max-width: 644px;
     position: fixed;
   }
+
 }
