@@ -64,5 +64,8 @@ class ImageTitleHandler {
     const percent = (score * 100).toFixed(2);
     p.textContent = `Confidence: ${percent}%`;
     titleContainer.append(p);
+    const hr = document.createElement("hr");
+    hr.className = "mx-3 d-xl-none";
+    titleContainer.append(hr);
   }
 }
