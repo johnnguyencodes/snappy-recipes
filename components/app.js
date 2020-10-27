@@ -249,6 +249,8 @@ class App {
     titleContainer.className = "d-none desktop-space-form";
     percentageBarContainer.className = "d-none desktop-space-form";
     uploadedImageContainer.className = "d-none desktop-space-form";
+    chunkedRecipeArray = [];
+    chunkedRecipeArrayIndex = 0;
     let spoonacularURL = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${spoonacularAPIKey}&addRecipeNutrition=true&636x393&number=100&sort=random`
     $.ajax({
       method: "GET",
@@ -263,6 +265,7 @@ class App {
   }
 
   handleGetRandomRecipesSuccess(recipes) {
+    console.log(recipes);
     this.recipesHandler.chunkRandomRecipes(recipes);
   }
 

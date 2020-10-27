@@ -166,28 +166,18 @@ class Form {
     errorNoFile.className = "d-none";
     errorIncorrectFile.className = "d-none";
     errorFileExceedsSize.className = "d-none";
-    // errorNoSearch.className = "d-none";
     for (var i = 0; i < inputs.length; i++) {
       inputs[i].disabled = true;
     }
     let query = (recipeSearchInput.value)
-    if (query === "") {
-      // errorContainer.className = "col-12 mt-2 desktop-space-form";
-      // errorNoSearch.className = "text-danger text-center";
-      // for (var i = 0; i < inputs.length; i++) {
-      //   inputs[i].disabled = false;
-      titleContainer.className = "d-none desktop-space-form";
-      percentageBarContainer.className = "d-none desktop-space-form";
-      uploadedImageContainer.className = "d-none desktop-space-form";
-      this.dietInfo();
-      this.getRandomRecipes();
-      }
-      // return;
-    // }
+    this.dietInfo();
     titleContainer.className = "d-none desktop-space-form";
     percentageBarContainer.className = "d-none desktop-space-form";
     uploadedImageContainer.className = "d-none desktop-space-form";
-    this.dietInfo();
+    if (!query) {
+      this.getRandomRecipes();
+      return;
+      }
     this.getRecipes(query);
   }
 }
