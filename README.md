@@ -48,4 +48,4 @@ A web application that helps users find and save recipes by identifying an image
 
 * iPad - Landscape
 
-<img src="https://user-images.githubusercontent.com/61361957/92297149-0c5a6080-eef1-11ea-9a1e-aa3499ddd722.gif" width="600" alt="iPad - Landscape - Demo Gif"/>
+<img src="https://user-images.githubusercontent.com/61361957/97382836-853ebe80-1889-11eb-93d0-da71b0ed0f47.gif" width="600" alt="iPad - Landscape - Demo Gif"/>
