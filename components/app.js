@@ -87,6 +87,7 @@ class App {
     this.form.clickDietInfo(this.dietInfo);
     this.form.clickPostImage(this.postImage);
     this.form.clickGetRecipes(this.getRecipes);
+    this.form.clickGetRandomRecipes(this.getRandomRecipes);
     this.dietMenu.clickDietInfo(this.dietInfo);
     this.form.clickGetFavoriteRecipes(this.getFavoriteRecipes);
     this.recipesHandler.clickGetFavoriteRecipes(this.getFavoriteRecipes);
@@ -248,6 +249,8 @@ class App {
     titleContainer.className = "d-none desktop-space-form";
     percentageBarContainer.className = "d-none desktop-space-form";
     uploadedImageContainer.className = "d-none desktop-space-form";
+    chunkedRecipeArray = [];
+    chunkedRecipeArrayIndex = 0;
     let spoonacularURL = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${spoonacularAPIKey}&addRecipeNutrition=true&636x393&number=100&sort=random`
     $.ajax({
       method: "GET",
@@ -262,6 +265,7 @@ class App {
   }
 
   handleGetRandomRecipesSuccess(recipes) {
+    console.log(recipes);
     this.recipesHandler.chunkRandomRecipes(recipes);
   }
 

@@ -162,10 +162,9 @@
     </div>
   </div>
   <div id="main_content" class="row">
-    <div class="form_spaceholder col-md-6 col-lg-6 col-xl-4"></div>
-    <div id="form" class="ml-3 col-md-6 col-lg-6 col-xl-4 d-flex flex-column align-items-center">
-      <header
-        class="d-flex flex-column align-items-center justify-content-center my-2 px-0">
+    <div class="form_spaceholder col-12 col-xl-4"></div>
+    <div id="form" class="col-10 offset-1 col-xl-4 offset-xl-0 d-flex flex-column align-items-center">
+      <header class="d-flex flex-column align-items-center justify-content-center my-2 px-0">
         <h1> <span class="badge badge-primary">Snappy Recipes <i class="fa fa-utensils"></i></span></h1>
         <p class="m-2 text-center">Find recipes by entering a
         <strong>search</strong>, or by choosing an <strong>image</strong>.</p>
@@ -197,7 +196,6 @@
           file.</p>
         <p id="error_file_exceeds_size" class="d-none">Image exceeds 10MB size limit, please select a smaller
           image.</p>
-        <p id="error_no_search" class="d-none">No search query entered. Please enter a search query.</p>
       </div>
       <div id="image_processing_container" class="d-none desktop-space-form">
         <div class="spinner-border text-primary" role="status">
@@ -218,13 +216,13 @@
         class="col-xs-12 col-sm-12 col-md-12 col-lg-12 d-flex justify-content-center my-3 desktop-space-form">
         <img id="uploaded_image" src="" alt="">
       </div>
-      <div id="title_container" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 d-flex flex-column justify-content-around desktop-space-forms">
+      <div id="title_container" class="d-none desktop-space-form">
         <p id="image_recognition_status" class="text-center d-none">Recognizing image...</p>
         <p id="image_recognition_failed" class="text-center d-none">Your image could not be recognized. Please upload a
           different image or enter a search.</p>
       </div>
     </div>
-    <div id="search_results_section" class="col-md-6 col-lg-6 col-xl-8 search-results-space">
+    <div id="search_results_section" class="col-12 col-xl-8 search-results-space">
       <div id="search_results_quantity_div" class="d-none">
         <p id="search_results_quantity_text" class="text-center font-weight-bold mb-0"></p>
       </div>
