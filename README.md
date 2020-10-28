@@ -17,15 +17,14 @@ A web application that helps users find and save recipes by identifying an image
 
 * The user can view a preview of the recipe, and can navigate to its webpage in a new browser tab.
 
-* The app is mobile responsive and can be used on the following devices:
-  * iPhone 6/7/8: Portrait and Landscape
-  * iPhone 6/7/8 Plus: Portrait and Landscape
-  * iPhone X: Portrait only
-  * iPad: Portrait and Landscape
-  * iPad Pro: Portrait and Landscape
+* The app is mobile responsive and can be used on the following devices in portrait and landscape mode:
+  * iPhone 6/7/8
+  * iPhone 6/7/8 Plus
+  * iPhone X
+  * iPad
+  * iPad Pro
 
 ### Issues
-* App layout is not (yet) optimized for iPhone X in Landscape.
 * Using the app on an iPhone causes the form's layout to temporarily break when an image is being processed.
 
 ## Lessons Learned

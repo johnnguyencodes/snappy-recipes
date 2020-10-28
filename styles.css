@@ -329,11 +329,11 @@ span {
 }
 
 .main-content-right {
-  right: 17px;
+  /* right: 17px; */
 }
 
 .form-element-left {
-  left: -15px;
+  /* left: -15px; */
 }
 
 /* .custom-file-label:focus, .custom-file-label:active {
