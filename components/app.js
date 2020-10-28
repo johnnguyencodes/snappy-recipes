@@ -242,7 +242,6 @@ class App {
   getRandomRecipes() {
     for (var i = 0; i < inputs.length; i++) {
       inputs[i].disabled = true;
-      console.log(inputs[i]);
     }
     searchRecipesDownloadProgress.className = "recipe-progress-visible text-left mt-3";
     searchRecipesDownloadText.className = "text-center mt-3";
@@ -294,7 +293,6 @@ class App {
   }
 
   handleGetRecipesError(error) {
-    console.log(error);
     searchRecipesDownloadContainer.className = "d-none";
     searchRecipesDownloadProgress.className = "recipe-progress-hidden text-left mt-3";
     searchRecipesDownloadText.className = "d-none";

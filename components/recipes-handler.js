@@ -361,7 +361,6 @@ class RecipesHandler {
   }
 
   displayFavoriteRecipes(recipes) {
-    console.log(recipes);
     for (let i = 0; i < recipes.length; i++) {
       let imageURL = null;
       if ("image" in recipes[i]) {

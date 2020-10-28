@@ -12,6 +12,7 @@ const errorImgurCORSIssue = document.getElementById("imgur_api_error");
 const errorNoFile = document.getElementById("error_no_file");
 const errorIncorrectFile = document.getElementById("error_incorrect_file");
 const errorFileExceedsSize = document.getElementById("error_file_exceeds_size");
+const errorNoSearchResults = document.getElementById("no_search_recipes_text");
 let favoriteYPosition;
 
 class Form {
@@ -95,7 +96,6 @@ class Form {
     }
     for (var i = 0; i < inputs.length; i++) {
       inputs[i].disabled = true;
-      console.log(inputs[i]);
     }
     while (document.getElementById("recipe")) {
       document.getElementById("recipe").remove();
@@ -119,6 +119,7 @@ class Form {
     errorIncorrectFile.className = "d-none";
     errorFileExceedsSize.className = "d-none";
     errorSpoonacularSearch.className = "d-none";
+    errorNoSearchResults.className = "d-none";
     errorImgurCORSIssue.className = "d-none";
     titleContainer.className = "col-xs-12 col-sm-12 col-md-12 col-lg-12 d-flex justify-content-around flex-column desktop-space-form mb-3";
     percentageBarContainer.className = "col-12 d-flex flex-column justify-content-center my-3 desktop-space-form";
