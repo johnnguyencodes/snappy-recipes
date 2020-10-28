@@ -12,6 +12,7 @@ const errorImgurCORSIssue = document.getElementById("imgur_api_error");
 const errorNoFile = document.getElementById("error_no_file");
 const errorIncorrectFile = document.getElementById("error_incorrect_file");
 const errorFileExceedsSize = document.getElementById("error_file_exceeds_size");
+const errorNoSearchResults = document.getElementById("no_search_recipes_text");
 let favoriteYPosition;
 
 class Form {
@@ -66,7 +67,7 @@ class Form {
     mainContent.className="row main-content-right noscroll";
     mainContent.style.top = `-${favoriteYPosition}px`;
     formElement.style.top = "0px";
-    formElement.className = "ml-3 col-md-6 col-lg-6 col-xl-4 d-flex flex-column align-items-center form-element-left";
+    formElement.className = "col-10 offset-1 col-xl-4 offset-xl-0 d-flex flex-column align-items-center form-element-left";
     overlay.className = "";
     this.getFavoriteRecipes();
   }
@@ -77,7 +78,7 @@ class Form {
     mainContent.className = "row";
     overlay.className = "d-none";
     window.scroll(0, favoriteYPosition);
-    formElement.className = "ml-3 col-md-6 col-lg-6 col-xl-4 d-flex flex-column align-items-center";
+    formElement.className = "col-10 offset-1 col-xl-4 offset-xl-0 d-flex flex-column align-items-center";
     favoriteRecipesDownloadProgress.className = "recipe-progress-hidden mt-3";
     spoonacularFavoriteError.className = "d-none";
   }
@@ -92,6 +93,9 @@ class Form {
     event.preventDefault();
     if (!(fileInputForm.files[0])) {
       return;
+    }
+    for (var i = 0; i < inputs.length; i++) {
+      inputs[i].disabled = true;
     }
     while (document.getElementById("recipe")) {
       document.getElementById("recipe").remove();
@@ -115,6 +119,7 @@ class Form {
     errorIncorrectFile.className = "d-none";
     errorFileExceedsSize.className = "d-none";
     errorSpoonacularSearch.className = "d-none";
+    errorNoSearchResults.className = "d-none";
     errorImgurCORSIssue.className = "d-none";
     titleContainer.className = "col-xs-12 col-sm-12 col-md-12 col-lg-12 d-flex justify-content-around flex-column desktop-space-form mb-3";
     percentageBarContainer.className = "col-12 d-flex flex-column justify-content-center my-3 desktop-space-form";

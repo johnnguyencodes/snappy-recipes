@@ -265,7 +265,6 @@ class App {
   }
 
   handleGetRandomRecipesSuccess(recipes) {
-    console.log(recipes);
     this.recipesHandler.chunkRandomRecipes(recipes);
   }
 
@@ -294,7 +293,6 @@ class App {
   }
 
   handleGetRecipesError(error) {
-    console.log(error);
     searchRecipesDownloadContainer.className = "d-none";
     searchRecipesDownloadProgress.className = "recipe-progress-hidden text-left mt-3";
     searchRecipesDownloadText.className = "d-none";
