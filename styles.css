@@ -336,6 +336,11 @@ span {
   left: -15px;
 }
 
+/* .custom-file-label:focus, .custom-file-label:active {
+  border-color: #FFFFFF;
+  outline: none;
+} */
+
 /* iPhone 6, 6S, 7, 8 Portrait and Landscape */
 @media only screen
   and (min-device-width: 375px)
@@ -385,7 +390,6 @@ span {
     #search_results_section {
     top: 0px !important;
   }
-
 }
 
 @media only screen and (max-width: 1199px) {
@@ -448,6 +452,10 @@ span {
   .desktop-space-form {
     top: 0px;
   }
+
+      .search-results-space {
+      top: 0px;
+    }
 }
 
 /* iPad Portrait Only */
@@ -490,4 +498,11 @@ span {
     margin-left: 1.5%;
     margin-right: 1.5%;
   }
+}
+
+.custom-file-label:focus,.custom-file-label:active,
+.custom-file-label:active:focus:not(:disabled):not(.disabled) {
+  border-color: white;
+  box-shadow: none;
+  outline: none;
 }

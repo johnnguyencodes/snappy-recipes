@@ -7,10 +7,11 @@ const openFavoriteButton = document.getElementById("open_favorites_button");
 const closeFavoriteButton = document.getElementById("close_favorite_button");
 const mainContent = document.getElementById("main_content");
 const errorContainer = document.getElementById("error_container");
+const errorSpoonacularSearch = document.getElementById("spoonacular_search_error");
+const errorImgurCORSIssue = document.getElementById("imgur_api_error");
 const errorNoFile = document.getElementById("error_no_file");
 const errorIncorrectFile = document.getElementById("error_incorrect_file");
 const errorFileExceedsSize = document.getElementById("error_file_exceeds_size");
-// const errorNoSearch = document.getElementById("error_no_search");
 let favoriteYPosition;
 
 class Form {
@@ -101,6 +102,9 @@ class Form {
     if (document.getElementById("title_score")) {
       document.getElementById("title_score").remove();
     }
+    if (document.getElementById("hr")) {
+      document.getElementById("hr").remove();
+    }
     percentageBarContainer.className = "col-12 d-flex flex-column justify-content-center my-3 desktop-space-form";
     uploadedImage.src = "";
     searchResultsQuantityDiv.className = "d-none";
@@ -110,7 +114,8 @@ class Form {
     errorNoFile.className = "d-none";
     errorIncorrectFile.className = "d-none";
     errorFileExceedsSize.className = "d-none";
-    // errorNoSearch.className = "d-none";
+    errorSpoonacularSearch.className = "d-none";
+    errorImgurCORSIssue.className = "d-none";
     titleContainer.className = "col-xs-12 col-sm-12 col-md-12 col-lg-12 d-flex justify-content-around flex-column desktop-space-form mb-3";
     percentageBarContainer.className = "col-12 d-flex flex-column justify-content-center my-3 desktop-space-form";
     uploadedImageContainer.className = "col-xs-12 col-sm-12 col-md-12 col-lg-12 d-flex justify-content-center my-3 desktop-space-form";

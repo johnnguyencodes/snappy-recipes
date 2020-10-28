@@ -65,7 +65,8 @@ class ImageTitleHandler {
     p.textContent = `Confidence: ${percent}%`;
     titleContainer.append(p);
     const hr = document.createElement("hr");
-    hr.className = "mx-3 d-xl-none";
+    hr.id = "hr";
+    hr.className = "mx-3 my-0 py-0 d-xl-none";
     titleContainer.append(hr);
   }
 }
