@@ -93,6 +93,10 @@ class Form {
     if (!(fileInputForm.files[0])) {
       return;
     }
+    for (var i = 0; i < inputs.length; i++) {
+      inputs[i].disabled = true;
+      console.log(inputs[i]);
+    }
     while (document.getElementById("recipe")) {
       document.getElementById("recipe").remove();
     }
