@@ -316,6 +316,7 @@ class App {
       emptyFavoriteTextContainer.className = "d-flex justify-content-center";
       return;
     }
+    favoriteRecipesSection.className = "favorite-recipes-visible d-flex flex-column justify-content-center"
     emptyFavoriteTextContainer.className = "d-none";
     favoriteRecipesDownloadProgress.className = "favorite-recipe-progress-visible mt-3"
     favoriteRecipesStatusText.className = "text-center";

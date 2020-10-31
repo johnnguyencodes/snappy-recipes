@@ -398,7 +398,7 @@ class RecipesHandler {
       titleAnchorTag.addEventListener("click", this.modalHandler.bind(this, recipeURL));
       imageContainer.className = "d-flex justify-content-center"
       const img = document.createElement("img");
-      imageContainer.className = "card-image-top d-flex justify-content-center";
+      imageContainer.className = "card-image-top d-flex justify-content-center mt-3";
       img.src = imageURL;
       img.alt = "Recipe Image"
       img.className = "m-0 p-0";
