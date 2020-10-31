@@ -389,7 +389,7 @@ class RecipesHandler {
       const ingredients = recipes[i].nutrition.ingredients;
       const summary = recipes[i].summary;
       const recipeCard = document.createElement("div");
-      recipeCard.className = "favorite-recipe-card card m-3 px-0 col-12 h-100";
+      recipeCard.className = "favorite-recipe-card card m-3 px-0 col-12";
       recipeCard.id = id;
       const imageContainer = document.createElement("div");
       const titleAnchorTag = document.createElement("a");
@@ -411,7 +411,7 @@ class RecipesHandler {
       imageContainer.append(deleteIconContainer);
       deleteIconContainer.addEventListener("click", this.handleDeleteClick.bind(this, id));
       const cardBody = document.createElement("div");
-      cardBody.className = "card-body h-100 py-0 mb-2";
+      cardBody.className = "card-body py-0 mb-2";
       const cardTitle = document.createElement("div");
       cardTitle.className = "card-title mb-2";
       const recipeTitle = document.createElement("h5");
