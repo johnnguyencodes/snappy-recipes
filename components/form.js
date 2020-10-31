@@ -121,6 +121,7 @@ class Form {
     errorSpoonacularSearch.className = "d-none";
     errorNoSearchResults.className = "d-none";
     errorImgurCORSIssue.className = "d-none";
+    errorNoSearchResults.className = "d-none";
     titleContainer.className = "col-xs-12 col-sm-12 col-md-12 col-lg-12 d-flex justify-content-around flex-column desktop-space-form mb-3";
     percentageBarContainer.className = "col-12 d-flex flex-column justify-content-center my-3 desktop-space-form";
     uploadedImageContainer.className = "col-xs-12 col-sm-12 col-md-12 col-lg-12 d-flex justify-content-center my-3 desktop-space-form";
@@ -172,10 +173,14 @@ class Form {
     searchResultsQuantityDiv.className = "d-none";
     resultsShownQuantityDiv.className = "d-none";
     imageRecognitionFailedText.className = "d-none";
-    errorContainer.className = "d-none";
+    errorContainer.className = "d-none desktop-space-form";
     errorNoFile.className = "d-none";
     errorIncorrectFile.className = "d-none";
     errorFileExceedsSize.className = "d-none";
+    errorSpoonacularSearch.className = "d-none";
+    errorNoSearchResults.className = "d-none";
+    errorImgurCORSIssue.className = "d-none";
+    errorNoSearchResults.className = "d-none";
     for (var i = 0; i < inputs.length; i++) {
       inputs[i].disabled = true;
     }
