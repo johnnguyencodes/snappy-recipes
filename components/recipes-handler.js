@@ -145,6 +145,8 @@ class RecipesHandler {
       }
       if (favoriteRecipesSection.scrollHeight > favoriteRecipesSection.clientHeight && favoriteRecipesSection.classList.contains("favorite-recipes-visible")) {
         favoriteRecipesSection.className = "favorite-recipes-visible d-flex flex-column justify-content-start";
+      } else {
+        favoriteRecipesSection.className = "favorite-recipes-visible d-flex flex-column justify-content-center";
       }
       localStorage.setItem('favoriteArray', JSON.stringify(favoriteArray));
       if (!(localStorage.getItem('favoriteArray')) || localStorage.getItem('favoriteArray') === "[]") {
