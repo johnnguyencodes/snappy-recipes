@@ -169,6 +169,10 @@ a:hover, #heart_container:hover, #delete_container:hover, #file_input_form:hover
     transition: 10s ease-in-out;
 }
 
+#recipes_download_container {
+  height: 100%;
+}
+
 .favorite-recipe-progress-visible {
   visibility: visible;
   width: 100%;

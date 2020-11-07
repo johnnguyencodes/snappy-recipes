@@ -24,7 +24,7 @@ class RecipesHandler {
   chunkSearchedRecipes(recipes) {
     recipeInformation = recipes;
     if (!(recipes.results[0])) {
-      searchRecipesDownloadProgress.className = "recipe-progress-hidden";
+      searchRecipesDownloadProgress.className = "recipe-progress-hidden mt-3";
       searchRecipesDownloadText.className = "d-none";
       noSearchRecipesText.className = "text-center mt-3";
       for (var i = 0; i < inputs.length; i++) {
@@ -49,7 +49,7 @@ class RecipesHandler {
   chunkRandomRecipes(recipes) {
     recipeInformation = recipes;
     if (!(recipes.results[0])) {
-      searchRecipesDownloadProgress.className = "recipe-progress-hidden";
+      searchRecipesDownloadProgress.className = "recipe-progress-hidden mt-3";
       searchRecipesDownloadText.className = "d-none";
       noSearchRecipesText.className = "text-center mt-3";
       for (var i = 0; i < inputs.length; i++) {
@@ -130,6 +130,8 @@ class RecipesHandler {
       localStorage.setItem('favoriteArray', JSON.stringify(favoriteArray));
       if (favoriteRecipesSection.classList.contains("favorite-recipes-visible")) {
         this.getFavoriteRecipes();
+        spoonacularFavoriteError.className = "d-none";
+        spoonacularFavoriteTimeoutError.className = "d-none";
       }
       return;
     } else {
@@ -355,7 +357,7 @@ class RecipesHandler {
       titleAnchorTag.addEventListener("click", this.modalHandler.bind(this, imageURL,
         title, recipeURL, id, instructions, ingredients, summary));
     }
-    searchRecipesDownloadProgress.className = "recipe-progress-hidden";
+    searchRecipesDownloadProgress.className = "recipe-progress-hidden mt-3";
     searchRecipesDownloadText.className = "d-none";
     for (var i = 0; i < inputs.length; i++) {
       inputs[i].disabled = false;

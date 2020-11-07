@@ -22,6 +22,7 @@ const resultsShownQuantityDiv = document.getElementById("results_shown_quantity_
 const imgurAPIError = document.getElementById("imgur_api_error");
 const spoonacularSearchError = document.getElementById("spoonacular_search_error");
 const spoonacularFavoriteError = document.getElementById("spoonacular_favorite_error");
+const spoonacularFavoriteTimeoutError = document.getElementById("spoonacular_favorite_timeout_error");
 const titleContainer = document.getElementById("title_container");
 const percentageBarContainer = document.getElementById("percentage_bar_container");
 const uploadedImageContainer = document.getElementById("uploaded_image_container");
@@ -269,10 +270,10 @@ class App {
   }
 
   getRecipes(imageTitle) {
-    searchRecipesDownloadContainer.className = "col-12 d-flex flex-column justify-content-center mt-3"
+    // searchRecipesDownloadContainer.className = "col-12 d-flex flex-column justify-content-center mt-3"
     searchRecipesDownloadProgress.className = "recipe-progress-visible text-left mt-3";
     searchRecipesDownloadText.className = "text-center mt-3";
-    searchRecipesDownloadText.textContent = "Gathering recipes..."
+    searchRecipesDownloadText.textContent = "Gathering recipes, please wait..."
     chunkedRecipeArray = [];
     chunkedRecipeArrayIndex = 0;
     let spoonacularURL = `https://api.spoonacular.com/recipes/complexSearch?query=${imageTitle}&apiKey=${spoonacularAPIKey}&addRecipeNutrition=true&636x393&number=100`
@@ -283,8 +284,9 @@ class App {
       headers: {
         "Content-Type": "application/json"
       },
-      success: this.handleGetRecipesSuccess,
-      error: this.handleGetRecipesError
+      timeout: 10000,
+      error: this.handleGetRecipesError,
+      success: this.handleGetRecipesSuccess
     })
   }
 
@@ -293,18 +295,24 @@ class App {
   }
 
   handleGetRecipesError(error) {
+    console.log(error.status);
     searchRecipesDownloadContainer.className = "d-none";
     searchRecipesDownloadProgress.className = "recipe-progress-hidden text-left mt-3";
     searchRecipesDownloadText.className = "d-none";
     spoonacularSearchError.className = "text-center mt-3";
-    if ('responseJSON' in error) {
+    for (var i = 0; i < inputs.length; i++) {
+      inputs[i].disabled = false;
+    }
+    if (error.status === 402) {
       spoonacularSearchError.innerHTML = "The Spoonacular API has reached its daily quota for this app's current API Key. Please notify <a href = 'mailto:john@johnnguyencodes.com?subject=Snappy%20Recipes%20API%20Key%20Refresh'> john@johnnguyencodes.com</a>, thank you."
+      return;
+    }
+    if (error.statusText === "timeout") {
+      spoonacularSearchError.innerHTML = "The ajax request to the Spoonacular API has timed out, please try again."
+      return;
     }
     else {
       spoonacularSearchError.innerHTML = "There is a CORS issue with the Spoonacular's API.  This issue will usually resolve itself in ten minutes.  If it does not, please notify <a href = 'mailto:john@johnnguyencodes.com?subject=Snappy%20Recipes%20API%20Key%20Refresh'> john@johnnguyencodes.com</a >, thank you."
-    }
-    for (var i = 0; i < inputs.length; i++) {
-      inputs[i].disabled = false;
     }
   }
 
@@ -329,8 +337,9 @@ class App {
       headers: {
         "Content-Type": "application/json"
       },
-      success: this.handleGetFavoriteRecipesSuccess,
-      error: this.handleGetFavoriteRecipesError
+      timeout: 10000,
+      error: this.handleGetFavoriteRecipesError,
+      success: this.handleGetFavoriteRecipesSuccess
     })
   }
 
@@ -339,8 +348,14 @@ class App {
   }
 
   handleGetFavoriteRecipesError(error) {
+    console.log(error);
     favoriteRecipesDownloadProgress.className = "recipe-progress-hidden";
     favoriteRecipesStatusText.className = "d-none";
-    spoonacularFavoriteError.className = "mt-3 text-center";
+    if (error.statusText === "error") {
+      spoonacularFavoriteError.className = "mt-3 text-center";
+    }
+    if (error.statusText === "timeout") {
+      spoonacularFavoriteTimeoutError.className = "mt-3 text-center";
+    }
     }
 }
