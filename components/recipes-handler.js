@@ -130,6 +130,8 @@ class RecipesHandler {
       localStorage.setItem('favoriteArray', JSON.stringify(favoriteArray));
       if (favoriteRecipesSection.classList.contains("favorite-recipes-visible")) {
         this.getFavoriteRecipes();
+        spoonacularFavoriteError.className = "d-none";
+        spoonacularFavoriteTimeoutError.className = "d-none";
       }
       return;
     } else {
