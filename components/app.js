@@ -349,7 +349,7 @@ class App {
 
   handleGetFavoriteRecipesError(error) {
     console.log(error);
-    favoriteRecipesDownloadProgress.className = "recipe-progress-hidden mt-3";
+    favoriteRecipesDownloadProgress.className = "recipe-progress-hidden";
     favoriteRecipesStatusText.className = "d-none";
     if (error.statusText === "error") {
       spoonacularFavoriteError.className = "mt-3 text-center";
