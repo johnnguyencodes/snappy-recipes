@@ -270,10 +270,10 @@ class App {
   }
 
   getRecipes(imageTitle) {
-    searchRecipesDownloadContainer.className = "col-12 d-flex flex-column justify-content-center mt-3"
+    // searchRecipesDownloadContainer.className = "col-12 d-flex flex-column justify-content-center mt-3"
     searchRecipesDownloadProgress.className = "recipe-progress-visible text-left mt-3";
     searchRecipesDownloadText.className = "text-center mt-3";
-    searchRecipesDownloadText.textContent = "Gathering recipes..."
+    searchRecipesDownloadText.textContent = "Gathering recipes, please wait..."
     chunkedRecipeArray = [];
     chunkedRecipeArrayIndex = 0;
     let spoonacularURL = `https://api.spoonacular.com/recipes/complexSearch?query=${imageTitle}&apiKey=${spoonacularAPIKey}&addRecipeNutrition=true&636x393&number=100`
@@ -349,7 +349,7 @@ class App {
 
   handleGetFavoriteRecipesError(error) {
     console.log(error);
-    favoriteRecipesDownloadProgress.className = "recipe-progress-hidden";
+    favoriteRecipesDownloadProgress.className = "recipe-progress-hidden mt-3";
     favoriteRecipesStatusText.className = "d-none";
     if (error.statusText === "error") {
       spoonacularFavoriteError.className = "mt-3 text-center";
