@@ -64,7 +64,7 @@ class Form {
     if (!(localStorage.getItem('favoriteArray')) || localStorage.getItem('favoriteArray') !== "[]" ) {
       emptyFavoriteTextContainer.className = "d-none";
     }
-    mainContent.className="row main-content-right";
+    mainContent.className="row main-content-right noscroll";
     mainContent.style.top = `-${favoriteYPosition}px`;
     formElement.style.top = "0px";
     formElement.className = "col-10 offset-1 col-xl-4 offset-xl-0 d-flex flex-column align-items-center form-element-left";

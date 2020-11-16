@@ -270,7 +270,6 @@ class App {
   }
 
   getRecipes(imageTitle) {
-    // searchRecipesDownloadContainer.className = "col-12 d-flex flex-column justify-content-center mt-3"
     searchRecipesDownloadProgress.className = "recipe-progress-visible text-left mt-3";
     searchRecipesDownloadText.className = "text-center mt-3";
     searchRecipesDownloadText.textContent = "Gathering recipes, please wait..."
