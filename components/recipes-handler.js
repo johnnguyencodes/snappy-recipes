@@ -296,7 +296,7 @@ class RecipesHandler {
       imageContainer.append(heartIconContainer);
       heartIconContainer.addEventListener("click", this.handleFavoriteClick.bind(this, id));
       const cardBody = document.createElement("div");
-      cardBody.className = "card-body h-100 py-0 mb-2";
+      cardBody.className = "card-body py-0 mb-2";
       const cardTitle = document.createElement("div");
       cardTitle.className = "card-title mb-2";
       const recipeTitle = document.createElement("h5");
