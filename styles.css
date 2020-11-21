@@ -131,7 +131,7 @@ a:hover, #heart_container:hover, #delete_container:hover, #file_input_form:hover
 .diet-menu-visible {
   z-index: 3;
   min-height: 100vh;
-  width: 350px;
+  width: 300px;
   position: absolute;
   top: 0;
   left: 0;
@@ -243,7 +243,7 @@ a:hover, #heart_container:hover, #delete_container:hover, #file_input_form:hover
   z-index: 3;
   min-height: 100vh;
   height: 100%;
-  width: 350px;
+  width: 300px;
   position: absolute;
   top: 0;
   left: 0;
