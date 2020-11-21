@@ -269,6 +269,10 @@ a:hover, #heart_container:hover, #delete_container:hover, #file_input_form:hover
   z-index: 50;
 }
 
+#back_to_top_arrow {
+  height: 25px;
+}
+
 #button {
   z-index: 1;
 }
