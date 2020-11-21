@@ -262,6 +262,12 @@ a:hover, #heart_container:hover, #delete_container:hover, #file_input_form:hover
   overflow-y: auto;
 }
 
+#back_to_top_button {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+}
+
 #button {
   z-index: 1;
 }
