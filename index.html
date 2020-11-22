@@ -53,121 +53,124 @@
       </div>
     </div>
   </div>
-  <div id="favorite_recipes_section" class="favorite-recipes-hidden d-flex flex-column justify-content-center">
-    <p id="spoonacular_favorite_error" class="d-none">The Spoonacular API has reached its daily quota for the current
-      API Key.
-      Please notify <a
-        href="mailto:john@johnnguyencodes.com?subject=Snappy%20Recipes%20API%20Key%20Refresh">john@johnnguyencodes.com</a>,
-      thank you.</p>
-    <p id="spoonacular_favorite_timeout_error" class="d-none">The Ajax Request to the Spoonacular API timed out.  Please close and re-open the favorites menu to try again, thank you.</p>
-      <div id="favorite_recipes_download_progress" class="recipe-progress-hidden mt-3 text-left"></div>
-      <p id="favorite_recipes_status_text" class="text-center d-none">Gathering recipes...</p>
-      <div id="favorite_recipes_container" class="d-flex flex-column align-items-center justify-content-center"></div>
-      <div id="empty_favorite_text_container" class="justify-content-center d-none">
-      <h3 class="text-center mb-5">Your saved recipes will appear here.</h3>
+  <div id="side_menu" class="side-menu-hidden">
+    <div id="favorite_recipes_section" class="favorite-recipes-hidden d-flex flex-column justify-content-center">
+      <p id="spoonacular_favorite_error" class="d-none">The Spoonacular API has reached its daily quota for the current
+        API Key.
+        Please notify <a
+          href="mailto:john@johnnguyencodes.com?subject=Snappy%20Recipes%20API%20Key%20Refresh">john@johnnguyencodes.com</a>,
+        thank you.</p>
+      <p id="spoonacular_favorite_timeout_error" class="d-none">The Ajax Request to the Spoonacular API timed out.  Please close and re-open the favorites menu to try again, thank you.</p>
+        <div id="favorite_recipes_download_progress" class="recipe-progress-hidden mt-3 text-left"></div>
+        <p id="favorite_recipes_status_text" class="text-center d-none">Gathering recipes...</p>
+        <div id="favorite_recipes_container" class="d-flex flex-column align-items-center justify-content-center"></div>
+        <div id="empty_favorite_text_container" class="justify-content-center d-none">
+        <h3 class="text-center mb-5">Your saved recipes will appear here.</h3>
+      </div>
+      <div class="d-flex justify-content-center">
+      <button id="close_favorite_button" class="btn btn-danger mt-2 mb-4 text-center">Close</button>
+      </div>
     </div>
-    <div class="d-flex justify-content-center">
-    <button id="close_favorite_button" class="btn btn-danger mt-2 mb-4 text-center">Close</button>
+    <div id="diet_menu" class="diet-menu-hidden d-flex flex-column justify-content-center">
+      <div id="dietary_restrictions">
+        <p class="font-weight-bold text-center mt-5">Please select any dietary restrictions</p>
+        <div id="restrictions_container">
+        </div>
+        <div class="w-100 d-flex ml-3">
+          <span class="col">
+            <input type="checkbox" id="vegan" class="restriction-checkbox" value="vegan" name="vegan">
+            <label for="vegan">Vegan</label>
+          </span>
+          <span class="col">
+            <input type="checkbox" id="vegetarian" class="restriction-checkbox" value="vegetarian" name="vegetarian">
+            <label for="vegetarian">Vegetarian</label>
+          </span>
+        </div>
+        <div class="w-100 d-flex ml-3">
+          <span class="col">
+            <input type="checkbox" id="lacto-vegetarian" class="restriction-checkbox" value="lacto-vegetarian"
+              name="lacto-vegetarian">
+            <label for="lacto-vegetarian">Lacto-Veget.</label>
+          </span>
+          <span class="col">
+            <input type="checkbox" id="ovo-vegetarian" class="restriction-checkbox" value="ovo-vegetarian"
+              name="ovo-vegetarian">
+            <label for="ovo-vegetarian">Ovo-Veget.</label>
+          </span>
+        </div>
+        <div class="w-100 d-flex ml-3">
+          <span class="col">
+            <input type="checkbox" id="pescetarian" class="restriction-checkbox" value="pescetarian" name="pescetarian">
+            <label for="pescetarian">Pescetarian</label>
+          </span>
+        </div>
+      </div>
+      <div id="dietary_intolerances" class="my-5">
+        <p class="font-weight-bold text-center">Please select any food intolerances</p>
+        <div id="intolerances_container"></div>
+        <div class="w-100 d-flex ml-3">
+          <span class="col">
+            <input type="checkbox" id="dairy" class="intolerance-checkbox" value="dairy" name="dairy">
+            <label for="dairy">Dairy</label>
+          </span>
+          <span class="col">
+            <input type="checkbox" id="egg" class="intolerance-checkbox" value="egg" name="egg">
+            <label for="egg">Egg</label>
+          </span>
+        </div>
+        <div class="w-100 d-flex ml-3">
+          <span class="col">
+            <input type="checkbox" id="gluten" class="intolerance-checkbox" value="gluten" name="gluten">
+            <label for="gluten">Gluten</label>
+          </span>
+          <span class="col">
+            <input type="checkbox" id="peanut" class="intolerance-checkbox" value="peanut" name="peanut">
+            <label for="peanut">Peanut</label>
+          </span>
+        </div>
+        <div class="w-100 d-flex ml-3">
+          <span class="col">
+            <input type="checkbox" id="seafood" class="intolerance-checkbox" value="seafood" name="seafood">
+            <label for="seafood">Seafood</label>
+          </span>
+          <span class="col">
+            <input type="checkbox" id="sesame" class="intolerance-checkbox" value="sesame" name="sesame">
+            <label for="sesame">Sesame</label>
+          </span>
+        </div>
+        <div class="w-100 d-flex ml-3">
+          <span class="col">
+            <input type="checkbox" id="shellfish" class="intolerance-checkbox" value="shellfish" name="shellfish">
+            <label for="shellfish">Shellfish</label>
+          </span>
+          <span class="col">
+            <input type="checkbox" id="soy" class="intolerance-checkbox" value="soy" name="soy">
+            <label for="soy">Soy</label>
+          </span>
+        </div>
+        <div class="w-100 d-flex ml-3">
+          <span class="col">
+            <input type="checkbox" id="sulfite" class="intolerance-checkbox" value="sulfite" name="sulfite">
+            <label for="sulfite">Sulfite</label>
+          </span>
+          <span class="col">
+            <input type="checkbox" id="tree-nut" class="intolerance-checkbox" value="tree-nut" name="tree-nut">
+            <label for="tree-nut">Tree Nut</label>
+          </span>
+        </div>
+        <div class="w-100 d-flex ml-3">
+          <span class="col">
+            <input type="checkbox" id="wheat" class="intolerance-checkbox" value="wheat" name="wheat">
+            <label for="wheat">Wheat</label>
+          </span>
+        </div>
+      </div>
+      <div id="close_button" class="d-flex justify-content-center">
+        <button id="close_diet_menu_button" class="btn btn-warning mb-5">Save</button>
+      </div>
     </div>
   </div>
-  <div id="diet_menu" class="diet-menu-hidden d-flex flex-column justify-content-center">
-    <div id="dietary_restrictions">
-      <p class="font-weight-bold text-center mt-5">Please select any dietary restrictions</p>
-      <div id="restrictions_container">
-      </div>
-      <div class="w-100 d-flex ml-3">
-        <span class="col">
-          <input type="checkbox" id="vegan" class="restriction-checkbox" value="vegan" name="vegan">
-          <label for="vegan">Vegan</label>
-        </span>
-        <span class="col">
-          <input type="checkbox" id="vegetarian" class="restriction-checkbox" value="vegetarian" name="vegetarian">
-          <label for="vegetarian">Vegetarian</label>
-        </span>
-      </div>
-      <div class="w-100 d-flex ml-3">
-        <span class="col">
-          <input type="checkbox" id="lacto-vegetarian" class="restriction-checkbox" value="lacto-vegetarian"
-            name="lacto-vegetarian">
-          <label for="lacto-vegetarian">Lacto-Veget.</label>
-        </span>
-        <span class="col">
-          <input type="checkbox" id="ovo-vegetarian" class="restriction-checkbox" value="ovo-vegetarian"
-            name="ovo-vegetarian">
-          <label for="ovo-vegetarian">Ovo-Veget.</label>
-        </span>
-      </div>
-      <div class="w-100 d-flex ml-3">
-        <span class="col">
-          <input type="checkbox" id="pescetarian" class="restriction-checkbox" value="pescetarian" name="pescetarian">
-          <label for="pescetarian">Pescetarian</label>
-        </span>
-      </div>
-    </div>
-    <div id="dietary_intolerances" class="my-5">
-      <p class="font-weight-bold text-center">Please select any food intolerances</p>
-      <div id="intolerances_container"></div>
-      <div class="w-100 d-flex ml-3">
-        <span class="col">
-          <input type="checkbox" id="dairy" class="intolerance-checkbox" value="dairy" name="dairy">
-          <label for="dairy">Dairy</label>
-        </span>
-        <span class="col">
-          <input type="checkbox" id="egg" class="intolerance-checkbox" value="egg" name="egg">
-          <label for="egg">Egg</label>
-        </span>
-      </div>
-      <div class="w-100 d-flex ml-3">
-        <span class="col">
-          <input type="checkbox" id="gluten" class="intolerance-checkbox" value="gluten" name="gluten">
-          <label for="gluten">Gluten</label>
-        </span>
-        <span class="col">
-          <input type="checkbox" id="peanut" class="intolerance-checkbox" value="peanut" name="peanut">
-          <label for="peanut">Peanut</label>
-        </span>
-      </div>
-      <div class="w-100 d-flex ml-3">
-        <span class="col">
-          <input type="checkbox" id="seafood" class="intolerance-checkbox" value="seafood" name="seafood">
-          <label for="seafood">Seafood</label>
-        </span>
-        <span class="col">
-          <input type="checkbox" id="sesame" class="intolerance-checkbox" value="sesame" name="sesame">
-          <label for="sesame">Sesame</label>
-        </span>
-      </div>
-      <div class="w-100 d-flex ml-3">
-        <span class="col">
-          <input type="checkbox" id="shellfish" class="intolerance-checkbox" value="shellfish" name="shellfish">
-          <label for="shellfish">Shellfish</label>
-        </span>
-        <span class="col">
-          <input type="checkbox" id="soy" class="intolerance-checkbox" value="soy" name="soy">
-          <label for="soy">Soy</label>
-        </span>
-      </div>
-      <div class="w-100 d-flex ml-3">
-        <span class="col">
-          <input type="checkbox" id="sulfite" class="intolerance-checkbox" value="sulfite" name="sulfite">
-          <label for="sulfite">Sulfite</label>
-        </span>
-        <span class="col">
-          <input type="checkbox" id="tree-nut" class="intolerance-checkbox" value="tree-nut" name="tree-nut">
-          <label for="tree-nut">Tree Nut</label>
-        </span>
-      </div>
-      <div class="w-100 d-flex ml-3">
-        <span class="col">
-          <input type="checkbox" id="wheat" class="intolerance-checkbox" value="wheat" name="wheat">
-          <label for="wheat">Wheat</label>
-        </span>
-      </div>
-    </div>
-    <div id="close_button" class="d-flex justify-content-center">
-      <button id="close_diet_menu_button" class="btn btn-warning mb-5">Save</button>
-    </div>
-  </div>
+
   <div id="main_content" class="row">
     <div class="form_spaceholder col-12 col-xl-4"></div>
     <div id="form" class="col-10 offset-1 col-xl-4 offset-xl-0 d-flex flex-column align-items-center">
@@ -254,13 +257,6 @@
       </div>
     </div>
   </div>
-  <div id="nav_container" class="col-12 bg-white p-3">
-    <div class="tabs row d-flex justify-content-around">
-      <button id="open_search_button" class="btn btn-primary input">Find Recipes</button>
-      <button id="open_diet_menu_button" class="btn btn-warning input">Diet Preferences</button>
-      <button id="open_favorites_button" class="btn btn-danger input">Favorites</button>
-    </div>
-  </div>
   <div id="overlay" class="d-none"></div>
   <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.0.12/purify.min.js"></script>
@@ -270,7 +266,6 @@
   <script src="components/image-title-handler.js"></script>
   <script src="components/form.js"></script>
   <script src="components/recipes-handler.js"></script>
-  <script src="components/tabs.js"></script>
   <script src="main.js"></script>
 </body>
 
