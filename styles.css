@@ -111,22 +111,6 @@ a:hover, #heart_container:hover, #delete_container:hover, #file_input_form:hover
   top: 50px;
 }
 
-.diet-menu-hidden {
-  z-index: 3;
-  height: 100vh;
-  width: 350px;
-  top: 0;
-  left: -355px;
-  position: fixed;
-  -webkit-transition: 0.3s ease-in-out;
-  -o-transition: 0.3s ease-in-out;
-  transition: 0.3s ease-in-out;
-  border-right: 3px black solid;
-  -webkit-box-shadow: 5px 5px rgba(0, 0, 0, 0.4);
-          box-shadow: 5px 5px rgba(0, 0, 0, 0.4);
-  background-color: white;
-  overflow-x: hidden;
-}
 
 #side_menu_button {
   border-bottom-right-radius: 0px!important;
@@ -136,24 +120,6 @@ a:hover, #heart_container:hover, #delete_container:hover, #file_input_form:hover
 #search_button {
   border-bottom-left-radius: 0px!important;
   border-top-left-radius: 0px!important;
-}
-
-.diet-menu-visible {
-  z-index: 3;
-  min-height: 100vh;
-  width: 320px;
-  position: absolute;
-  top: 0;
-  left: 0;
-  -webkit-transition: 0.3s ease-in-out;
-  -o-transition: 0.3s ease-in-out;
-  transition: 0.3s ease-in-out;
-  border-right: 3px black solid;
-  -webkit-box-shadow: 5px 5px rgba(0, 0, 0, 0.4);
-          box-shadow: 5px 5px rgba(0, 0, 0, 0.4);
-  background-color: white;
-  overflow-y: auto;
-  overflow-x: hidden;
 }
 
 .recipe-progress-hidden {
@@ -182,6 +148,8 @@ a:hover, #heart_container:hover, #delete_container:hover, #file_input_form:hover
 #recipes_download_container {
   height: 100%;
 }
+
+
 
 .favorite-recipe-progress-visible {
   visibility: visible;
@@ -231,7 +199,7 @@ a:hover, #heart_container:hover, #delete_container:hover, #file_input_form:hover
   transition: all .25s ease-in-out;
 }
 
-.favorite-recipes-hidden {
+.favorite-recipes-hidden, .diet-menu-hidden, .side-menu-hidden {
   z-index: 3;
   min-height: 100vh;
   height: 100%;
@@ -249,10 +217,9 @@ a:hover, #heart_container:hover, #delete_container:hover, #file_input_form:hover
   display: none;
 }
 
-.favorite-recipes-visible {
+.favorite-recipes-visible, .diet-menu-visible, .side-menu-visible {
   z-index: 3;
   min-height: 100vh;
-  height: 100%;
   width: 320px;
   position: absolute;
   top: 0;
