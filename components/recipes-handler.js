@@ -529,7 +529,7 @@ class RecipesHandler {
       img.src = imageURL;
       img.alt = "Recipe Image";
       img.className = "m-0 p-0";
-      img.width = "240";
+      img.width = "215";
       img.height = "180";
       const deleteIconContainer = document.createElement("span");
       deleteIconContainer.id = "delete_container";
