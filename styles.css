@@ -264,7 +264,7 @@ a:hover, #heart_container:hover, #delete_container:hover, #file_input_form:hover
 
 #back_to_top_button {
   position: fixed;
-  bottom: 50px;
+  bottom: 80px;
   right: 10px;
   z-index: 50;
 }
