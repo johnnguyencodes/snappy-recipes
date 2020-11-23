@@ -111,39 +111,20 @@ a:hover, #heart_container:hover, #delete_container:hover, #file_input_form:hover
   top: 50px;
 }
 
-.diet-menu-hidden {
-  z-index: 3;
-  height: 100vh;
-  width: 350px;
-  top: 0;
-  left: -355px;
-  position: fixed;
-  -webkit-transition: 0.3s ease-in-out;
-  -o-transition: 0.3s ease-in-out;
-  transition: 0.3s ease-in-out;
-  border-right: 3px black solid;
-  -webkit-box-shadow: 5px 5px rgba(0, 0, 0, 0.4);
-          box-shadow: 5px 5px rgba(0, 0, 0, 0.4);
-  background-color: white;
-  overflow-x: hidden;
+
+#open_side_menu_button {
+  border-bottom-right-radius: 0px!important;
+  border-top-right-radius: 0px!important;
 }
 
-.diet-menu-visible {
-  z-index: 3;
-  min-height: 100vh;
-  width: 350px;
-  position: absolute;
-  top: 0;
-  left: 0;
-  -webkit-transition: 0.3s ease-in-out;
-  -o-transition: 0.3s ease-in-out;
-  transition: 0.3s ease-in-out;
-  border-right: 3px black solid;
-  -webkit-box-shadow: 5px 5px rgba(0, 0, 0, 0.4);
-          box-shadow: 5px 5px rgba(0, 0, 0, 0.4);
-  background-color: white;
-  overflow-y: auto;
-  overflow-x: hidden;
+#close_side_menu_button, #toggle_favorites_button, #toggle_diet_button {
+  position: fixed;
+  z-index: 4;
+}
+
+#search_button {
+  border-bottom-left-radius: 0px!important;
+  border-top-left-radius: 0px!important;
 }
 
 .recipe-progress-hidden {
@@ -221,7 +202,7 @@ a:hover, #heart_container:hover, #delete_container:hover, #file_input_form:hover
   transition: all .25s ease-in-out;
 }
 
-.favorite-recipes-hidden {
+.favorite-recipes-hidden, .diet-menu-hidden, .side-menu-hidden {
   z-index: 3;
   min-height: 100vh;
   height: 100%;
@@ -239,12 +220,48 @@ a:hover, #heart_container:hover, #delete_container:hover, #file_input_form:hover
   display: none;
 }
 
-.favorite-recipes-visible {
+.close-side-menu-button-hidden  {
+  top: 10px;
+  left: -100px;
+  -webkit-transition: 0.3s ease-in-out;
+  -o-transition: 0.3s ease-in-out;
+  transition: 0.3s ease-in-out;
+}
+
+.toggle-hidden {
+  left: -300px;
+  -webkit-transition: 0.3s ease-in-out;
+  -o-transition: 0.3s ease-in-out;
+  transition: 0.3s ease-in-out;
+}
+
+.close-side-menu-button-visible {
+  top: 10px;
+  left: 275px;
+  -webkit-transition: 0.3s ease-in-out;
+  -o-transition: 0.3s ease-in-out;
+  transition: 0.3s ease-in-out;
+}
+
+.toggle-visible {
+  left: 10px;
+  -webkit-transition: 0.3s ease-in-out;
+  -o-transition: 0.3s ease-in-out;
+  transition: 0.3s ease-in-out;
+}
+
+#toggle_favorites_button {
+  top: 10px;
+}
+
+#toggle_diet_button {
+  top: 52px;
+}
+.favorite-recipes-visible, .diet-menu-visible, .side-menu-visible {
   z-index: 3;
   min-height: 100vh;
-  height: 100%;
-  width: 350px;
-  position: absolute;
+  width: 320px;
+  position: relative;
   top: 0;
   left: 0;
   -webkit-transition: 0.3s ease-in-out;
@@ -258,6 +275,11 @@ a:hover, #heart_container:hover, #delete_container:hover, #file_input_form:hover
   overflow-y: auto;
 }
 
+.toggle {
+  width: 32px;
+  height: 32px;
+}
+
 #favorite_recipes_element {
   overflow-y: auto;
 }
@@ -267,6 +289,12 @@ a:hover, #heart_container:hover, #delete_container:hover, #file_input_form:hover
   bottom: 10px;
   right: 10px;
   z-index: 50;
+}
+
+#nav_container {
+  position: fixed;
+  bottom: 0px;
+  z-index: 1000;
 }
 
 #back_to_top_arrow {
@@ -344,9 +372,14 @@ span {
   max-width: 90%;
 }
 
-.recipe-card, .favorite-recipe-card {
+.recipe-card {
   min-width: 268px;
   max-width: 268px;
+}
+
+.favorite-recipe-card {
+  min-width: 220px;
+  max-width: 220px;
 }
 
 .main-content-right {

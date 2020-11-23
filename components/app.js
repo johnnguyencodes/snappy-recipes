@@ -31,6 +31,7 @@ const favoriteRecipesSection = document.getElementById("favorite_recipes_section
 const inputs = document.querySelectorAll(".input");
 const searchRecipesDownloadContainer = document.getElementById("search_recipes_download_container");
 const imageProcessingContainer = document.getElementById("image_processing_container");
+const dietMenu = document.getElementById("diet_menu");
 let recipeInformation = null;
 let spoonacularError = null;
 
