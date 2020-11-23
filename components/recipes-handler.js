@@ -120,7 +120,7 @@ class RecipesHandler {
         duration: 1500,
         newWindow: true,
         gravity: "bottom",
-        position: "right",
+        position: "left",
       }).showToast();
     } else {
       favoriteArray.splice(favoriteArray.indexOf(id), 1);
@@ -132,7 +132,7 @@ class RecipesHandler {
         duration: 1500,
         newWindow: true,
         gravity: "bottom",
-        position: "right",
+        position: "left",
       }).showToast();
     }
     localStorage.setItem("favoriteArray", JSON.stringify(favoriteArray));
@@ -167,7 +167,7 @@ class RecipesHandler {
             duration: 1500,
             newWindow: true,
             gravity: "bottom",
-            position: "right",
+            position: "left",
           }).showToast();
     this.favoriteCheck(id);
   }
@@ -185,7 +185,7 @@ class RecipesHandler {
         duration: 1500,
         newWindow: true,
         gravity: "bottom",
-        position: "right",
+        position: "left",
       }).showToast();
       if (document.getElementById(`heart_icon_${id}`)) {
         document.getElementById(`heart_icon_${id}`).className =
@@ -236,7 +236,7 @@ class RecipesHandler {
         duration: 1500,
         newWindow: true,
         gravity: "bottom",
-        position: "right",
+        position: "left",
       }).showToast();
     }
   }
