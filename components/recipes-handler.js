@@ -7,6 +7,7 @@ const backToTopButton = document.getElementById("back_to_top_button");
 const recipeInstructions = document.getElementById("recipe_instructions");
 const recipeIngredients = document.getElementById("recipe_ingredients");
 const modalButtonContainer = document.getElementById("modal_button_container");
+const overlayPreview = document.getElementById("overlay_preview");
 
 class RecipesHandler {
   constructor(recipesContainer, favoriteRecipesContainer) {
@@ -22,7 +23,7 @@ class RecipesHandler {
       this
     );
     this.favoriteCheck = this.favoriteCheck.bind(this);
-    modalContainer.addEventListener("click", this.closePreview.bind(this));
+    overlayPreview.addEventListener("click", this.closePreview.bind(this));
     closePreviewXButton.addEventListener("click", this.closePreview.bind(this));
   }
 
@@ -116,9 +117,9 @@ class RecipesHandler {
         "recipe-card favorited card col-xs-12 col-sm-5 col-md-5 col-lg-3 col-xl-2 m-3 px-0 h-100";
       Toastify({
         text: `${firstWord}... added`,
-        duration: 3000,
+        duration: 1500,
         newWindow: true,
-        gravity: "top",
+        gravity: "bottom",
         position: "right",
       }).showToast();
     } else {
@@ -128,9 +129,9 @@ class RecipesHandler {
         "recipe-card card col-xs-12 col-sm-5 col-md-5 col-lg-3 col-xl-2 m-3 px-0 h-100";
       Toastify({
         text: `${firstWord}... removed`,
-        duration: 3000,
+        duration: 1500,
         newWindow: true,
-        gravity: "top",
+        gravity: "bottom",
         position: "right",
       }).showToast();
     }
@@ -138,8 +139,12 @@ class RecipesHandler {
   }
 
   handleDeleteClick(id) {
-    console.log(event);
     event.stopPropagation();
+    let deleteCard = document.getElementById(`${id}`);
+    let recipeTitle =
+      deleteCard.firstChild.nextSibling.firstChild.firstChild.firstChild
+        .textContent;
+    let firstWord = recipeTitle.split(" ")[0];
     favoriteArray.splice(favoriteArray.indexOf(id), 1);
     document.getElementById(`${id}`).remove();
     localStorage.setItem("favoriteArray", JSON.stringify(favoriteArray));
@@ -157,6 +162,13 @@ class RecipesHandler {
       favoriteRecipesSection.className =
         "favorite-recipes-visible d-flex flex-column justify-content-center";
     }
+          Toastify({
+            text: `${firstWord}... removed`,
+            duration: 1500,
+            newWindow: true,
+            gravity: "bottom",
+            position: "right",
+          }).showToast();
     this.favoriteCheck(id);
   }
 
@@ -253,6 +265,7 @@ class RecipesHandler {
     const recipeImage = document.getElementById("recipe_image");
     const recipeSummary = document.getElementById("recipe_summary");
     const externalLinkButton = document.createElement("button");
+    overlayPreview.className = "";
     externalLinkButton.id = "external_link_button";
     externalLinkButton.className = "btn btn-primary text-white";
     externalLinkButton.textContent = "Recipe Page";
@@ -272,7 +285,8 @@ class RecipesHandler {
       recipeIngredients.append(ingredient);
     }
     const cleanSummary = DOMPurify.sanitize(summary);
-    modalContainer.className = "d-flex justify-content-center";
+    modalContainer.className =
+      "modal-dialog modal-lg modal-dialog-centered rounded d-flex justify-content-center m-0";
     recipeTitle.textContent = `Recipe Preview: ${title}`;
     recipeImage.src = imageURL;
     recipeSummary.innerHTML = cleanSummary;
@@ -303,12 +317,14 @@ class RecipesHandler {
   }
 
   closePreview() {
+    event.stopPropagation();
     document.querySelector(".modal-body").scrollTo({
       top: 0,
       behavior: "auto",
     });
     modalContainer.className = "d-none justify-content-center";
     body.className = "bg-light";
+    overlayPreview.className = "d-none";
     while (recipeInstructions.firstChild) {
       recipeInstructions.removeChild(recipeInstructions.firstChild);
     }

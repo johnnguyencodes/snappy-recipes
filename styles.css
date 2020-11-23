@@ -361,6 +361,11 @@ span {
   background-color: rgba(0,0,0,0.3);
 }
 
+#overlay_preview {
+  z-index: 101;
+  position: fixed;
+}
+
 .modal-dialog,
 .modal-content {
     /* 80% of window height */
