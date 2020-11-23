@@ -41,7 +41,7 @@ table {
   right: 20px;
 }
 
-a:hover, #heart_container:hover, #delete_container:hover, #file_input_form:hover {
+a:hover, #heart_container:hover, #delete_container:hover, #file_input_form:hover, .recipe-card:hover {
   cursor: pointer;
 }
 

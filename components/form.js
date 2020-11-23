@@ -30,7 +30,7 @@ class Form {
     fileInputForm.addEventListener("change", this.imgValidation.bind(this));
     // openFavoriteButton.addEventListener("click", this.openFavorites.bind(this));
     // closeFavoriteButton.addEventListener("click", this.closeFavorites.bind(this));
-    overlay.addEventListener("click", this.handleOverlayClick.bind(this));
+    overlay.addEventListener("click", this.closeSideMenu.bind(this));
     recipeSearchInput.addEventListener("keyup", this.enterSearch.bind(this));
     fileLabel.addEventListener("dragover", this.imgValidation.bind(this));
     document.addEventListener("drop", function (event) {
@@ -138,11 +138,11 @@ class Form {
     this.dietInfo();
   }
 
-  handleOverlayClick() {
-    if (favoriteRecipesSection.classList.contains("favorite-recipes-visible")) {
-      this.closeFavorites();
-    }
-  }
+  // handleOverlayClick() {
+  //   if (favoriteRecipesSection.classList.contains("favorite-recipes-visible")) {
+  //     this.closeFavorites();
+  //   }
+  // }
 
   imgValidation(event) {
     event.preventDefault();
