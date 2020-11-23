@@ -106,14 +106,17 @@ class RecipesHandler {
 
   handleFavoriteClick(id) {
     event.stopPropagation();
+    let heartIcon = document.getElementById(`heart_icon_${id}`);
     if (!favoriteArray.includes(id)) {
       favoriteArray.push(id);
-      document.getElementById(`heart_icon_${id}`).className =
-        "fas fa-heart text-danger heart-icon fa-lg";
+      heartIcon.className = "fas fa-heart text-danger heart-icon fa-lg";
+      heartIcon.parentNode.parentNode.parentNode.className =
+        "recipe-card favorited card col-xs-12 col-sm-5 col-md-5 col-lg-3 col-xl-2 m-3 px-0 h-100";
     } else {
       favoriteArray.splice(favoriteArray.indexOf(id), 1);
-      document.getElementById(`heart_icon_${id}`).className =
-        "far fa-heart text-danger heart-icon fa-lg";
+      heartIcon.className = "far fa-heart text-danger heart-icon fa-lg";
+      heartIcon.parentNode.parentNode.parentNode.className =
+        "recipe-card card col-xs-12 col-sm-5 col-md-5 col-lg-3 col-xl-2 m-3 px-0 h-100";
     }
     localStorage.setItem("favoriteArray", JSON.stringify(favoriteArray));
   }

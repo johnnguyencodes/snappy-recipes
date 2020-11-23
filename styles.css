@@ -196,12 +196,32 @@ a:hover, #heart_container:hover, #delete_container:hover, #file_input_form:hover
   transition: all 0.25s ease-in-out;
 }
 
+.favorited {
+    -webkit-box-shadow: 0 0 10px rgba(206, 8, 8, 0.616);
+          box-shadow: 0 0 10px rgba(206, 8, 8, 0.616);
+  -webkit-transition: all 0.25s ease-in-out;
+  -o-transition: all 0.25s ease-in-out;
+  transition: all 0.25s ease-in-out;
+}
+
+
 .recipe-card:hover, .favorite-recipe-card:hover {
   -webkit-transform: translateY(-.5rem);
       -ms-transform: translateY(-.5rem);
           transform: translateY(-.5rem);
   -webkit-box-shadow: 0 0 15px rgba(33,33,33,.2);
           box-shadow: 0 0 15px rgba(33,33,33,.2);
+  -webkit-transition: all .25s ease-in-out;
+  -o-transition: all .25s ease-in-out;
+  transition: all .25s ease-in-out;
+}
+
+.favorited:hover {
+    -webkit-transform: translateY(-.5rem);
+      -ms-transform: translateY(-.5rem);
+          transform: translateY(-.5rem);
+  -webkit-box-shadow: 0 0 15px rgba(206, 8, 8, 0.616);
+          box-shadow: 0 0 15px rgba(206, 8, 8, 0.616);
   -webkit-transition: all .25s ease-in-out;
   -o-transition: all .25s ease-in-out;
   transition: all .25s ease-in-out;
