@@ -107,16 +107,32 @@ class RecipesHandler {
   handleFavoriteClick(id) {
     event.stopPropagation();
     let heartIcon = document.getElementById(`heart_icon_${id}`);
+    let recipeTitle = heartIcon.parentNode.parentNode.parentNode.lastChild.firstChild.firstChild.firstChild.textContent;
+    let firstWord = recipeTitle.split(" ")[0];
     if (!favoriteArray.includes(id)) {
       favoriteArray.push(id);
       heartIcon.className = "fas fa-heart text-danger heart-icon fa-lg";
       heartIcon.parentNode.parentNode.parentNode.className =
         "recipe-card favorited card col-xs-12 col-sm-5 col-md-5 col-lg-3 col-xl-2 m-3 px-0 h-100";
+      Toastify({
+        text: `${firstWord}... added`,
+        duration: 3000,
+        newWindow: true,
+        gravity: "top",
+        position: "right",
+      }).showToast();
     } else {
       favoriteArray.splice(favoriteArray.indexOf(id), 1);
       heartIcon.className = "far fa-heart text-danger heart-icon fa-lg";
       heartIcon.parentNode.parentNode.parentNode.className =
         "recipe-card card col-xs-12 col-sm-5 col-md-5 col-lg-3 col-xl-2 m-3 px-0 h-100";
+      Toastify({
+        text: `${firstWord}... removed`,
+        duration: 3000,
+        newWindow: true,
+        gravity: "top",
+        position: "right",
+      }).showToast();
     }
     localStorage.setItem("favoriteArray", JSON.stringify(favoriteArray));
   }
@@ -523,7 +539,7 @@ class RecipesHandler {
       const ingredients = recipes[i].nutrition.ingredients;
       const summary = recipes[i].summary;
       const recipeCard = document.createElement("div");
-      recipeCard.className = "favorite-recipe-card card m-3 px-0 col-12";
+      recipeCard.className = "favorite-recipe-card favorited card m-3 px-0 col-12";
       recipeCard.id = id;
       const imageContainer = document.createElement("div");
       const titleAnchorTag = document.createElement("a");
