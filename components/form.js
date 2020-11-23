@@ -24,6 +24,8 @@ class Form {
   constructor() {
     openSideMenuButton.addEventListener("click", this.openSideMenu.bind(this));
     closeSideMenuButton.addEventListener("click", this.closeSideMenu.bind(this));
+    toggleFavoritesButton.addEventListener("click", this.toggleFavorites.bind(this));
+    toggleDietButton.addEventListener("click", this.toggleDiet.bind(this));
     searchButton.addEventListener("click", this.search.bind(this));
     fileInputForm.addEventListener("change", this.imgValidation.bind(this));
     // openFavoriteButton.addEventListener("click", this.openFavorites.bind(this));
@@ -64,6 +66,18 @@ class Form {
     }
   }
 
+  toggleFavorites() {
+    event.preventDefault();
+    favoriteRecipesSection.className = "d-flex flex-column justify-content-center";
+    dietMenu.className = "d-none flex-column justify-content-center";
+  }
+
+  toggleDiet() {
+    event.preventDefault();
+    favoriteRecipesSection.className = "d-none flex-column justify-content-center";
+    dietMenu.className = "d-flex flex-column justify-content-center";
+  }
+
   openFavorites() {
     event.preventDefault();
     favoriteYPosition = window.scrollY;
@@ -95,8 +109,8 @@ class Form {
     event.preventDefault();
     favoriteYPosition = window.scrollY;
     closeSideMenuButton.className = "close-side-menu-button-visible d-flex justify-content-center align-items-center text-danger p-0 m-0";
-    toggleFavoritesButton.className = "toggle-visible btn btn-danger text-white m-1"
-    toggleDietButton.className = "toggle-visible btn btn-primary text-white m-1";
+    toggleFavoritesButton.className = "toggle-visible toggle btn btn-danger text-white m-0 p-0 d-flex justify-content-center align-items-center"
+    toggleDietButton.className = "toggle-visible toggle btn btn-primary text-white m-0 p-0 d-flex justify-content-center align-items-center";
     sideMenuContainer.className = "side-menu-visible d-flex flex-column justify-content-center";
     favoriteRecipesSection.className = "d-flex flex-column justify-content-center";
     dietMenu.className = "d-none flex-column justify-content-center"
@@ -111,8 +125,8 @@ class Form {
   closeSideMenu() {
     event.preventDefault();
     closeSideMenuButton.className = "close-side-menu-button-hidden justify-content-center align-items-center text-danger p-0 m-0";
-    toggleFavoritesButton.className = "toggle-hidden btn btn-danger text-white m-1"
-    toggleDietButton.className = "toggle-hidden btn btn-primary text-white m-1";
+    toggleFavoritesButton.className = "toggle-hidden toggle btn btn-danger text-white m-0 p-0 d-flex justify-content-center align-items-center"
+    toggleDietButton.className = "toggle-hidden toggle btn btn-primary text-white m-0 p-0 d-flex justify-content-center align-items-center";
     sideMenuContainer.className = "side-menu-hidden d-flex flex-column justify-content-center";
     mainContent.className = "row";
     overlay.className = "d-none";
