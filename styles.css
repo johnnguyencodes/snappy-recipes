@@ -154,8 +154,6 @@ a:hover, #heart_container:hover, #delete_container:hover, #file_input_form:hover
   height: 100%;
 }
 
-
-
 .favorite-recipe-progress-visible {
   visibility: visible;
   width: 100%;
@@ -254,6 +252,11 @@ a:hover, #heart_container:hover, #delete_container:hover, #file_input_form:hover
   background-color: white;
   overflow-x: hidden;
   overflow-y: auto;
+}
+
+.toggle {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
 }
 
 #favorite_recipes_element {
