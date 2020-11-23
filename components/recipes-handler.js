@@ -100,6 +100,7 @@ class RecipesHandler {
   }
 
   handleFavoriteClick(id) {
+    event.stopPropagation();
     if (!favoriteArray.includes(id)) {
       favoriteArray.push(id);
       document.getElementById(`heart_icon_${id}`).className =
@@ -112,7 +113,8 @@ class RecipesHandler {
     localStorage.setItem("favoriteArray", JSON.stringify(favoriteArray));
   }
 
-  handleDeleteClick(id) {
+  handleDeleteClick(id, event) {
+    event.stopPropagation();
     favoriteArray.splice(favoriteArray.indexOf(id), 1);
     document.getElementById(`${id}`).remove();
     localStorage.setItem("favoriteArray", JSON.stringify(favoriteArray));
@@ -387,7 +389,7 @@ class RecipesHandler {
       imageContainer.append(heartIconContainer);
       heartIconContainer.addEventListener(
         "click",
-        this.handleFavoriteClick.bind(this, id)
+        this.handleFavoriteClick.bind(this, id, event)
       );
       const cardBody = document.createElement("div");
       cardBody.className = "card-body py-0 mb-2";
@@ -453,7 +455,7 @@ class RecipesHandler {
       recipeCard.append(imageContainer);
       recipeCard.append(cardBody);
       this.recipesContainer.append(recipeCard);
-      titleAnchorTag.addEventListener(
+      recipeCard.addEventListener(
         "click",
         this.modalHandler.bind(
           this,
@@ -541,7 +543,7 @@ class RecipesHandler {
       imageContainer.append(deleteIconContainer);
       deleteIconContainer.addEventListener(
         "click",
-        this.handleDeleteClick.bind(this, id)
+        this.handleDeleteClick.bind(this, id, event)
       );
       const cardBody = document.createElement("div");
       cardBody.className = "card-body py-0 mb-2";
@@ -601,7 +603,7 @@ class RecipesHandler {
       recipeCard.append(imageContainer);
       recipeCard.append(cardBody);
       this.favoriteRecipesContainer.append(recipeCard);
-      titleAnchorTag.addEventListener(
+      recipeCard.addEventListener(
         "click",
         this.modalHandler.bind(
           this,
