@@ -32,6 +32,7 @@ const inputs = document.querySelectorAll(".input");
 const searchRecipesDownloadContainer = document.getElementById("search_recipes_download_container");
 const imageProcessingContainer = document.getElementById("image_processing_container");
 const dietMenu = document.getElementById("diet_menu");
+const closePreviewXButton = document.getElementById("close_preview_x_button");
 let recipeInformation = null;
 let spoonacularError = null;
 

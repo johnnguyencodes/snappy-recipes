@@ -23,6 +23,7 @@ class RecipesHandler {
     );
     this.favoriteCheck = this.favoriteCheck.bind(this);
     modalContainer.addEventListener("click", this.closePreview.bind(this));
+    closePreviewXButton.addEventListener("click", this.closePreview.bind(this));
   }
 
   clickGetFavoriteRecipes(getFavoriteRecipes) {
@@ -242,6 +243,7 @@ class RecipesHandler {
     closePreviewButton.id = "go_back_button";
     closePreviewButton.className = "btn btn-secondary";
     closePreviewButton.textContent = "Close Preview";
+    closePreviewXButton.className = "close-preview-x-button-visible justify-content-center align-items-center text-danger p-0 m-0";
     modalButtonContainer.append(externalLinkButton);
     modalButtonContainer.append(favoriteButton);
     modalButtonContainer.append(closePreviewButton);
