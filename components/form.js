@@ -3,8 +3,6 @@ let fileInputForm = document.getElementById("file_input_form");
 const recipeSearchInput = document.getElementById('recipe_search_input');
 const resetButton = document.getElementById("reset_button");
 const searchButton = document.getElementById("search_button");
-// const openFavoriteButton = document.getElementById("open_favorites_button");
-// const closeFavoriteButton = document.getElementById("close_favorite_button");
 const toggleFavoritesButton = document.getElementById("toggle_favorites_button");
 const toggleDietButton = document.getElementById("toggle_diet_button");
 const mainContent = document.getElementById("main_content");
@@ -28,8 +26,6 @@ class Form {
     toggleDietButton.addEventListener("click", this.toggleDiet.bind(this));
     searchButton.addEventListener("click", this.search.bind(this));
     fileInputForm.addEventListener("change", this.imgValidation.bind(this));
-    // openFavoriteButton.addEventListener("click", this.openFavorites.bind(this));
-    // closeFavoriteButton.addEventListener("click", this.closeFavorites.bind(this));
     overlay.addEventListener("click", this.closeSideMenu.bind(this));
     recipeSearchInput.addEventListener("keyup", this.enterSearch.bind(this));
     fileLabel.addEventListener("dragover", this.imgValidation.bind(this));
@@ -137,12 +133,6 @@ class Form {
     spoonacularFavoriteTimeoutError.className = "d-none";
     this.dietInfo();
   }
-
-  // handleOverlayClick() {
-  //   if (favoriteRecipesSection.classList.contains("favorite-recipes-visible")) {
-  //     this.closeFavorites();
-  //   }
-  // }
 
   imgValidation(event) {
     event.preventDefault();

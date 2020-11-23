@@ -8,7 +8,6 @@ const recipeInstructions = document.getElementById("recipe_instructions");
 const recipeIngredients = document.getElementById("recipe_ingredients");
 const modalButtonContainer = document.getElementById("modal_button_container");
 const overlayPreview = document.getElementById("overlay_preview");
-// let recipeTitle = document.getElementById("recipe_title");
 
 class RecipesHandler {
   constructor(recipesContainer, favoriteRecipesContainer) {
@@ -576,10 +575,6 @@ class RecipesHandler {
       recipeCard.id = id;
       const imageContainer = document.createElement("div");
       const titleAnchorTag = document.createElement("a");
-      // titleAnchorTag.addEventListener(
-      //   "click",
-      //   this.modalHandler.bind(this, recipeURL)
-      // );
       imageContainer.className = "d-flex justify-content-center";
       const img = document.createElement("img");
       imageContainer.className =

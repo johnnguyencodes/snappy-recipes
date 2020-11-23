@@ -90,7 +90,6 @@ class App {
     this.form.clickPostImage(this.postImage);
     this.form.clickGetRecipes(this.getRecipes);
     this.form.clickGetRandomRecipes(this.getRandomRecipes);
-    // this.dietMenu.clickDietInfo(this.dietInfo);
     this.form.clickGetFavoriteRecipes(this.getFavoriteRecipes);
     this.recipesHandler.clickGetFavoriteRecipes(this.getFavoriteRecipes);
   }
@@ -295,7 +294,6 @@ class App {
   }
 
   handleGetRecipesError(error) {
-    console.log(error.status);
     searchRecipesDownloadContainer.className = "d-none";
     searchRecipesDownloadProgress.className = "recipe-progress-hidden text-left mt-3";
     searchRecipesDownloadText.className = "d-none";
@@ -348,7 +346,6 @@ class App {
   }
 
   handleGetFavoriteRecipesError(error) {
-    console.log(error);
     favoriteRecipesDownloadProgress.className = "recipe-progress-hidden";
     favoriteRecipesStatusText.className = "d-none";
     if (error.statusText === "error") {
