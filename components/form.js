@@ -115,6 +115,7 @@ class Form {
     favoriteRecipesDownloadProgress.className = "recipe-progress-hidden mt-3";
     spoonacularFavoriteError.className = "d-none";
     spoonacularFavoriteTimeoutError.className = "d-none";
+    this.dietInfo();
   }
 
   handleOverlayClick() {
