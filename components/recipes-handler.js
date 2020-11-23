@@ -4,6 +4,9 @@ const resultsShownQuantityText = document.getElementById("results_shown_quantity
 const body = document.querySelector("body");
 const favoriteButton = document.getElementById("favorite_button");
 const backToTopButton = document.getElementById("back_to_top_button");
+const recipeInstructions = document.getElementById("recipe_instructions");
+const recipeIngredients = document.getElementById("recipe_ingredients");
+const modalButtonContainer = document.getElementById("modal_button_container");
 
 class RecipesHandler {
   constructor(recipesContainer, favoriteRecipesContainer) {
@@ -19,6 +22,7 @@ class RecipesHandler {
       this
     );
     this.favoriteCheck = this.favoriteCheck.bind(this);
+    modalContainer.addEventListener("click", this.closePreview.bind(this));
   }
 
   clickGetFavoriteRecipes(getFavoriteRecipes) {
@@ -228,12 +232,7 @@ class RecipesHandler {
     const recipeTitle = document.getElementById("recipe_title");
     const recipeImage = document.getElementById("recipe_image");
     const recipeSummary = document.getElementById("recipe_summary");
-    const recipeInstructions = document.getElementById("recipe_instructions");
-    const recipeIngredients = document.getElementById("recipe_ingredients");
     const externalLinkButton = document.createElement("button");
-    const modalButtonContainer = document.getElementById(
-      "modal_button_container"
-    );
     externalLinkButton.id = "external_link_button";
     externalLinkButton.className = "btn btn-primary text-white";
     externalLinkButton.textContent = "Recipe Page";
@@ -271,23 +270,7 @@ class RecipesHandler {
       favoriteButton.className = "btn btn-outline-danger";
       favoriteButton.textContent = "Save to Favorites";
     }
-    closePreviewButton.addEventListener("click", () => {
-      document.querySelector(".modal-body").scrollTo({
-        top: 0,
-        behavior: "auto",
-      });
-      modalContainer.className = "d-none justify-content-center";
-      body.className = "bg-light";
-      while (recipeInstructions.firstChild) {
-        recipeInstructions.removeChild(recipeInstructions.firstChild);
-      }
-      while (recipeIngredients.firstChild) {
-        recipeIngredients.removeChild(recipeIngredients.firstChild);
-      }
-      while (modalButtonContainer.firstChild) {
-        modalButtonContainer.removeChild(modalButtonContainer.firstChild);
-      }
-    });
+    closePreviewButton.addEventListener("click", this.closePreview.bind(this));
     for (var i = 0; i < instructions.length; i++) {
       if (instructions[i] === "var article") {
         return;
@@ -295,6 +278,24 @@ class RecipesHandler {
       const step = document.createElement("li");
       step.textContent = instructions[i];
       recipeInstructions.append(step);
+    }
+  }
+
+  closePreview() {
+    document.querySelector(".modal-body").scrollTo({
+      top: 0,
+      behavior: "auto",
+    });
+    modalContainer.className = "d-none justify-content-center";
+    body.className = "bg-light";
+    while (recipeInstructions.firstChild) {
+      recipeInstructions.removeChild(recipeInstructions.firstChild);
+    }
+    while (recipeIngredients.firstChild) {
+      recipeIngredients.removeChild(recipeIngredients.firstChild);
+    }
+    while (modalButtonContainer.firstChild) {
+      modalButtonContainer.removeChild(modalButtonContainer.firstChild);
     }
   }
 
