@@ -13,10 +13,15 @@ const errorNoFile = document.getElementById("error_no_file");
 const errorIncorrectFile = document.getElementById("error_incorrect_file");
 const errorFileExceedsSize = document.getElementById("error_file_exceeds_size");
 const errorNoSearchResults = document.getElementById("no_search_recipes_text");
+const openSideMenuButton = document.getElementById("open_side_menu_button");
+const closeSideMenuButton = document.getElementById("close_side_menu_button");
+const sideMenuContainer = document.getElementById("side_menu_container");
 let favoriteYPosition;
 
 class Form {
   constructor() {
+    openSideMenuButton.addEventListener("click", this.openSideMenu.bind(this));
+    closeSideMenuButton.addEventListener("click", this.closeSideMenu.bind(this));
     searchButton.addEventListener("click", this.search.bind(this));
     fileInputForm.addEventListener("change", this.imgValidation.bind(this));
     openFavoriteButton.addEventListener("click", this.openFavorites.bind(this));
@@ -75,6 +80,32 @@ class Form {
   closeFavorites() {
     event.preventDefault();
     favoriteRecipesSection.className = "favorite-recipes-hidden d-flex flex-column justify-content-center";
+    mainContent.className = "row";
+    overlay.className = "d-none";
+    window.scroll(0, favoriteYPosition);
+    formElement.className = "col-10 offset-1 col-xl-4 offset-xl-0 d-flex flex-column align-items-center";
+    favoriteRecipesDownloadProgress.className = "recipe-progress-hidden mt-3";
+    spoonacularFavoriteError.className = "d-none";
+    spoonacularFavoriteTimeoutError.className = "d-none";
+  }
+
+  openSideMenu() {
+    event.preventDefault();
+    favoriteYPosition = window.scrollY;
+    sideMenuContainer.className = "side-menu-visible d-flex flex-column justify-content-center";
+    favoriteRecipesSection.className = "d-flex flex-column justify-content-center";
+    dietMenu.className = "d-none flex-column justify-content-center"
+    mainContent.className = "row main-content-right noscroll";
+    mainContent.style.top = `-${favoriteYPosition}px`;
+    formElement.style.top = "0px";
+    formElement.className = "col-10 offset-1 col-xl-4 offset-xl-0 d-flex flex-column align-items-center form-element-left";
+    overlay.className = "";
+    this.getFavoriteRecipes();
+  }
+
+  closeSideMenu() {
+    event.preventDefault();
+    sideMenuContainer.className = "side-menu-hidden d-flex flex-column justify-content-center";
     mainContent.className = "row";
     overlay.className = "d-none";
     window.scroll(0, favoriteYPosition);

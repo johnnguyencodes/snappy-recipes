@@ -112,9 +112,16 @@ a:hover, #heart_container:hover, #delete_container:hover, #file_input_form:hover
 }
 
 
-#side_menu_button {
+#open_side_menu_button {
   border-bottom-right-radius: 0px!important;
   border-top-right-radius: 0px!important;
+}
+
+#close_side_menu_button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 4;
 }
 
 #search_button {

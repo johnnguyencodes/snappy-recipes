@@ -1,4 +1,3 @@
-const dietMenu = document.getElementById("diet_menu");
 const openDietMenuButton = document.getElementById("open_diet_menu_button");
 const closeDietMenuButton = document.getElementById("close_diet_menu_button");
 let dietYPosition;

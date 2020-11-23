@@ -53,8 +53,9 @@
       </div>
     </div>
   </div>
-  <div id="side_menu" class="side-menu-hidden">
-    <div id="favorite_recipes_section" class="favorite-recipes-hidden d-flex flex-column justify-content-center">
+  <div id="side_menu_container" class="side-menu-hidden d-flex flex-column justify-content-center">
+    <a id="close_side_menu_button" class="btn btn-danger"><i class="fas fa-window-close"></i></a>
+    <div id="favorite_recipes_section" class="d-flex flex-column justify-content-center">
       <p id="spoonacular_favorite_error" class="d-none">The Spoonacular API has reached its daily quota for the current
         API Key.
         Please notify <a
@@ -170,7 +171,6 @@
       </div>
     </div>
   </div>
-
   <div id="main_content" class="row">
     <div class="form_spaceholder col-12 col-xl-4"></div>
     <div id="form" class="col-10 offset-1 col-xl-4 offset-xl-0 d-flex flex-column align-items-center">
@@ -185,7 +185,7 @@
           <button id="open_favorites_button" class="btn btn-danger input">Favorites</button>
         </div>
         <div class="input-group col-xs-12">
-          <div id="side_menu_button" class="btn btn-primary ml-2"><i class="fas fa-bars text-white"></i></div>
+          <div id="open_side_menu_button" class="btn btn-primary ml-2 input"><i class="fas fa-bars text-white"></i></div>
           <input type="text" id="recipe_search_input" class="form-control input"
             placeholder="Search for recipes">
           <a id="search_button" class="btn btn-primary rounded-right mr-2 input text-white" type="button">
