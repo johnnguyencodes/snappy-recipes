@@ -252,7 +252,7 @@ class RecipesHandler {
       recipeIngredients.append(ingredient);
     }
     const cleanSummary = DOMPurify.sanitize(summary);
-    modalContainer.className = "";
+    modalContainer.className = "d-flex justify-content-center";
     recipeTitle.textContent = `Recipe Preview: ${title}`;
     recipeImage.src = imageURL;
     recipeSummary.innerHTML = cleanSummary;
@@ -276,7 +276,7 @@ class RecipesHandler {
         top: 0,
         behavior: "auto",
       });
-      modalContainer.className = "d-none";
+      modalContainer.className = "d-none justify-content-center";
       body.className = "bg-light";
       while (recipeInstructions.firstChild) {
         recipeInstructions.removeChild(recipeInstructions.firstChild);
