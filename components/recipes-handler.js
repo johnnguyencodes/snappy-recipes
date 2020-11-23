@@ -8,6 +8,7 @@ const recipeInstructions = document.getElementById("recipe_instructions");
 const recipeIngredients = document.getElementById("recipe_ingredients");
 const modalButtonContainer = document.getElementById("modal_button_container");
 const overlayPreview = document.getElementById("overlay_preview");
+// let recipeTitle = document.getElementById("recipe_title");
 
 class RecipesHandler {
   constructor(recipesContainer, favoriteRecipesContainer) {
@@ -174,10 +175,19 @@ class RecipesHandler {
 
   handleFavoriteButtonClick(id) {
     const favoriteButton = document.getElementById("favorite_button");
+    let recipeTitle = document.getElementById("recipe_title").textContent;
+    let firstWord = recipeTitle.split(" ")[2];
     if (favoriteArray.includes(id) === false) {
       favoriteArray.push(id);
       favoriteButton.className = "btn btn-danger";
       favoriteButton.textContent = "Remove from Favorites";
+      Toastify({
+        text: `${firstWord}... added`,
+        duration: 1500,
+        newWindow: true,
+        gravity: "bottom",
+        position: "right",
+      }).showToast();
       if (document.getElementById(`heart_icon_${id}`)) {
         document.getElementById(`heart_icon_${id}`).className =
           "fas fa-heart text-danger heart-icon fa-lg";
@@ -222,6 +232,13 @@ class RecipesHandler {
         emptyFavoriteTextContainer.className = "d-flex justify-content-center";
         return;
       }
+      Toastify({
+        text: `${firstWord}... removed`,
+        duration: 1500,
+        newWindow: true,
+        gravity: "bottom",
+        position: "right",
+      }).showToast();
     }
   }
 
