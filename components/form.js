@@ -5,6 +5,8 @@ const resetButton = document.getElementById("reset_button");
 const searchButton = document.getElementById("search_button");
 // const openFavoriteButton = document.getElementById("open_favorites_button");
 // const closeFavoriteButton = document.getElementById("close_favorite_button");
+const toggleFavoritesButton = document.getElementById("toggle_favorites_button");
+const toggleDietButton = document.getElementById("toggle_diet_button");
 const mainContent = document.getElementById("main_content");
 const errorContainer = document.getElementById("error_container");
 const errorSpoonacularSearch = document.getElementById("spoonacular_search_error");
@@ -93,6 +95,8 @@ class Form {
     event.preventDefault();
     favoriteYPosition = window.scrollY;
     closeSideMenuButton.className = "close-side-menu-button-visible d-flex justify-content-center align-items-center text-danger p-0 m-0";
+    toggleFavoritesButton.className = "toggle-visible btn btn-danger text-white m-1"
+    toggleDietButton.className = "toggle-visible btn btn-primary text-white m-1";
     sideMenuContainer.className = "side-menu-visible d-flex flex-column justify-content-center";
     favoriteRecipesSection.className = "d-flex flex-column justify-content-center";
     dietMenu.className = "d-none flex-column justify-content-center"
@@ -107,6 +111,8 @@ class Form {
   closeSideMenu() {
     event.preventDefault();
     closeSideMenuButton.className = "close-side-menu-button-hidden justify-content-center align-items-center text-danger p-0 m-0";
+    toggleFavoritesButton.className = "toggle-hidden btn btn-danger text-white m-1"
+    toggleDietButton.className = "toggle-hidden btn btn-primary text-white m-1";
     sideMenuContainer.className = "side-menu-hidden d-flex flex-column justify-content-center";
     mainContent.className = "row";
     overlay.className = "d-none";
