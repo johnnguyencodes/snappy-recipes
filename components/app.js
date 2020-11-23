@@ -32,6 +32,7 @@ const inputs = document.querySelectorAll(".input");
 const searchRecipesDownloadContainer = document.getElementById("search_recipes_download_container");
 const imageProcessingContainer = document.getElementById("image_processing_container");
 const dietMenu = document.getElementById("diet_menu");
+const closePreviewXButton = document.getElementById("close_preview_x_button");
 let recipeInformation = null;
 let spoonacularError = null;
 
@@ -58,11 +59,10 @@ let spoonacularDataToSend = {
 }
 
 class App {
-  constructor(form, dietMenu, imageTitleHandler, recipesHandler) {
+  constructor(form, imageTitleHandler, recipesHandler) {
     this.form = form;
     this.imageTitleHandler = imageTitleHandler;
     this.recipesHandler = recipesHandler;
-    this.dietMenu = dietMenu;
     this.dietInfo = this.dietInfo.bind(this);
     this.postImage = this.postImage.bind(this);
     this.handlePostImageSuccess = this.handlePostImageSuccess.bind(this);
@@ -90,7 +90,7 @@ class App {
     this.form.clickPostImage(this.postImage);
     this.form.clickGetRecipes(this.getRecipes);
     this.form.clickGetRandomRecipes(this.getRandomRecipes);
-    this.dietMenu.clickDietInfo(this.dietInfo);
+    // this.dietMenu.clickDietInfo(this.dietInfo);
     this.form.clickGetFavoriteRecipes(this.getFavoriteRecipes);
     this.recipesHandler.clickGetFavoriteRecipes(this.getFavoriteRecipes);
   }

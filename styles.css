@@ -117,9 +117,14 @@ a:hover, #heart_container:hover, #delete_container:hover, #file_input_form:hover
   border-top-right-radius: 0px!important;
 }
 
-#close_side_menu_button, #toggle_favorites_button, #toggle_diet_button {
+#close_side_menu_button, #toggle_favorites_button, #toggle_diet_button, #close_preview_x_button {
   position: fixed;
   z-index: 4;
+}
+
+#close_preview_x_button {
+  top: 48px;
+  left: 303px;
 }
 
 #search_button {
@@ -340,6 +345,7 @@ span {
 .modal-content {
     /* 80% of window height */
     height: 80%;
+    position: relative;
 }
 
 .modal-body {
@@ -353,7 +359,7 @@ span {
   height: 250px;
 }
 
-#overlay {
+#overlay, #overlay_preview {
   position: fixed;
   left: 0;
   top: 0;
@@ -543,6 +549,7 @@ span {
 .modal-content {
     top: -5px;
     height: 85%;
+    width: 92%;
   }
 }
 
