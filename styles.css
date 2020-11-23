@@ -34,6 +34,17 @@ table {
   height: 411px;
 }
 
+
+.sticky {
+  position: -webkit-sticky;
+  position: sticky;
+  top: -1px;
+}
+
+.static {
+  position: static;
+}
+
 #heart_container, #delete_container {
   z-index: 2;
   position: absolute;
@@ -55,13 +66,13 @@ a:hover, #heart_container:hover, #delete_container:hover, #file_input_form:hover
   position: fixed;
 }
 
+.instructions {
+  font-size: 15px;
+}
+
 .freeze {
   max-height: 100vh;
   overflow-y: hidden;
-}
-
-#custom_file_label {
-  height: 100;
 }
 
 #percentage_bar_upload, #percentage_bar_download {
@@ -77,7 +88,6 @@ a:hover, #heart_container:hover, #delete_container:hover, #file_input_form:hover
 }
 
 #custom_file_label {
-  height: 100%;
   border: white;
   border-radius: 15px;
 }
@@ -421,6 +431,11 @@ span {
   /* left: -15px; */
 }
 
+#form {
+  z-index: 10;
+  background-color: #f7f7f7;
+}
+
 /* .custom-file-label:focus, .custom-file-label:active {
   border-color: #FFFFFF;
   outline: none;
@@ -575,14 +590,6 @@ span {
     top: -5px;
     height: 85%;
     width: 92%;
-  }
-}
-
-@media only screen and (min-width: 1200px) {
-    #form {
-    position: fixed;
-    margin-left: 1.5%;
-    margin-right: 1.5%;
   }
 }
 

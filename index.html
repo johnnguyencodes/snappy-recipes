@@ -72,9 +72,6 @@
         <div id="empty_favorite_text_container" class="justify-content-center d-none">
         <h3 class="text-center mb-5">Your saved recipes will appear here.</h3>
       </div>
-      <!-- <div class="d-flex justify-content-center">
-      <button id="close_favorite_button" class="btn btn-danger mt-2 mb-4 text-center">Close</button>
-      </div> -->
     </div>
     <div id="diet_menu" class="d-none flex-column justify-content-center">
       <div id="dietary_restrictions">
@@ -170,24 +167,23 @@
           </span>
         </div>
       </div>
-      <!-- <div id="close_button" class="d-flex justify-content-center">
-        <button id="close_diet_menu_button" class="btn btn-warning mb-5">Save</button>
-      </div> -->
     </div>
   </div>
   <div id="main_content" class="row">
-    <div class="form_spaceholder col-12 col-xl-4"></div>
-    <div id="form" class="col-10 offset-1 col-xl-4 offset-xl-0 d-flex flex-column align-items-center">
-      <header class="d-flex flex-column align-items-center justify-content-center my-2 px-0">
-        <h1> <span class="badge badge-primary">Snappy Recipes <i class="fa fa-utensils"></i></span></h1>
-        <p class="m-2 text-center">Find recipes by entering a
-        <strong>search</strong>, or by choosing an <strong>image</strong>.</p>
+    <div class="form_spaceholder col-12 col-xl-4">
+      <div class="d-block d-sm-none">
+        <header class="static d-flex flex-column align-items-center justify-content-center my-2 px-0">
+          <h1> <span class="static badge badge-primary">Snappy Recipes <i class="fa fa-utensils"></i></span></h1>
+          <p class="static m-2 text-center instructions">Find recipes with a <strong>search</strong>, or by choosing an <strong>image</strong>.</p>
+        </header>
+      </div>
+    </div>
+    <div id="form" class="sticky col-12 col-xl-4 offset-xl-0 d-flex flex-column align-items-center">
+        <header class="d-none d-md-flex flex-column align-items-center justify-content-center my-2 px-0">
+          <h1> <span class="static badge badge-primary">Snappy Recipes <i class="fa fa-utensils"></i></span></h1>
+          <p class="static m-2 text-center instructions">Find recipes with a <strong>search</strong>, or by choosing an <strong>image</strong>.</p>
       </header>
-      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 px-0">
-        <!-- <div class="form-group col-xs-12 d-flex justify-content-around">
-          <button id="open_diet_menu_button" class="btn btn-warning input">Diet Preferences</button>
-          <button id="open_favorites_button" class="btn btn-danger input">Favorites</button>
-        </div> -->
+      <div id="user_input_container" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 px-0">
         <div class="input-group col-xs-12">
           <div id="open_side_menu_button" class="btn btn-primary ml-2 input"><i class="fas fa-bars text-white"></i></div>
           <input type="text" id="recipe_search_input" class="form-control input"
