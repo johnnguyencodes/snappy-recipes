@@ -110,14 +110,14 @@ class RecipesHandler {
     event.stopPropagation();
     let heartIcon = document.getElementById(`heart_icon_${id}`);
     let recipeTitle = heartIcon.parentNode.parentNode.parentNode.lastChild.firstChild.firstChild.firstChild.textContent;
-    let firstWord = recipeTitle.split(" ")[0];
+    let twoWords = recipeTitle.split(" ").slice(0, 2).join(" ");
     if (!favoriteArray.includes(id)) {
       favoriteArray.push(id);
       heartIcon.className = "fas fa-heart text-danger heart-icon fa-lg";
       heartIcon.parentNode.parentNode.parentNode.className =
         "recipe-card favorited card col-xs-12 col-sm-5 col-md-5 col-lg-3 col-xl-2 m-3 px-0 h-100";
       Toastify({
-        text: `${firstWord}... added`,
+        text: `${twoWords}... added`,
         duration: 1500,
         newWindow: true,
         gravity: "bottom",
@@ -129,7 +129,7 @@ class RecipesHandler {
       heartIcon.parentNode.parentNode.parentNode.className =
         "recipe-card card col-xs-12 col-sm-5 col-md-5 col-lg-3 col-xl-2 m-3 px-0 h-100";
       Toastify({
-        text: `${firstWord}... removed`,
+        text: `${twoWords}... removed`,
         duration: 1500,
         newWindow: true,
         gravity: "bottom",
@@ -145,7 +145,7 @@ class RecipesHandler {
     let recipeTitle =
       deleteCard.firstChild.nextSibling.firstChild.firstChild.firstChild
         .textContent;
-    let firstWord = recipeTitle.split(" ")[0];
+    let twoWords = recipeTitle.split(" ").slice(0, 2).join(" ");
     favoriteArray.splice(favoriteArray.indexOf(id), 1);
     document.getElementById(`${id}`).remove();
     localStorage.setItem("favoriteArray", JSON.stringify(favoriteArray));
@@ -164,7 +164,7 @@ class RecipesHandler {
         "favorite-recipes-visible d-flex flex-column justify-content-center";
     }
           Toastify({
-            text: `${firstWord}... removed`,
+            text: `${twoWords}... removed`,
             duration: 1500,
             newWindow: true,
             gravity: "bottom",
@@ -176,13 +176,13 @@ class RecipesHandler {
   handleFavoriteButtonClick(id) {
     const favoriteButton = document.getElementById("favorite_button");
     let recipeTitle = document.getElementById("recipe_title").textContent;
-    let firstWord = recipeTitle.split(" ")[2];
+    let twoWords = recipeTitle.split(" ").slice(2, 4).join(" ");
     if (favoriteArray.includes(id) === false) {
       favoriteArray.push(id);
       favoriteButton.className = "btn btn-danger";
       favoriteButton.textContent = "Remove from Favorites";
       Toastify({
-        text: `${firstWord}... added`,
+        text: `${twoWords}... added`,
         duration: 1500,
         newWindow: true,
         gravity: "bottom",
@@ -233,7 +233,7 @@ class RecipesHandler {
         return;
       }
       Toastify({
-        text: `${firstWord}... removed`,
+        text: `${twoWords}... removed`,
         duration: 1500,
         newWindow: true,
         gravity: "bottom",
