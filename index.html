@@ -18,38 +18,37 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha256-YLGeXaapI0/5IgZopewRJcFXomhRMlYYjugPLSyNjTY=" crossorigin="anonymous" />
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="toastify.css">
 </head>
 
 <body class="bg-light">
-  <div id="modal_container" class="d-none justify-content-center">
-    <div class="modal-dialog modal-lg modal-dialog-centered rounded d-flex justify-content-center m-0">
+    <div id="modal_container" class="d-none modal-dialog modal-lg modal-dialog-centered rounded justify-content-center m-0">
       <div class="modal-content m-0 d-flex justify-content-center">
         <div class="modal-header text-center">
           <div class="modal-title w-100">
             <p id="recipe_title" class="text-left m-0 font-weight-bold"></p>
             <a id="close_preview_x_button" class="d-none justify-content-center align-items-center text-danger p-0 m-0"><i class="fas fa-window-close fa-2x"></i></a>
           </div>
+      </div>
+      <div id="recipe_body" class="modal-body">
+        <div class="d-flex justify-content-center">
+          <img id="recipe_image" src="" alt="">
         </div>
-        <div id="recipe_body" class="modal-body">
-          <div class="d-flex justify-content-center">
-            <img id="recipe_image" src="" alt="">
-          </div>
-          <div class="mt-3">
-            <h3>Summary</h3>
-            <div id="recipe_summary" class=""></div>
-          </div>
-          <div class="mt-3">
-            <h3>Ingredients</h3>
-            <ul id="recipe_ingredients" class=""></ul>
-          </div>
-          <div class="mt-3">
-            <h3>Instructions</h3>
-            <ol id="recipe_instructions" class=""></ol>
-          </div>
+        <div class="mt-3">
+          <h3>Summary</h3>
+          <div id="recipe_summary" class=""></div>
         </div>
-        <div class="modal-title d-flex flex-column justify-content-between">
-          <div id="modal_button_container" class="form-group col-xs-12 d-flex justify-content-around mt-3">
-          </div>
+        <div class="mt-3">
+          <h3>Ingredients</h3>
+          <ul id="recipe_ingredients" class=""></ul>
+        </div>
+        <div class="mt-3">
+          <h3>Instructions</h3>
+          <ol id="recipe_instructions" class=""></ol>
+        </div>
+      </div>
+      <div class="modal-title d-flex flex-column justify-content-between">
+        <div id="modal_button_container" class="form-group col-xs-12 d-flex justify-content-around mt-3">
         </div>
       </div>
     </div>
@@ -264,11 +263,12 @@
     </div>
   </div>
   <div id="overlay" class="d-none"></div>
+  <div id="overlay_preview" class="d-none"></div>
   <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.0.12/purify.min.js"></script>
   <script src="config.js"></script>
+  <script src="components/toastify.js"></script>
   <script src="components/app.js"></script>
-  <script src="components/diet-menu.js"></script>
   <script src="components/image-title-handler.js"></script>
   <script src="components/form.js"></script>
   <script src="components/recipes-handler.js"></script>
