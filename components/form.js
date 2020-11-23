@@ -3,8 +3,8 @@ let fileInputForm = document.getElementById("file_input_form");
 const recipeSearchInput = document.getElementById('recipe_search_input');
 const resetButton = document.getElementById("reset_button");
 const searchButton = document.getElementById("search_button");
-const openFavoriteButton = document.getElementById("open_favorites_button");
-const closeFavoriteButton = document.getElementById("close_favorite_button");
+// const openFavoriteButton = document.getElementById("open_favorites_button");
+// const closeFavoriteButton = document.getElementById("close_favorite_button");
 const mainContent = document.getElementById("main_content");
 const errorContainer = document.getElementById("error_container");
 const errorSpoonacularSearch = document.getElementById("spoonacular_search_error");
@@ -24,8 +24,8 @@ class Form {
     closeSideMenuButton.addEventListener("click", this.closeSideMenu.bind(this));
     searchButton.addEventListener("click", this.search.bind(this));
     fileInputForm.addEventListener("change", this.imgValidation.bind(this));
-    openFavoriteButton.addEventListener("click", this.openFavorites.bind(this));
-    closeFavoriteButton.addEventListener("click", this.closeFavorites.bind(this));
+    // openFavoriteButton.addEventListener("click", this.openFavorites.bind(this));
+    // closeFavoriteButton.addEventListener("click", this.closeFavorites.bind(this));
     overlay.addEventListener("click", this.handleOverlayClick.bind(this));
     recipeSearchInput.addEventListener("keyup", this.enterSearch.bind(this));
     fileLabel.addEventListener("dragover", this.imgValidation.bind(this));
@@ -92,6 +92,7 @@ class Form {
   openSideMenu() {
     event.preventDefault();
     favoriteYPosition = window.scrollY;
+    closeSideMenuButton.className = "close-side-menu-button-visible d-flex justify-content-center align-items-center text-danger p-0 m-0";
     sideMenuContainer.className = "side-menu-visible d-flex flex-column justify-content-center";
     favoriteRecipesSection.className = "d-flex flex-column justify-content-center";
     dietMenu.className = "d-none flex-column justify-content-center"
@@ -105,6 +106,7 @@ class Form {
 
   closeSideMenu() {
     event.preventDefault();
+    closeSideMenuButton.className = "close-side-menu-button-hidden justify-content-center align-items-center text-danger p-0 m-0";
     sideMenuContainer.className = "side-menu-hidden d-flex flex-column justify-content-center";
     mainContent.className = "row";
     overlay.className = "d-none";

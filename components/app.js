@@ -242,28 +242,28 @@ class App {
   //GET request to Spoonacular's API with label from Google to get a list of up to 10 recipes containing the item from the image and other nutrition info.
 
   getRandomRecipes() {
-    // for (var i = 0; i < inputs.length; i++) {
-    //   inputs[i].disabled = true;
-    // }
-    // searchRecipesDownloadProgress.className = "recipe-progress-visible text-left mt-3";
-    // searchRecipesDownloadText.className = "text-center mt-3";
-    // searchRecipesDownloadText.textContent = "Gathering random recipes, please wait..."
-    // titleContainer.className = "d-none desktop-space-form";
-    // percentageBarContainer.className = "d-none desktop-space-form";
-    // uploadedImageContainer.className = "d-none desktop-space-form";
-    // chunkedRecipeArray = [];
-    // chunkedRecipeArrayIndex = 0;
-    // let spoonacularURL = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${spoonacularAPIKey}&addRecipeNutrition=true&636x393&number=100&sort=random`
-    // $.ajax({
-    //   method: "GET",
-    //   url: spoonacularURL,
-    //   data: spoonacularDataToSend,
-    //   headers: {
-    //     "Content-Type": "application/json"
-    //   },
-    //   success: this.handleGetRandomRecipesSuccess,
-    //   error: this.handleGetRecipesError
-    // })
+    for (var i = 0; i < inputs.length; i++) {
+      inputs[i].disabled = true;
+    }
+    searchRecipesDownloadProgress.className = "recipe-progress-visible text-left mt-3";
+    searchRecipesDownloadText.className = "text-center mt-3";
+    searchRecipesDownloadText.textContent = "Gathering random recipes, please wait..."
+    titleContainer.className = "d-none desktop-space-form";
+    percentageBarContainer.className = "d-none desktop-space-form";
+    uploadedImageContainer.className = "d-none desktop-space-form";
+    chunkedRecipeArray = [];
+    chunkedRecipeArrayIndex = 0;
+    let spoonacularURL = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${spoonacularAPIKey}&addRecipeNutrition=true&636x393&number=100&sort=random`
+    $.ajax({
+      method: "GET",
+      url: spoonacularURL,
+      data: spoonacularDataToSend,
+      headers: {
+        "Content-Type": "application/json"
+      },
+      success: this.handleGetRandomRecipesSuccess,
+      error: this.handleGetRecipesError
+    })
   }
 
   handleGetRandomRecipesSuccess(recipes) {
