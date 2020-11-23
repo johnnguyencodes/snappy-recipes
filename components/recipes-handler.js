@@ -113,7 +113,8 @@ class RecipesHandler {
     localStorage.setItem("favoriteArray", JSON.stringify(favoriteArray));
   }
 
-  handleDeleteClick(id, event) {
+  handleDeleteClick(id) {
+    console.log(event);
     event.stopPropagation();
     favoriteArray.splice(favoriteArray.indexOf(id), 1);
     document.getElementById(`${id}`).remove();
@@ -520,10 +521,10 @@ class RecipesHandler {
       recipeCard.id = id;
       const imageContainer = document.createElement("div");
       const titleAnchorTag = document.createElement("a");
-      titleAnchorTag.addEventListener(
-        "click",
-        this.modalHandler.bind(this, recipeURL)
-      );
+      // titleAnchorTag.addEventListener(
+      //   "click",
+      //   this.modalHandler.bind(this, recipeURL)
+      // );
       imageContainer.className = "d-flex justify-content-center";
       const img = document.createElement("img");
       imageContainer.className =
