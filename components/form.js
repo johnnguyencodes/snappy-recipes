@@ -16,6 +16,9 @@ const errorNoSearchResults = document.getElementById("no_search_recipes_text");
 const openSideMenuButton = document.getElementById("open_side_menu_button");
 const closeSideMenuButton = document.getElementById("close_side_menu_button");
 const sideMenuContainer = document.getElementById("side_menu_container");
+const userInputContainer = document.getElementById("user_input_container");
+const headerElement = document.getElementById("header_element");
+
 let favoriteYPosition;
 
 class Form {
@@ -84,7 +87,7 @@ class Form {
     mainContent.className="row main-content-right noscroll";
     mainContent.style.top = `-${favoriteYPosition}px`;
     formElement.style.top = "0px";
-    formElement.className = "col-10 offset-1 col-xl-4 offset-xl-0 d-flex flex-column align-items-center form-element-left";
+    formElement.className = "sticky col-12 col-xl-4 offset-xl-0 d-flex flex-column align-items-center form-element-left";
     overlay.className = "";
     this.getFavoriteRecipes();
   }
@@ -95,7 +98,7 @@ class Form {
     mainContent.className = "row";
     overlay.className = "d-none";
     window.scroll(0, favoriteYPosition);
-    formElement.className = "col-10 offset-1 col-xl-4 offset-xl-0 d-flex flex-column align-items-center";
+    formElement.className = "sticky col-12 col-xl-4 offset-xl-0 d-flex flex-column align-items-center";
     favoriteRecipesDownloadProgress.className = "recipe-progress-hidden mt-3";
     spoonacularFavoriteError.className = "d-none";
     spoonacularFavoriteTimeoutError.className = "d-none";
@@ -109,28 +112,32 @@ class Form {
     toggleDietButton.className = "toggle-visible toggle btn btn-primary text-white m-0 p-0 d-flex justify-content-center align-items-center";
     sideMenuContainer.className = "side-menu-visible d-flex flex-column justify-content-center";
     favoriteRecipesSection.className = "d-flex flex-column justify-content-center";
-    dietMenu.className = "d-none flex-column justify-content-center"
-    mainContent.className = "row main-content-right noscroll";
-    mainContent.style.top = `-${favoriteYPosition}px`;
-    formElement.style.top = "0px";
-    formElement.className = "col-10 offset-1 col-xl-4 offset-xl-0 d-flex flex-column align-items-center form-element-left";
+    dietMenu.className = "d-none flex-column justify-content-center";
+    mainContent.className = "row noscroll";
     overlay.className = "";
+    mainContent.style.top = `-${favoriteYPosition}px`;
+    headerElement.className = "d-flex flex-column align-items-center justify-content-center my-2 px-0";
+    formElement.style.top = "0px";
+    formElement.className = "sticky col-12 col-xl-4 offset-xl-0 d-flex flex-column align-items-center";
+    userInputContainer.className = "col-xs-12 col-sm-12 col-md-12 col-lg-12 px-0 noscroll"
     this.getFavoriteRecipes();
   }
 
   closeSideMenu() {
     event.preventDefault();
-    closeSideMenuButton.className = "close-side-menu-button-hidden justify-content-center align-items-center text-danger p-0 m-0";
+    closeSideMenuButton.className = "close-side-menu-button-hidden d-flex justify-content-center align-items-center text-danger p-0 m-0";
     toggleFavoritesButton.className = "toggle-hidden toggle btn btn-danger text-white m-0 p-0 d-flex justify-content-center align-items-center"
     toggleDietButton.className = "toggle-hidden toggle btn btn-primary text-white m-0 p-0 d-flex justify-content-center align-items-center";
     sideMenuContainer.className = "side-menu-hidden d-flex flex-column justify-content-center";
     mainContent.className = "row";
     overlay.className = "d-none";
     window.scroll(0, favoriteYPosition);
-    formElement.className = "col-10 offset-1 col-xl-4 offset-xl-0 d-flex flex-column align-items-center";
+    formElement.className = "sticky col-12 col-xl-4 offset-xl-0 d-flex flex-column align-items-center";
+    headerElement.className = "static d-flex flex-column align-items-center justify-content-center my-2 px-0";
     favoriteRecipesDownloadProgress.className = "recipe-progress-hidden mt-3";
     spoonacularFavoriteError.className = "d-none";
     spoonacularFavoriteTimeoutError.className = "d-none";
+    userInputContainer.className = "col-xs-12 col-sm-12 col-md-12 col-lg-12 px-0";
     this.dietInfo();
   }
 

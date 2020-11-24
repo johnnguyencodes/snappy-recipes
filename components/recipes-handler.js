@@ -287,14 +287,14 @@ class RecipesHandler {
     externalLinkButton.textContent = "Recipe Page";
     const favoriteButton = document.createElement("button");
     favoriteButton.id = "favorite_button";
-    const closePreviewButton = document.createElement("button");
-    closePreviewButton.id = "go_back_button";
-    closePreviewButton.className = "btn btn-secondary";
-    closePreviewButton.textContent = "Close Preview";
+    // const closePreviewButton = document.createElement("button");
+    // closePreviewButton.id = "go_back_button";
+    // closePreviewButton.className = "btn btn-secondary";
+    // closePreviewButton.textContent = "Close Preview";
     closePreviewXButton.className = "close-preview-x-button-visible justify-content-center align-items-center text-danger p-0 m-0";
     modalButtonContainer.append(externalLinkButton);
     modalButtonContainer.append(favoriteButton);
-    modalButtonContainer.append(closePreviewButton);
+    // modalButtonContainer.append(closePreviewButton);
     for (var x = 0; x < ingredients.length; x++) {
       const ingredient = document.createElement("li");
       ingredient.textContent = `${ingredients[x].amount} ${ingredients[x].unit} ${ingredients[x].name}`;
@@ -321,7 +321,7 @@ class RecipesHandler {
       favoriteButton.className = "btn btn-outline-danger";
       favoriteButton.textContent = "Save to Favorites";
     }
-    closePreviewButton.addEventListener("click", this.closePreview.bind(this));
+    // closePreviewButton.addEventListener("click", this.closePreview.bind(this));
     for (var i = 0; i < instructions.length; i++) {
       if (instructions[i] === "var article") {
         return;
