@@ -133,8 +133,12 @@ a:hover, #heart_container:hover, #delete_container:hover, #file_input_form:hover
 }
 
 #close_preview_x_button {
-  top: 48px;
-  left: 303px;
+  top: 70px;
+  left: 308px;
+}
+
+#recipe_title {
+  width: 90%;
 }
 
 #search_button {
@@ -238,7 +242,7 @@ a:hover, #heart_container:hover, #delete_container:hover, #file_input_form:hover
 }
 
 .favorite-recipes-hidden, .diet-menu-hidden, .side-menu-hidden {
-  z-index: 3;
+  z-index: 4;
   min-height: 100vh;
   height: 100%;
   width: 350px;
@@ -293,7 +297,7 @@ a:hover, #heart_container:hover, #delete_container:hover, #file_input_form:hover
   top: 52px;
 }
 .favorite-recipes-visible, .diet-menu-visible, .side-menu-visible {
-  z-index: 3;
+  z-index: 4;
   min-height: 100vh;
   width: 320px;
   position: relative;
@@ -402,7 +406,14 @@ span {
   height: 100vh;
   background-color: #000;
   opacity: 0.5;
+}
+
+#overlay {
   z-index: 2;
+}
+
+#overlay_preview {
+  z-index: 11;
 }
 
 #favorite_recipes_container img {
@@ -432,7 +443,7 @@ span {
 }
 
 #form {
-  z-index: 10;
+  z-index: 3;
   background-color: #f7f7f7;
 }
 
@@ -588,8 +599,8 @@ span {
 .modal-dialog,
 .modal-content {
     top: -5px;
-    height: 85%;
-    width: 92%;
+    height: 80%;
+    width: 87%;
   }
 }
 
