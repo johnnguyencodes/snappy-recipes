@@ -39,6 +39,7 @@ class RecipesHandler {
       noSearchRecipesText.className = "text-center mt-3";
       for (var i = 0; i < inputs.length; i++) {
         inputs[i].disabled = false;
+        inputs[i].classList.remove("no-click");
       }
       return;
     }
@@ -65,6 +66,7 @@ class RecipesHandler {
       noSearchRecipesText.className = "text-center mt-3";
       for (var i = 0; i < inputs.length; i++) {
         inputs[i].disabled = false;
+        inputs[i].classList.remove("no-click");
       }
       return;
     }
@@ -528,6 +530,7 @@ class RecipesHandler {
     searchRecipesDownloadText.className = "d-none";
     for (var i = 0; i < inputs.length; i++) {
       inputs[i].disabled = false;
+      inputs[i].classList.remove("no-click");
     }
   }
 

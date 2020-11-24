@@ -210,6 +210,11 @@ a:hover, #heart_container:hover, #delete_container:hover, #file_input_form:hover
   transition: all 0.25s ease-in-out;
 }
 
+.no-click {
+  pointer-events: none;
+  filter: brightness(75%);
+}
+
 .favorited {
     -webkit-box-shadow: 0 0 10px rgba(206, 8, 8, 0.616);
           box-shadow: 0 0 10px rgba(206, 8, 8, 0.616);

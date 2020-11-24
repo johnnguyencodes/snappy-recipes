@@ -200,6 +200,7 @@ class App {
     imgurAPIError.className = "text-center mt-3";
     for (var i = 0; i < inputs.length; i++) {
       inputs[i].disabled = false;
+      inputs[i].classList.remove("no-click");
     }
   }
 
@@ -224,6 +225,7 @@ class App {
       uploadedImage.src = "";
       for (var i = 0; i < inputs.length; i++) {
         inputs[i].disabled = false;
+        inputs[i].classList.remove("no-click");
       }
       return;
     }
@@ -243,6 +245,7 @@ class App {
   getRandomRecipes() {
     for (var i = 0; i < inputs.length; i++) {
       inputs[i].disabled = true;
+      inputs[i].classList.add("no-click");
     }
     searchRecipesDownloadProgress.className = "recipe-progress-visible text-left mt-3";
     searchRecipesDownloadText.className = "text-center mt-3";
@@ -300,6 +303,7 @@ class App {
     spoonacularSearchError.className = "text-center mt-3";
     for (var i = 0; i < inputs.length; i++) {
       inputs[i].disabled = false;
+      inputs[i].classList.remove("no-click");
     }
     if (error.status === 402) {
       spoonacularSearchError.innerHTML = "The Spoonacular API has reached its daily quota for this app's current API Key. Please notify <a href = 'mailto:john@johnnguyencodes.com?subject=Snappy%20Recipes%20API%20Key%20Refresh'> john@johnnguyencodes.com</a>, thank you."
