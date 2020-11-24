@@ -148,6 +148,7 @@ class Form {
     }
     for (var i = 0; i < inputs.length; i++) {
       inputs[i].disabled = true;
+      inputs[i].classList.add("no-click");
     }
     while (document.getElementById("recipe")) {
       document.getElementById("recipe").remove();
@@ -187,6 +188,7 @@ class Form {
       fileInputForm.value = "";
       for (var i = 0; i < inputs.length; i++) {
         inputs[i].disabled = false;
+        inputs[i].classList.remove("no-click");
       }
       return;
     }
@@ -199,6 +201,7 @@ class Form {
       fileInputForm.value = "";
       for (var i = 0; i < inputs.length; i++) {
         inputs[i].disabled = false;
+        inputs[i].classList.remove("no-click");
       }
       return;
     }
@@ -208,6 +211,7 @@ class Form {
       fileInputForm.value = "";
       for (var i = 0; i < inputs.length; i++) {
         inputs[i].disabled = false;
+        inputs[i].classList.remove("no-click");
       }
       return;
     }
@@ -235,6 +239,7 @@ class Form {
     errorNoSearchResults.className = "d-none";
     for (var i = 0; i < inputs.length; i++) {
       inputs[i].disabled = true;
+      inputs[i].classList.add("no-click");
     }
     let query = (recipeSearchInput.value)
     this.dietInfo();
