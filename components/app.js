@@ -293,6 +293,7 @@ class App {
   }
 
   handleGetRecipesSuccess(recipes) {
+    console.log(recipes);
     this.recipesHandler.chunkSearchedRecipes(recipes);
   }
 

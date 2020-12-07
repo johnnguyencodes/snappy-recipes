@@ -615,3 +615,50 @@ span {
   box-shadow: none;
   outline: none;
 }
+
+
+/* scrollbar styling */
+
+/* ::-webkit-scrollbar,
+::-webkit-scrollbar-thumb,
+::-webkit-scrollbar-track {
+    width: 8px;
+    border: none;
+}
+
+::-webkit-scrollbar-track-piece,
+::-webkit-scrollbar-corner,
+::-webkit-resizer {
+    display: none;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #007bff;
+}
+
+::-webkit-scrollbar-track {
+    background-image: url("https://i.imgur.com/IjSEZ77.png");
+    background-color: white;
+    background-repeat: repeat-y;
+    background-size: contain;
+} */
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: grey white;
+}
+
+/* Works on Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 12px;
+}
+
+*::-webkit-scrollbar-track {
+  background: white;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: grey;
+  border-radius: 20px;
+  border: 3px solid white;
+}
