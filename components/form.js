@@ -20,6 +20,7 @@ const userInputContainer = document.getElementById("user_input_container");
 const headerElement = document.getElementById("header_element");
 
 let favoriteYPosition;
+let userInputContainerYPosition;
 
 class Form {
   constructor() {
@@ -107,19 +108,28 @@ class Form {
   openSideMenu() {
     event.preventDefault();
     favoriteYPosition = window.scrollY;
+    userInputContainerYPosition = userInputContainer.scrollY;
     closeSideMenuButton.className = "close-side-menu-button-visible d-flex justify-content-center align-items-center text-danger p-0 m-0";
     toggleFavoritesButton.className = "toggle-visible toggle btn btn-danger text-white m-0 p-0 d-flex justify-content-center align-items-center"
     toggleDietButton.className = "toggle-visible toggle btn btn-primary text-white m-0 p-0 d-flex justify-content-center align-items-center";
     sideMenuContainer.className = "side-menu-visible d-flex flex-column justify-content-center";
     favoriteRecipesSection.className = "d-flex flex-column justify-content-center";
     dietMenu.className = "d-none flex-column justify-content-center";
-    mainContent.className = "row noscroll";
+    mainContent.className = "row main-content-right noscroll";
     overlay.className = "";
     mainContent.style.top = `-${favoriteYPosition}px`;
     headerElement.className = "d-flex flex-column align-items-center justify-content-center my-2 px-0";
     formElement.style.top = "0px";
-    formElement.className = "sticky col-12 col-xl-4 offset-xl-0 d-flex flex-column align-items-center";
-    userInputContainer.className = "col-xs-12 col-sm-12 col-md-12 col-lg-12 px-0 noscroll"
+    formElement.className = "sticky col-12 col-xl-4 offset-xl-0 d-flex flex-column align-items-center form-element-left";
+    userInputContainer.className = "col-xs-12 col-sm-12 col-md-12 col-lg-12 mt-3 px-0"
+    mainContent.style.top = `-${favoriteYPosition}px`;
+    // if (favoriteYPosition < "115px") {
+    //   userInputContainer.style.top = `-${userInputContainerYPosition}px`
+    // } else {
+    //   userInputContainer.style.top = "0px";
+    // }
+    // userInputContainer.style.top = "0px";
+
     this.getFavoriteRecipes();
   }
 
@@ -137,7 +147,7 @@ class Form {
     favoriteRecipesDownloadProgress.className = "recipe-progress-hidden mt-3";
     spoonacularFavoriteError.className = "d-none";
     spoonacularFavoriteTimeoutError.className = "d-none";
-    userInputContainer.className = "col-xs-12 col-sm-12 col-md-12 col-lg-12 px-0";
+    userInputContainer.className = "col-xs-12 col-sm-12 col-md-12 col-lg-12 mt-3 px-0";
     this.dietInfo();
   }
 
