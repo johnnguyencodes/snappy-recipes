@@ -9,6 +9,7 @@ const recipeIngredients = document.getElementById("recipe_ingredients");
 const modalButtonContainer = document.getElementById("modal_button_container");
 const overlayPreview = document.getElementById("overlay_preview");
 
+
 class RecipesHandler {
   constructor(recipesContainer, favoriteRecipesContainer) {
     this.recipesContainer = recipesContainer;
@@ -23,7 +24,7 @@ class RecipesHandler {
       this
     );
     this.favoriteCheck = this.favoriteCheck.bind(this);
-    overlayPreview.addEventListener("click", this.closePreview.bind(this));
+    modalContainer.addEventListener("click", this.closePreview.bind(this));
     closePreviewXButton.addEventListener("click", this.closePreview.bind(this));
   }
 
@@ -102,13 +103,13 @@ class RecipesHandler {
       top: 0,
       left: 0,
       behavior: 'smooth'
-  });
+    });
   }
 
   updateResultsQuantityShown() {
     resultsShownQuantityText.textContent = `Showing ${
       document.querySelectorAll(".recipe-card").length
-    } of ${searchResultsQuantityText.textContent.substring(0, 3)}`;
+      } of ${searchResultsQuantityText.textContent.substring(0, 3)}`;
   }
 
   handleFavoriteClick(id) {
@@ -168,13 +169,13 @@ class RecipesHandler {
       favoriteRecipesSection.className =
         "favorite-recipes-visible d-flex flex-column justify-content-center";
     }
-          Toastify({
-            text: `${twoWords}... removed`,
-            duration: 1500,
-            newWindow: true,
-            gravity: "bottom",
-            position: "left",
-          }).showToast();
+    Toastify({
+      text: `${twoWords}... removed`,
+      duration: 1500,
+      newWindow: true,
+      gravity: "bottom",
+      position: "left",
+    }).showToast();
     this.favoriteCheck(id);
   }
 
@@ -220,7 +221,7 @@ class RecipesHandler {
       }
       if (
         favoriteRecipesSection.scrollHeight >
-          favoriteRecipesSection.clientHeight &&
+        favoriteRecipesSection.clientHeight &&
         favoriteRecipesSection.classList.contains("favorite-recipes-visible")
       ) {
         favoriteRecipesSection.className =
@@ -308,7 +309,7 @@ class RecipesHandler {
     }
     const cleanSummary = DOMPurify.sanitize(summary);
     modalContainer.className =
-      "modal-dialog modal-lg modal-dialog-centered rounded d-flex justify-content-center m-0";
+      "";
     recipeTitle.textContent = `Recipe Preview: ${title}`;
     recipeImage.src = imageURL;
     recipeSummary.innerHTML = cleanSummary;
