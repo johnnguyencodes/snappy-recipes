@@ -127,14 +127,16 @@ a:hover, #heart_container:hover, #delete_container:hover, #file_input_form:hover
   border-top-right-radius: 0px!important;
 }
 
-#close_side_menu_button, #toggle_favorites_button, #toggle_diet_button, #close_preview_x_button {
+#close_side_menu_button, #toggle_favorites_button, #toggle_diet_button {
   position: fixed;
   z-index: 5;
 }
 
 #close_preview_x_button {
-  top: 70px;
-  left: 308px;
+  z-index: 5;
+  position: absolute;
+  top: 10px;
+  right: 10px;
 }
 
 #recipe_title {
