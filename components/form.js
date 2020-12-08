@@ -21,9 +21,11 @@ const headerElement = document.getElementById("header_element");
 
 let favoriteYPosition;
 let userInputContainerYPosition;
+let rect;
 
 class Form {
   constructor() {
+    favoriteRecipesSection.addEventListener("scroll", this.keepUserInputContainerPosition.bind(this));
     openSideMenuButton.addEventListener("click", this.openSideMenu.bind(this));
     closeSideMenuButton.addEventListener("click", this.closeSideMenu.bind(this));
     toggleFavoritesButton.addEventListener("click", this.toggleFavorites.bind(this));
@@ -108,7 +110,7 @@ class Form {
   openSideMenu() {
     event.preventDefault();
     favoriteYPosition = window.scrollY;
-    userInputContainerYPosition = userInputContainer.scrollY;
+    rect = userInputContainer.getBoundingClientRect();
     closeSideMenuButton.className = "close-side-menu-button-visible d-flex justify-content-center align-items-center text-danger p-0 m-0";
     toggleFavoritesButton.className = "toggle-visible toggle btn btn-danger text-white m-0 p-0 d-flex justify-content-center align-items-center"
     toggleDietButton.className = "toggle-visible toggle btn btn-primary text-white m-0 p-0 d-flex justify-content-center align-items-center";
@@ -121,16 +123,17 @@ class Form {
     headerElement.className = "d-flex flex-column align-items-center justify-content-center my-2 px-0";
     formElement.style.top = "0px";
     formElement.className = "sticky col-12 col-xl-4 offset-xl-0 d-flex flex-column align-items-center form-element-left";
-    userInputContainer.className = "col-xs-12 col-sm-12 col-md-12 col-lg-12 mt-3 px-0"
+    userInputContainer.className = "col-xs-12 col-sm-12 col-md-12 col-lg-12 mt-3 px-0 noscroll"
     mainContent.style.top = `-${favoriteYPosition}px`;
-    // if (favoriteYPosition < "115px") {
-    //   userInputContainer.style.top = `-${userInputContainerYPosition}px`
-    // } else {
-    //   userInputContainer.style.top = "0px";
-    // }
-    // userInputContainer.style.top = "0px";
-
     this.getFavoriteRecipes();
+  }
+
+    keepUserInputContainerPosition() {
+        console.log("rect", rect);
+        console.log("scrollY", userInputContainer.scrollY);
+    if (document.getElementById("side_menu_container").classList.contains("side-menu-visible") && document.getElementById("diet_menu").classList.contains("d-none")) {
+      userInputContainer.scrollY = rect.top;
+    } else return;
   }
 
   closeSideMenu() {
