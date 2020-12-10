@@ -123,7 +123,7 @@ class Form {
     headerElement.className = "d-flex flex-column align-items-center justify-content-center my-2 px-0";
     formElement.style.top = "0px";
     formElement.className = "sticky col-12 col-xl-4 offset-xl-0 d-flex flex-column align-items-center form-element-left";
-    userInputContainer.className = "col-xs-12 col-sm-12 col-md-12 col-lg-12 mt-3 px-0 noscroll"
+    userInputContainer.className = "col-xs-12 col-sm-12 col-md-12 col-lg-12 mt-3 px-0"
     mainContent.style.top = `-${favoriteYPosition}px`;
     this.getFavoriteRecipes();
   }
