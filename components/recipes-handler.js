@@ -579,7 +579,7 @@ class RecipesHandler {
       const ingredients = recipes[i].nutrition.ingredients;
       const summary = recipes[i].summary;
       const recipeCard = document.createElement("div");
-      recipeCard.className = "favorite-recipe-card favorited card m-3 px-0 col-12";
+      recipeCard.className = "favorite-recipe-card favorited card m-3 px-0 col-xs-12 col-sm-5 col-md-5 col-lg-3 col-xl-2";
       recipeCard.id = id;
       const imageContainer = document.createElement("div");
       const titleAnchorTag = document.createElement("a");
@@ -590,8 +590,8 @@ class RecipesHandler {
       img.src = imageURL;
       img.alt = "Recipe Image";
       img.className = "m-0 p-0";
-      img.width = "180";
-      img.height = "135";
+      img.width = "240";
+      img.height = "180";
       const deleteIconContainer = document.createElement("span");
       deleteIconContainer.id = "delete_container";
       deleteIconContainer.className =

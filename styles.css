@@ -444,7 +444,7 @@ span {
 }
 
 #favorite_recipes_container img {
-  max-width: 286px;
+  max-width: 90%;
 }
 
 #search_recipes_container img {
@@ -457,8 +457,8 @@ span {
 }
 
 .favorite-recipe-card {
-  min-width: 220px;
-  max-width: 220px;
+  min-width: 268px;
+  max-width: 268px;
 }
 
 #form {
