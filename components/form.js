@@ -102,7 +102,7 @@ class Form {
     overlay.className = "d-none";
     window.scroll(0, favoriteYPosition);
     formElement.className = "sticky col-12 col-xl-4 offset-xl-0 d-flex flex-column align-items-center";
-    favoriteRecipesDownloadProgress.className = "recipe-progress-hidden mt-3";
+    favoriteRecipesDownloadProgress.className = "recipe-progress-hidden mt-3 text-center";
     spoonacularFavoriteError.className = "d-none";
     spoonacularFavoriteTimeoutError.className = "d-none";
   }
@@ -147,7 +147,7 @@ class Form {
     window.scroll(0, favoriteYPosition);
     formElement.className = "sticky col-12 col-xl-4 offset-xl-0 d-flex flex-column align-items-center";
     headerElement.className = "static d-flex flex-column align-items-center justify-content-center my-2 px-0";
-    favoriteRecipesDownloadProgress.className = "recipe-progress-hidden mt-3";
+    favoriteRecipesDownloadProgress.className = "favorite-recipe-progress-hidden mt-3 text-center";
     spoonacularFavoriteError.className = "d-none";
     spoonacularFavoriteTimeoutError.className = "d-none";
     userInputContainer.className = "col-xs-12 col-sm-12 col-md-12 col-lg-12 mt-3 px-0";

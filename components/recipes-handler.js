@@ -686,7 +686,7 @@ class RecipesHandler {
         "favorite-recipes-visible d-flex flex-column justify-content-center";
     }
     favoriteRecipesStatusText.className = "text-center d-none";
-    favoriteRecipesDownloadProgress.className = "recipe-progress-hidden";
+    favoriteRecipesDownloadProgress.className = "favorite-recipe-progress-hidden";
     emptyFavoriteTextContainer.className = "d-none";
   }
 }
