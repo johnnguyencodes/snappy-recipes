@@ -286,9 +286,9 @@ class App {
       headers: {
         "Content-Type": "application/json"
       },
-      timeout: 10000,
       error: this.handleGetRecipesError,
-      success: this.handleGetRecipesSuccess
+      success: this.handleGetRecipesSuccess,
+      timeout: 10000
     })
   }
 
@@ -351,7 +351,7 @@ class App {
   }
 
   handleGetFavoriteRecipesError(error) {
-    favoriteRecipesDownloadProgress.className = "recipe-progress-hidden";
+    favoriteRecipesDownloadProgress.className = "favorite-recipe-progress-hidden";
     favoriteRecipesStatusText.className = "d-none";
     if (error.statusText === "error") {
       spoonacularFavoriteError.className = "mt-3 text-center";

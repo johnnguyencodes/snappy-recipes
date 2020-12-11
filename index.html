@@ -22,7 +22,17 @@
 </head>
 
 <body class="bg-light">
-    <div id="modal_container" class="d-none modal-dialog modal-lg modal-dialog-centered rounded justify-content-center m-0">
+  <div id="favorite_sticky_div" class="favorite-sticky-div-hidden m-0">
+    <div class="d-flex flex-column align-items-start side-menu-sticky">
+      <div class="row m-0 p-0 d-flex justify-content-around bg-light">
+        <button id="toggle_favorites_button" class="favorites-toggle-hidden toggle btn btn-danger text-white mx-2 px-2 py-0 d-flex justify-content-center align-items-center font-weight-bold"><i class="fas fa-heart fa-sm p-0 mr-2 my-0 ml-0"></i> Favorites</button>
+        <button id="toggle_diet_button" class="diet-toggle-hidden toggle btn btn-primary text-white mx-2 px-2 py-0 d-flex justify-content-center align-items-center"><i class="fas fa-tasks fa-sm p-0 mr-2 my-0 ml-0"></i> Diet Preferences</button>
+        <a id="close_side_menu_button" class="close-side-menu-button-hidden d-flex justify-content-center align-items-center text-danger p-0 m-0 input"><i class="fas fa-window-close fa-2x"></i></a>
+      </div>
+    </div>
+  </div>
+    <div id="modal_container" class="d-none justify-content-center m-0">
+      <div class="modal-dialog modal-lg modal-dialog-centered rounded">
       <div class="modal-content m-0 d-flex justify-content-center bg-light">
         <div class="modal-header text-center">
           <div class="modal-title w-100">
@@ -52,13 +62,9 @@
         </div>
       </div>
     </div>
+    </div>
   </div>
-  <div id="side_menu_container" class="side-menu-hidden d-flex flex-column justify-content-center">
-    <a id="close_side_menu_button" class="close-side-menu-button-hidden d-flex justify-content-center align-items-center text-danger p-0 m-0 input"><i class="fas fa-window-close fa-2x"></i></a>
-      <div class="d-flex flex-column align-items-start">
-        <button id="toggle_favorites_button" class="toggle-hidden toggle btn btn-danger text-white m-0 p-0 d-flex justify-content-center align-items-center"><i class="fas fa-heart fa-sm p-0 m-0"></i></button>
-        <button id="toggle_diet_button" class="toggle-hidden toggle btn btn-primary text-white m-0 p-0 d-flex justify-content-center align-items-center"><i class="fas fa-tasks fa-sm p-0 m-0"></i></button>
-      </div>
+  <div id="side_menu_container" class="side-menu-hidden d-flex flex-column justify-content-center align-items">
     <div id="favorite_recipes_section" class="d-flex flex-column justify-content-center">
       <p id="spoonacular_favorite_error" class="d-none">The Spoonacular API has reached its daily quota for the current
         API Key.
@@ -66,9 +72,9 @@
           href="mailto:john@johnnguyencodes.com?subject=Snappy%20Recipes%20API%20Key%20Refresh">john@johnnguyencodes.com</a>,
         thank you.</p>
       <p id="spoonacular_favorite_timeout_error" class="d-none">The Ajax Request to the Spoonacular API timed out.  Please close and re-open the favorites menu to try again, thank you.</p>
-        <div id="favorite_recipes_download_progress" class="recipe-progress-hidden mt-3 text-left"></div>
+        <div id="favorite_recipes_download_progress" class="favorite-recipe-progress-hidden mt-3"></div>
         <p id="favorite_recipes_status_text" class="text-center d-none">Gathering recipes...</p>
-        <div id="favorite_recipes_container" class="d-flex flex-column align-items-center justify-content-center"></div>
+        <div id="favorite_recipes_container" class="d-flex flex-wrap align-items-center justify-content-center col-12"></div>
         <div id="empty_favorite_text_container" class="justify-content-center d-none">
         <h3 class="text-center mb-5">Your saved recipes will appear here.</h3>
       </div>
@@ -171,7 +177,7 @@
   </div>
   <div id="main_content" class="row">
     <div class="form_spaceholder col-12 col-xl-4">
-      <div class="d-block d-sm-none">
+      <div class="d-block d-xl-none">
         <header id="header_element" class="static d-flex flex-column align-items-center justify-content-center my-2 px-0">
           <h1> <span class="static badge badge-primary">Snappy Recipes <i class="fa fa-utensils"></i></span></h1>
           <p class="static m-2 text-center instructions">Find recipes with a <strong>search</strong>, or by choosing an <strong>image</strong>.</p>
@@ -179,11 +185,11 @@
       </div>
     </div>
     <div id="form" class="sticky col-12 col-xl-4 offset-xl-0 d-flex flex-column align-items-center">
-        <header class="d-none d-md-flex flex-column align-items-center justify-content-center my-2 px-0">
+        <header class="d-none d-xl-flex flex-column align-items-center justify-content-center my-2 px-0">
           <h1> <span class="static badge badge-primary">Snappy Recipes <i class="fa fa-utensils"></i></span></h1>
           <p class="static m-2 text-center instructions">Find recipes with a <strong>search</strong>, or by choosing an <strong>image</strong>.</p>
       </header>
-      <div id="user_input_container" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 my-2 px-0">
+      <div id="user_input_container" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mt-3 px-0">
         <div class="input-group col-xs-12">
           <div id="open_side_menu_button" class="btn btn-primary ml-2 input"><i class="fas fa-bars text-white"></i></div>
           <input type="text" id="recipe_search_input" class="form-control input"
