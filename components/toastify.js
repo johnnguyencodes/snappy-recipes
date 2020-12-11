@@ -74,7 +74,7 @@
       divElement.className = "toastify on " + this.options.className;
 
       // Positioning toast to left or right or center
-      if (!!this.options.position) {
+      if (this.options.position) {
         divElement.className += " toastify-" + this.options.position;
       } else {
         // To be depreciated in further versions
@@ -173,7 +173,7 @@
           }
         )
       }
-      
+
       // Adding an on-click destination path
       if (typeof this.options.destination !== "undefined") {
         divElement.addEventListener(
@@ -194,7 +194,7 @@
           "click",
           function(event) {
             event.stopPropagation();
-            this.options.onClick();            
+            this.options.onClick();
           }.bind(this)
         );
       }
@@ -204,7 +204,7 @@
 
         var x = getAxisOffsetAValue("x", this.options);
         var y = getAxisOffsetAValue("y", this.options);
-        
+
         var xOffset = this.options.position == "left" ? x : "-" + x;
         var yOffset = this.options.gravity == "toastify-top" ? y : "-" + y;
 
@@ -330,23 +330,17 @@
       var width = window.innerWidth > 0 ? window.innerWidth : screen.width;
 
       // Show toast in center if screen with less than or qual to 360px
-      if (width <= 360) {
+
+      if (containsClass(allToasts[i], "toastify-left") === true) {
         // Setting the position
-        allToasts[i].style[classUsed] = offsetSize[classUsed] + "px";
+        allToasts[i].style[classUsed] = topLeftOffsetSize[classUsed] + "px";
 
-        offsetSize[classUsed] += height + offset;
+        topLeftOffsetSize[classUsed] += height + offset;
       } else {
-        if (containsClass(allToasts[i], "toastify-left") === true) {
-          // Setting the position
-          allToasts[i].style[classUsed] = topLeftOffsetSize[classUsed] + "px";
+        // Setting the position
+        allToasts[i].style[classUsed] = topRightOffsetSize[classUsed] + "px";
 
-          topLeftOffsetSize[classUsed] += height + offset;
-        } else {
-          // Setting the position
-          allToasts[i].style[classUsed] = topRightOffsetSize[classUsed] + "px";
-
-          topRightOffsetSize[classUsed] += height + offset;
-        }
+        topRightOffsetSize[classUsed] += height + offset;
       }
     }
 
