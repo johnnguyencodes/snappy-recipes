@@ -8,6 +8,7 @@ const recipeInstructions = document.getElementById("recipe_instructions");
 const recipeIngredients = document.getElementById("recipe_ingredients");
 const modalButtonContainer = document.getElementById("modal_button_container");
 const overlayPreview = document.getElementById("overlay_preview");
+const modalDialog = document.getElementById("modal_dialog");
 
 
 class RecipesHandler {
@@ -24,8 +25,8 @@ class RecipesHandler {
       this
     );
     this.favoriteCheck = this.favoriteCheck.bind(this);
-    modalContainer.addEventListener("click", this.closePreview.bind(this));
-    closePreviewXButton.addEventListener("click", this.closePreview.bind(this));
+    modalContainer.addEventListener("click", this.closePreview.bind(this, event));
+    closePreviewXButton.addEventListener("click", this.closePreview.bind(this, event));
   }
 
   clickGetFavoriteRecipes(getFavoriteRecipes) {
@@ -180,6 +181,7 @@ class RecipesHandler {
   }
 
   handleFavoriteButtonClick(id) {
+    event.stopPropagation();
     const favoriteButton = document.getElementById("favorite_button");
     let recipeTitle = document.getElementById("recipe_title").textContent;
     let twoWords = recipeTitle.split(" ").slice(2, 4).join(" ");
@@ -340,23 +342,25 @@ class RecipesHandler {
   }
 
   closePreview() {
-    event.stopPropagation();
-    document.querySelector(".modal-body").scrollTo({
-      top: 0,
-      behavior: "auto",
-    });
-    modalContainer.className = "d-none justify-content-center";
-    body.className = "bg-light";
-    overlayPreview.className = "d-none";
-    while (recipeInstructions.firstChild) {
-      recipeInstructions.removeChild(recipeInstructions.firstChild);
-    }
-    while (recipeIngredients.firstChild) {
-      recipeIngredients.removeChild(recipeIngredients.firstChild);
-    }
-    while (modalButtonContainer.firstChild) {
-      modalButtonContainer.removeChild(modalButtonContainer.firstChild);
-    }
+    // if (event.target === "<i class="fas fa-window-close fa-2x"></i>" || event.target === )
+    if (event.target.id === "modal_container" || event.target.id === "close_preview_x_icon") {
+      document.querySelector(".modal-body").scrollTo({
+        top: 0,
+        behavior: "auto",
+      });
+      modalContainer.className = "d-none justify-content-center";
+      body.className = "bg-light";
+      overlayPreview.className = "d-none";
+      while (recipeInstructions.firstChild) {
+        recipeInstructions.removeChild(recipeInstructions.firstChild);
+      }
+      while (recipeIngredients.firstChild) {
+        recipeIngredients.removeChild(recipeIngredients.firstChild);
+      }
+      while (modalButtonContainer.firstChild) {
+        modalButtonContainer.removeChild(modalButtonContainer.firstChild);
+      }
+    } else return;
   }
 
   displaySearchedRecipes(chunkedRecipeArray, chunkedRecipeArrayIndex) {
