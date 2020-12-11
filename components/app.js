@@ -286,9 +286,9 @@ class App {
       headers: {
         "Content-Type": "application/json"
       },
-      timeout: 10000,
       error: this.handleGetRecipesError,
-      success: this.handleGetRecipesSuccess
+      success: this.handleGetRecipesSuccess,
+      timeout: 10000
     })
   }
 

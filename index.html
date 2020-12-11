@@ -22,6 +22,15 @@
 </head>
 
 <body class="bg-light">
+  <div id="favorite_sticky_div" class="favorite-sticky-div-hidden m-0">
+    <div class="d-flex flex-column align-items-start side-menu-sticky">
+      <div class="row m-0 p-0 d-flex justify-content-around bg-light">
+        <button id="toggle_favorites_button" class="favorites-toggle-hidden toggle btn btn-danger text-white mx-2 px-2 py-0 d-flex justify-content-center align-items-center font-weight-bold"><i class="fas fa-heart fa-sm p-0 mr-2 my-0 ml-0"></i> Favorites</button>
+        <button id="toggle_diet_button" class="diet-toggle-hidden toggle btn btn-primary text-white mx-2 px-2 py-0 d-flex justify-content-center align-items-center"><i class="fas fa-tasks fa-sm p-0 mr-2 my-0 ml-0"></i> Diet Preferences</button>
+        <a id="close_side_menu_button" class="close-side-menu-button-hidden d-flex justify-content-center align-items-center text-danger p-0 m-0 input"><i class="fas fa-window-close fa-2x"></i></a>
+      </div>
+    </div>
+  </div>
     <div id="modal_container" class="d-none justify-content-center m-0">
       <div class="modal-dialog modal-lg modal-dialog-centered rounded">
       <div class="modal-content m-0 d-flex justify-content-center bg-light">
@@ -55,12 +64,7 @@
     </div>
     </div>
   </div>
-  <div id="side_menu_container" class="side-menu-hidden d-flex flex-column justify-content-center">
-    <a id="close_side_menu_button" class="close-side-menu-button-hidden d-flex justify-content-center align-items-center text-danger p-0 m-0 input"><i class="fas fa-window-close fa-2x"></i></a>
-      <div class="d-flex flex-column align-items-start">
-        <button id="toggle_favorites_button" class="toggle-hidden toggle btn btn-danger text-white m-0 p-0 d-flex justify-content-center align-items-center"><i class="fas fa-heart fa-sm p-0 m-0"></i></button>
-        <button id="toggle_diet_button" class="toggle-hidden toggle btn btn-primary text-white m-0 p-0 d-flex justify-content-center align-items-center"><i class="fas fa-tasks fa-sm p-0 m-0"></i></button>
-      </div>
+  <div id="side_menu_container" class="side-menu-hidden d-flex flex-column justify-content-center align-items">
     <div id="favorite_recipes_section" class="d-flex flex-column justify-content-center">
       <p id="spoonacular_favorite_error" class="d-none">The Spoonacular API has reached its daily quota for the current
         API Key.

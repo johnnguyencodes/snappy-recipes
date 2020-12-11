@@ -18,6 +18,7 @@ const closeSideMenuButton = document.getElementById("close_side_menu_button");
 const sideMenuContainer = document.getElementById("side_menu_container");
 const userInputContainer = document.getElementById("user_input_container");
 const headerElement = document.getElementById("header_element");
+const favoriteStickyDiv = document.getElementById("favorite_sticky_div");
 
 let favoriteYPosition;
 let userInputContainerYPosition;
@@ -71,13 +72,17 @@ class Form {
   toggleFavorites() {
     event.preventDefault();
     favoriteRecipesSection.className = "d-flex flex-column justify-content-center";
-    dietMenu.className = "d-none flex-column justify-content-center";
+    dietMenu.className = "d-none flex-column justify-content-center align-items-center";
+    toggleFavoritesButton.classList.add("font-weight-bold");
+    toggleDietButton.classList.remove("font-weight-bold");
   }
 
   toggleDiet() {
     event.preventDefault();
     favoriteRecipesSection.className = "d-none flex-column justify-content-center";
-    dietMenu.className = "d-flex flex-column justify-content-center";
+    dietMenu.className = "d-flex flex-column justify-content-center align-items-center";
+    toggleFavoritesButton.classList.remove("font-weight-bold");
+    toggleDietButton.classList.add("font-weight-bold");
   }
 
   openFavorites() {
@@ -112,11 +117,12 @@ class Form {
     favoriteYPosition = window.scrollY;
     rect = userInputContainer.getBoundingClientRect();
     closeSideMenuButton.className = "close-side-menu-button-visible d-flex justify-content-center align-items-center text-danger p-0 m-0";
-    toggleFavoritesButton.className = "toggle-visible toggle btn btn-danger text-white m-0 p-0 d-flex justify-content-center align-items-center"
-    toggleDietButton.className = "toggle-visible toggle btn btn-primary text-white m-0 p-0 d-flex justify-content-center align-items-center";
-    sideMenuContainer.className = "side-menu-visible d-flex flex-column justify-content-center";
+    toggleFavoritesButton.className = "favorites-toggle-visible toggle btn btn-danger text-white m-2 px-2 py-0 d-flex justify-content-center align-items-center font-weight-bold"
+    favoriteStickyDiv.className="favorite-sticky-div-visible m-0 p-0";
+    toggleDietButton.className = "diet-toggle-visible toggle btn btn-primary text-white m-2 px-2 py-0 d-flex justify-content-center align-items-center";
+    sideMenuContainer.className = "side-menu-visible d-flex flex-column justify-content-center align-items-center";
     favoriteRecipesSection.className = "d-flex flex-column justify-content-center";
-    dietMenu.className = "d-none flex-column justify-content-center";
+    dietMenu.className = "d-none flex-column justify-content-center align-items-center";
     mainContent.className = "row main-content-right noscroll";
     overlay.className = "";
     mainContent.style.top = `-${favoriteYPosition}px`;
@@ -124,7 +130,7 @@ class Form {
     formElement.style.top = "0px";
     formElement.className = "sticky col-12 col-xl-4 offset-xl-0 d-flex flex-column align-items-center form-element-left";
     userInputContainer.className = "col-xs-12 col-sm-12 col-md-12 col-lg-12 mt-3 px-0"
-    mainContent.style.top = `-${favoriteYPosition}px`;
+    mainContent.style.top = `-${favoriteYPosition}px - 50px`;
     this.getFavoriteRecipes();
   }
 
@@ -139,9 +145,10 @@ class Form {
   closeSideMenu() {
     event.preventDefault();
     closeSideMenuButton.className = "close-side-menu-button-hidden d-flex justify-content-center align-items-center text-danger p-0 m-0";
-    toggleFavoritesButton.className = "toggle-hidden toggle btn btn-danger text-white m-0 p-0 d-flex justify-content-center align-items-center"
-    toggleDietButton.className = "toggle-hidden toggle btn btn-primary text-white m-0 p-0 d-flex justify-content-center align-items-center";
-    sideMenuContainer.className = "side-menu-hidden d-flex flex-column justify-content-center";
+    toggleFavoritesButton.className = "favorites-toggle-hidden toggle btn btn-danger text-white m-0 px-2 py-0 d-flex justify-content-center align-items-center"
+    toggleDietButton.className = "diet-toggle-hidden toggle btn btn-primary text-white m-0 px-2 py-0 d-flex justify-content-center align-items-center";
+    favoriteStickyDiv.className="favorite-sticky-div-hidden m-0 p-0";
+    sideMenuContainer.className = "side-menu-hidden d-flex flex-column justify-content-center align-items-center";
     mainContent.className = "row";
     overlay.className = "d-none";
     window.scroll(0, favoriteYPosition);
