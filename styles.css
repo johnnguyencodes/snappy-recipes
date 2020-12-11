@@ -75,10 +75,6 @@ a:hover, #heart_container:hover, #delete_container:hover, #file_input_form:hover
   overflow-y: hidden;
 }
 
-#user_input_container {
-      box-shadow: 0 8px 8px -8px rgba(0, 0, 0, 0.2), 0 8px 8px -8px rgba(0, 0, 0, 0.9);
-}
-
 #percentage_bar_upload, #percentage_bar_download {
     z-index: 5;
     display: block;
@@ -114,6 +110,7 @@ a:hover, #heart_container:hover, #delete_container:hover, #file_input_form:hover
   height: 125px;
   padding-top: 45px;
   cursor: pointer;
+        box-shadow: 0 8px 8px -8px rgba(0, 0, 0, 0.2), 0 8px 8px -8px rgba(0, 0, 0, 0.9);
 }
 
 .desktop-space-form {
@@ -537,6 +534,10 @@ span {
       top: 80px;
     }
 
+    #user_input_container {
+        box-shadow: 0 8px 8px -8px rgba(0, 0, 0, 0.2), 0 8px 8px -8px rgba(0, 0, 0, 0.9);
+}
+
 }
 
 @media only screen and (min-width: 1200px) {
@@ -577,6 +578,7 @@ span {
   border: none;
   height: 100%;
   padding-top: 6px;
+
   }
 
   .desktop-space-form {
@@ -631,6 +633,10 @@ span {
   height: 100%;
   padding-top: 6px;
   }
+
+  #user_input_container {
+        box-shadow: 0 8px 8px -8px rgba(0, 0, 0, 0.2), 0 8px 8px -8px rgba(0, 0, 0, 0.9);
+}
 
   .desktop-space-form {
     top: 0px;
