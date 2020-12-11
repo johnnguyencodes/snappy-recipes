@@ -553,60 +553,6 @@ span {
 
 }
 
-/* Galaxy Note 3 */
-@media only screen
-  and (min-device-width: 360px)
-  and (max-device-width: 640px)
-  and (-webkit-min-device-pixel-ratio: 1) {
-        .main-content-right {
-      right: 0px;
-    }
-
-    .form-element-left {
-      left: 0px;
-    }
-    .favorite-recipes-visible {
-      height: auto;
-    }
-  .custom-file-input.input ~ .custom-file-label::after {
-  font-family: "Font Awesome 5 Free", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  content: "\f03e   Choose Image";
-  width: 100%;
-  color: white;
-  background-color:#007bff;
-  border-radius: 4px;
-  border: none;
-  height: 100%;
-  padding-top: 6px;
-
-  }
-
-  .desktop-space-form {
-    top: 0px;
-  }
-  #file_input_form {
-    height: 0px;
-    top: 0px;
-  }
-
-  .modal-dialog,
-  .modal-content {
-    /* 80% of window height */
-    height: 80%;
-  }
-
-  .modal-body {
-    /* 100% = dialog height, 120px = header + footer */
-    max-height: calc(100% - 120px);
-    overflow-y: scroll;
-  }
-
-    #search_results_section {
-    top: 0px !important;
-  }
-
-  }
-
 /* iPhone 6, 6S, 7, 8 Portrait and Landscape */
 @media only screen
   and (max-device-width: 1024px)
@@ -633,10 +579,6 @@ span {
   height: 100%;
   padding-top: 6px;
   }
-
-  #user_input_container {
-        box-shadow: 0 8px 8px -8px rgba(0, 0, 0, 0.2), 0 8px 8px -8px rgba(0, 0, 0, 0.9);
-}
 
   .desktop-space-form {
     top: 0px;
