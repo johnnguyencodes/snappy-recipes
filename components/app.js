@@ -240,7 +240,7 @@ class App {
     console.error(error);
   }
 
-  //GET request to Spoonacular's API with label from Google to get a list of up to 10 recipes containing the item from the image and other nutrition info.
+  //GET request to Spoonacular's API with label from Google, if available, to get a list of up to 100 recipes.
 
   getRandomRecipes() {
     for (var i = 0; i < inputs.length; i++) {
