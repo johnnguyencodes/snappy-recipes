@@ -1,0 +1,539 @@
+<html lang="en"><head><script type="application/javascript" src="https://mcas-proxyweb.mcas.ms/js-bootstrap.js?saasId=26077&type=WINDOW&McasTsid=11599"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MiDog Contact Us Form</title>
+    <link href="https://fonts.googleapis.com.mcas.ms/css?family=Montserrat:400,500,600,700,800&amp;display=swap&amp;McasCtx=8&amp;McasUserAuth=casBF3NoYXJlZC1uaXB0dWNrLTIwMjAwODA5ZyslcEnSvuQryLpvkKxqhzuvScYlPrN_1vhjf0fDrJiSsVXxLNVPrI7K-ZsQhlvNFGNBRL-D9s5SfEuOsaqHUI_QHxnigUWa_pDaMA1jSDz_m18c4WsebOkDYQeZBPbzwgL-DjUs3DiNqyey4Yu9nIjdsK-N2TnAqxGT1dSaN6VxonfSqjnKFgE9tZD2bUrFePjzv94gUgRZwSea5iMIVd-GTrrci4jKiZsGsrytJw8T0i6jJjjIHTk-4Sc-Ph7UoAf1jbEPozxdWPxtcMoqISR8BCXfFuKY4JD3VpqfYY1TbVgay9TxIBWrBoGPtl_CVQvXrE0uWcMhxim371GEPg" rel="stylesheet">
+  
+    <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com.mcas.ms/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css?McasCtx=8&McasUserAuth=casBF3NoYXJlZC1uaXB0dWNrLTIwMjAwODA5ZyslcEnSvuQryLpvkKxqhzuvScYlPrN_1vhjf0fDrJiSsVXxLNVPrI7K-ZsQhlvNFGNBRL-D9s5SfEuOsaqHUI_QHxnigUWa_pDaMA1jSDz_m18c4WsebOkDYQeZBPbzwgL-DjUs3DiNqyey4Yu9nIjdsK-N2TnAqxGT1dSaN6VxonfSqjnKFgE9tZD2bUrFePjzv94gUgRZwSea5iMIVd-GTrrci4jKiZsGsrytJw8T0i6jJjjIHTk-4Sc-Ph7UoAf1jbEPozxdWPxtcMoqISR8BCXfFuKY4JD3VpqfYY1TbVgay9TxIBWrBoGPtl_CVQvXrE0uWcMhxim371GEPg">
+  
+    <script src="https://cdnjs.cloudflare.com.mcas.ms/ajax/libs/jquery/3.4.1/jquery.min.js?McasCtx=8389200" type="text/javascript"></script>
+  
+    <script src="https://cdnjs.cloudflare.com.mcas.ms/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js?McasCtx=8389200" type="text/javascript"></script>
+    
+    <script src="https://cdnjs.cloudflare.com.mcas.ms/ajax/libs/popper.js/1.14.3/umd/popper.min.js?McasCtx=8389200"></script>
+    <script src="https://cdnjs.cloudflare.com.mcas.ms/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js?McasCtx=8389200"></script>
+<meta name="chromesniffer" id="chromesniffer_meta" content="{&quot;jQuery&quot;:&quot;3.4.1&quot;,&quot;jQuery UI&quot;:&quot;1.12.1&quot;,&quot;SPDY&quot;:-1,&quot;Bootstrap&quot;:-1}"><script type="text/javascript" src="chrome-extension://fhhdlnnepfjhlhilgmeepgkhjmhhhjkh/js/detector.js"></script></head>
+<body cz-shortcut-listen="true">
+    <style>
+        :root {
+            --zymo-green: #00843D;
+            --zymo-yellow: #FEDD00;
+            --zymo-green-faint: #EDF6F1;
+            --dark-grey: #3A4249;
+            --zymo-green-light: #99CEB1;
+            --zymo-yellow-faint: #FFFAD9;
+            --zymo-yellow-light: #FEEB66;
+            --zymo-green-less-faint: #F2F9F5;
+            --header-height: 105px;
+            --header-box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.2);
+            --search-menu-max-height: 500px;
+            --search-menu-max-height-mobile: 350px;
+        }
+        
+        :focus {
+            outline: none;
+        }
+        
+        body {
+            font-family: Montserrat, sans-serif;
+        }
+        
+        body,
+        input,
+        textarea,
+        button,
+        select,
+        p {
+            font-size: 16px;
+            font-family: Montserrat, sans-serif;
+            font-style: normal;
+            font-weight: 500;
+            color: #69727b;
+            line-height: 1.5;
+        }
+        
+        input,
+        textarea,
+        select {
+            border: 1px solid #949494;
+            background-color: #fff;
+            color: #000;
+            max-width: 100%;
+            line-height: 1.2;
+            border-radius: 0.25rem !important;
+        }
+        
+        input,
+        textarea {
+            padding: 8px 15px;
+        }
+        
+        input:focus {
+            outline: none;
+        }
+        
+        .h1,
+        .h2,
+        .h3,
+        .h4,
+        h1,
+        h2,
+        h3,
+        h4 {
+            font-weight: 700;
+            color: var(--zymo-green);
+        }
+        
+        a {
+            color: var(--zymo-green);
+            text-decoration: none
+        }
+        
+        /* a:not([disabled]):hover, */
+        a:focus {
+            color: #005125
+        }
+        
+        a:hover,
+        a:active,
+        a:link,
+        a:visited {
+            text-decoration: none
+        }
+        
+        a:hover {
+            color: var(--zymo-green);
+        }
+        
+        .citations a:link {
+            word-break: break-word;
+        }
+        
+        .site-header__icon {
+            color: var(--zymo-green)
+        }
+        
+        
+        .site-header__icon:hover {
+            color: #212529;
+        }
+        
+        .site-page-width {
+            max-width: 1200px;
+        }
+        
+        .page-width {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-left: 55px;
+            padding-right: 55px;
+        }
+        
+        .w-90 {
+            width: 90%;
+        }
+        
+        button {
+            font-size: 16px;
+            font-family: Montserrat, sans-serif;
+            font-style: normal;
+            font-weight: 500;
+            color: var(--zymo-green);
+            line-height: 1.5;
+            cursor: pointer;
+        }
+        
+        button:focus,
+        .btn:focus {
+            outline: none;
+            box-shadow: none;
+        }
+        
+        .text-zymo {
+            color: var(--zymo-green);
+        }
+        
+        .text-zymo-grey {
+            color: #69727b
+        }
+        
+        .btn {
+            border-radius: 0.25rem !important;
+            cursor: pointer;
+            padding: 5px 20px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        
+        .btn-zymo,
+        .btn-zymo-inverse,
+        .btn-zymo-secondary {
+            text-transform: uppercase;
+            cursor: pointer;
+        }
+        
+        .btn-zymo:hover,
+        .btn-zymo-inverse {
+            border-radius: 0.25rem !important;
+            background-color: #fff;
+            color: var(--zymo-green);
+            border: 2px solid var(--zymo-green);
+            font-weight: bold;
+            letter-spacing: 0.08em;
+        }
+        
+        .btn-zymo-inverse:hover,
+        .btn-zymo {
+            border-radius: 0.25rem !important;
+            background-color: var(--zymo-green);
+            color: #fff;
+            font-weight: bold;
+            border: 2px solid var(--zymo-green);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+        
+        .btn-zymo-secondary {
+            background-color: var(--zymo-yellow);
+            color: var(--zymo-green);
+            border-color: transparent;
+            border-radius: 0.25rem !important;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+        
+        .btn-zymo-secondary:hover {
+            color: white;
+        }
+        
+        .btn-formats {
+            background-color: white;
+            color: #69727b;
+            border-color: #69727b;
+            border-radius: .25rem !important;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+        
+        .btn-formats.active,
+        .btn-formats:hover {
+            color: var(--zymo-green);
+            border-color: var(--zymo-green);
+            background-color: #e8f1e3;
+            text-transform: uppercase;
+            font-weight: 700;
+        
+        }
+        
+        .list-style-none {
+            list-style: none;
+        }
+        
+        .font-size-1rem {
+            font-size: 1rem;
+        }
+        
+        .display-none {
+            display: none;
+        }
+        
+        .section-header,
+        #CollectionSection {
+            margin-top: 35px;
+        }
+        
+        .empty-page-content {
+            padding: 125px 55px;
+        }
+        
+        .zymo-radius {
+            border-radius: 0.25rem !important;
+        }
+        
+        .responsive-image {
+            display: block;
+            object-fit: contain;
+            margin-left: auto;
+            margin-right: auto;
+            height: auto;
+            max-width: 100%;
+        }
+        
+        .responsive-image-no-height-auto {
+            display: block;
+            object-fit: contain;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .hover-border-green {
+            border-bottom: 5px solid transparent;
+            -webkit-transition: all 0.25s ease-in;
+            -o-transition: all 0.25s ease-in;
+            transition: all 0.25s ease-in;
+        }
+        
+        .hover-border-green:hover {
+            -webkit-transform: translateY(-5px);
+            -ms-transform: translateY(-5px);
+            transform: translateY(-5px);
+            border-bottom: 5px solid var(--zymo-green);
+        }
+        
+        /*** TEXT ***/
+        .text-green {
+            color: var(--zymo-green)
+        }
+        
+        .main-header {
+            font-size: 45px;
+        }
+        
+        .icon-spinner {
+            -moz-animation: spin 500ms infinite linear;
+            -o-animation: spin 500ms infinite linear;
+            -webkit-animation: spin 500ms infinite linear;
+            animation: spin 500ms infinite linear
+        }
+        
+        .errors ul {
+            margin-bottom: 0;
+            padding: 0;
+            list-style: none;
+        }
+        
+        .shopify-challenge__container .shopify-challenge__button {
+            display: block;
+            margin: 0 auto;
+            border-radius: 0.25rem !important;
+            background-color: var(--zymo-green);
+            color: #fff;
+            font-weight: bold;
+            border: 2px solid var(--zymo-green);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+        
+        .shopify-challenge__container {
+            max-width: 500px;
+            margin: 0 auto;
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .shopify-challenge__container .g-recaptcha {
+            margin-bottom: 1rem !important;
+        }
+        
+        .rte.page-width.blog-zymo img {
+            max-width: 100%;
+        }
+        
+        .list--inline {
+            padding: 0;
+            margin: 0;
+        }
+        
+        .list--inline>li {
+            display: inline-block;
+            margin-bottom: 0;
+            vertical-align: middle;
+            margin: 0 auto;
+        }
+        
+        .text-underline {
+            text-decoration: underline !important;
+        }
+        
+        @media only screen and (max-width: 768px) {
+            .page-width {
+                padding-left: 22px;
+                padding-right: 22px;
+            }
+        }
+        
+        @media only screen and (max-width: 750px) {
+            .mobile-h5-title {
+                font-size: 16px
+            }
+        
+            .mobile-h4-title {
+                font-size: 18px
+            }
+        
+            .mobile-h3-title {
+                font-size: 21px
+            }
+        
+            .mobile-h2-title {
+                font-size: 24px
+            }
+        
+            .mobile-h1-title {
+                font-size: 40px
+            }
+        
+        }
+        
+
+            .ui-autocomplete-loading {
+                background:url('https://files.zymoresearch.com.mcas.ms/images/rolling-loader.gif?McasCtx=1&McasUserAuth=casBF3NoYXJlZC1uaXB0dWNrLTIwMjAwODA5ZyslcEnSvuQryLpvkKxqhzuvScYlPrN_1vhjf0fDrJiSsVXxLNVPrI7K-ZsQhlvNFGNBRL-D9s5SfEuOsaqHUI_QHxnigUWa_pDaMA1jSDz_m18c4WsebOkDYQeZBPbzwgL-DjUs3DiNqyey4Yu9nIjdsK-N2TnAqxGT1dSaN6VxonfSqjnKFgE9tZD2bUrFePjzv94gUgRZwSea5iMIVd-GTrrci4jKiZsGsrytJw8T0i6jJjjIHTk-4Sc-Ph7UoAf1jbEPozxdWPxtcMoqISR8BCXfFuKY4JD3VpqfYY1TbVgay9TxIBWrBoGPtl_CVQvXrE0uWcMhxim371GEPg') center center no-repeat;
+                height: 40px;
+            }
+        
+            #imageContainer a:hover {
+                background-color: rgb(223, 223, 223);
+            }
+        </style>
+
+<div class="page-width">
+    <section id="netsuiteForm">
+        <div class="mx-auto text-center">
+            <h2>Feel free to contact us with questions:</h2>
+            <p></p>
+        </div>
+        <form class="needs-validation" action="https://1247584.extforms.netsuite.com/app/site/hosting/scriptlet.nl?script=1643&deploy=1&compid=1247584&h=e98cbeb09f85bdc3557a&type=contactus&action=create" method="POST" onsubmit="preSubmitCheck()">
+              
+          <input name="submitted" id="submitted" type="hidden" value="T">
+          <input type="checkbox" id="contact_me_by_fax_only-services" value="1" style="display:none!important" tabindex="-1" autocomplete="off">
+    
+          <input type="hidden" id="gclid" name="custevent_gclid">
+          <input type="hidden" id="form-name" name="custevent_online_form_name" value="midog_contact_form">
+          <input type="hidden" id="form-title" name="title" value="MiDog Wix Contact Us Form">
+    
+          <div class="form-row">
+            <div class="form-group col-md-6 mb-3">
+              <label class="font-weight-bold" for="firstname">First Name <span>*</span></label>
+              <input type="text" class="form-control" id="firstname" name="firstname" required>
+            </div>
+            <div class="form-group col-md-6 mb-3">
+              <label class="font-weight-bold" for="lastname">Last Name <span>*</span></label>
+              <input type="text" class="form-control" id="lastname" name="lastname" required>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group col-md-6 mb-3">
+              <label class="font-weight-bold" for="email">Email <span>*</span></label>
+              <input type="email" class="form-control" id="email" name="email"  required>
+            </div>
+            <div class="form-group col-md-6 mb-3">
+              <label class="font-weight-bold" for="phone">Phone Number</label>
+              <input type="phone" class="form-control" id="phone" name="phone">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group col-md-6 mb-3">
+              <label class="font-weight-bold" for="fax">Fax Number </label>
+              <input type="fax" class="form-control" id="fax" name="fax">
+            </div>
+            <div class="form-group col-md-6 mb-3">
+                <label class="font-weight-bold" for="companyname">Hospital or Institution Name</label>
+                <input type="text" class="form-control" id="companyname" name="companyname">
+              </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group col-md-6 mb-3">
+                <label class="font-weight-bold" for="accountno">Account Number</label>
+                <input type="phone" class="form-control" id="accountno" name="custevent_account_number">
+              </div>
+            <div class="form-group col-md-6 mb-3">
+                <label class="font-weight-bold" for="profession">Profession <span>*</span></label>
+                <select name="custevent_profession" class="form-control col-md-3 mb-3 mw-100" id="profession" required>
+                    <option value="">-Please select your profession-</option>
+                    <option value="01">Veterinarian</option>
+                    <option value="02">Technician</option>
+                    <option value="03">Hospital Manager</option>
+                    <option value="04">Researcher</option>
+                    <option value="05">Academia</option>
+                    <option value="06">Pet Parent</option>
+                    <option value="07">Other</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group col-md-6 mb-3">
+                <label class="font-weight-bold" for="category">Category <span>*</span></label>
+                <select name="custevent_category" class="form-control col-md-3 mb-3 mw-100" id="category" required>
+                    <option value="">-Please select a category-</option>
+                    <option value="01">General question</option>
+                    <option value="02">Sample question</option>
+                    <option value="03">Pricing Information</option>
+                    <option value="04">Invoice/Accounting</option>
+                    <option value="05">Other</option>
+                </select>
+            </div>
+            <div class="form-group col-md-6 mb-3">
+                <label class="font-weight-bold" for="interest">Interest <span>*</span></label>
+                <select name="custevent_interest" class="form-control col-md-3 mb-3 mw-100" id="interest" required>
+                    <option value="">-Please select an interest-</option>
+                    <option value="01">Small animals</option>
+                    <option value="02">Exotic pets</option>
+                    <option value="03">Zoo/Wildlife</option>
+                    <option value="04">Aquatic animals</option>
+                    <option value="05">Livestock</option>
+                    <option value="06">Dermatology</option>
+                    <option value="07">Dentistry</option>
+                    <option value="08">Surgery</option>
+                    <option value="09">Other</option>
+                </select>
+            </div>
+          </div>
+    
+          <div class="form-row">
+            <div class="form-group col-12 mb-3">
+              <label class="font-weight-bold" for="incomingmessage">Your Message</label>
+              <textarea name="incomingmessage" id="incomingmessage" class="form-control" rows="4"></textarea>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+                <label htmlFor="marketing">
+                <input type="checkbox" id="marketing" name="marketing" value="true"/>
+                    I want to be subscribed to the MiDog Newsletter
+                </label>
+            </div>
+        </div>
+    
+          <div class="form-row d-flex justify-content-start">
+            <div class="form-group">
+              <input type="submit" class="btn btn-zymo" id="submitorder" value="SUBMIT">
+            </div>
+          </div>
+        </form>
+      </section>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+        setTimeout(function () {
+        // If the user takes longer than 10 seconds to fill out the form, then use the actual endpoint.  If it takes less than 10 seconds, it most likely is a bot.
+        const form = document.querySelector("#netsuiteForm form");
+        form.action = "https://1247584-sb2.extforms.netsuite.com/app/site/crm/externalcasepage.nl?compid=1247584_SB2&formid=29&h=AAFdikaIUHwvaWGDNzBbMWeruhJG0mx0S5gS13bUe9sxSCNIhhg";
+        }, 10000);
+    });
+    
+      function preSubmitCheck() {
+
+        // If the invisible checkbox honeypot trap is checked, send form data to honeypot endpoint in NetSuite
+        if ($("#contact_me_by_fax_only-services").is(":checked")) {
+            const form = document.querySelector("#netsuiteForm form")
+            form.action = "https://1247584.extforms.netsuite.com/app/site/hosting/scriptlet.nl?script=1643&deploy=1&compid=1247584&h=e98cbeb09f85bdc3557a&type=contactus&action=create";
+        }
+        let incomingmessage = document.getElementById("incomingmessage");
+        if (incomingmessage.value.length === 0) {
+            incomingmessage.value = "Empty";
+        }
+      }
+    </script>
+
+</body>
+</html>
+
