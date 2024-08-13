@@ -405,7 +405,6 @@ class RecipesHandler {
       let instructions = [];
       if (
         !chunkedRecipeArray[chunkedRecipeArrayIndex][i].analyzedInstructions
-          .length
       ) {
         instructions.push("Instructions are available on the Recipe Page.");
       } else {
