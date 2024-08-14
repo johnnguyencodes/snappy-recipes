@@ -1,6 +1,10 @@
-const searchResultsQuantityText = document.getElementById("search_results_quantity_text");
+const searchResultsQuantityText = document.getElementById(
+  "search_results_quantity_text"
+);
 const modalContainer = document.getElementById("modal_container");
-const resultsShownQuantityText = document.getElementById("results_shown_quantity_text");
+const resultsShownQuantityText = document.getElementById(
+  "results_shown_quantity_text"
+);
 const body = document.querySelector("body");
 const favoriteButton = document.getElementById("favorite_button");
 const backToTopButton = document.getElementById("back_to_top_button");
@@ -9,7 +13,6 @@ const recipeIngredients = document.getElementById("recipe_ingredients");
 const modalButtonContainer = document.getElementById("modal_button_container");
 const overlayPreview = document.getElementById("overlay_preview");
 const modalDialog = document.getElementById("modal_dialog");
-
 
 class RecipesHandler {
   constructor(recipesContainer, favoriteRecipesContainer) {
@@ -21,12 +24,17 @@ class RecipesHandler {
       this.handleBackToTopClick.bind(this)
     );
     this.displaySearchedRecipes = this.displaySearchedRecipes.bind(this);
-    this.updateResultsQuantityShown = this.updateResultsQuantityShown.bind(
-      this
-    );
+    this.updateResultsQuantityShown =
+      this.updateResultsQuantityShown.bind(this);
     this.favoriteCheck = this.favoriteCheck.bind(this);
-    modalContainer.addEventListener("click", this.closePreview.bind(this, event));
-    closePreviewXButton.addEventListener("click", this.closePreview.bind(this, event));
+    modalContainer.addEventListener(
+      "click",
+      this.closePreview.bind(this, event)
+    );
+    closePreviewXButton.addEventListener(
+      "click",
+      this.closePreview.bind(this, event)
+    );
   }
 
   clickGetFavoriteRecipes(getFavoriteRecipes) {
@@ -88,11 +96,17 @@ class RecipesHandler {
   }
 
   handleShowMoreScroll() {
-    if (document.documentElement.scrollTop + window.innerHeight === document.documentElement.scrollHeight) {
+    if (
+      document.documentElement.scrollTop + window.innerHeight ===
+      document.documentElement.scrollHeight
+    ) {
       if (chunkedRecipeArrayIndex !== chunkedRecipeArray.length - 1) {
         let yPosition = window.scrollY;
         chunkedRecipeArrayIndex++;
-        this.displaySearchedRecipes(chunkedRecipeArray, chunkedRecipeArrayIndex);
+        this.displaySearchedRecipes(
+          chunkedRecipeArray,
+          chunkedRecipeArrayIndex
+        );
         window.scroll(0, yPosition);
         this.updateResultsQuantityShown();
       }
@@ -103,20 +117,22 @@ class RecipesHandler {
     window.scrollTo({
       top: 0,
       left: 0,
-      behavior: 'smooth'
+      behavior: "smooth",
     });
   }
 
   updateResultsQuantityShown() {
     resultsShownQuantityText.textContent = `Showing ${
       document.querySelectorAll(".recipe-card").length
-      } of ${searchResultsQuantityText.textContent.substring(0, 3)}`;
+    } of ${searchResultsQuantityText.textContent.substring(0, 3)}`;
   }
 
   handleFavoriteClick(id) {
     event.stopPropagation();
     let heartIcon = document.getElementById(`heart_icon_${id}`);
-    let recipeTitle = heartIcon.parentNode.parentNode.parentNode.lastChild.firstChild.firstChild.firstChild.textContent;
+    let recipeTitle =
+      heartIcon.parentNode.parentNode.parentNode.lastChild.firstChild.firstChild
+        .firstChild.textContent;
     let twoWords = recipeTitle.split(" ").slice(0, 2).join(" ");
     if (!favoriteArray.includes(id)) {
       favoriteArray.push(id);
@@ -223,7 +239,7 @@ class RecipesHandler {
       }
       if (
         favoriteRecipesSection.scrollHeight >
-        favoriteRecipesSection.clientHeight &&
+          favoriteRecipesSection.clientHeight &&
         favoriteRecipesSection.classList.contains("favorite-recipes-visible")
       ) {
         favoriteRecipesSection.className =
@@ -300,7 +316,8 @@ class RecipesHandler {
     // closePreviewButton.id = "go_back_button";
     // closePreviewButton.className = "btn btn-secondary";
     // closePreviewButton.textContent = "Close Preview";
-    closePreviewXButton.className = "close-preview-x-button-visible justify-content-center align-items-center text-danger p-0 m-0";
+    closePreviewXButton.className =
+      "close-preview-x-button-visible justify-content-center align-items-center text-danger p-0 m-0";
     modalButtonContainer.append(externalLinkButton);
     modalButtonContainer.append(favoriteButton);
     // modalButtonContainer.append(closePreviewButton);
@@ -310,8 +327,7 @@ class RecipesHandler {
       recipeIngredients.append(ingredient);
     }
     const cleanSummary = DOMPurify.sanitize(summary);
-    modalContainer.className =
-      "";
+    modalContainer.className = "";
     recipeTitle.textContent = `Recipe Preview: ${title}`;
     recipeImage.src = imageURL;
     recipeSummary.innerHTML = cleanSummary;
@@ -343,7 +359,10 @@ class RecipesHandler {
 
   closePreview() {
     // if (event.target === "<i class="fas fa-window-close fa-2x"></i>" || event.target === )
-    if (event.target.id === "modal_container" || event.target.id === "close_preview_x_icon") {
+    if (
+      event.target.id === "modal_container" ||
+      event.target.id === "close_preview_x_icon"
+    ) {
       document.querySelector(".modal-body").scrollTo({
         top: 0,
         behavior: "auto",
@@ -582,7 +601,8 @@ class RecipesHandler {
       const ingredients = recipes[i].nutrition.ingredients;
       const summary = recipes[i].summary;
       const recipeCard = document.createElement("div");
-      recipeCard.className = "favorite-recipe-card favorited card m-3 px-0 col-xs-12 col-sm-5 col-md-5 col-lg-3 col-xl-2";
+      recipeCard.className =
+        "favorite-recipe-card favorited card m-3 px-0 col-xs-12 col-sm-5 col-md-5 col-lg-3 col-xl-2";
       recipeCard.id = id;
       const imageContainer = document.createElement("div");
       const titleAnchorTag = document.createElement("a");
@@ -689,7 +709,8 @@ class RecipesHandler {
         "favorite-recipes-visible d-flex flex-column justify-content-center";
     }
     favoriteRecipesStatusText.className = "text-center d-none";
-    favoriteRecipesDownloadProgress.className = "favorite-recipe-progress-hidden";
+    favoriteRecipesDownloadProgress.className =
+      "favorite-recipe-progress-hidden";
     emptyFavoriteTextContainer.className = "d-none";
   }
 }

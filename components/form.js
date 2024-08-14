@@ -1,13 +1,17 @@
 const fileLabel = document.getElementById("custom_file_label");
 let fileInputForm = document.getElementById("file_input_form");
-const recipeSearchInput = document.getElementById('recipe_search_input');
+const recipeSearchInput = document.getElementById("recipe_search_input");
 const resetButton = document.getElementById("reset_button");
 const searchButton = document.getElementById("search_button");
-const toggleFavoritesButton = document.getElementById("toggle_favorites_button");
+const toggleFavoritesButton = document.getElementById(
+  "toggle_favorites_button"
+);
 const toggleDietButton = document.getElementById("toggle_diet_button");
 const mainContent = document.getElementById("main_content");
 const errorContainer = document.getElementById("error_container");
-const errorSpoonacularSearch = document.getElementById("spoonacular_search_error");
+const errorSpoonacularSearch = document.getElementById(
+  "spoonacular_search_error"
+);
 const errorImgurCORSIssue = document.getElementById("imgur_api_error");
 const errorNoFile = document.getElementById("error_no_file");
 const errorIncorrectFile = document.getElementById("error_incorrect_file");
@@ -26,10 +30,19 @@ let rect;
 
 class Form {
   constructor() {
-    favoriteRecipesSection.addEventListener("scroll", this.keepUserInputContainerPosition.bind(this));
+    favoriteRecipesSection.addEventListener(
+      "scroll",
+      this.keepUserInputContainerPosition.bind(this)
+    );
     openSideMenuButton.addEventListener("click", this.openSideMenu.bind(this));
-    closeSideMenuButton.addEventListener("click", this.closeSideMenu.bind(this));
-    toggleFavoritesButton.addEventListener("click", this.toggleFavorites.bind(this));
+    closeSideMenuButton.addEventListener(
+      "click",
+      this.closeSideMenu.bind(this)
+    );
+    toggleFavoritesButton.addEventListener(
+      "click",
+      this.toggleFavorites.bind(this)
+    );
     toggleDietButton.addEventListener("click", this.toggleDiet.bind(this));
     searchButton.addEventListener("click", this.search.bind(this));
     fileInputForm.addEventListener("change", this.imgValidation.bind(this));
@@ -39,7 +52,8 @@ class Form {
     document.addEventListener("drop", function (event) {
       if (event.target !== fileInputForm) {
         event.preventDefault();
-      }});
+      }
+    });
   }
 
   clickDietInfo(dietInfo) {
@@ -71,16 +85,20 @@ class Form {
 
   toggleFavorites() {
     event.preventDefault();
-    favoriteRecipesSection.className = "d-flex flex-column justify-content-center";
-    dietMenu.className = "d-none flex-column justify-content-center align-items-center";
+    favoriteRecipesSection.className =
+      "d-flex flex-column justify-content-center";
+    dietMenu.className =
+      "d-none flex-column justify-content-center align-items-center";
     toggleFavoritesButton.classList.add("font-weight-bold");
     toggleDietButton.classList.remove("font-weight-bold");
   }
 
   toggleDiet() {
     event.preventDefault();
-    favoriteRecipesSection.className = "d-none flex-column justify-content-center";
-    dietMenu.className = "d-flex flex-column justify-content-center align-items-center";
+    favoriteRecipesSection.className =
+      "d-none flex-column justify-content-center";
+    dietMenu.className =
+      "d-flex flex-column justify-content-center align-items-center";
     toggleFavoritesButton.classList.remove("font-weight-bold");
     toggleDietButton.classList.add("font-weight-bold");
   }
@@ -88,26 +106,34 @@ class Form {
   openFavorites() {
     event.preventDefault();
     favoriteYPosition = window.scrollY;
-    favoriteRecipesSection.className = "favorite-recipes-visible d-flex flex-column justify-content-center";
-    if (!(localStorage.getItem('favoriteArray')) || localStorage.getItem('favoriteArray') !== "[]" ) {
+    favoriteRecipesSection.className =
+      "favorite-recipes-visible d-flex flex-column justify-content-center";
+    if (
+      !localStorage.getItem("favoriteArray") ||
+      localStorage.getItem("favoriteArray") !== "[]"
+    ) {
       emptyFavoriteTextContainer.className = "d-none";
     }
-    mainContent.className="row main-content-right noscroll";
+    mainContent.className = "row main-content-right noscroll";
     mainContent.style.top = `-${favoriteYPosition}px`;
     formElement.style.top = "0px";
-    formElement.className = "sticky col-12 col-xl-4 offset-xl-0 d-flex flex-column align-items-center form-element-left";
+    formElement.className =
+      "sticky col-12 col-xl-4 offset-xl-0 d-flex flex-column align-items-center form-element-left";
     overlay.className = "";
     this.getFavoriteRecipes();
   }
 
   closeFavorites() {
     event.preventDefault();
-    favoriteRecipesSection.className = "favorite-recipes-hidden d-flex flex-column justify-content-center";
+    favoriteRecipesSection.className =
+      "favorite-recipes-hidden d-flex flex-column justify-content-center";
     mainContent.className = "row";
     overlay.className = "d-none";
     window.scroll(0, favoriteYPosition);
-    formElement.className = "sticky col-12 col-xl-4 offset-xl-0 d-flex flex-column align-items-center";
-    favoriteRecipesDownloadProgress.className = "recipe-progress-hidden mt-3 text-center";
+    formElement.className =
+      "sticky col-12 col-xl-4 offset-xl-0 d-flex flex-column align-items-center";
+    favoriteRecipesDownloadProgress.className =
+      "recipe-progress-hidden mt-3 text-center";
     spoonacularFavoriteError.className = "d-none";
     spoonacularFavoriteTimeoutError.className = "d-none";
   }
@@ -116,54 +142,76 @@ class Form {
     event.preventDefault();
     favoriteYPosition = window.scrollY;
     rect = userInputContainer.getBoundingClientRect();
-    closeSideMenuButton.className = "close-side-menu-button-visible d-flex justify-content-center align-items-center text-danger p-0 m-0";
-    toggleFavoritesButton.className = "favorites-toggle-visible toggle btn btn-danger text-white m-2 px-2 py-0 d-flex justify-content-center align-items-center font-weight-bold"
-    favoriteStickyDiv.className="favorite-sticky-div-visible m-0 p-0";
-    toggleDietButton.className = "diet-toggle-visible toggle btn btn-primary text-white m-2 px-2 py-0 d-flex justify-content-center align-items-center";
-    sideMenuContainer.className = "side-menu-visible d-flex flex-column justify-content-center align-items-center";
-    favoriteRecipesSection.className = "d-flex flex-column justify-content-center";
-    dietMenu.className = "d-none flex-column justify-content-center align-items-center";
+    closeSideMenuButton.className =
+      "close-side-menu-button-visible d-flex justify-content-center align-items-center text-danger p-0 m-0";
+    toggleFavoritesButton.className =
+      "favorites-toggle-visible toggle btn btn-danger text-white m-2 px-2 py-0 d-flex justify-content-center align-items-center font-weight-bold";
+    favoriteStickyDiv.className = "favorite-sticky-div-visible m-0 p-0";
+    toggleDietButton.className =
+      "diet-toggle-visible toggle btn btn-primary text-white m-2 px-2 py-0 d-flex justify-content-center align-items-center";
+    sideMenuContainer.className =
+      "side-menu-visible d-flex flex-column justify-content-center align-items-center";
+    favoriteRecipesSection.className =
+      "d-flex flex-column justify-content-center";
+    dietMenu.className =
+      "d-none flex-column justify-content-center align-items-center";
     mainContent.className = "row main-content-right noscroll";
     overlay.className = "";
     mainContent.style.top = `-${favoriteYPosition}px`;
-    headerElement.className = "d-flex flex-column align-items-center justify-content-center my-2 px-0";
+    headerElement.className =
+      "d-flex flex-column align-items-center justify-content-center my-2 px-0";
     formElement.style.top = "0px";
-    formElement.className = "sticky col-12 col-xl-4 offset-xl-0 d-flex flex-column align-items-center form-element-left";
-    userInputContainer.className = "col-xs-12 col-sm-12 col-md-12 col-lg-12 mt-3 px-0"
+    formElement.className =
+      "sticky col-12 col-xl-4 offset-xl-0 d-flex flex-column align-items-center form-element-left";
+    userInputContainer.className =
+      "col-xs-12 col-sm-12 col-md-12 col-lg-12 mt-3 px-0";
     mainContent.style.top = `-${favoriteYPosition}px - 50px`;
     this.getFavoriteRecipes();
   }
 
-    keepUserInputContainerPosition() {
-        console.log("rect", rect);
-        console.log("scrollY", userInputContainer.scrollY);
-    if (document.getElementById("side_menu_container").classList.contains("side-menu-visible") && document.getElementById("diet_menu").classList.contains("d-none")) {
+  keepUserInputContainerPosition() {
+    console.log("rect", rect);
+    console.log("scrollY", userInputContainer.scrollY);
+    if (
+      document
+        .getElementById("side_menu_container")
+        .classList.contains("side-menu-visible") &&
+      document.getElementById("diet_menu").classList.contains("d-none")
+    ) {
       userInputContainer.scrollY = rect.top;
     } else return;
   }
 
   closeSideMenu() {
     event.preventDefault();
-    closeSideMenuButton.className = "close-side-menu-button-hidden d-flex justify-content-center align-items-center text-danger p-0 m-0";
-    toggleFavoritesButton.className = "favorites-toggle-hidden toggle btn btn-danger text-white m-0 px-2 py-0 d-flex justify-content-center align-items-center"
-    toggleDietButton.className = "diet-toggle-hidden toggle btn btn-primary text-white m-0 px-2 py-0 d-flex justify-content-center align-items-center";
-    favoriteStickyDiv.className="favorite-sticky-div-hidden m-0 p-0";
-    sideMenuContainer.className = "side-menu-hidden d-flex flex-column justify-content-center align-items-center";
+    closeSideMenuButton.className =
+      "close-side-menu-button-hidden d-flex justify-content-center align-items-center text-danger p-0 m-0";
+    toggleFavoritesButton.className =
+      "favorites-toggle-hidden toggle btn btn-danger text-white m-0 px-2 py-0 d-flex justify-content-center align-items-center";
+    toggleDietButton.className =
+      "diet-toggle-hidden toggle btn btn-primary text-white m-0 px-2 py-0 d-flex justify-content-center align-items-center";
+    favoriteStickyDiv.className = "favorite-sticky-div-hidden m-0 p-0";
+    sideMenuContainer.className =
+      "side-menu-hidden d-flex flex-column justify-content-center align-items-center";
     mainContent.className = "row";
     overlay.className = "d-none";
     window.scroll(0, favoriteYPosition);
-    formElement.className = "sticky col-12 col-xl-4 offset-xl-0 d-flex flex-column align-items-center";
-    headerElement.className = "static d-flex flex-column align-items-center justify-content-center my-2 px-0";
-    favoriteRecipesDownloadProgress.className = "favorite-recipe-progress-hidden mt-3 text-center";
+    formElement.className =
+      "sticky col-12 col-xl-4 offset-xl-0 d-flex flex-column align-items-center";
+    headerElement.className =
+      "static d-flex flex-column align-items-center justify-content-center my-2 px-0";
+    favoriteRecipesDownloadProgress.className =
+      "favorite-recipe-progress-hidden mt-3 text-center";
     spoonacularFavoriteError.className = "d-none";
     spoonacularFavoriteTimeoutError.className = "d-none";
-    userInputContainer.className = "col-xs-12 col-sm-12 col-md-12 col-lg-12 mt-3 px-0";
+    userInputContainer.className =
+      "col-xs-12 col-sm-12 col-md-12 col-lg-12 mt-3 px-0";
     this.dietInfo();
   }
 
   imgValidation(event) {
     event.preventDefault();
-    if (!(fileInputForm.files[0])) {
+    if (!fileInputForm.files[0]) {
       return;
     }
     for (var i = 0; i < inputs.length; i++) {
@@ -182,7 +230,8 @@ class Form {
     if (document.getElementById("hr")) {
       document.getElementById("hr").remove();
     }
-    percentageBarContainer.className = "col-12 d-flex flex-column justify-content-center my-3 desktop-space-form";
+    percentageBarContainer.className =
+      "col-12 d-flex flex-column justify-content-center my-3 desktop-space-form";
     uploadedImage.src = "";
     searchResultsQuantityDiv.className = "d-none";
     resultsShownQuantityDiv.className = "d-none";
@@ -195,16 +244,19 @@ class Form {
     errorNoSearchResults.className = "d-none";
     errorImgurCORSIssue.className = "d-none";
     errorNoSearchResults.className = "d-none";
-    titleContainer.className = "col-xs-12 col-sm-12 col-md-12 col-lg-12 d-flex justify-content-around flex-column desktop-space-form mb-3";
-    percentageBarContainer.className = "col-12 d-flex flex-column justify-content-center my-3 desktop-space-form";
-    uploadedImageContainer.className = "col-xs-12 col-sm-12 col-md-12 col-lg-12 d-flex justify-content-center my-3 desktop-space-form";
+    titleContainer.className =
+      "col-xs-12 col-sm-12 col-md-12 col-lg-12 d-flex justify-content-around flex-column desktop-space-form mb-3";
+    percentageBarContainer.className =
+      "col-12 d-flex flex-column justify-content-center my-3 desktop-space-form";
+    uploadedImageContainer.className =
+      "col-xs-12 col-sm-12 col-md-12 col-lg-12 d-flex justify-content-center my-3 desktop-space-form";
     if (fileInputForm.files[1]) {
       fileInputForm.files.splice(1, 1);
     }
     const imageFile = fileInputForm.files[0];
-    if (!(imageFile)) {
-      errorContainer.className="col-12 mt-2 desktop-space-form";
-      errorNoFile.className ="text-danger text-center";
+    if (!imageFile) {
+      errorContainer.className = "col-12 mt-2 desktop-space-form";
+      errorNoFile.className = "text-danger text-center";
       fileInputForm.value = "";
       for (var i = 0; i < inputs.length; i++) {
         inputs[i].disabled = false;
@@ -214,8 +266,8 @@ class Form {
     }
     const fileType = imageFile.type;
     const formData = new FormData();
-    const mimeTypes = ['image/jpeg', 'image/png', 'image/gif'];
-    if (!(mimeTypes.includes(fileType))) {
+    const mimeTypes = ["image/jpeg", "image/png", "image/gif"];
+    if (!mimeTypes.includes(fileType)) {
       errorContainer.className = "col-12 mt-2 desktop-space-form";
       errorIncorrectFile.className = "text-danger text-center";
       fileInputForm.value = "";
@@ -261,7 +313,7 @@ class Form {
       inputs[i].disabled = true;
       inputs[i].classList.add("no-click");
     }
-    let query = (recipeSearchInput.value)
+    let query = recipeSearchInput.value;
     this.dietInfo();
     titleContainer.className = "d-none desktop-space-form";
     percentageBarContainer.className = "d-none desktop-space-form";
@@ -269,7 +321,7 @@ class Form {
     if (!query) {
       this.getRandomRecipes();
       return;
-      }
+    }
     this.getRecipes(query);
   }
 }
