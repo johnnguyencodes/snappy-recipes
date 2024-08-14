@@ -1,8 +1,17 @@
-const form = new Form();
+const newForm = new Form();
 
-const imageTitleHandler = new ImageTitleHandler();
+const newImageTitleHandler = new ImageTitleHandler();
 
-const recipesHandler = new RecipesHandler();
+const searchRecipesContainer = document.getElementById(
+  "search_recipes_container"
+);
+const favoriteRecipesContainer = document.getElementById(
+  "favorite_recipes_container"
+);
+const newRecipesHandler = new RecipesHandler(
+  searchRecipesContainer,
+  favoriteRecipesContainer
+);
 
-const app = new App(form, imageTitleHandler, recipesHandler);
-app.start();
+const newApp = new App(newForm, newImageTitleHandler, newRecipesHandler);
+newApp.start();
