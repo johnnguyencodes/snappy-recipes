@@ -15,8 +15,8 @@ const overlayPreview = document.getElementById("overlay_preview");
 const modalDialog = document.getElementById("modal_dialog");
 
 class RecipesHandler {
-  constructor(recipesContainer, favoriteRecipesContainer) {
-    this.recipesContainer = recipesContainer;
+  constructor(searchRecipesContainer, favoriteRecipesContainer) {
+    this.searchRecipesContainer = searchRecipesContainer;
     this.favoriteRecipesContainer = favoriteRecipesContainer;
     window.addEventListener("scroll", this.handleShowMoreScroll.bind(this));
     backToTopButton.addEventListener(
@@ -538,7 +538,7 @@ class RecipesHandler {
       imageContainer.append(img);
       recipeCard.append(imageContainer);
       recipeCard.append(cardBody);
-      this.recipesContainer.append(recipeCard);
+      this.searchRecipesContainer.append(recipeCard);
       recipeCard.addEventListener(
         "click",
         this.modalHandler.bind(
