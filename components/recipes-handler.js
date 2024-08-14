@@ -15,9 +15,16 @@ const overlayPreview = document.getElementById("overlay_preview");
 const modalDialog = document.getElementById("modal_dialog");
 
 class RecipesHandler {
-  constructor(recipesContainer, favoriteRecipesContainer) {
-    this.recipesContainer = recipesContainer;
-    this.favoriteRecipesContainer = favoriteRecipesContainer;
+  constructor() {
+    this.searchRecipesContainer = document.getElementById(
+      "search_recipes_container"
+    );
+    this.favoriteRecipesContainer = document.getElementById(
+      "favorite_recipes_container"
+    );
+    if (!this.searchRecipesContainer || !this.favoriteRecipesContainer) {
+      throw new Error("Required recipes container DOM elements are missing.");
+    }
     window.addEventListener("scroll", this.handleShowMoreScroll.bind(this));
     backToTopButton.addEventListener(
       "click",
@@ -538,7 +545,7 @@ class RecipesHandler {
       imageContainer.append(img);
       recipeCard.append(imageContainer);
       recipeCard.append(cardBody);
-      this.recipesContainer.append(recipeCard);
+      this.searchRecipesContainer.append(recipeCard);
       recipeCard.addEventListener(
         "click",
         this.modalHandler.bind(
