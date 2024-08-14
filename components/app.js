@@ -165,25 +165,25 @@ class App {
       headers: {
         "Authorization": `${imgurAPIKey}`
       },
-      xhr: function () {
-        var xhr = new window.XMLHttpRequest();
-        xhr.upload.addEventListener("progress", (evt) => {
-          if (evt.lengthComputable) {
-            var percentComplete = evt.loaded / evt.total;
-            $('#percentage_bar_upload').css({
-              width: percentComplete * 100 + '%'
-            });
-            if (percentComplete > 0 && percentComplete < 1) {
-              $('#percentage_upload_container').removeClass('d-none');
-            }
-            if (percentComplete === 1) {
-              $('#percentage_upload_container').addClass('d-none');
-              imageProcessingContainer.className = "d-flex col-12 flex-column align-items-center justify-content-center desktop-space-form";
-            }
-          }
-        }, false);
-        return xhr;
-      },
+      // xhr: function () {
+      //   var xhr = new window.XMLHttpRequest();
+      //   xhr.upload.addEventListener("progress", (evt) => {
+      //     if (evt.lengthComputable) {
+      //       var percentComplete = evt.loaded / evt.total;
+      //       $('#percentage_bar_upload').css({
+      //         width: percentComplete * 100 + '%'
+      //       });
+      //       if (percentComplete > 0 && percentComplete < 1) {
+      //         $('#percentage_upload_container').removeClass('d-none');
+      //       }
+      //       if (percentComplete === 1) {
+      //         $('#percentage_upload_container').addClass('d-none');
+      //         imageProcessingContainer.className = "d-flex col-12 flex-column align-items-center justify-content-center desktop-space-form";
+      //       }
+      //     }
+      //   }, false);
+      //   return xhr;
+      // },
       success: this.handlePostImageSuccess,
       error: this.handlePostImageError
     })
