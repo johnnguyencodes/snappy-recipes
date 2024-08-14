@@ -22,7 +22,9 @@ class RecipesHandler {
     this.favoriteRecipesContainer = document.getElementById(
       "favorite_recipes_container"
     );
-
+    if (!this.searchRecipesContainer || !this.favoriteRecipesContainer) {
+      throw new Error("Required recipes container DOM elements are missing.");
+    }
     window.addEventListener("scroll", this.handleShowMoreScroll.bind(this));
     backToTopButton.addEventListener(
       "click",
