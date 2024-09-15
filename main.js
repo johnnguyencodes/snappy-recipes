@@ -1,106 +1,208 @@
-//------ app.js start
+class AppDOMManager {
+  constructor() {
+    this.initAppElements();
+  }
 
-const imgurAPIKey = config.imgurAPIKey;
-const googleAPIKey = config.googleAPIKey;
-const spoonacularAPIKey = config.spoonacularAPIKey;
-let favoriteArray;
-let restrictionsString;
-let intolerancesString;
-const searchRecipesDownloadText = document.getElementById(
-  "search_recipes_download_text"
-);
-const searchRecipesDownloadProgress = document.getElementById(
-  "search_recipes_download_progress"
-);
-const favoriteRecipesDownloadProgress = document.getElementById(
-  "favorite_recipes_download_progress"
-);
-const noSearchRecipesText = document.getElementById("no_search_recipes_text");
-const uploadedImage = document.getElementById("uploaded_image");
-let chunkedRecipeArray = [];
-let chunkedRecipeArrayIndex = 0;
-let restrictionsCheckboxes = document.getElementsByClassName(
-  "restriction-checkbox"
-);
-let intolerancesCheckboxes = document.getElementsByClassName(
-  "intolerance-checkbox"
-);
-const imageRecognitionStatusText = document.getElementById(
-  "image_recognition_status"
-);
-const imageRecognitionFailedText = document.getElementById(
-  "image_recognition_failed"
-);
-const emptyFavoriteTextContainer = document.getElementById(
-  "empty_favorite_text_container"
-);
-const favoriteRecipesStatusText = document.getElementById(
-  "favorite_recipes_status_text"
-);
-const searchResultsQuantityDiv = document.getElementById(
-  "search_results_quantity_div"
-);
-const resultsShownQuantityDiv = document.getElementById(
-  "results_shown_quantity_div"
-);
-const imgurAPIError = document.getElementById("imgur_api_error");
-const spoonacularSearchError = document.getElementById(
-  "spoonacular_search_error"
-);
-const spoonacularFavoriteError = document.getElementById(
-  "spoonacular_favorite_error"
-);
-const spoonacularFavoriteTimeoutError = document.getElementById(
-  "spoonacular_favorite_timeout_error"
-);
-const titleContainer = document.getElementById("title_container");
-const percentageBarContainer = document.getElementById(
-  "percentage_bar_container"
-);
-const uploadedImageContainer = document.getElementById(
-  "uploaded_image_container"
-);
-const formElement = document.getElementById("form");
-const favoriteRecipesSection = document.getElementById(
-  "favorite_recipes_section"
-);
-const inputs = document.querySelectorAll(".input");
-const searchRecipesDownloadContainer = document.getElementById(
-  "search_recipes_download_container"
-);
-const imageProcessingContainer = document.getElementById(
-  "image_processing_container"
-);
-const dietMenu = document.getElementById("diet_menu");
-const closePreviewXButton = document.getElementById("close_preview_x_button");
-let recipeInformation = null;
-let spoonacularError = null;
+  initAppElements() {
+    // state variables
+    this.favoriteArray = [];
+    this.restrictionsString = "";
+    this.intolerancesString = "";
+    this.chunkedRecipeArray = [];
+    this.chunkedRecipeArrayIndex = 0;
+    // APIKeys
+    this.imgurAPIKey = config.imgurAPIKey;
+    this.googleAPIKey = config.googleAPIKey;
+    this.spoonacularAPIKey = config.spoonacularAPIKey;
+    // DOM elements
+    this.searchRecipesDownloadText = document.getElementById(
+      "search_recipes_download_text"
+    );
+    this.searchRecipesDownloadProgress = document.getElementById(
+      "search_recipes_download_progress"
+    );
+    this.favoriteRecipesDownloadProgress = document.getElementById(
+      "favorite_recipes_download_progress"
+    );
+    this.noSearchRecipesText = document.getElementById(
+      "no_search_recipes_text"
+    );
+    this.uploadedImage = document.getElementById("uploaded_image");
+    this.restrictionsCheckboxes = document.getElementsByClassName(
+      "restriction-checkbox"
+    );
+    this.intolerancesCheckboxes = document.getElementsByClassName(
+      "intolerance-checkbox"
+    );
+    this.imageRecognitionStatusText = document.getElementById(
+      "image_recognition_status"
+    );
+    this.imageRecognitionFailedText = document.getElementById(
+      "image_recognition_failed"
+    );
+    this.emptyFavoriteTextContainer = document.getElementById(
+      "empty_favorite_text_container"
+    );
+    this.favoriteRecipesStatusText = document.getElementById(
+      "favorite_recipes_status_text"
+    );
+    this.searchResultsQuantityDiv = document.getElementById(
+      "search_results_quantity_div"
+    );
+    this.resultsShownQuantityDiv = document.getElementById(
+      "results_shown_quantity_div"
+    );
+    this.imgurAPIError = document.getElementById("imgur_api_error");
+    this.spoonacularSearchError = document.getElementById(
+      "spoonacular_search_error"
+    );
+    this.spoonacularFavoriteError = document.getElementById(
+      "spoonacular_favorite_error"
+    );
+    this.spoonacularFavoriteTimeoutError = document.getElementById(
+      "spoonacular_favorite_timeout_error"
+    );
+    this.titleContainer = document.getElementById("title_container");
+    this.percentageBarContainer = document.getElementById(
+      "percentage_bar_container"
+    );
+    this.uploadedImageContainer = document.getElementById(
+      "uploaded_image_container"
+    );
+    this.formElement = document.getElementById("form");
+    this.favoriteRecipesSection = document.getElementById(
+      "favorite_recipes_section"
+    );
+    this.inputs = document.querySelectorAll(".input");
+    this.searchRecipesDownloadContainer = document.getElementById(
+      "search_recipes_download_container"
+    );
+    this.imageProcessingContainer = document.getElementById(
+      "image_processing_container"
+    );
+    this.dietMenu = document.getElementById("diet_menu");
+    this.closePreviewXButton = document.getElementById(
+      "close_preview_x_button"
+    );
+    this.recipeInformation = null;
+    // this.spoonacularError = null;
 
-let dataForImageRecognition = {
-  requests: [
-    {
-      image: {
-        source: {
-          imageUri: null,
-        },
-      },
-      features: [
+    this.dataForImageRecognition = {
+      requests: [
         {
-          type: "LABEL_DETECTION",
+          image: {
+            source: {
+              imageUri: null,
+            },
+          },
+          features: [
+            {
+              type: "LABEL_DETECTION",
+            },
+          ],
         },
       ],
-    },
-  ],
-};
+    };
 
-let spoonacularDataToSend = {
-  diet: null,
-  intolerances: null,
-};
+    this.spoonacularDataToSend = {
+      diet: null,
+      intolerances: null,
+    };
+  }
+}
+
+class FormDOMManager {
+  constructor() {
+    this.initFormElements();
+  }
+
+  initFormElements() {
+    // state variables
+    this.favoriteYPosition = null;
+    this.rect = {};
+    // DOM elements
+    this.fileLabel = document.getElementById("custom_file_label");
+    this.fileInputForm = document.getElementById("file_input_form");
+    this.recipeSearchInput = document.getElementById("recipe_search_input");
+    // this.resetButton = document.getElementById("reset_button");
+    this.searchButton = document.getElementById("search_button");
+    this.toggleFavoritesButton = document.getElementById(
+      "toggle_favorites_button"
+    );
+    this.toggleDietButton = document.getElementById("toggle_diet_button");
+    this.mainContent = document.getElementById("main_content");
+    this.errorContainer = document.getElementById("error_container");
+    this.errorSpoonacularSearch = document.getElementById(
+      "spoonacular_search_error"
+    );
+    this.errorImgurCORSIssue = document.getElementById("imgur_api_error");
+    this.errorNoFile = document.getElementById("error_no_file");
+    this.errorIncorrectFile = document.getElementById("error_incorrect_file");
+    this.errorFileExceedsSize = document.getElementById(
+      "error_file_exceeds_size"
+    );
+    this.errorNoSearchResults = document.getElementById(
+      "no_search_recipes_text"
+    );
+    this.openSideMenuButton = document.getElementById("open_side_menu_button");
+    this.closeSideMenuButton = document.getElementById(
+      "close_side_menu_button"
+    );
+    this.sideMenuContainer = document.getElementById("side_menu_container");
+    this.userInputContainer = document.getElementById("user_input_container");
+    this.headerElement = document.getElementById("header_element");
+    this.favoriteStickyDiv = document.getElementById("favorite_sticky_div");
+  }
+}
+
+class RecipesHandlerDOMManager {
+  constructor() {
+    this.initRecipeElements();
+  }
+
+  initRecipeElements() {
+    this.searchResultsQuantityText = document.getElementById(
+      "search_results_quantity_text"
+    );
+    this.modalContainer = document.getElementById("modal_container");
+    this.resultsShownQuantityText = document.getElementById(
+      "results_shown_quantity_text"
+    );
+    this.body = document.querySelector("body");
+    // this.favoriteButton = document.getElementById("favorite_button");
+    this.backToTopButton = document.getElementById("back_to_top_button");
+    if (!this.backToTopButton) {
+      console.error("Element with ID 'backToTopButton' not found.");
+    }
+    this.recipeInstructions = document.getElementById("recipe_instructions");
+    this.recipeIngredients = document.getElementById("recipe_ingredients");
+    this.modalButtonContainer = document.getElementById(
+      "modal_button_container"
+    );
+    this.overlayPreview = document.getElementById("overlay_preview");
+    this.modalDialog = document.getElementById("modal_dialog");
+  }
+}
+
+class DOMManager {
+  constructor() {
+    this.app = new AppDOMManager();
+    this.form = new FormDOMManager();
+    this.recipes = new RecipesHandlerDOMManager();
+  }
+}
 
 class App {
-  constructor(form, imageTitleHandler, recipesHandler) {
+  constructor(
+    form,
+    imageTitleHandler,
+    recipesHandler,
+    domManager,
+    favoriteRecipesContainer
+  ) {
+    this.favoriteRecipesContainer = favoriteRecipesContainer;
     this.form = form;
+    this.domManager = domManager;
     this.imageTitleHandler = imageTitleHandler;
     this.recipesHandler = recipesHandler;
     this.dietInfo = this.dietInfo.bind(this);
@@ -141,22 +243,24 @@ class App {
 
   localStorageCheck() {
     if (!localStorage.getItem("favoriteArray")) {
-      favoriteArray = [];
+      this.domManager.app.favoriteArray = [];
       localStorage.setItem("favoriteArray", JSON.stringify(favoriteArray));
     } else {
-      favoriteArray = JSON.parse(localStorage.getItem("favoriteArray"));
+      this.domManager.app.favoriteArray = JSON.parse(
+        localStorage.getItem("favoriteArray")
+      );
     }
     if (!localStorage.getItem("restrictionsString")) {
-      restrictionsString = "";
+      this.domManager.app.restrictionsString = "";
     } else {
-      restrictionsString = JSON.parse(
+      this.domManager.app.restrictionsString = JSON.parse(
         localStorage.getItem("restrictionsString")
       );
     }
     if (!localStorage.getItem("intolerancesString")) {
-      intolerancesString = [];
+      this.domManager.app.intolerancesString = [];
     } else {
-      intolerancesString = JSON.parse(
+      this.domManager.app.intolerancesString = JSON.parse(
         localStorage.getItem("intolerancesString")
       );
     }
@@ -175,14 +279,30 @@ class App {
     let intolerancesArray = JSON.parse(
       localStorage.getItem("intolerancesString")
     ).split(",");
-    for (var i = 0; i < restrictionsCheckboxes.length; i++) {
-      if (restrictionsArray.includes(restrictionsCheckboxes[i].id)) {
-        restrictionsCheckboxes[i].checked = true;
+    for (
+      var i = 0;
+      i < this.domManager.app.restrictionsCheckboxes.length;
+      i++
+    ) {
+      if (
+        restrictionsArray.includes(
+          this.domManager.app.restrictionsCheckboxes[i].id
+        )
+      ) {
+        this.domManager.app.restrictionsCheckboxes[i].checked = true;
       }
     }
-    for (var j = 0; j < intolerancesCheckboxes.length; j++) {
-      if (intolerancesArray.includes(intolerancesCheckboxes[j].id)) {
-        intolerancesCheckboxes[j].checked = true;
+    for (
+      var j = 0;
+      j < this.domManager.app.intolerancesCheckboxes.length;
+      j++
+    ) {
+      if (
+        intolerancesArray.includes(
+          this.domManager.app.intolerancesCheckboxes[j].id
+        )
+      ) {
+        this.domManager.app.intolerancesCheckboxes[j].checked = true;
       }
     }
   }
@@ -190,31 +310,43 @@ class App {
   dietInfo() {
     let restrictionValues = "";
     let intoleranceValues = "";
-    for (var i = 0; i < restrictionsCheckboxes.length; i++) {
-      if (restrictionsCheckboxes[i].checked) {
-        restrictionValues += restrictionsCheckboxes[i].value + ", ";
+    for (
+      var i = 0;
+      i < this.domManager.app.restrictionsCheckboxes.length;
+      i++
+    ) {
+      if (this.domManager.app.restrictionsCheckboxes[i].checked) {
+        restrictionValues +=
+          this.domManager.app.restrictionsCheckboxes[i].value + ", ";
       }
     }
-    for (var j = 0; j < intolerancesCheckboxes.length; j++) {
-      if (intolerancesCheckboxes[j].checked) {
-        intoleranceValues += intolerancesCheckboxes[j].value + ", ";
+    for (
+      var j = 0;
+      j < this.domManager.app.intolerancesCheckboxes.length;
+      j++
+    ) {
+      if (this.domManager.app.intolerancesCheckboxes[j].checked) {
+        intoleranceValues +=
+          this.domManager.app.intolerancesCheckboxes[j].value + ", ";
       }
     }
-    spoonacularDataToSend.diet = restrictionValues
+    this.domManager.app.spoonacularDataToSend.diet = restrictionValues
       .slice(0, -2)
       .replace(/\s/g, "");
-    restrictionsString = spoonacularDataToSend.diet;
+    this.domManager.app.restrictionsString =
+      this.domManager.app.spoonacularDataToSend.diet;
     localStorage.setItem(
       "restrictionsString",
-      JSON.stringify(restrictionsString)
+      JSON.stringify(this.domManager.app.restrictionsString)
     );
-    spoonacularDataToSend.intolerances = intoleranceValues
+    this.domManager.app.spoonacularDataToSend.intolerances = intoleranceValues
       .slice(0, -2)
       .replace(/\s/g, "");
-    intolerancesString = spoonacularDataToSend.intolerances;
+    this.domManager.app.intolerancesString =
+      this.domManager.app.spoonacularDataToSend.intolerances;
     localStorage.setItem(
       "intolerancesString",
-      JSON.stringify(intolerancesString)
+      JSON.stringify(this.domManager.app.intolerancesString)
     );
   }
 
@@ -228,7 +360,7 @@ class App {
       contentType: false,
       cache: false,
       headers: {
-        Authorization: `${imgurAPIKey}`,
+        Authorization: `${this.domManager.app.imgurAPIKey}`,
       },
       xhr: function () {
         var xhr = new window.XMLHttpRequest();
@@ -245,7 +377,7 @@ class App {
               }
               if (percentComplete === 1) {
                 $("#percentage_upload_container").addClass("d-none");
-                imageProcessingContainer.className =
+                this.domManager.app.imageProcessingContainer.className =
                   "d-flex col-12 flex-column align-items-center justify-content-center desktop-space-form";
               }
             }
@@ -261,28 +393,29 @@ class App {
 
   handlePostImageSuccess(data) {
     const imageURL = data.data.link;
-    dataForImageRecognition.requests[0].image.source.imageUri = imageURL;
+    this.domManager.app.dataForImageRecognition.requests[0].image.source.imageUri =
+      imageURL;
     this.imageTitleHandler.postedImageDownloadProgress(imageURL);
     this.imageRecognition();
   }
 
   handlePostImageError(error) {
-    imgurAPIError.className = "text-center mt-3";
-    for (var i = 0; i < inputs.length; i++) {
-      inputs[i].disabled = false;
-      inputs[i].classList.remove("no-click");
+    this.domManager.app.imgurAPIError.className = "text-center mt-3";
+    for (var i = 0; i < this.domManager.app.inputs.length; i++) {
+      this.domManager.app.inputs[i].disabled = false;
+      this.domManager.app.inputs[i].classList.remove("no-click");
     }
   }
 
   //POST request to Google's Cloud Vision API with image from IMGUR to label the object in the image
   imageRecognition() {
-    imageRecognitionStatusText.className = "text-center";
+    this.domManager.app.imageRecognitionStatusText.className = "text-center";
     $.ajax({
-      url: `https://vision.googleapis.com/v1/images:annotate?fields=responses&key=${googleAPIKey}`,
+      url: `https://vision.googleapis.com/v1/images:annotate?fields=responses&key=${this.domManager.app.googleAPIKey}`,
       type: "POST",
       dataType: "JSON",
       contentType: "application/json",
-      data: JSON.stringify(dataForImageRecognition),
+      data: JSON.stringify(this.domManager.app.dataForImageRecognition),
       success: this.handleImageRecognitionSuccess,
       error: this.handleImageRecognitionError,
     });
@@ -290,19 +423,20 @@ class App {
 
   handleImageRecognitionSuccess(response) {
     if (!response.responses[0].labelAnnotations) {
-      imageRecognitionStatusText.className = "d-none";
-      imageRecognitionFailedText.className = "text-center";
-      uploadedImage.src = "";
-      for (var i = 0; i < inputs.length; i++) {
-        inputs[i].disabled = false;
-        inputs[i].classList.remove("no-click");
+      this.domManager.app.imageRecognitionStatusText.className = "d-none";
+      this.domManager.app.imageRecognitionFailedText.className = "text-center";
+      this.domManager.app.uploadedImage.src = "";
+      for (var i = 0; i < this.domManager.app.inputs.length; i++) {
+        this.domManager.app.inputs[i].disabled = false;
+        this.domManager.app.inputs[i].classList.remove("no-click");
       }
       return;
     }
     const imageTitle = response.responses[0].labelAnnotations[0].description;
     const score = response.responses[0].labelAnnotations[0].score;
     this.imageTitleHandler.imageTitleOnPage(imageTitle, score);
-    imageRecognitionStatusText.className = "text-center d-none";
+    this.domManager.app.imageRecognitionStatusText.className =
+      "text-center d-none";
     this.getRecipes(imageTitle);
   }
 
@@ -313,25 +447,28 @@ class App {
   //GET request to Spoonacular's API with label from Google, if available, to get a list of up to 100 recipes.
 
   getRandomRecipes() {
-    for (var i = 0; i < inputs.length; i++) {
-      inputs[i].disabled = true;
-      inputs[i].classList.add("no-click");
+    for (var i = 0; i < this.domManager.app.inputs.length; i++) {
+      this.domManager.app.inputs[i].disabled = true;
+      this.domManager.app.inputs[i].classList.add("no-click");
     }
-    searchRecipesDownloadProgress.className =
+    this.domManager.app.searchRecipesDownloadProgress.className =
       "recipe-progress-visible text-left mt-3";
-    searchRecipesDownloadText.className = "text-center mt-3";
-    searchRecipesDownloadText.textContent =
+    this.domManager.app.searchRecipesDownloadText.className =
+      "text-center mt-3";
+    this.domManager.app.searchRecipesDownloadText.textContent =
       "Gathering random recipes, please wait...";
-    titleContainer.className = "d-none desktop-space-form";
-    percentageBarContainer.className = "d-none desktop-space-form";
-    uploadedImageContainer.className = "d-none desktop-space-form";
-    chunkedRecipeArray = [];
-    chunkedRecipeArrayIndex = 0;
-    let spoonacularURL = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${spoonacularAPIKey}&addRecipeNutrition=true&636x393&number=100&sort=random`;
+    this.domManager.app.titleContainer.className = "d-none desktop-space-form";
+    this.domManager.app.percentageBarContainer.className =
+      "d-none desktop-space-form";
+    this.domManager.app.uploadedImageContainer.className =
+      "d-none desktop-space-form";
+    this.domManager.app.chunkedRecipeArray = [];
+    this.domManager.app.chunkedRecipeArrayIndex = 0;
+    let spoonacularURL = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${this.domManager.app.spoonacularAPIKey}&addRecipeNutrition=true&636x393&number=100&sort=random`;
     $.ajax({
       method: "GET",
       url: spoonacularURL,
-      data: spoonacularDataToSend,
+      data: this.domManager.app.spoonacularDataToSend,
       headers: {
         "Content-Type": "application/json",
       },
@@ -345,17 +482,19 @@ class App {
   }
 
   getRecipes(imageTitle) {
-    searchRecipesDownloadProgress.className =
+    this.domManager.app.searchRecipesDownloadProgress.className =
       "recipe-progress-visible text-left mt-3";
-    searchRecipesDownloadText.className = "text-center mt-3";
-    searchRecipesDownloadText.textContent = "Gathering recipes, please wait...";
-    chunkedRecipeArray = [];
-    chunkedRecipeArrayIndex = 0;
-    let spoonacularURL = `https://api.spoonacular.com/recipes/complexSearch?query=${imageTitle}&apiKey=${spoonacularAPIKey}&addRecipeNutrition=true&636x393&number=100`;
+    this.domManager.app.searchRecipesDownloadText.className =
+      "text-center mt-3";
+    this.domManager.app.searchRecipesDownloadText.textContent =
+      "Gathering recipes, please wait...";
+    this.domManager.app.chunkedRecipeArray = [];
+    this.domManager.app.chunkedRecipeArrayIndex = 0;
+    let spoonacularURL = `https://api.spoonacular.com/recipes/complexSearch?query=${imageTitle}&apiKey=${this.domManager.app.spoonacularAPIKey}&addRecipeNutrition=true&636x393&number=100`;
     $.ajax({
       method: "GET",
       url: spoonacularURL,
-      data: spoonacularDataToSend,
+      data: this.domManager.app.spoonacularDataToSend,
       headers: {
         "Content-Type": "application/json",
       },
@@ -366,55 +505,59 @@ class App {
   }
 
   handleGetRecipesSuccess(recipes) {
-    console.log(recipes);
     this.recipesHandler.chunkSearchedRecipes(recipes);
   }
 
   handleGetRecipesError(error) {
-    searchRecipesDownloadContainer.className = "d-none";
-    searchRecipesDownloadProgress.className =
+    this.domManager.app.searchRecipesDownloadContainer.className = "d-none";
+    this.domManager.app.searchRecipesDownloadProgress.className =
       "recipe-progress-hidden text-left mt-3";
-    searchRecipesDownloadText.className = "d-none";
-    spoonacularSearchError.className = "text-center mt-3";
-    for (var i = 0; i < inputs.length; i++) {
-      inputs[i].disabled = false;
-      inputs[i].classList.remove("no-click");
+    this.domManager.app.searchRecipesDownloadText.className = "d-none";
+    this.domManager.app.spoonacularSearchError.className = "text-center mt-3";
+    for (var i = 0; i < this.domManager.app.inputs.length; i++) {
+      this.domManager.app.inputs[i].disabled = false;
+      this.domManager.app.inputs[i].classList.remove("no-click");
     }
     if (error.status === 402) {
-      spoonacularSearchError.innerHTML =
+      this.domManager.app.spoonacularSearchError.innerHTML =
         "The Spoonacular API has reached its daily quota for this app's current API Key. Please notify <a href = 'mailto:john@johnnguyencodes.com?subject=Snappy%20Recipes%20API%20Key%20Refresh'> john@johnnguyencodes.com</a>, thank you.";
       return;
     }
     if (error.statusText === "timeout") {
-      spoonacularSearchError.innerHTML =
+      this.domManager.app.spoonacularSearchError.innerHTML =
         "The ajax request to the Spoonacular API has timed out, please try again.";
       return;
     } else {
-      spoonacularSearchError.innerHTML =
+      this.domManager.app.spoonacularSearchError.innerHTML =
         "There is a CORS issue with the Spoonacular's API.  This issue will usually resolve itself in ten minutes.  If it does not, please notify <a href = 'mailto:john@johnnguyencodes.com?subject=Snappy%20Recipes%20API%20Key%20Refresh'> john@johnnguyencodes.com</a >, thank you.";
     }
   }
 
   getFavoriteRecipes() {
-    while (favoriteRecipesContainer.firstChild) {
-      favoriteRecipesContainer.removeChild(favoriteRecipesContainer.firstChild);
+    while (this.favoriteRecipesContainer.firstChild) {
+      this.favoriteRecipesContainer.removeChild(
+        this.favoriteRecipesContainer.firstChild
+      );
     }
     if (
       !localStorage.getItem("favoriteArray") ||
       localStorage.getItem("favoriteArray") === "[]"
     ) {
-      emptyFavoriteTextContainer.className = "d-flex justify-content-center";
+      this.domManager.app.emptyFavoriteTextContainer.className =
+        "d-flex justify-content-center";
       return;
     }
-    favoriteRecipesSection.className =
+    this.domManager.app.favoriteRecipesSection.className =
       "favorite-recipes-visible d-flex flex-column justify-content-center";
-    emptyFavoriteTextContainer.className = "d-none";
-    favoriteRecipesDownloadProgress.className =
+    this.domManager.app.emptyFavoriteTextContainer.className = "d-none";
+    this.domManager.app.favoriteRecipesDownloadProgress.className =
       "favorite-recipe-progress-visible mt-3";
-    favoriteRecipesStatusText.className = "text-center";
-    favoriteArray = JSON.parse(localStorage.getItem("favoriteArray"));
-    let stringifiedArray = favoriteArray.join(",");
-    let spoonacularURL = `https://api.spoonacular.com/recipes/informationBulk?ids=${stringifiedArray}&apiKey=${spoonacularAPIKey}&includeNutrition=true&size=636x393`;
+    this.domManager.app.favoriteRecipesStatusText.className = "text-center";
+    this.domManager.app.favoriteArray = JSON.parse(
+      localStorage.getItem("favoriteArray")
+    );
+    let stringifiedArray = this.domManager.app.favoriteArray.join(",");
+    let spoonacularURL = `https://api.spoonacular.com/recipes/informationBulk?ids=${stringifiedArray}&apiKey=${this.domManager.app.spoonacularAPIKey}&includeNutrition=true&size=636x393`;
     $.ajax({
       method: "GET",
       url: spoonacularURL,
@@ -432,14 +575,16 @@ class App {
   }
 
   handleGetFavoriteRecipesError(error) {
-    favoriteRecipesDownloadProgress.className =
+    this.domManager.app.favoriteRecipesDownloadProgress.className =
       "favorite-recipe-progress-hidden";
-    favoriteRecipesStatusText.className = "d-none";
+    this.domManager.app.favoriteRecipesStatusText.className = "d-none";
     if (error.statusText === "error") {
-      spoonacularFavoriteError.className = "mt-3 text-center";
+      this.domManager.app.spoonacularFavoriteError.className =
+        "mt-3 text-center";
     }
     if (error.statusText === "timeout") {
-      spoonacularFavoriteTimeoutError.className = "mt-3 text-center";
+      this.domManager.app.spoonacularFavoriteTimeoutError.className =
+        "mt-3 text-center";
     }
   }
 }
@@ -449,10 +594,13 @@ class App {
 // --------- image-title-handler.js start
 
 class ImageTitleHandler {
-  constructor() {}
+  constructor(domManager) {
+    this.domManager = domManager;
+  }
 
   postedImageDownloadProgress(imageURL) {
-    imageProcessingContainer.className = "d-none desktop-space-form";
+    this.domManager.app.imageProcessingContainer.className =
+      "d-none desktop-space-form";
     let imageURLParameter = imageURL;
     let imageLoader = {};
     imageLoader["LoadImage"] = (imageURLParameter, progressUpdateCallback) => {
@@ -471,7 +619,8 @@ class ImageTitleHandler {
             }
             if (percentComplete === 1) {
               $("#percentage_download_container").addClass("d-none");
-              percentageBarContainer.className = "d-none desktop-space-form";
+              this.domManager.app.percentageBarContainer.className =
+                "d-none desktop-space-form";
             }
           }
         };
@@ -495,7 +644,7 @@ class ImageTitleHandler {
 
   imageLoaderFunction(imageLoader, imageURL) {
     imageLoader.LoadImage("imageURL").then((image) => {
-      uploadedImage.src = imageURL;
+      this.domManager.app.uploadedImage.src = imageURL;
     });
   }
 
@@ -504,17 +653,17 @@ class ImageTitleHandler {
     h2.id = "image_title";
     h2.className = "text-center";
     h2.textContent = imageTitle;
-    titleContainer.append(h2);
+    this.domManager.app.titleContainer.append(h2);
     const p = document.createElement("p");
     p.id = "title_score";
     p.className = "text-center";
     const percent = (score * 100).toFixed(2);
     p.textContent = `Confidence: ${percent}%`;
-    titleContainer.append(p);
+    this.domManager.app.titleContainer.append(p);
     const hr = document.createElement("hr");
     hr.id = "hr";
     hr.className = "mx-3 my-0 py-0 d-xl-none";
-    titleContainer.append(hr);
+    this.domManager.app.titleContainer.append(hr);
   }
 }
 
@@ -522,59 +671,48 @@ class ImageTitleHandler {
 
 // --------- form.js start
 
-const fileLabel = document.getElementById("custom_file_label");
-let fileInputForm = document.getElementById("file_input_form");
-const recipeSearchInput = document.getElementById("recipe_search_input");
-const resetButton = document.getElementById("reset_button");
-const searchButton = document.getElementById("search_button");
-const toggleFavoritesButton = document.getElementById(
-  "toggle_favorites_button"
-);
-const toggleDietButton = document.getElementById("toggle_diet_button");
-const mainContent = document.getElementById("main_content");
-const errorContainer = document.getElementById("error_container");
-const errorSpoonacularSearch = document.getElementById(
-  "spoonacular_search_error"
-);
-const errorImgurCORSIssue = document.getElementById("imgur_api_error");
-const errorNoFile = document.getElementById("error_no_file");
-const errorIncorrectFile = document.getElementById("error_incorrect_file");
-const errorFileExceedsSize = document.getElementById("error_file_exceeds_size");
-const errorNoSearchResults = document.getElementById("no_search_recipes_text");
-const openSideMenuButton = document.getElementById("open_side_menu_button");
-const closeSideMenuButton = document.getElementById("close_side_menu_button");
-const sideMenuContainer = document.getElementById("side_menu_container");
-const userInputContainer = document.getElementById("user_input_container");
-const headerElement = document.getElementById("header_element");
-const favoriteStickyDiv = document.getElementById("favorite_sticky_div");
-
-let favoriteYPosition;
-let userInputContainerYPosition;
-let rect;
-
 class Form {
-  constructor() {
-    favoriteRecipesSection.addEventListener(
+  constructor(domManager) {
+    this.domManager = domManager;
+    this.domManager.app.favoriteRecipesSection.addEventListener(
       "scroll",
       this.keepUserInputContainerPosition.bind(this)
     );
-    openSideMenuButton.addEventListener("click", this.openSideMenu.bind(this));
-    closeSideMenuButton.addEventListener(
+    this.domManager.form.openSideMenuButton.addEventListener(
+      "click",
+      this.openSideMenu.bind(this)
+    );
+    this.domManager.form.closeSideMenuButton.addEventListener(
       "click",
       this.closeSideMenu.bind(this)
     );
-    toggleFavoritesButton.addEventListener(
+    this.domManager.form.toggleFavoritesButton.addEventListener(
       "click",
       this.toggleFavorites.bind(this)
     );
-    toggleDietButton.addEventListener("click", this.toggleDiet.bind(this));
-    searchButton.addEventListener("click", this.search.bind(this));
-    fileInputForm.addEventListener("change", this.imgValidation.bind(this));
+    this.domManager.form.toggleDietButton.addEventListener(
+      "click",
+      this.toggleDiet.bind(this)
+    );
+    this.domManager.form.searchButton.addEventListener(
+      "click",
+      this.search.bind(this)
+    );
+    this.domManager.form.fileInputForm.addEventListener(
+      "change",
+      this.imgValidation.bind(this)
+    );
     overlay.addEventListener("click", this.closeSideMenu.bind(this));
-    recipeSearchInput.addEventListener("keyup", this.enterSearch.bind(this));
-    fileLabel.addEventListener("dragover", this.imgValidation.bind(this));
+    this.domManager.form.recipeSearchInput.addEventListener(
+      "keyup",
+      this.enterSearch.bind(this)
+    );
+    this.domManager.form.fileLabel.addEventListener(
+      "dragover",
+      this.imgValidation.bind(this)
+    );
     document.addEventListener("drop", function (event) {
-      if (event.target !== fileInputForm) {
+      if (event.target !== this.domManager.form.fileInputForm) {
         event.preventDefault();
       }
     });
@@ -609,39 +747,44 @@ class Form {
 
   toggleFavorites() {
     event.preventDefault();
-    favoriteRecipesSection.className =
+    this.domManager.app.favoriteRecipesSection.className =
       "d-flex flex-column justify-content-center";
-    dietMenu.className =
+    this.domManager.app.dietMenu.className =
       "d-none flex-column justify-content-center align-items-center";
-    toggleFavoritesButton.classList.add("font-weight-bold");
-    toggleDietButton.classList.remove("font-weight-bold");
+    this.domManager.form.toggleFavoritesButton.classList.add(
+      "font-weight-bold"
+    );
+    this.domManager.form.toggleDietButton.classList.remove("font-weight-bold");
   }
 
   toggleDiet() {
     event.preventDefault();
-    favoriteRecipesSection.className =
+    this.domManager.app.favoriteRecipesSection.className =
       "d-none flex-column justify-content-center";
-    dietMenu.className =
+    this.domManager.app.dietMenu.className =
       "d-flex flex-column justify-content-center align-items-center";
-    toggleFavoritesButton.classList.remove("font-weight-bold");
-    toggleDietButton.classList.add("font-weight-bold");
+    this.domManager.form.toggleFavoritesButton.classList.remove(
+      "font-weight-bold"
+    );
+    this.domManager.form.toggleDietButton.classList.add("font-weight-bold");
   }
 
   openFavorites() {
     event.preventDefault();
-    favoriteYPosition = window.scrollY;
-    favoriteRecipesSection.className =
+    this.domManager.form.favoriteYPosition = window.scrollY;
+    this.domManager.app.favoriteRecipesSection.className =
       "favorite-recipes-visible d-flex flex-column justify-content-center";
     if (
       !localStorage.getItem("favoriteArray") ||
       localStorage.getItem("favoriteArray") !== "[]"
     ) {
-      emptyFavoriteTextContainer.className = "d-none";
+      this.domManager.app.emptyFavoriteTextContainer.className = "d-none";
     }
-    mainContent.className = "row main-content-right noscroll";
-    mainContent.style.top = `-${favoriteYPosition}px`;
-    formElement.style.top = "0px";
-    formElement.className =
+    this.domManager.form.mainContent.className =
+      "row main-content-right noscroll";
+    this.domManager.form.mainContent.style.top = `-${this.domManager.form.favoriteYPosition}px`;
+    this.domManager.app.formElement.style.top = "0px";
+    this.domManager.app.formElement.className =
       "sticky col-12 col-xl-4 offset-xl-0 d-flex flex-column align-items-center form-element-left";
     overlay.className = "";
     this.getFavoriteRecipes();
@@ -649,98 +792,102 @@ class Form {
 
   closeFavorites() {
     event.preventDefault();
-    favoriteRecipesSection.className =
+    this.domManager.app.favoriteRecipesSection.className =
       "favorite-recipes-hidden d-flex flex-column justify-content-center";
-    mainContent.className = "row";
+    this.domManager.form.mainContent.className = "row";
     overlay.className = "d-none";
-    window.scroll(0, favoriteYPosition);
-    formElement.className =
+    window.scroll(0, this.domManager.form.favoriteYPosition);
+    this.domManager.app.formElement.className =
       "sticky col-12 col-xl-4 offset-xl-0 d-flex flex-column align-items-center";
-    favoriteRecipesDownloadProgress.className =
+    this.domManager.app.favoriteRecipesDownloadProgress.className =
       "recipe-progress-hidden mt-3 text-center";
-    spoonacularFavoriteError.className = "d-none";
-    spoonacularFavoriteTimeoutError.className = "d-none";
+    this.domManager.app.spoonacularFavoriteError.className = "d-none";
+    this.domManager.app.spoonacularFavoriteTimeoutError.className = "d-none";
   }
 
   openSideMenu() {
     event.preventDefault();
-    favoriteYPosition = window.scrollY;
-    rect = userInputContainer.getBoundingClientRect();
-    closeSideMenuButton.className =
+    this.domManager.form.favoriteYPosition = window.scrollY;
+    this.domManager.form.rect =
+      this.domManager.form.userInputContainer.getBoundingClientRect();
+
+    this.domManager.form.closeSideMenuButton.className =
       "close-side-menu-button-visible d-flex justify-content-center align-items-center text-danger p-0 m-0";
-    toggleFavoritesButton.className =
+    this.domManager.form.toggleFavoritesButton.className =
       "favorites-toggle-visible toggle btn btn-danger text-white m-2 px-2 py-0 d-flex justify-content-center align-items-center font-weight-bold";
-    favoriteStickyDiv.className = "favorite-sticky-div-visible m-0 p-0";
-    toggleDietButton.className =
+    this.domManager.form.favoriteStickyDiv.className =
+      "favorite-sticky-div-visible m-0 p-0";
+    this.domManager.form.toggleDietButton.className =
       "diet-toggle-visible toggle btn btn-primary text-white m-2 px-2 py-0 d-flex justify-content-center align-items-center";
-    sideMenuContainer.className =
+    this.domManager.form.sideMenuContainer.className =
       "side-menu-visible d-flex flex-column justify-content-center align-items-center";
-    favoriteRecipesSection.className =
+    this.domManager.app.favoriteRecipesSection.className =
       "d-flex flex-column justify-content-center";
-    dietMenu.className =
+    this.domManager.app.dietMenu.className =
       "d-none flex-column justify-content-center align-items-center";
-    mainContent.className = "row main-content-right noscroll";
+    this.domManager.form.mainContent.className =
+      "row main-content-right noscroll";
     overlay.className = "";
-    mainContent.style.top = `-${favoriteYPosition}px`;
-    headerElement.className =
+    this.domManager.form.mainContent.style.top = `-${this.domManager.form.favoriteYPosition}px`;
+    this.domManager.form.headerElement.className =
       "d-flex flex-column align-items-center justify-content-center my-2 px-0";
-    formElement.style.top = "0px";
-    formElement.className =
+    this.domManager.app.formElement.style.top = "0px";
+    this.domManager.app.formElement.className =
       "sticky col-12 col-xl-4 offset-xl-0 d-flex flex-column align-items-center form-element-left";
-    userInputContainer.className =
+    this.domManager.form.userInputContainer.className =
       "col-xs-12 col-sm-12 col-md-12 col-lg-12 mt-3 px-0";
-    mainContent.style.top = `-${favoriteYPosition}px - 50px`;
+    this.domManager.form.mainContent.style.top = `-${this.domManager.form.favoriteYPosition}px - 50px`;
     this.getFavoriteRecipes();
   }
 
   keepUserInputContainerPosition() {
-    console.log("rect", rect);
-    console.log("scrollY", userInputContainer.scrollY);
     if (
       document
         .getElementById("side_menu_container")
         .classList.contains("side-menu-visible") &&
       document.getElementById("diet_menu").classList.contains("d-none")
     ) {
-      userInputContainer.scrollY = rect.top;
+      this.domManager.form.userInputContainer.scrollY =
+        this.domManager.form.rect.top;
     } else return;
   }
 
   closeSideMenu() {
     event.preventDefault();
-    closeSideMenuButton.className =
+    this.domManager.form.closeSideMenuButton.className =
       "close-side-menu-button-hidden d-flex justify-content-center align-items-center text-danger p-0 m-0";
-    toggleFavoritesButton.className =
+    this.domManager.form.toggleFavoritesButton.className =
       "favorites-toggle-hidden toggle btn btn-danger text-white m-0 px-2 py-0 d-flex justify-content-center align-items-center";
-    toggleDietButton.className =
+    this.domManager.form.toggleDietButton.className =
       "diet-toggle-hidden toggle btn btn-primary text-white m-0 px-2 py-0 d-flex justify-content-center align-items-center";
-    favoriteStickyDiv.className = "favorite-sticky-div-hidden m-0 p-0";
-    sideMenuContainer.className =
+    this.domManager.form.favoriteStickyDiv.className =
+      "favorite-sticky-div-hidden m-0 p-0";
+    this.domManager.form.sideMenuContainer.className =
       "side-menu-hidden d-flex flex-column justify-content-center align-items-center";
-    mainContent.className = "row";
+    this.domManager.form.mainContent.className = "row";
     overlay.className = "d-none";
-    window.scroll(0, favoriteYPosition);
-    formElement.className =
+    window.scroll(0, this.domManager.form.favoriteYPosition);
+    this.domManager.app.formElement.className =
       "sticky col-12 col-xl-4 offset-xl-0 d-flex flex-column align-items-center";
-    headerElement.className =
+    this.domManager.form.headerElement.className =
       "static d-flex flex-column align-items-center justify-content-center my-2 px-0";
-    favoriteRecipesDownloadProgress.className =
+    this.domManager.app.favoriteRecipesDownloadProgress.className =
       "favorite-recipe-progress-hidden mt-3 text-center";
-    spoonacularFavoriteError.className = "d-none";
-    spoonacularFavoriteTimeoutError.className = "d-none";
-    userInputContainer.className =
+    this.domManager.app.spoonacularFavoriteError.className = "d-none";
+    this.domManager.app.spoonacularFavoriteTimeoutError.className = "d-none";
+    this.domManager.form.userInputContainer.className =
       "col-xs-12 col-sm-12 col-md-12 col-lg-12 mt-3 px-0";
     this.dietInfo();
   }
 
   imgValidation(event) {
     event.preventDefault();
-    if (!fileInputForm.files[0]) {
+    if (!this.domManager.form.fileInputForm.files[0]) {
       return;
     }
-    for (var i = 0; i < inputs.length; i++) {
-      inputs[i].disabled = true;
-      inputs[i].classList.add("no-click");
+    for (var i = 0; i < this.domManager.app.inputs.length; i++) {
+      this.domManager.app.inputs[i].disabled = true;
+      this.domManager.app.inputs[i].classList.add("no-click");
     }
     while (document.getElementById("recipe")) {
       document.getElementById("recipe").remove();
@@ -754,37 +901,38 @@ class Form {
     if (document.getElementById("hr")) {
       document.getElementById("hr").remove();
     }
-    percentageBarContainer.className =
+    this.domManager.app.percentageBarContainer.className =
       "col-12 d-flex flex-column justify-content-center my-3 desktop-space-form";
-    uploadedImage.src = "";
-    searchResultsQuantityDiv.className = "d-none";
-    resultsShownQuantityDiv.className = "d-none";
-    imageRecognitionFailedText.className = "d-none";
-    errorContainer.className = "d-none desktop-space-form";
-    errorNoFile.className = "d-none";
-    errorIncorrectFile.className = "d-none";
-    errorFileExceedsSize.className = "d-none";
-    errorSpoonacularSearch.className = "d-none";
-    errorNoSearchResults.className = "d-none";
-    errorImgurCORSIssue.className = "d-none";
-    errorNoSearchResults.className = "d-none";
-    titleContainer.className =
+    this.domManager.app.uploadedImage.src = "";
+    this.domManager.app.searchResultsQuantityDiv.className = "d-none";
+    this.domManager.app.resultsShownQuantityDiv.className = "d-none";
+    this.domManager.app.imageRecognitionFailedText.className = "d-none";
+    this.domManager.form.errorContainer.className = "d-none desktop-space-form";
+    this.domManager.form.errorNoFile.className = "d-none";
+    this.domManager.form.errorIncorrectFile.className = "d-none";
+    this.domManager.form.errorFileExceedsSize.className = "d-none";
+    this.domManager.form.errorSpoonacularSearch.className = "d-none";
+    this.domManager.form.errorNoSearchResults.className = "d-none";
+    this.domManager.form.errorImgurCORSIssue.className = "d-none";
+    this.domManager.form.errorNoSearchResults.className = "d-none";
+    this.domManager.app.titleContainer.className =
       "col-xs-12 col-sm-12 col-md-12 col-lg-12 d-flex justify-content-around flex-column desktop-space-form mb-3";
-    percentageBarContainer.className =
+    this.domManager.app.percentageBarContainer.className =
       "col-12 d-flex flex-column justify-content-center my-3 desktop-space-form";
-    uploadedImageContainer.className =
+    this.domManager.app.uploadedImageContainer.className =
       "col-xs-12 col-sm-12 col-md-12 col-lg-12 d-flex justify-content-center my-3 desktop-space-form";
-    if (fileInputForm.files[1]) {
-      fileInputForm.files.splice(1, 1);
+    if (this.domManager.form.fileInputForm.files[1]) {
+      this.domManager.form.fileInputForm.files.splice(1, 1);
     }
-    const imageFile = fileInputForm.files[0];
+    const imageFile = this.domManager.form.fileInputForm.files[0];
     if (!imageFile) {
-      errorContainer.className = "col-12 mt-2 desktop-space-form";
-      errorNoFile.className = "text-danger text-center";
-      fileInputForm.value = "";
-      for (var i = 0; i < inputs.length; i++) {
-        inputs[i].disabled = false;
-        inputs[i].classList.remove("no-click");
+      this.domManager.form.errorContainer.className =
+        "col-12 mt-2 desktop-space-form";
+      this.domManager.form.errorNoFile.className = "text-danger text-center";
+      this.domManager.form.fileInputForm.value = "";
+      for (var i = 0; i < this.domManager.app.inputs.length; i++) {
+        this.domManager.app.inputs[i].disabled = false;
+        this.domManager.app.inputs[i].classList.remove("no-click");
       }
       return;
     }
@@ -792,29 +940,33 @@ class Form {
     const formData = new FormData();
     const mimeTypes = ["image/jpeg", "image/png", "image/gif"];
     if (!mimeTypes.includes(fileType)) {
-      errorContainer.className = "col-12 mt-2 desktop-space-form";
-      errorIncorrectFile.className = "text-danger text-center";
-      fileInputForm.value = "";
-      for (var i = 0; i < inputs.length; i++) {
-        inputs[i].disabled = false;
-        inputs[i].classList.remove("no-click");
+      this.domManager.form.errorContainer.className =
+        "col-12 mt-2 desktop-space-form";
+      this.domManager.form.errorIncorrectFile.className =
+        "text-danger text-center";
+      this.domManager.form.fileInputForm.value = "";
+      for (var i = 0; i < this.domManager.app.inputs.length; i++) {
+        this.domManager.app.inputs[i].disabled = false;
+        this.domManager.app.inputs[i].classList.remove("no-click");
       }
       return;
     }
     if (imageFile.size > 10485760) {
-      errorContainer.className = "col-12 mt-2 desktop-space-form";
-      errorFileExceedsSize.className = "text-danger text-center";
-      fileInputForm.value = "";
-      for (var i = 0; i < inputs.length; i++) {
-        inputs[i].disabled = false;
-        inputs[i].classList.remove("no-click");
+      this.domManager.form.errorContainer.className =
+        "col-12 mt-2 desktop-space-form";
+      this.domManager.form.errorFileExceedsSize.className =
+        "text-danger text-center";
+      this.domManager.form.fileInputForm.value = "";
+      for (var i = 0; i < this.domManager.app.inputs.length; i++) {
+        this.domManager.app.inputs[i].disabled = false;
+        this.domManager.app.inputs[i].classList.remove("no-click");
       }
       return;
     }
     formData.append("image", imageFile);
     this.dietInfo();
     this.postImage(formData);
-    fileInputForm.value = "";
+    this.domManager.form.fileInputForm.value = "";
   }
 
   search(event) {
@@ -822,26 +974,28 @@ class Form {
     while (document.getElementById("recipe")) {
       document.getElementById("recipe").remove();
     }
-    searchResultsQuantityDiv.className = "d-none";
-    resultsShownQuantityDiv.className = "d-none";
-    imageRecognitionFailedText.className = "d-none";
-    errorContainer.className = "d-none desktop-space-form";
-    errorNoFile.className = "d-none";
-    errorIncorrectFile.className = "d-none";
-    errorFileExceedsSize.className = "d-none";
-    errorSpoonacularSearch.className = "d-none";
-    errorNoSearchResults.className = "d-none";
-    errorImgurCORSIssue.className = "d-none";
-    errorNoSearchResults.className = "d-none";
-    for (var i = 0; i < inputs.length; i++) {
-      inputs[i].disabled = true;
-      inputs[i].classList.add("no-click");
+    this.domManager.app.searchResultsQuantityDiv.className = "d-none";
+    this.domManager.app.resultsShownQuantityDiv.className = "d-none";
+    this.domManager.app.imageRecognitionFailedText.className = "d-none";
+    this.domManager.form.errorContainer.className = "d-none desktop-space-form";
+    this.domManager.form.errorNoFile.className = "d-none";
+    this.domManager.form.errorIncorrectFile.className = "d-none";
+    this.domManager.form.errorFileExceedsSize.className = "d-none";
+    this.domManager.form.errorSpoonacularSearch.className = "d-none";
+    this.domManager.form.errorNoSearchResults.className = "d-none";
+    this.domManager.form.errorImgurCORSIssue.className = "d-none";
+    this.domManager.form.errorNoSearchResults.className = "d-none";
+    for (var i = 0; i < this.domManager.app.inputs.length; i++) {
+      this.domManager.app.inputs[i].disabled = true;
+      this.domManager.app.inputs[i].classList.add("no-click");
     }
-    let query = recipeSearchInput.value;
+    let query = this.domManager.form.recipeSearchInput.value;
     this.dietInfo();
-    titleContainer.className = "d-none desktop-space-form";
-    percentageBarContainer.className = "d-none desktop-space-form";
-    uploadedImageContainer.className = "d-none desktop-space-form";
+    this.domManager.app.titleContainer.className = "d-none desktop-space-form";
+    this.domManager.app.percentageBarContainer.className =
+      "d-none desktop-space-form";
+    this.domManager.app.uploadedImageContainer.className =
+      "d-none desktop-space-form";
     if (!query) {
       this.getRandomRecipes();
       return;
@@ -854,98 +1008,96 @@ class Form {
 
 // ----------- recipes-handler.js start
 
-const searchResultsQuantityText = document.getElementById(
-  "search_results_quantity_text"
-);
-const modalContainer = document.getElementById("modal_container");
-const resultsShownQuantityText = document.getElementById(
-  "results_shown_quantity_text"
-);
-const body = document.querySelector("body");
-const favoriteButton = document.getElementById("favorite_button");
-const backToTopButton = document.getElementById("back_to_top_button");
-const recipeInstructions = document.getElementById("recipe_instructions");
-const recipeIngredients = document.getElementById("recipe_ingredients");
-const modalButtonContainer = document.getElementById("modal_button_container");
-const overlayPreview = document.getElementById("overlay_preview");
-const modalDialog = document.getElementById("modal_dialog");
-
 class RecipesHandler {
-  constructor(searchRecipesContainer, favoriteRecipesContainer) {
+  constructor(searchRecipesContainer, favoriteRecipesContainer, domManager) {
+    this.domManager = domManager;
     this.searchRecipesContainer = searchRecipesContainer;
     this.favoriteRecipesContainer = favoriteRecipesContainer;
     window.addEventListener("scroll", this.handleShowMoreScroll.bind(this));
-    backToTopButton.addEventListener(
+    this.domManager.recipes.backToTopButton.addEventListener(
       "click",
-      this.handleBackToTopClick.bind(this)
+      this.handleBackToTopClick
     );
     this.displaySearchedRecipes = this.displaySearchedRecipes.bind(this);
     this.updateResultsQuantityShown =
       this.updateResultsQuantityShown.bind(this);
     this.favoriteCheck = this.favoriteCheck.bind(this);
-    modalContainer.addEventListener(
+    this.domManager.recipes.modalContainer.addEventListener(
       "click",
       this.closePreview.bind(this, event)
     );
-    closePreviewXButton.addEventListener(
+    this.domManager.app.closePreviewXButton.addEventListener(
       "click",
       this.closePreview.bind(this, event)
     );
   }
-
   clickGetFavoriteRecipes(getFavoriteRecipes) {
     this.getFavoriteRecipes = getFavoriteRecipes;
   }
 
   chunkSearchedRecipes(recipes) {
-    recipeInformation = recipes;
+    this.domManager.app.recipeInformation = recipes;
     if (!recipes.results[0]) {
-      searchRecipesDownloadProgress.className = "recipe-progress-hidden mt-3";
-      searchRecipesDownloadText.className = "d-none";
-      noSearchRecipesText.className = "text-center mt-3";
-      for (var i = 0; i < inputs.length; i++) {
-        inputs[i].disabled = false;
-        inputs[i].classList.remove("no-click");
+      this.domManager.app.searchRecipesDownloadProgress.className =
+        "recipe-progress-hidden mt-3";
+      this.domManager.app.searchRecipesDownloadText.className = "d-none";
+      this.domManager.app.noSearchRecipesText.className = "text-center mt-3";
+      for (var i = 0; i < this.domManager.app.inputs.length; i++) {
+        this.domManager.app.inputs[i].disabled = false;
+        this.domManager.app.inputs[i].classList.remove("no-click");
       }
       return;
     }
-    searchResultsQuantityDiv.className = "d-flex justify-content-center mt-3";
-    searchResultsQuantityText.textContent = `${recipes.results.length} recipes found`;
+    this.domManager.app.searchResultsQuantityDiv.className =
+      "d-flex justify-content-center mt-3";
+    this.domManager.recipes.searchResultsQuantityText.textContent = `${recipes.results.length} recipes found`;
     let a = 0;
     while (a < recipes.results.length) {
-      chunkedRecipeArray.push(recipes.results.slice(a, a + 12));
+      this.domManager.app.chunkedRecipeArray.push(
+        recipes.results.slice(a, a + 12)
+      );
       a = a + 12;
     }
-    this.displaySearchedRecipes(chunkedRecipeArray, chunkedRecipeArrayIndex);
+    this.displaySearchedRecipes(
+      this.domManager.app.chunkedRecipeArray,
+      this.domManager.app.chunkedRecipeArrayIndex
+    );
     if (recipes.results.length > 12) {
-      resultsShownQuantityDiv.className =
+      this.domManager.app.resultsShownQuantityDiv.className =
         "d-flex flex-column align-items-center justify-content-center mb-3";
     }
     this.updateResultsQuantityShown();
   }
 
   chunkRandomRecipes(recipes) {
-    recipeInformation = recipes;
+    this.domManager.app.recipeInformation = recipes;
     if (!recipes.results[0]) {
-      searchRecipesDownloadProgress.className = "recipe-progress-hidden mt-3";
-      searchRecipesDownloadText.className = "d-none";
-      noSearchRecipesText.className = "text-center mt-3";
-      for (var i = 0; i < inputs.length; i++) {
-        inputs[i].disabled = false;
-        inputs[i].classList.remove("no-click");
+      this.domManager.app.searchRecipesDownloadProgress.className =
+        "recipe-progress-hidden mt-3";
+      this.domManager.app.searchRecipesDownloadText.className = "d-none";
+      this.domManager.app.noSearchRecipesText.className = "text-center mt-3";
+      for (var i = 0; i < this.domManager.app.inputs.length; i++) {
+        this.domManager.app.inputs[i].disabled = false;
+        this.domManager.app.inputs[i].classList.remove("no-click");
       }
       return;
     }
-    searchResultsQuantityDiv.className = "d-flex justify-content-center mt-3";
-    searchResultsQuantityText.textContent = `${recipes.results.length} random recipes found`;
+    this.domManager.app.searchResultsQuantityDiv.className =
+      "d-flex justify-content-center mt-3";
+    this.domManager.recipes.searchResultsQuantityText.textContent = `${recipes.results.length} random recipes found`;
     let a = 0;
     while (a < recipes.results.length) {
-      chunkedRecipeArray.push(recipes.results.slice(a, a + 12));
+      this.domManager.app.chunkedRecipeArray.push(
+        recipes.results.slice(a, a + 12)
+      );
       a = a + 12;
     }
-    this.displaySearchedRecipes(chunkedRecipeArray, chunkedRecipeArrayIndex);
+    this.displaySearchedRecipes(
+      this.domManager.app.chunkedRecipeArray,
+      this.domManager.app.chunkedRecipeArrayIndex
+    );
     if (recipes.results.length > 12) {
-      resultsShownQuantityDiv.className =
+      this.domManager.app.resultsShownQuantityDiv.className =
         "d-flex flex-column align-items-center justify-content-center mb-3";
     }
     this.updateResultsQuantityShown();
@@ -956,12 +1108,15 @@ class RecipesHandler {
       document.documentElement.scrollTop + window.innerHeight ===
       document.documentElement.scrollHeight
     ) {
-      if (chunkedRecipeArrayIndex !== chunkedRecipeArray.length - 1) {
+      if (
+        this.domManager.app.chunkedRecipeArrayIndex !==
+        this.domManager.app.chunkedRecipeArray.length - 1
+      ) {
         let yPosition = window.scrollY;
-        chunkedRecipeArrayIndex++;
+        this.domManager.app.chunkedRecipeArrayIndex++;
         this.displaySearchedRecipes(
-          chunkedRecipeArray,
-          chunkedRecipeArrayIndex
+          this.domManager.app.chunkedRecipeArray,
+          this.domManager.app.chunkedRecipeArrayIndex
         );
         window.scroll(0, yPosition);
         this.updateResultsQuantityShown();
@@ -978,9 +1133,9 @@ class RecipesHandler {
   }
 
   updateResultsQuantityShown() {
-    resultsShownQuantityText.textContent = `Showing ${
+    this.domManager.recipes.resultsShownQuantityText.textContent = `Showing ${
       document.querySelectorAll(".recipe-card").length
-    } of ${searchResultsQuantityText.textContent.substring(0, 3)}`;
+    } of ${this.domManager.recipes.searchResultsQuantityText.textContent.substring(0, 3)}`;
   }
 
   handleFavoriteClick(id) {
@@ -990,32 +1145,38 @@ class RecipesHandler {
       heartIcon.parentNode.parentNode.parentNode.lastChild.firstChild.firstChild
         .firstChild.textContent;
     let twoWords = recipeTitle.split(" ").slice(0, 2).join(" ");
-    if (!favoriteArray.includes(id)) {
-      favoriteArray.push(id);
+    if (!this.domManager.app.favoriteArray.includes(id)) {
+      this.domManager.app.favoriteArray.push(id);
       heartIcon.className = "fas fa-heart text-danger heart-icon fa-lg";
       heartIcon.parentNode.parentNode.parentNode.className =
         "recipe-card favorited card col-xs-12 col-sm-5 col-md-5 col-lg-3 col-xl-2 m-3 px-0 h-100";
-      Toastify({
-        text: `${twoWords}... added`,
-        duration: 1500,
-        newWindow: true,
-        gravity: "bottom",
-        position: "left",
-      }).showToast();
+      // Toastify({
+      //   text: `${twoWords}... added`,
+      //   duration: 1500,
+      //   newWindow: true,
+      //   gravity: "bottom",
+      //   position: "left",
+      // }).showToast();
     } else {
-      favoriteArray.splice(favoriteArray.indexOf(id), 1);
+      this.domManager.app.favoriteArray.splice(
+        this.domManager.app.favoriteArray.indexOf(id),
+        1
+      );
       heartIcon.className = "far fa-heart text-danger heart-icon fa-lg";
       heartIcon.parentNode.parentNode.parentNode.className =
         "recipe-card card col-xs-12 col-sm-5 col-md-5 col-lg-3 col-xl-2 m-3 px-0 h-100";
-      Toastify({
-        text: `${twoWords}... removed`,
-        duration: 1500,
-        newWindow: true,
-        gravity: "bottom",
-        position: "left",
-      }).showToast();
+      // Toastify({
+      //   text: `${twoWords}... removed`,
+      //   duration: 1500,
+      //   newWindow: true,
+      //   gravity: "bottom",
+      //   position: "left",
+      // }).showToast();
     }
-    localStorage.setItem("favoriteArray", JSON.stringify(favoriteArray));
+    localStorage.setItem(
+      "favoriteArray",
+      JSON.stringify(this.domManager.app.favoriteArray)
+    );
   }
 
   handleDeleteClick(id) {
@@ -1025,30 +1186,38 @@ class RecipesHandler {
       deleteCard.firstChild.nextSibling.firstChild.firstChild.firstChild
         .textContent;
     let twoWords = recipeTitle.split(" ").slice(0, 2).join(" ");
-    favoriteArray.splice(favoriteArray.indexOf(id), 1);
+    this.domManager.app.favoriteArray.splice(
+      this.domManager.app.favoriteArray.indexOf(id),
+      1
+    );
     document.getElementById(`${id}`).remove();
-    localStorage.setItem("favoriteArray", JSON.stringify(favoriteArray));
+    localStorage.setItem(
+      "favoriteArray",
+      JSON.stringify(this.domManager.app.favoriteArray)
+    );
     if (localStorage.getItem("favoriteArray") === "[]") {
-      emptyFavoriteTextContainer.className = "d-flex justify-content-center";
-      favoriteRecipesSection.className =
+      this.domManager.app.emptyFavoriteTextContainer.className =
+        "d-flex justify-content-center";
+      this.domManager.app.favoriteRecipesSection.className =
         "favorite-recipes-visible d-flex flex-column justify-content-center";
     }
     if (
-      favoriteRecipesSection.scrollHeight > favoriteRecipesSection.clientHeight
+      this.domManager.app.favoriteRecipesSection.scrollHeight >
+      this.domManager.app.favoriteRecipesSection.clientHeight
     ) {
-      favoriteRecipesSection.className =
+      this.domManager.app.favoriteRecipesSection.className =
         "favorite-recipes-visible d-flex flex-column justify-content-start";
     } else {
-      favoriteRecipesSection.className =
+      this.domManager.app.favoriteRecipesSection.className =
         "favorite-recipes-visible d-flex flex-column justify-content-center";
     }
-    Toastify({
-      text: `${twoWords}... removed`,
-      duration: 1500,
-      newWindow: true,
-      gravity: "bottom",
-      position: "left",
-    }).showToast();
+    // Toastify({
+    //   text: `${twoWords}... removed`,
+    //   duration: 1500,
+    //   newWindow: true,
+    //   gravity: "bottom",
+    //   position: "left",
+    // }).showToast();
     this.favoriteCheck(id);
   }
 
@@ -1057,33 +1226,45 @@ class RecipesHandler {
     const favoriteButton = document.getElementById("favorite_button");
     let recipeTitle = document.getElementById("recipe_title").textContent;
     let twoWords = recipeTitle.split(" ").slice(2, 4).join(" ");
-    if (favoriteArray.includes(id) === false) {
-      favoriteArray.push(id);
+    if (this.domManager.app.favoriteArray.includes(id) === false) {
+      this.domManager.app.favoriteArray.push(id);
       favoriteButton.className = "btn btn-danger";
       favoriteButton.textContent = "Remove from Favorites";
-      Toastify({
-        text: `${twoWords}... added`,
-        duration: 1500,
-        newWindow: true,
-        gravity: "bottom",
-        position: "left",
-      }).showToast();
+      // Toastify({
+      //   text: `${twoWords}... added`,
+      //   duration: 1500,
+      //   newWindow: true,
+      //   gravity: "bottom",
+      //   position: "left",
+      // }).showToast();
       if (document.getElementById(`heart_icon_${id}`)) {
         document.getElementById(`heart_icon_${id}`).className =
           "fas fa-heart text-danger heart-icon fa-lg";
       }
-      localStorage.setItem("favoriteArray", JSON.stringify(favoriteArray));
+      localStorage.setItem(
+        "favoriteArray",
+        JSON.stringify(this.domManager.app.favoriteArray)
+      );
       if (
-        favoriteRecipesSection.classList.contains("favorite-recipes-visible")
+        this.domManager.app.favoriteRecipesSection.classList.contains(
+          "favorite-recipes-visible"
+        )
       ) {
         this.getFavoriteRecipes();
-        spoonacularFavoriteError.className = "d-none";
-        spoonacularFavoriteTimeoutError.className = "d-none";
+        this.domManager.app.spoonacularFavoriteError.className = "d-none";
+        this.domManager.app.spoonacularFavoriteTimeoutError.className =
+          "d-none";
       }
       return;
     } else {
-      favoriteArray.splice(favoriteArray.indexOf(id), 1);
-      localStorage.setItem("favoriteArray", JSON.stringify(favoriteArray));
+      this.domManager.app.favoriteArray.splice(
+        this.domManager.app.favoriteArray.indexOf(id),
+        1
+      );
+      localStorage.setItem(
+        "favoriteArray",
+        JSON.stringify(this.domManager.app.favoriteArray)
+      );
       favoriteButton.className = "btn btn-outline-danger";
       favoriteButton.textContent = "Save to Favorites";
       if (document.getElementById(`heart_icon_${id}`)) {
@@ -1094,31 +1275,37 @@ class RecipesHandler {
         document.getElementById(`${id}`).remove();
       }
       if (
-        favoriteRecipesSection.scrollHeight >
-          favoriteRecipesSection.clientHeight &&
-        favoriteRecipesSection.classList.contains("favorite-recipes-visible")
+        this.domManager.app.favoriteRecipesSection.scrollHeight >
+          this.domManager.app.favoriteRecipesSection.clientHeight &&
+        this.domManager.app.favoriteRecipesSection.classList.contains(
+          "favorite-recipes-visible"
+        )
       ) {
-        favoriteRecipesSection.className =
+        this.domManager.app.favoriteRecipesSection.className =
           "favorite-recipes-visible d-flex flex-column justify-content-start";
       } else {
-        favoriteRecipesSection.className =
+        this.domManager.app.favoriteRecipesSection.className =
           "favorite-recipes-visible d-flex flex-column justify-content-center";
       }
-      localStorage.setItem("favoriteArray", JSON.stringify(favoriteArray));
+      localStorage.setItem(
+        "favoriteArray",
+        JSON.stringify(this.domManager.app.favoriteArray)
+      );
       if (
         !localStorage.getItem("favoriteArray") ||
         localStorage.getItem("favoriteArray") === "[]"
       ) {
-        emptyFavoriteTextContainer.className = "d-flex justify-content-center";
+        this.domManager.app.emptyFavoriteTextContainer.className =
+          "d-flex justify-content-center";
         return;
       }
-      Toastify({
-        text: `${twoWords}... removed`,
-        duration: 1500,
-        newWindow: true,
-        gravity: "bottom",
-        position: "left",
-      }).showToast();
+      // Toastify({
+      //   text: `${twoWords}... removed`,
+      //   duration: 1500,
+      //   newWindow: true,
+      //   gravity: "bottom",
+      //   position: "left",
+      // }).showToast();
     }
   }
 
@@ -1162,7 +1349,7 @@ class RecipesHandler {
     const recipeImage = document.getElementById("recipe_image");
     const recipeSummary = document.getElementById("recipe_summary");
     const externalLinkButton = document.createElement("button");
-    overlayPreview.className = "";
+    this.domManager.recipes.overlayPreview.className = "";
     externalLinkButton.id = "external_link_button";
     externalLinkButton.className = "btn btn-primary text-white";
     externalLinkButton.textContent = "Recipe Page";
@@ -1172,22 +1359,22 @@ class RecipesHandler {
     // closePreviewButton.id = "go_back_button";
     // closePreviewButton.className = "btn btn-secondary";
     // closePreviewButton.textContent = "Close Preview";
-    closePreviewXButton.className =
+    this.domManager.app.closePreviewXButton.className =
       "close-preview-x-button-visible justify-content-center align-items-center text-danger p-0 m-0";
-    modalButtonContainer.append(externalLinkButton);
-    modalButtonContainer.append(favoriteButton);
-    // modalButtonContainer.append(closePreviewButton);
+    this.domManager.recipes.modalButtonContainer.append(externalLinkButton);
+    this.domManager.recipes.modalButtonContainer.append(favoriteButton);
+    // this.domManager.recipes.modalButtonContainer.append(closePreviewButton);
     for (var x = 0; x < ingredients.length; x++) {
       const ingredient = document.createElement("li");
       ingredient.textContent = `${ingredients[x].amount} ${ingredients[x].unit} ${ingredients[x].name}`;
-      recipeIngredients.append(ingredient);
+      this.domManager.recipes.recipeIngredients.append(ingredient);
     }
     const cleanSummary = DOMPurify.sanitize(summary);
-    modalContainer.className = "";
+    this.domManager.recipes.modalContainer.className = "";
     recipeTitle.textContent = `Recipe Preview: ${title}`;
     recipeImage.src = imageURL;
     recipeSummary.innerHTML = cleanSummary;
-    body.className = "bg-light freeze";
+    this.domManager.recipes.body.className = "bg-light freeze";
     externalLinkButton.addEventListener("click", () => {
       window.open(recipeURL, "_blank");
     });
@@ -1195,7 +1382,7 @@ class RecipesHandler {
       "click",
       this.handleFavoriteButtonClick.bind(this, id)
     );
-    if (favoriteArray.includes(id)) {
+    if (this.domManager.app.favoriteArray.includes(id)) {
       favoriteButton.className = "btn btn-danger";
       favoriteButton.textContent = "Remove from Favorites";
     } else {
@@ -1209,7 +1396,7 @@ class RecipesHandler {
       }
       const step = document.createElement("li");
       step.textContent = instructions[i];
-      recipeInstructions.append(step);
+      this.domManager.recipes.recipeInstructions.append(step);
     }
   }
 
@@ -1223,17 +1410,24 @@ class RecipesHandler {
         top: 0,
         behavior: "auto",
       });
-      modalContainer.className = "d-none justify-content-center";
-      body.className = "bg-light";
-      overlayPreview.className = "d-none";
-      while (recipeInstructions.firstChild) {
-        recipeInstructions.removeChild(recipeInstructions.firstChild);
+      this.domManager.recipes.modalContainer.className =
+        "d-none justify-content-center";
+      this.domManager.recipes.body.className = "bg-light";
+      this.domManager.recipes.overlayPreview.className = "d-none";
+      while (this.domManager.recipes.recipeInstructions.firstChild) {
+        this.domManager.recipes.recipeInstructions.removeChild(
+          this.domManager.recipes.recipeInstructions.firstChild
+        );
       }
-      while (recipeIngredients.firstChild) {
-        recipeIngredients.removeChild(recipeIngredients.firstChild);
+      while (this.domManager.recipes.recipeIngredients.firstChild) {
+        this.domManager.recipes.recipeIngredients.removeChild(
+          this.domManager.recipes.recipeIngredients.firstChild
+        );
       }
-      while (modalButtonContainer.firstChild) {
-        modalButtonContainer.removeChild(modalButtonContainer.firstChild);
+      while (this.domManager.recipes.modalButtonContainer.firstChild) {
+        this.domManager.recipes.modalButtonContainer.removeChild(
+          this.domManager.recipes.modalButtonContainer.firstChild
+        );
       }
     } else return;
   }
@@ -1320,7 +1514,7 @@ class RecipesHandler {
         "badge badge-light m-1 p-1 border border-danger rounded";
       const heartIcon = document.createElement("i");
       heartIcon.id = `heart_icon_${id}`;
-      if (favoriteArray.includes(id)) {
+      if (this.domManager.app.favoriteArray.includes(id)) {
         heartIcon.className = "fas fa-heart text-danger heart-icon fa-lg";
       } else {
         heartIcon.className = "far fa-heart text-danger heart-icon fa-lg";
@@ -1409,11 +1603,12 @@ class RecipesHandler {
         )
       );
     }
-    searchRecipesDownloadProgress.className = "recipe-progress-hidden mt-3";
-    searchRecipesDownloadText.className = "d-none";
-    for (var i = 0; i < inputs.length; i++) {
-      inputs[i].disabled = false;
-      inputs[i].classList.remove("no-click");
+    this.domManager.app.searchRecipesDownloadProgress.className =
+      "recipe-progress-hidden mt-3";
+    this.domManager.app.searchRecipesDownloadText.className = "d-none";
+    for (var i = 0; i < this.domManager.app.inputs.length; i++) {
+      this.domManager.app.inputs[i].disabled = false;
+      this.domManager.app.inputs[i].classList.remove("no-click");
     }
   }
 
@@ -1556,38 +1751,53 @@ class RecipesHandler {
       );
     }
     if (
-      favoriteRecipesSection.scrollHeight > favoriteRecipesSection.clientHeight
+      this.domManager.app.favoriteRecipesSection.scrollHeight >
+      this.domManager.app.favoriteRecipesSection.clientHeight
     ) {
-      favoriteRecipesSection.className =
+      this.domManager.app.favoriteRecipesSection.className =
         "favorite-recipes-visible d-flex flex-column justify-content-start";
     } else {
-      favoriteRecipesSection.className =
+      this.domManager.app.favoriteRecipesSection.className =
         "favorite-recipes-visible d-flex flex-column justify-content-center";
     }
-    favoriteRecipesStatusText.className = "text-center d-none";
-    favoriteRecipesDownloadProgress.className =
+    this.domManager.app.favoriteRecipesStatusText.className =
+      "text-center d-none";
+    this.domManager.app.favoriteRecipesDownloadProgress.className =
       "favorite-recipe-progress-hidden";
-    emptyFavoriteTextContainer.className = "d-none";
+    this.domManager.app.emptyFavoriteTextContainer.className = "d-none";
   }
 }
 // ------------- recipes-handler.js end
 
 // ------------- main.js start
 
-const form = new Form();
+document.addEventListener("DOMContentLoaded", () => {
+  setTimeout(() => {
+    const domManager = new DOMManager();
 
-const imageTitleHandler = new ImageTitleHandler();
+    const form = new Form(domManager);
 
-const searchRecipesContainer = document.getElementById(
-  "search_recipes_container"
-);
-const favoriteRecipesContainer = document.getElementById(
-  "favorite_recipes_container"
-);
-const recipesHandler = new RecipesHandler(
-  searchRecipesContainer,
-  favoriteRecipesContainer
-);
+    const imageTitleHandler = new ImageTitleHandler(domManager);
 
-const app = new App(form, imageTitleHandler, recipesHandler);
-app.start();
+    const searchRecipesContainer = document.getElementById(
+      "search_recipes_container"
+    );
+    const favoriteRecipesContainer = document.getElementById(
+      "favorite_recipes_container"
+    );
+    const recipesHandler = new RecipesHandler(
+      searchRecipesContainer,
+      favoriteRecipesContainer,
+      domManager
+    );
+
+    const app = new App(
+      form,
+      imageTitleHandler,
+      recipesHandler,
+      domManager,
+      favoriteRecipesContainer
+    );
+    app.start();
+  }, 1000);
+});
