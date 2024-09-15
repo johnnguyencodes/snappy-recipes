@@ -1,19 +1,44 @@
+class AppStateManager {
+  constructor() {
+    // state
+    this.favoriteArray = [];
+    this.restrictionsString = "";
+    this.intolerancesString = "";
+    this.chunkedRecipeArray = [];
+    this.chunkedRecipeArrayIndex = 0;
+    this.favoriteYPosition = null;
+    this.rect = {};
+
+    // APIKeys
+    this.imgurAPIKey = config.imgurAPIKey;
+    this.googleAPIKey = config.googleAPIKey;
+    this.spoonacularAPIKey = config.spoonacularAPIKey;
+
+    // binding class methods
+
+    this.updateState = this.updateState.bind(this);
+    this.getState = this.getState.bind(this);
+  }
+
+  updateState(key, value) {
+    if (this.hasOwnProperty(key)) {
+      this[key] = value;
+    } else {
+      console.warn(`State key "${key}" does not exist`);
+    }
+  }
+
+  getState(key) {
+    return this[key];
+  }
+}
+
 class AppDOMManager {
   constructor() {
     this.initAppElements();
   }
 
   initAppElements() {
-    // state variables
-    this.favoriteArray = [];
-    this.restrictionsString = "";
-    this.intolerancesString = "";
-    this.chunkedRecipeArray = [];
-    this.chunkedRecipeArrayIndex = 0;
-    // APIKeys
-    this.imgurAPIKey = config.imgurAPIKey;
-    this.googleAPIKey = config.googleAPIKey;
-    this.spoonacularAPIKey = config.spoonacularAPIKey;
     // DOM elements
     this.searchRecipesDownloadText = document.getElementById(
       "search_recipes_download_text"
@@ -117,9 +142,6 @@ class FormDOMManager {
   }
 
   initFormElements() {
-    // state variables
-    this.favoriteYPosition = null;
-    this.rect = {};
     // DOM elements
     this.fileLabel = document.getElementById("custom_file_label");
     this.fileInputForm = document.getElementById("file_input_form");
@@ -198,13 +220,15 @@ class App {
     imageTitleHandler,
     recipesHandler,
     domManager,
-    favoriteRecipesContainer
+    favoriteRecipesContainer,
+    appStateManager
   ) {
     this.favoriteRecipesContainer = favoriteRecipesContainer;
     this.form = form;
     this.domManager = domManager;
     this.imageTitleHandler = imageTitleHandler;
     this.recipesHandler = recipesHandler;
+    this.appStateManager = appStateManager;
     this.dietInfo = this.dietInfo.bind(this);
     this.postImage = this.postImage.bind(this);
     this.handlePostImageSuccess = this.handlePostImageSuccess.bind(this);
@@ -243,25 +267,31 @@ class App {
 
   localStorageCheck() {
     if (!localStorage.getItem("favoriteArray")) {
-      this.domManager.app.favoriteArray = [];
-      localStorage.setItem("favoriteArray", JSON.stringify(favoriteArray));
+      this.appStateManager.updateState("favoriteArray", []);
+      localStorage.setItem(
+        "favoriteArray",
+        JSON.stringify(this.appStateManager.getState("favoriteArray"))
+      );
     } else {
-      this.domManager.app.favoriteArray = JSON.parse(
-        localStorage.getItem("favoriteArray")
+      this.appStateManager.updateState(
+        "favoriteArray",
+        JSON.parse(localStorage.getItem("favoriteArray"))
       );
     }
     if (!localStorage.getItem("restrictionsString")) {
-      this.domManager.app.restrictionsString = "";
+      this.appStateManager.updateState("restrictionsString", "");
     } else {
-      this.domManager.app.restrictionsString = JSON.parse(
-        localStorage.getItem("restrictionsString")
+      this.appStateManager.updateState(
+        "restrictionsString",
+        JSON.parse(localStorage.getItem("restrictionsString"))
       );
     }
     if (!localStorage.getItem("intolerancesString")) {
-      this.domManager.app.intolerancesString = [];
+      this.appStateManager.updateState("intolerancesString", "");
     } else {
-      this.domManager.app.intolerancesString = JSON.parse(
-        localStorage.getItem("intolerancesString")
+      this.appStateManager.updateState(
+        "intolerancesString",
+        JSON.parse(localStorage.getItem("intolerancesString"))
       );
     }
   }
@@ -280,7 +310,7 @@ class App {
       localStorage.getItem("intolerancesString")
     ).split(",");
     for (
-      var i = 0;
+      let i = 0;
       i < this.domManager.app.restrictionsCheckboxes.length;
       i++
     ) {
@@ -293,7 +323,7 @@ class App {
       }
     }
     for (
-      var j = 0;
+      let j = 0;
       j < this.domManager.app.intolerancesCheckboxes.length;
       j++
     ) {
@@ -311,7 +341,7 @@ class App {
     let restrictionValues = "";
     let intoleranceValues = "";
     for (
-      var i = 0;
+      let i = 0;
       i < this.domManager.app.restrictionsCheckboxes.length;
       i++
     ) {
@@ -321,7 +351,7 @@ class App {
       }
     }
     for (
-      var j = 0;
+      let j = 0;
       j < this.domManager.app.intolerancesCheckboxes.length;
       j++
     ) {
@@ -333,25 +363,29 @@ class App {
     this.domManager.app.spoonacularDataToSend.diet = restrictionValues
       .slice(0, -2)
       .replace(/\s/g, "");
-    this.domManager.app.restrictionsString =
-      this.domManager.app.spoonacularDataToSend.diet;
+    this.appStateManager.updateState(
+      "restrictionsString",
+      this.domManager.app.spoonacularDataToSend.diet
+    );
     localStorage.setItem(
       "restrictionsString",
-      JSON.stringify(this.domManager.app.restrictionsString)
+      JSON.stringify(this.appStateManager.getState("restrictionsString"))
     );
     this.domManager.app.spoonacularDataToSend.intolerances = intoleranceValues
       .slice(0, -2)
       .replace(/\s/g, "");
-    this.domManager.app.intolerancesString =
-      this.domManager.app.spoonacularDataToSend.intolerances;
+    this.appStateManager.updateState(
+      "intolerancesString",
+      this.domManager.app.spoonacularDataToSend.intolerances
+    );
     localStorage.setItem(
       "intolerancesString",
-      JSON.stringify(this.domManager.app.intolerancesString)
+      JSON.stringify(this.appStateManager.getState("intolerancesString"))
     );
   }
 
   //POST request to IMGUR with image id supplied
-  postImage(formData) {
+  postImage(formData, domManager) {
     $.ajax({
       method: "POST",
       url: "https://api.imgur.com/3/image/",
@@ -360,15 +394,15 @@ class App {
       contentType: false,
       cache: false,
       headers: {
-        Authorization: `${this.domManager.app.imgurAPIKey}`,
+        Authorization: `${this.appStateManager.getState("imgurAPIKey")}`,
       },
       xhr: function () {
-        var xhr = new window.XMLHttpRequest();
+        let xhr = new window.XMLHttpRequest();
         xhr.upload.addEventListener(
           "progress",
           (evt) => {
             if (evt.lengthComputable) {
-              var percentComplete = evt.loaded / evt.total;
+              let percentComplete = evt.loaded / evt.total;
               $("#percentage_bar_upload").css({
                 width: percentComplete * 100 + "%",
               });
@@ -377,7 +411,7 @@ class App {
               }
               if (percentComplete === 1) {
                 $("#percentage_upload_container").addClass("d-none");
-                this.domManager.app.imageProcessingContainer.className =
+                domManager.app.imageProcessingContainer.classList =
                   "d-flex col-12 flex-column align-items-center justify-content-center desktop-space-form";
               }
             }
@@ -400,8 +434,8 @@ class App {
   }
 
   handlePostImageError(error) {
-    this.domManager.app.imgurAPIError.className = "text-center mt-3";
-    for (var i = 0; i < this.domManager.app.inputs.length; i++) {
+    this.domManager.app.imgurAPIError.classList = "text-center mt-3";
+    for (let i = 0; i < this.domManager.app.inputs.length; i++) {
       this.domManager.app.inputs[i].disabled = false;
       this.domManager.app.inputs[i].classList.remove("no-click");
     }
@@ -409,9 +443,9 @@ class App {
 
   //POST request to Google's Cloud Vision API with image from IMGUR to label the object in the image
   imageRecognition() {
-    this.domManager.app.imageRecognitionStatusText.className = "text-center";
+    this.domManager.app.imageRecognitionStatusText.classList = "text-center";
     $.ajax({
-      url: `https://vision.googleapis.com/v1/images:annotate?fields=responses&key=${this.domManager.app.googleAPIKey}`,
+      url: `https://vision.googleapis.com/v1/images:annotate?fields=responses&key=${this.appStateManager.getState("googleAPIKey")}`,
       type: "POST",
       dataType: "JSON",
       contentType: "application/json",
@@ -423,10 +457,10 @@ class App {
 
   handleImageRecognitionSuccess(response) {
     if (!response.responses[0].labelAnnotations) {
-      this.domManager.app.imageRecognitionStatusText.className = "d-none";
-      this.domManager.app.imageRecognitionFailedText.className = "text-center";
+      this.domManager.app.imageRecognitionStatusText.classList = "d-none";
+      this.domManager.app.imageRecognitionFailedText.classList = "text-center";
       this.domManager.app.uploadedImage.src = "";
-      for (var i = 0; i < this.domManager.app.inputs.length; i++) {
+      for (let i = 0; i < this.domManager.app.inputs.length; i++) {
         this.domManager.app.inputs[i].disabled = false;
         this.domManager.app.inputs[i].classList.remove("no-click");
       }
@@ -435,7 +469,7 @@ class App {
     const imageTitle = response.responses[0].labelAnnotations[0].description;
     const score = response.responses[0].labelAnnotations[0].score;
     this.imageTitleHandler.imageTitleOnPage(imageTitle, score);
-    this.domManager.app.imageRecognitionStatusText.className =
+    this.domManager.app.imageRecognitionStatusText.classList =
       "text-center d-none";
     this.getRecipes(imageTitle);
   }
@@ -447,24 +481,24 @@ class App {
   //GET request to Spoonacular's API with label from Google, if available, to get a list of up to 100 recipes.
 
   getRandomRecipes() {
-    for (var i = 0; i < this.domManager.app.inputs.length; i++) {
+    for (let i = 0; i < this.domManager.app.inputs.length; i++) {
       this.domManager.app.inputs[i].disabled = true;
       this.domManager.app.inputs[i].classList.add("no-click");
     }
-    this.domManager.app.searchRecipesDownloadProgress.className =
+    this.domManager.app.searchRecipesDownloadProgress.classList =
       "recipe-progress-visible text-left mt-3";
-    this.domManager.app.searchRecipesDownloadText.className =
+    this.domManager.app.searchRecipesDownloadText.classList =
       "text-center mt-3";
     this.domManager.app.searchRecipesDownloadText.textContent =
       "Gathering random recipes, please wait...";
-    this.domManager.app.titleContainer.className = "d-none desktop-space-form";
-    this.domManager.app.percentageBarContainer.className =
+    this.domManager.app.titleContainer.classList = "d-none desktop-space-form";
+    this.domManager.app.percentageBarContainer.classList =
       "d-none desktop-space-form";
-    this.domManager.app.uploadedImageContainer.className =
+    this.domManager.app.uploadedImageContainer.classList =
       "d-none desktop-space-form";
-    this.domManager.app.chunkedRecipeArray = [];
-    this.domManager.app.chunkedRecipeArrayIndex = 0;
-    let spoonacularURL = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${this.domManager.app.spoonacularAPIKey}&addRecipeNutrition=true&636x393&number=100&sort=random`;
+    this.appStateManager.updateState("chunkedRecipeArray", []);
+    this.appStateManager.updateState("chunkedRecipeArrayIndex", 0);
+    let spoonacularURL = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${this.appStateManager.getState("spoonacularAPIKey")}&addRecipeNutrition=true&636x393&number=100&sort=random`;
     $.ajax({
       method: "GET",
       url: spoonacularURL,
@@ -482,15 +516,15 @@ class App {
   }
 
   getRecipes(imageTitle) {
-    this.domManager.app.searchRecipesDownloadProgress.className =
+    this.domManager.app.searchRecipesDownloadProgress.classList =
       "recipe-progress-visible text-left mt-3";
-    this.domManager.app.searchRecipesDownloadText.className =
+    this.domManager.app.searchRecipesDownloadText.classList =
       "text-center mt-3";
     this.domManager.app.searchRecipesDownloadText.textContent =
       "Gathering recipes, please wait...";
-    this.domManager.app.chunkedRecipeArray = [];
-    this.domManager.app.chunkedRecipeArrayIndex = 0;
-    let spoonacularURL = `https://api.spoonacular.com/recipes/complexSearch?query=${imageTitle}&apiKey=${this.domManager.app.spoonacularAPIKey}&addRecipeNutrition=true&636x393&number=100`;
+    this.appStateManager.updateState("chunkedRecipeArray", []);
+    this.appStateManager.updateState("chunkedRecipeArrayIndex", 0);
+    let spoonacularURL = `https://api.spoonacular.com/recipes/complexSearch?query=${imageTitle}&apiKey=${this.appStateManager.getState("spoonacularAPIKey")}&addRecipeNutrition=true&636x393&number=100`;
     $.ajax({
       method: "GET",
       url: spoonacularURL,
@@ -509,12 +543,12 @@ class App {
   }
 
   handleGetRecipesError(error) {
-    this.domManager.app.searchRecipesDownloadContainer.className = "d-none";
-    this.domManager.app.searchRecipesDownloadProgress.className =
+    this.domManager.app.searchRecipesDownloadContainer.classList = "d-none";
+    this.domManager.app.searchRecipesDownloadProgress.classList =
       "recipe-progress-hidden text-left mt-3";
-    this.domManager.app.searchRecipesDownloadText.className = "d-none";
-    this.domManager.app.spoonacularSearchError.className = "text-center mt-3";
-    for (var i = 0; i < this.domManager.app.inputs.length; i++) {
+    this.domManager.app.searchRecipesDownloadText.classList = "d-none";
+    this.domManager.app.spoonacularSearchError.classList = "text-center mt-3";
+    for (let i = 0; i < this.domManager.app.inputs.length; i++) {
       this.domManager.app.inputs[i].disabled = false;
       this.domManager.app.inputs[i].classList.remove("no-click");
     }
@@ -543,21 +577,24 @@ class App {
       !localStorage.getItem("favoriteArray") ||
       localStorage.getItem("favoriteArray") === "[]"
     ) {
-      this.domManager.app.emptyFavoriteTextContainer.className =
+      this.domManager.app.emptyFavoriteTextContainer.classList =
         "d-flex justify-content-center";
       return;
     }
-    this.domManager.app.favoriteRecipesSection.className =
+    this.domManager.app.favoriteRecipesSection.classList =
       "favorite-recipes-visible d-flex flex-column justify-content-center";
-    this.domManager.app.emptyFavoriteTextContainer.className = "d-none";
-    this.domManager.app.favoriteRecipesDownloadProgress.className =
+    this.domManager.app.emptyFavoriteTextContainer.classList = "d-none";
+    this.domManager.app.favoriteRecipesDownloadProgress.classList =
       "favorite-recipe-progress-visible mt-3";
-    this.domManager.app.favoriteRecipesStatusText.className = "text-center";
-    this.domManager.app.favoriteArray = JSON.parse(
-      localStorage.getItem("favoriteArray")
+    this.domManager.app.favoriteRecipesStatusText.classList = "text-center";
+    this.appStateManager.updateState(
+      "favoriteArray",
+      JSON.parse(localStorage.getItem("favoriteArray"))
     );
-    let stringifiedArray = this.domManager.app.favoriteArray.join(",");
-    let spoonacularURL = `https://api.spoonacular.com/recipes/informationBulk?ids=${stringifiedArray}&apiKey=${this.domManager.app.spoonacularAPIKey}&includeNutrition=true&size=636x393`;
+    let stringifiedArray = this.appStateManager
+      .getState("favoriteArray")
+      .join(",");
+    let spoonacularURL = `https://api.spoonacular.com/recipes/informationBulk?ids=${stringifiedArray}&apiKey=${this.appStateManager.getState("spoonacularAPIKey")}&includeNutrition=true&size=636x393`;
     $.ajax({
       method: "GET",
       url: spoonacularURL,
@@ -575,15 +612,15 @@ class App {
   }
 
   handleGetFavoriteRecipesError(error) {
-    this.domManager.app.favoriteRecipesDownloadProgress.className =
+    this.domManager.app.favoriteRecipesDownloadProgress.classList =
       "favorite-recipe-progress-hidden";
-    this.domManager.app.favoriteRecipesStatusText.className = "d-none";
+    this.domManager.app.favoriteRecipesStatusText.classList = "d-none";
     if (error.statusText === "error") {
-      this.domManager.app.spoonacularFavoriteError.className =
+      this.domManager.app.spoonacularFavoriteError.classList =
         "mt-3 text-center";
     }
     if (error.statusText === "timeout") {
-      this.domManager.app.spoonacularFavoriteTimeoutError.className =
+      this.domManager.app.spoonacularFavoriteTimeoutError.classList =
         "mt-3 text-center";
     }
   }
@@ -599,18 +636,18 @@ class ImageTitleHandler {
   }
 
   postedImageDownloadProgress(imageURL) {
-    this.domManager.app.imageProcessingContainer.className =
+    this.domManager.app.imageProcessingContainer.classList =
       "d-none desktop-space-form";
     let imageURLParameter = imageURL;
     let imageLoader = {};
     imageLoader["LoadImage"] = (imageURLParameter, progressUpdateCallback) => {
       return new Promise((resolve) => {
-        var xhr = new XMLHttpRequest();
+        let xhr = new XMLHttpRequest();
         xhr.open("GET", imageURL, true);
         xhr.responseType = "arraybuffer";
         xhr.onprogress = (progressEvent) => {
           if (progressEvent.lengthComputable) {
-            var percentComplete = progressEvent.loaded / progressEvent.total;
+            let percentComplete = progressEvent.loaded / progressEvent.total;
             $("#percentage_bar_download").css({
               width: percentComplete * 100 + "%",
             });
@@ -619,21 +656,21 @@ class ImageTitleHandler {
             }
             if (percentComplete === 1) {
               $("#percentage_download_container").addClass("d-none");
-              this.domManager.app.percentageBarContainer.className =
+              this.domManager.app.percentageBarContainer.classList =
                 "d-none desktop-space-form";
             }
           }
         };
         xhr.onloadend = () => {
-          var options = {};
-          var headers = xhr.getAllResponseHeaders();
-          var typeMatch = headers.match(/^Content-Type:\s*(.*?)$/im);
+          const options = {};
+          const headers = xhr.getAllResponseHeaders();
+          const typeMatch = headers.match(/^Content-Type:\s*(.*?)$/im);
 
           if (typeMatch && typeMatch[1]) {
             options.type = typeMatch[1];
           }
 
-          var blob = new Blob([this.response], options);
+          const blob = new Blob([this.response], options);
           resolve(window.URL.createObjectURL(blob));
         };
         xhr.send();
@@ -651,18 +688,18 @@ class ImageTitleHandler {
   imageTitleOnPage(imageTitle, score) {
     const h2 = document.createElement("h1");
     h2.id = "image_title";
-    h2.className = "text-center";
+    h2.classList = "text-center";
     h2.textContent = imageTitle;
     this.domManager.app.titleContainer.append(h2);
     const p = document.createElement("p");
     p.id = "title_score";
-    p.className = "text-center";
+    p.classList = "text-center";
     const percent = (score * 100).toFixed(2);
     p.textContent = `Confidence: ${percent}%`;
     this.domManager.app.titleContainer.append(p);
     const hr = document.createElement("hr");
     hr.id = "hr";
-    hr.className = "mx-3 my-0 py-0 d-xl-none";
+    hr.classList = "mx-3 my-0 py-0 d-xl-none";
     this.domManager.app.titleContainer.append(hr);
   }
 }
@@ -672,7 +709,7 @@ class ImageTitleHandler {
 // --------- form.js start
 
 class Form {
-  constructor(domManager) {
+  constructor(domManager, appStateManager) {
     this.domManager = domManager;
     this.domManager.app.favoriteRecipesSection.addEventListener(
       "scroll",
@@ -702,6 +739,7 @@ class Form {
       "change",
       this.imgValidation.bind(this)
     );
+    this.appStateManager = appStateManager;
     overlay.addEventListener("click", this.closeSideMenu.bind(this));
     this.domManager.form.recipeSearchInput.addEventListener(
       "keyup",
@@ -712,7 +750,7 @@ class Form {
       this.imgValidation.bind(this)
     );
     document.addEventListener("drop", function (event) {
-      if (event.target !== this.domManager.form.fileInputForm) {
+      if (event.target.id !== "file_input_form") {
         event.preventDefault();
       }
     });
@@ -747,9 +785,9 @@ class Form {
 
   toggleFavorites() {
     event.preventDefault();
-    this.domManager.app.favoriteRecipesSection.className =
+    this.domManager.app.favoriteRecipesSection.classList =
       "d-flex flex-column justify-content-center";
-    this.domManager.app.dietMenu.className =
+    this.domManager.app.dietMenu.classList =
       "d-none flex-column justify-content-center align-items-center";
     this.domManager.form.toggleFavoritesButton.classList.add(
       "font-weight-bold"
@@ -759,9 +797,9 @@ class Form {
 
   toggleDiet() {
     event.preventDefault();
-    this.domManager.app.favoriteRecipesSection.className =
+    this.domManager.app.favoriteRecipesSection.classList =
       "d-none flex-column justify-content-center";
-    this.domManager.app.dietMenu.className =
+    this.domManager.app.dietMenu.classList =
       "d-flex flex-column justify-content-center align-items-center";
     this.domManager.form.toggleFavoritesButton.classList.remove(
       "font-weight-bold"
@@ -771,72 +809,73 @@ class Form {
 
   openFavorites() {
     event.preventDefault();
-    this.domManager.form.favoriteYPosition = window.scrollY;
-    this.domManager.app.favoriteRecipesSection.className =
+    this.appStateManager.updateState("favoriteYPosition", window.scrollY);
+    this.domManager.app.favoriteRecipesSection.classList =
       "favorite-recipes-visible d-flex flex-column justify-content-center";
     if (
       !localStorage.getItem("favoriteArray") ||
       localStorage.getItem("favoriteArray") !== "[]"
     ) {
-      this.domManager.app.emptyFavoriteTextContainer.className = "d-none";
+      this.domManager.app.emptyFavoriteTextContainer.classList = "d-none";
     }
-    this.domManager.form.mainContent.className =
+    this.domManager.form.mainContent.classList =
       "row main-content-right noscroll";
-    this.domManager.form.mainContent.style.top = `-${this.domManager.form.favoriteYPosition}px`;
+    this.domManager.form.mainContent.style.top = `-${this.appStateManager.getState("favoriteYPosition")}px`;
     this.domManager.app.formElement.style.top = "0px";
-    this.domManager.app.formElement.className =
+    this.domManager.app.formElement.classList =
       "sticky col-12 col-xl-4 offset-xl-0 d-flex flex-column align-items-center form-element-left";
-    overlay.className = "";
+    overlay.classList = "";
     this.getFavoriteRecipes();
   }
 
   closeFavorites() {
     event.preventDefault();
-    this.domManager.app.favoriteRecipesSection.className =
+    this.domManager.app.favoriteRecipesSection.classList =
       "favorite-recipes-hidden d-flex flex-column justify-content-center";
-    this.domManager.form.mainContent.className = "row";
-    overlay.className = "d-none";
-    window.scroll(0, this.domManager.form.favoriteYPosition);
-    this.domManager.app.formElement.className =
+    this.domManager.form.mainContent.classList = "row";
+    overlay.classList = "d-none";
+    window.scroll(0, this.appStateManager.getState("favoriteYPosition"));
+    this.domManager.app.formElement.classList =
       "sticky col-12 col-xl-4 offset-xl-0 d-flex flex-column align-items-center";
-    this.domManager.app.favoriteRecipesDownloadProgress.className =
+    this.domManager.app.favoriteRecipesDownloadProgress.classList =
       "recipe-progress-hidden mt-3 text-center";
-    this.domManager.app.spoonacularFavoriteError.className = "d-none";
-    this.domManager.app.spoonacularFavoriteTimeoutError.className = "d-none";
+    this.domManager.app.spoonacularFavoriteError.classList = "d-none";
+    this.domManager.app.spoonacularFavoriteTimeoutError.classList = "d-none";
   }
 
   openSideMenu() {
     event.preventDefault();
-    this.domManager.form.favoriteYPosition = window.scrollY;
-    this.domManager.form.rect =
-      this.domManager.form.userInputContainer.getBoundingClientRect();
-
-    this.domManager.form.closeSideMenuButton.className =
+    this.appStateManager.updateState("favoriteYPosition", window.scrollY);
+    this.appStateManager.updateState(
+      "rect",
+      this.domManager.form.userInputContainer.getBoundingClientRect()
+    );
+    this.domManager.form.closeSideMenuButton.classList =
       "close-side-menu-button-visible d-flex justify-content-center align-items-center text-danger p-0 m-0";
-    this.domManager.form.toggleFavoritesButton.className =
+    this.domManager.form.toggleFavoritesButton.classList =
       "favorites-toggle-visible toggle btn btn-danger text-white m-2 px-2 py-0 d-flex justify-content-center align-items-center font-weight-bold";
-    this.domManager.form.favoriteStickyDiv.className =
+    this.domManager.form.favoriteStickyDiv.classList =
       "favorite-sticky-div-visible m-0 p-0";
-    this.domManager.form.toggleDietButton.className =
+    this.domManager.form.toggleDietButton.classList =
       "diet-toggle-visible toggle btn btn-primary text-white m-2 px-2 py-0 d-flex justify-content-center align-items-center";
-    this.domManager.form.sideMenuContainer.className =
+    this.domManager.form.sideMenuContainer.classList =
       "side-menu-visible d-flex flex-column justify-content-center align-items-center";
-    this.domManager.app.favoriteRecipesSection.className =
+    this.domManager.app.favoriteRecipesSection.classList =
       "d-flex flex-column justify-content-center";
-    this.domManager.app.dietMenu.className =
+    this.domManager.app.dietMenu.classList =
       "d-none flex-column justify-content-center align-items-center";
-    this.domManager.form.mainContent.className =
+    this.domManager.form.mainContent.classList =
       "row main-content-right noscroll";
-    overlay.className = "";
-    this.domManager.form.mainContent.style.top = `-${this.domManager.form.favoriteYPosition}px`;
-    this.domManager.form.headerElement.className =
+    overlay.classList = "";
+    this.domManager.form.mainContent.style.top = `-${this.appStateManager.getState("favoriteYPosition")}px`;
+    this.domManager.form.headerElement.classList =
       "d-flex flex-column align-items-center justify-content-center my-2 px-0";
     this.domManager.app.formElement.style.top = "0px";
-    this.domManager.app.formElement.className =
+    this.domManager.app.formElement.classList =
       "sticky col-12 col-xl-4 offset-xl-0 d-flex flex-column align-items-center form-element-left";
-    this.domManager.form.userInputContainer.className =
+    this.domManager.form.userInputContainer.classList =
       "col-xs-12 col-sm-12 col-md-12 col-lg-12 mt-3 px-0";
-    this.domManager.form.mainContent.style.top = `-${this.domManager.form.favoriteYPosition}px - 50px`;
+    this.domManager.form.mainContent.style.top = `-${this.appStateManager.getState("favoriteYPosition")}px - 50px`;
     this.getFavoriteRecipes();
   }
 
@@ -848,34 +887,34 @@ class Form {
       document.getElementById("diet_menu").classList.contains("d-none")
     ) {
       this.domManager.form.userInputContainer.scrollY =
-        this.domManager.form.rect.top;
+        this.appStateManager.getState("rect").top;
     } else return;
   }
 
   closeSideMenu() {
     event.preventDefault();
-    this.domManager.form.closeSideMenuButton.className =
+    this.domManager.form.closeSideMenuButton.classList =
       "close-side-menu-button-hidden d-flex justify-content-center align-items-center text-danger p-0 m-0";
-    this.domManager.form.toggleFavoritesButton.className =
+    this.domManager.form.toggleFavoritesButton.classList =
       "favorites-toggle-hidden toggle btn btn-danger text-white m-0 px-2 py-0 d-flex justify-content-center align-items-center";
-    this.domManager.form.toggleDietButton.className =
+    this.domManager.form.toggleDietButton.classList =
       "diet-toggle-hidden toggle btn btn-primary text-white m-0 px-2 py-0 d-flex justify-content-center align-items-center";
-    this.domManager.form.favoriteStickyDiv.className =
+    this.domManager.form.favoriteStickyDiv.classList =
       "favorite-sticky-div-hidden m-0 p-0";
-    this.domManager.form.sideMenuContainer.className =
+    this.domManager.form.sideMenuContainer.classList =
       "side-menu-hidden d-flex flex-column justify-content-center align-items-center";
-    this.domManager.form.mainContent.className = "row";
-    overlay.className = "d-none";
-    window.scroll(0, this.domManager.form.favoriteYPosition);
-    this.domManager.app.formElement.className =
+    this.domManager.form.mainContent.classList = "row";
+    overlay.classList = "d-none";
+    window.scroll(0, this.appStateManager.getStates(favoriteYPosition));
+    this.domManager.app.formElement.classList =
       "sticky col-12 col-xl-4 offset-xl-0 d-flex flex-column align-items-center";
-    this.domManager.form.headerElement.className =
+    this.domManager.form.headerElement.classList =
       "static d-flex flex-column align-items-center justify-content-center my-2 px-0";
-    this.domManager.app.favoriteRecipesDownloadProgress.className =
+    this.domManager.app.favoriteRecipesDownloadProgress.classList =
       "favorite-recipe-progress-hidden mt-3 text-center";
-    this.domManager.app.spoonacularFavoriteError.className = "d-none";
-    this.domManager.app.spoonacularFavoriteTimeoutError.className = "d-none";
-    this.domManager.form.userInputContainer.className =
+    this.domManager.app.spoonacularFavoriteError.classList = "d-none";
+    this.domManager.app.spoonacularFavoriteTimeoutError.classList = "d-none";
+    this.domManager.form.userInputContainer.classList =
       "col-xs-12 col-sm-12 col-md-12 col-lg-12 mt-3 px-0";
     this.dietInfo();
   }
@@ -885,7 +924,7 @@ class Form {
     if (!this.domManager.form.fileInputForm.files[0]) {
       return;
     }
-    for (var i = 0; i < this.domManager.app.inputs.length; i++) {
+    for (let i = 0; i < this.domManager.app.inputs.length; i++) {
       this.domManager.app.inputs[i].disabled = true;
       this.domManager.app.inputs[i].classList.add("no-click");
     }
@@ -901,36 +940,36 @@ class Form {
     if (document.getElementById("hr")) {
       document.getElementById("hr").remove();
     }
-    this.domManager.app.percentageBarContainer.className =
+    this.domManager.app.percentageBarContainer.classList =
       "col-12 d-flex flex-column justify-content-center my-3 desktop-space-form";
     this.domManager.app.uploadedImage.src = "";
-    this.domManager.app.searchResultsQuantityDiv.className = "d-none";
-    this.domManager.app.resultsShownQuantityDiv.className = "d-none";
-    this.domManager.app.imageRecognitionFailedText.className = "d-none";
-    this.domManager.form.errorContainer.className = "d-none desktop-space-form";
-    this.domManager.form.errorNoFile.className = "d-none";
-    this.domManager.form.errorIncorrectFile.className = "d-none";
-    this.domManager.form.errorFileExceedsSize.className = "d-none";
-    this.domManager.form.errorSpoonacularSearch.className = "d-none";
-    this.domManager.form.errorNoSearchResults.className = "d-none";
-    this.domManager.form.errorImgurCORSIssue.className = "d-none";
-    this.domManager.form.errorNoSearchResults.className = "d-none";
-    this.domManager.app.titleContainer.className =
+    this.domManager.app.searchResultsQuantityDiv.classList = "d-none";
+    this.domManager.app.resultsShownQuantityDiv.classList = "d-none";
+    this.domManager.app.imageRecognitionFailedText.classList = "d-none";
+    this.domManager.form.errorContainer.classList = "d-none desktop-space-form";
+    this.domManager.form.errorNoFile.classList = "d-none";
+    this.domManager.form.errorIncorrectFile.classList = "d-none";
+    this.domManager.form.errorFileExceedsSize.classList = "d-none";
+    this.domManager.form.errorSpoonacularSearch.classList = "d-none";
+    this.domManager.form.errorNoSearchResults.classList = "d-none";
+    this.domManager.form.errorImgurCORSIssue.classList = "d-none";
+    this.domManager.form.errorNoSearchResults.classList = "d-none";
+    this.domManager.app.titleContainer.classList =
       "col-xs-12 col-sm-12 col-md-12 col-lg-12 d-flex justify-content-around flex-column desktop-space-form mb-3";
-    this.domManager.app.percentageBarContainer.className =
+    this.domManager.app.percentageBarContainer.classList =
       "col-12 d-flex flex-column justify-content-center my-3 desktop-space-form";
-    this.domManager.app.uploadedImageContainer.className =
+    this.domManager.app.uploadedImageContainer.classList =
       "col-xs-12 col-sm-12 col-md-12 col-lg-12 d-flex justify-content-center my-3 desktop-space-form";
     if (this.domManager.form.fileInputForm.files[1]) {
       this.domManager.form.fileInputForm.files.splice(1, 1);
     }
     const imageFile = this.domManager.form.fileInputForm.files[0];
     if (!imageFile) {
-      this.domManager.form.errorContainer.className =
+      this.domManager.form.errorContainer.classList =
         "col-12 mt-2 desktop-space-form";
-      this.domManager.form.errorNoFile.className = "text-danger text-center";
+      this.domManager.form.errorNoFile.classList = "text-danger text-center";
       this.domManager.form.fileInputForm.value = "";
-      for (var i = 0; i < this.domManager.app.inputs.length; i++) {
+      for (let i = 0; i < this.domManager.app.inputs.length; i++) {
         this.domManager.app.inputs[i].disabled = false;
         this.domManager.app.inputs[i].classList.remove("no-click");
       }
@@ -940,24 +979,24 @@ class Form {
     const formData = new FormData();
     const mimeTypes = ["image/jpeg", "image/png", "image/gif"];
     if (!mimeTypes.includes(fileType)) {
-      this.domManager.form.errorContainer.className =
+      this.domManager.form.errorContainer.classList =
         "col-12 mt-2 desktop-space-form";
-      this.domManager.form.errorIncorrectFile.className =
+      this.domManager.form.errorIncorrectFile.classList =
         "text-danger text-center";
       this.domManager.form.fileInputForm.value = "";
-      for (var i = 0; i < this.domManager.app.inputs.length; i++) {
+      for (let i = 0; i < this.domManager.app.inputs.length; i++) {
         this.domManager.app.inputs[i].disabled = false;
         this.domManager.app.inputs[i].classList.remove("no-click");
       }
       return;
     }
     if (imageFile.size > 10485760) {
-      this.domManager.form.errorContainer.className =
+      this.domManager.form.errorContainer.classList =
         "col-12 mt-2 desktop-space-form";
-      this.domManager.form.errorFileExceedsSize.className =
+      this.domManager.form.errorFileExceedsSize.classList =
         "text-danger text-center";
       this.domManager.form.fileInputForm.value = "";
-      for (var i = 0; i < this.domManager.app.inputs.length; i++) {
+      for (let i = 0; i < this.domManager.app.inputs.length; i++) {
         this.domManager.app.inputs[i].disabled = false;
         this.domManager.app.inputs[i].classList.remove("no-click");
       }
@@ -965,7 +1004,7 @@ class Form {
     }
     formData.append("image", imageFile);
     this.dietInfo();
-    this.postImage(formData);
+    this.postImage(formData, this.domManager);
     this.domManager.form.fileInputForm.value = "";
   }
 
@@ -974,27 +1013,27 @@ class Form {
     while (document.getElementById("recipe")) {
       document.getElementById("recipe").remove();
     }
-    this.domManager.app.searchResultsQuantityDiv.className = "d-none";
-    this.domManager.app.resultsShownQuantityDiv.className = "d-none";
-    this.domManager.app.imageRecognitionFailedText.className = "d-none";
-    this.domManager.form.errorContainer.className = "d-none desktop-space-form";
-    this.domManager.form.errorNoFile.className = "d-none";
-    this.domManager.form.errorIncorrectFile.className = "d-none";
-    this.domManager.form.errorFileExceedsSize.className = "d-none";
-    this.domManager.form.errorSpoonacularSearch.className = "d-none";
-    this.domManager.form.errorNoSearchResults.className = "d-none";
-    this.domManager.form.errorImgurCORSIssue.className = "d-none";
-    this.domManager.form.errorNoSearchResults.className = "d-none";
-    for (var i = 0; i < this.domManager.app.inputs.length; i++) {
+    this.domManager.app.searchResultsQuantityDiv.classList = "d-none";
+    this.domManager.app.resultsShownQuantityDiv.classList = "d-none";
+    this.domManager.app.imageRecognitionFailedText.classList = "d-none";
+    this.domManager.form.errorContainer.classList = "d-none desktop-space-form";
+    this.domManager.form.errorNoFile.classList = "d-none";
+    this.domManager.form.errorIncorrectFile.classList = "d-none";
+    this.domManager.form.errorFileExceedsSize.classList = "d-none";
+    this.domManager.form.errorSpoonacularSearch.classList = "d-none";
+    this.domManager.form.errorNoSearchResults.classList = "d-none";
+    this.domManager.form.errorImgurCORSIssue.classList = "d-none";
+    this.domManager.form.errorNoSearchResults.classList = "d-none";
+    for (let i = 0; i < this.domManager.app.inputs.length; i++) {
       this.domManager.app.inputs[i].disabled = true;
       this.domManager.app.inputs[i].classList.add("no-click");
     }
     let query = this.domManager.form.recipeSearchInput.value;
     this.dietInfo();
-    this.domManager.app.titleContainer.className = "d-none desktop-space-form";
-    this.domManager.app.percentageBarContainer.className =
+    this.domManager.app.titleContainer.classList = "d-none desktop-space-form";
+    this.domManager.app.percentageBarContainer.classList =
       "d-none desktop-space-form";
-    this.domManager.app.uploadedImageContainer.className =
+    this.domManager.app.uploadedImageContainer.classList =
       "d-none desktop-space-form";
     if (!query) {
       this.getRandomRecipes();
@@ -1009,7 +1048,13 @@ class Form {
 // ----------- recipes-handler.js start
 
 class RecipesHandler {
-  constructor(searchRecipesContainer, favoriteRecipesContainer, domManager) {
+  constructor(
+    searchRecipesContainer,
+    favoriteRecipesContainer,
+    domManager,
+    appStateManager
+  ) {
+    this.appStateManager = appStateManager;
     this.domManager = domManager;
     this.searchRecipesContainer = searchRecipesContainer;
     this.favoriteRecipesContainer = favoriteRecipesContainer;
@@ -1038,32 +1083,33 @@ class RecipesHandler {
   chunkSearchedRecipes(recipes) {
     this.domManager.app.recipeInformation = recipes;
     if (!recipes.results[0]) {
-      this.domManager.app.searchRecipesDownloadProgress.className =
+      this.domManager.app.searchRecipesDownloadProgress.classList =
         "recipe-progress-hidden mt-3";
-      this.domManager.app.searchRecipesDownloadText.className = "d-none";
-      this.domManager.app.noSearchRecipesText.className = "text-center mt-3";
-      for (var i = 0; i < this.domManager.app.inputs.length; i++) {
+      this.domManager.app.searchRecipesDownloadText.classList = "d-none";
+      this.domManager.app.noSearchRecipesText.classList = "text-center mt-3";
+      for (let i = 0; i < this.domManager.app.inputs.length; i++) {
         this.domManager.app.inputs[i].disabled = false;
         this.domManager.app.inputs[i].classList.remove("no-click");
       }
       return;
     }
-    this.domManager.app.searchResultsQuantityDiv.className =
+    this.domManager.app.searchResultsQuantityDiv.classList =
       "d-flex justify-content-center mt-3";
     this.domManager.recipes.searchResultsQuantityText.textContent = `${recipes.results.length} recipes found`;
     let a = 0;
     while (a < recipes.results.length) {
-      this.domManager.app.chunkedRecipeArray.push(
-        recipes.results.slice(a, a + 12)
-      );
+      const tempRecipeArray =
+        this.appStateManager.getState("chunkedRecipeArray");
+      tempRecipeArray.push(recipes.results.slice(a, a + 12));
+      this.appStateManager.updateState("chunkedRecipeArray", tempRecipeArray);
       a = a + 12;
     }
     this.displaySearchedRecipes(
-      this.domManager.app.chunkedRecipeArray,
-      this.domManager.app.chunkedRecipeArrayIndex
+      this.appStateManager.getState("chunkedRecipeArray"),
+      this.appStateManager.getState("chunkedRecipeArrayIndex")
     );
     if (recipes.results.length > 12) {
-      this.domManager.app.resultsShownQuantityDiv.className =
+      this.domManager.app.resultsShownQuantityDiv.classList =
         "d-flex flex-column align-items-center justify-content-center mb-3";
     }
     this.updateResultsQuantityShown();
@@ -1072,32 +1118,33 @@ class RecipesHandler {
   chunkRandomRecipes(recipes) {
     this.domManager.app.recipeInformation = recipes;
     if (!recipes.results[0]) {
-      this.domManager.app.searchRecipesDownloadProgress.className =
+      this.domManager.app.searchRecipesDownloadProgress.classList =
         "recipe-progress-hidden mt-3";
-      this.domManager.app.searchRecipesDownloadText.className = "d-none";
-      this.domManager.app.noSearchRecipesText.className = "text-center mt-3";
-      for (var i = 0; i < this.domManager.app.inputs.length; i++) {
+      this.domManager.app.searchRecipesDownloadText.classList = "d-none";
+      this.domManager.app.noSearchRecipesText.classList = "text-center mt-3";
+      for (let i = 0; i < this.domManager.app.inputs.length; i++) {
         this.domManager.app.inputs[i].disabled = false;
         this.domManager.app.inputs[i].classList.remove("no-click");
       }
       return;
     }
-    this.domManager.app.searchResultsQuantityDiv.className =
+    this.domManager.app.searchResultsQuantityDiv.classList =
       "d-flex justify-content-center mt-3";
     this.domManager.recipes.searchResultsQuantityText.textContent = `${recipes.results.length} random recipes found`;
     let a = 0;
     while (a < recipes.results.length) {
-      this.domManager.app.chunkedRecipeArray.push(
-        recipes.results.slice(a, a + 12)
-      );
+      const tempRecipeArray =
+        this.appStateManager.getState("chunkedRecipeArray");
+      tempRecipeArray.push(recipes.results.slice(a, a + 12));
+      this.appStateManager.updateState("chunkedRecipeArray", tempRecipeArray);
       a = a + 12;
     }
     this.displaySearchedRecipes(
-      this.domManager.app.chunkedRecipeArray,
-      this.domManager.app.chunkedRecipeArrayIndex
+      this.appStateManager.getState("chunkedRecipeArray"),
+      this.appStateManager.getState("chunkedRecipeArrayIndex")
     );
     if (recipes.results.length > 12) {
-      this.domManager.app.resultsShownQuantityDiv.className =
+      this.domManager.app.resultsShownQuantityDiv.classList =
         "d-flex flex-column align-items-center justify-content-center mb-3";
     }
     this.updateResultsQuantityShown();
@@ -1109,14 +1156,17 @@ class RecipesHandler {
       document.documentElement.scrollHeight
     ) {
       if (
-        this.domManager.app.chunkedRecipeArrayIndex !==
-        this.domManager.app.chunkedRecipeArray.length - 1
+        this.appStateManager.getState("chunkedRecipeArrayIndex") !==
+        this.appStateManager.getState("chunkedRecipeArray").length - 1
       ) {
         let yPosition = window.scrollY;
-        this.domManager.app.chunkedRecipeArrayIndex++;
+        this.appStateManager.updateState(
+          "chunkedRecipeArrayIndex",
+          this.appStateManager.getState("chunkedRecipeArrayIndex") + 1
+        );
         this.displaySearchedRecipes(
-          this.domManager.app.chunkedRecipeArray,
-          this.domManager.app.chunkedRecipeArrayIndex
+          this.appStateManager.getState("chunkedRecipeArray"),
+          this.appStateManager.getState("chunkedRecipeArrayIndex")
         );
         window.scroll(0, yPosition);
         this.updateResultsQuantityShown();
@@ -1145,10 +1195,13 @@ class RecipesHandler {
       heartIcon.parentNode.parentNode.parentNode.lastChild.firstChild.firstChild
         .firstChild.textContent;
     let twoWords = recipeTitle.split(" ").slice(0, 2).join(" ");
-    if (!this.domManager.app.favoriteArray.includes(id)) {
-      this.domManager.app.favoriteArray.push(id);
-      heartIcon.className = "fas fa-heart text-danger heart-icon fa-lg";
-      heartIcon.parentNode.parentNode.parentNode.className =
+    if (!this.appStateManager.getState("favoriteArray").includes(id)) {
+      this.appStateManager.updateState("favoriteArray", [
+        ...this.appStateManager.getState("favoriteArray"),
+        id,
+      ]);
+      heartIcon.classList = "fas fa-heart text-danger heart-icon fa-lg";
+      heartIcon.parentNode.parentNode.parentNode.classList =
         "recipe-card favorited card col-xs-12 col-sm-5 col-md-5 col-lg-3 col-xl-2 m-3 px-0 h-100";
       // Toastify({
       //   text: `${twoWords}... added`,
@@ -1158,12 +1211,14 @@ class RecipesHandler {
       //   position: "left",
       // }).showToast();
     } else {
-      this.domManager.app.favoriteArray.splice(
-        this.domManager.app.favoriteArray.indexOf(id),
-        1
-      );
-      heartIcon.className = "far fa-heart text-danger heart-icon fa-lg";
-      heartIcon.parentNode.parentNode.parentNode.className =
+      const tempArray = this.appStateManager.getState("favoriteArray");
+      const index = this.appStateManager.getState("favoriteArray").indexOf(id);
+      if (index !== -1) {
+        tempArray.splice(index, 1);
+        this.appStateManager.updateState("favoriteArray", tempArray);
+      }
+      heartIcon.classList = "far fa-heart text-danger heart-icon fa-lg";
+      heartIcon.parentNode.parentNode.parentNode.classList =
         "recipe-card card col-xs-12 col-sm-5 col-md-5 col-lg-3 col-xl-2 m-3 px-0 h-100";
       // Toastify({
       //   text: `${twoWords}... removed`,
@@ -1175,7 +1230,7 @@ class RecipesHandler {
     }
     localStorage.setItem(
       "favoriteArray",
-      JSON.stringify(this.domManager.app.favoriteArray)
+      JSON.stringify(this.appStateManager.getState("favoriteArray"))
     );
   }
 
@@ -1186,29 +1241,31 @@ class RecipesHandler {
       deleteCard.firstChild.nextSibling.firstChild.firstChild.firstChild
         .textContent;
     let twoWords = recipeTitle.split(" ").slice(0, 2).join(" ");
-    this.domManager.app.favoriteArray.splice(
-      this.domManager.app.favoriteArray.indexOf(id),
-      1
-    );
+    const tempArray = this.appStateManager.getState("favoriteArray");
+    const index = this.appStateManager.getState("favoriteArray").indexOf(id);
+    if (index !== -1) {
+      tempArray.splice(index, 1);
+      this.appStateManager.updateState("favoriteArray", tempArray);
+    }
     document.getElementById(`${id}`).remove();
     localStorage.setItem(
       "favoriteArray",
-      JSON.stringify(this.domManager.app.favoriteArray)
+      JSON.stringify(this.appStateManager.getState("favoriteArray"))
     );
     if (localStorage.getItem("favoriteArray") === "[]") {
-      this.domManager.app.emptyFavoriteTextContainer.className =
+      this.domManager.app.emptyFavoriteTextContainer.classList =
         "d-flex justify-content-center";
-      this.domManager.app.favoriteRecipesSection.className =
+      this.domManager.app.favoriteRecipesSection.classList =
         "favorite-recipes-visible d-flex flex-column justify-content-center";
     }
     if (
       this.domManager.app.favoriteRecipesSection.scrollHeight >
       this.domManager.app.favoriteRecipesSection.clientHeight
     ) {
-      this.domManager.app.favoriteRecipesSection.className =
+      this.domManager.app.favoriteRecipesSection.classList =
         "favorite-recipes-visible d-flex flex-column justify-content-start";
     } else {
-      this.domManager.app.favoriteRecipesSection.className =
+      this.domManager.app.favoriteRecipesSection.classList =
         "favorite-recipes-visible d-flex flex-column justify-content-center";
     }
     // Toastify({
@@ -1226,9 +1283,12 @@ class RecipesHandler {
     const favoriteButton = document.getElementById("favorite_button");
     let recipeTitle = document.getElementById("recipe_title").textContent;
     let twoWords = recipeTitle.split(" ").slice(2, 4).join(" ");
-    if (this.domManager.app.favoriteArray.includes(id) === false) {
-      this.domManager.app.favoriteArray.push(id);
-      favoriteButton.className = "btn btn-danger";
+    if (!this.appStateManager.getState("favoriteArray").includes(id)) {
+      this.appStateManager.updateState("favoriteArray", [
+        ...this.appStateManager.getState("favoriteArray"),
+        id,
+      ]);
+      favoriteButton.classList = "btn btn-danger";
       favoriteButton.textContent = "Remove from Favorites";
       // Toastify({
       //   text: `${twoWords}... added`,
@@ -1238,12 +1298,12 @@ class RecipesHandler {
       //   position: "left",
       // }).showToast();
       if (document.getElementById(`heart_icon_${id}`)) {
-        document.getElementById(`heart_icon_${id}`).className =
+        document.getElementById(`heart_icon_${id}`).classList =
           "fas fa-heart text-danger heart-icon fa-lg";
       }
       localStorage.setItem(
         "favoriteArray",
-        JSON.stringify(this.domManager.app.favoriteArray)
+        JSON.stringify(this.appStateManager.getState("favoriteArray"))
       );
       if (
         this.domManager.app.favoriteRecipesSection.classList.contains(
@@ -1251,24 +1311,26 @@ class RecipesHandler {
         )
       ) {
         this.getFavoriteRecipes();
-        this.domManager.app.spoonacularFavoriteError.className = "d-none";
-        this.domManager.app.spoonacularFavoriteTimeoutError.className =
+        this.domManager.app.spoonacularFavoriteError.classList = "d-none";
+        this.domManager.app.spoonacularFavoriteTimeoutError.classList =
           "d-none";
       }
       return;
     } else {
-      this.domManager.app.favoriteArray.splice(
-        this.domManager.app.favoriteArray.indexOf(id),
-        1
-      );
+      const tempArray = this.appStateManager.getState("favoriteArray");
+      const index = this.appStateManager.getState("favoriteArray").indexOf(id);
+      if (index !== -1) {
+        tempArray.splice(index, 1);
+        this.appStateManager.updateState("favoriteArray", tempArray);
+      }
       localStorage.setItem(
         "favoriteArray",
-        JSON.stringify(this.domManager.app.favoriteArray)
+        JSON.stringify(this.appStateManager.getState("favoriteArray"))
       );
-      favoriteButton.className = "btn btn-outline-danger";
+      favoriteButton.classList = "btn btn-outline-danger";
       favoriteButton.textContent = "Save to Favorites";
       if (document.getElementById(`heart_icon_${id}`)) {
-        document.getElementById(`heart_icon_${id}`).className =
+        document.getElementById(`heart_icon_${id}`).classList =
           "far fa-heart text-danger heart-icon fa-lg";
       }
       if (document.getElementById(`${id}`)) {
@@ -1281,21 +1343,21 @@ class RecipesHandler {
           "favorite-recipes-visible"
         )
       ) {
-        this.domManager.app.favoriteRecipesSection.className =
+        this.domManager.app.favoriteRecipesSection.classList =
           "favorite-recipes-visible d-flex flex-column justify-content-start";
       } else {
-        this.domManager.app.favoriteRecipesSection.className =
+        this.domManager.app.favoriteRecipesSection.classList =
           "favorite-recipes-visible d-flex flex-column justify-content-center";
       }
       localStorage.setItem(
         "favoriteArray",
-        JSON.stringify(this.domManager.app.favoriteArray)
+        JSON.stringify(this.appStateManager.getState("favoriteArray"))
       );
       if (
         !localStorage.getItem("favoriteArray") ||
         localStorage.getItem("favoriteArray") === "[]"
       ) {
-        this.domManager.app.emptyFavoriteTextContainer.className =
+        this.domManager.app.emptyFavoriteTextContainer.classList =
           "d-flex justify-content-center";
         return;
       }
@@ -1317,16 +1379,16 @@ class RecipesHandler {
     let favoriteArrayToCheck = JSON.parse(
       localStorage.getItem("favoriteArray")
     );
-    for (var i = 0; i < searchedArray.length; i++) {
+    for (let i = 0; i < searchedArray.length; i++) {
       if (
         favoriteArrayToCheck.includes(
           parseInt(searchedArray[i].id.substring(11))
         )
       ) {
-        searchedArray[i].className =
+        searchedArray[i].classList =
           "fas fa-heart text-danger heart-icon fa-lg";
       } else {
-        searchedArray[i].className =
+        searchedArray[i].classList =
           "far fa-heart text-danger heart-icon fa-lg";
       }
     }
@@ -1349,32 +1411,32 @@ class RecipesHandler {
     const recipeImage = document.getElementById("recipe_image");
     const recipeSummary = document.getElementById("recipe_summary");
     const externalLinkButton = document.createElement("button");
-    this.domManager.recipes.overlayPreview.className = "";
+    this.domManager.recipes.overlayPreview.classList = "";
     externalLinkButton.id = "external_link_button";
-    externalLinkButton.className = "btn btn-primary text-white";
+    externalLinkButton.classList = "btn btn-primary text-white";
     externalLinkButton.textContent = "Recipe Page";
     const favoriteButton = document.createElement("button");
     favoriteButton.id = "favorite_button";
     // const closePreviewButton = document.createElement("button");
     // closePreviewButton.id = "go_back_button";
-    // closePreviewButton.className = "btn btn-secondary";
+    // closePreviewButton.classList = "btn btn-secondary";
     // closePreviewButton.textContent = "Close Preview";
-    this.domManager.app.closePreviewXButton.className =
+    this.domManager.app.closePreviewXButton.classList =
       "close-preview-x-button-visible justify-content-center align-items-center text-danger p-0 m-0";
     this.domManager.recipes.modalButtonContainer.append(externalLinkButton);
     this.domManager.recipes.modalButtonContainer.append(favoriteButton);
     // this.domManager.recipes.modalButtonContainer.append(closePreviewButton);
-    for (var x = 0; x < ingredients.length; x++) {
+    for (let x = 0; x < ingredients.length; x++) {
       const ingredient = document.createElement("li");
       ingredient.textContent = `${ingredients[x].amount} ${ingredients[x].unit} ${ingredients[x].name}`;
       this.domManager.recipes.recipeIngredients.append(ingredient);
     }
     const cleanSummary = DOMPurify.sanitize(summary);
-    this.domManager.recipes.modalContainer.className = "";
+    this.domManager.recipes.modalContainer.classList = "";
     recipeTitle.textContent = `Recipe Preview: ${title}`;
     recipeImage.src = imageURL;
     recipeSummary.innerHTML = cleanSummary;
-    this.domManager.recipes.body.className = "bg-light freeze";
+    this.domManager.recipes.body.classList = "bg-light freeze";
     externalLinkButton.addEventListener("click", () => {
       window.open(recipeURL, "_blank");
     });
@@ -1382,15 +1444,15 @@ class RecipesHandler {
       "click",
       this.handleFavoriteButtonClick.bind(this, id)
     );
-    if (this.domManager.app.favoriteArray.includes(id)) {
-      favoriteButton.className = "btn btn-danger";
+    if (this.appStateManager.getState("favoriteArray").includes(id)) {
+      favoriteButton.classList = "btn btn-danger";
       favoriteButton.textContent = "Remove from Favorites";
     } else {
-      favoriteButton.className = "btn btn-outline-danger";
+      favoriteButton.classList = "btn btn-outline-danger";
       favoriteButton.textContent = "Save to Favorites";
     }
     // closePreviewButton.addEventListener("click", this.closePreview.bind(this));
-    for (var i = 0; i < instructions.length; i++) {
+    for (let i = 0; i < instructions.length; i++) {
       if (instructions[i] === "var article") {
         return;
       }
@@ -1410,10 +1472,10 @@ class RecipesHandler {
         top: 0,
         behavior: "auto",
       });
-      this.domManager.recipes.modalContainer.className =
+      this.domManager.recipes.modalContainer.classList =
         "d-none justify-content-center";
-      this.domManager.recipes.body.className = "bg-light";
-      this.domManager.recipes.overlayPreview.className = "d-none";
+      this.domManager.recipes.body.classList = "bg-light";
+      this.domManager.recipes.overlayPreview.classList = "d-none";
       while (this.domManager.recipes.recipeInstructions.firstChild) {
         this.domManager.recipes.recipeInstructions.removeChild(
           this.domManager.recipes.recipeInstructions.firstChild
@@ -1494,30 +1556,30 @@ class RecipesHandler {
         chunkedRecipeArray[chunkedRecipeArrayIndex][i].nutrition.ingredients;
       const summary = chunkedRecipeArray[chunkedRecipeArrayIndex][i].summary;
       const recipeCard = document.createElement("div");
-      recipeCard.className =
+      recipeCard.classList =
         "recipe-card card col-xs-12 col-sm-5 col-md-5 col-lg-3 col-xl-2 m-3 px-0 h-100";
       recipeCard.id = "recipe";
       const imageContainer = document.createElement("div");
       const titleAnchorTag = document.createElement("a");
-      imageContainer.className = "d-flex justify-content-center";
+      imageContainer.classList = "d-flex justify-content-center";
       const img = document.createElement("img");
-      imageContainer.className =
+      imageContainer.classList =
         "card-image-top d-flex justify-content-center mt-3";
       img.src = imageURL;
       img.alt = "Recipe Image";
-      img.className = "mb-1 p-0";
+      img.classList = "mb-1 p-0";
       img.width = "240";
       img.height = "180";
       const heartIconContainer = document.createElement("span");
       heartIconContainer.id = "heart_container";
-      heartIconContainer.className =
+      heartIconContainer.classList =
         "badge badge-light m-1 p-1 border border-danger rounded";
       const heartIcon = document.createElement("i");
       heartIcon.id = `heart_icon_${id}`;
-      if (this.domManager.app.favoriteArray.includes(id)) {
-        heartIcon.className = "fas fa-heart text-danger heart-icon fa-lg";
+      if (this.appStateManager.getState("favoriteArray").includes(id)) {
+        heartIcon.classList = "fas fa-heart text-danger heart-icon fa-lg";
       } else {
-        heartIcon.className = "far fa-heart text-danger heart-icon fa-lg";
+        heartIcon.classList = "far fa-heart text-danger heart-icon fa-lg";
       }
       heartIconContainer.append(heartIcon);
       imageContainer.append(heartIconContainer);
@@ -1526,49 +1588,49 @@ class RecipesHandler {
         this.handleFavoriteClick.bind(this, id, event)
       );
       const cardBody = document.createElement("div");
-      cardBody.className = "card-body py-0 mb-2";
+      cardBody.classList = "card-body py-0 mb-2";
       const cardTitle = document.createElement("div");
-      cardTitle.className = "card-title mb-2";
+      cardTitle.classList = "card-title mb-2";
       const recipeTitle = document.createElement("h5");
       recipeTitle.textContent = title;
       const cardText1 = document.createElement("div");
-      cardText1.className = "card-text";
+      cardText1.classList = "card-text";
       const minutesSpan = document.createElement("span");
-      minutesSpan.className = "badge badge-dark mr-1 mb-1";
+      minutesSpan.classList = "badge badge-dark mr-1 mb-1";
       minutesSpan.textContent = `${readyInMinutes} Minutes`;
       const servingsSpan = document.createElement("span");
-      servingsSpan.className = "badge badge-dark mb-1";
+      servingsSpan.classList = "badge badge-dark mb-1";
       servingsSpan.textContent = `${servings} Servings`;
       cardText1.append(minutesSpan);
       cardText1.append(servingsSpan);
       const cardText2 = document.createElement("div");
-      cardText2.className = "card-text d-flex flex-wrap";
+      cardText2.classList = "card-text d-flex flex-wrap";
       const calorieSpan = document.createElement("span");
-      calorieSpan.className = "badge badge-secondary mb-1 mr-1";
+      calorieSpan.classList = "badge badge-secondary mb-1 mr-1";
       calorieSpan.textContent = `${caloriesAmount} Calories`;
       const carbsSpan = document.createElement("span");
-      carbsSpan.className = "badge badge-secondary mb-1 mr-1";
+      carbsSpan.classList = "badge badge-secondary mb-1 mr-1";
       carbsSpan.textContent = `${carbsAmount}g Carbs`;
       const fatSpan = document.createElement("span");
-      fatSpan.className = "badge badge-secondary mb-1 mr-1";
+      fatSpan.classList = "badge badge-secondary mb-1 mr-1";
       fatSpan.textContent = `${fatAmount}g Total Fat`;
       const proteinSpan = document.createElement("span");
-      proteinSpan.className = "badge badge-secondary mb-1 mr-1";
+      proteinSpan.classList = "badge badge-secondary mb-1 mr-1";
       proteinSpan.textContent = `${proteinAmount}g Protein`;
       const sodiumSpan = document.createElement("span");
-      sodiumSpan.className = "badge badge-secondary mb-1 mr-1";
+      sodiumSpan.classList = "badge badge-secondary mb-1 mr-1";
       sodiumSpan.textContent = `${sodiumAmount}mg Sodium`;
       const cardText3 = document.createElement("div");
-      cardText3.className = "card-text d-flex flex-wrap";
+      cardText3.classList = "card-text d-flex flex-wrap";
       let dietSpan;
       if (chunkedRecipeArray[chunkedRecipeArrayIndex][i].diets) {
         for (
-          var j = 0;
+          let j = 0;
           j < chunkedRecipeArray[chunkedRecipeArrayIndex][i].diets.length;
           j++
         ) {
           dietSpan = document.createElement("span");
-          dietSpan.className = "badge badge-light mb-1 mr-1";
+          dietSpan.classList = "badge badge-light mb-1 mr-1";
           dietSpan.textContent =
             chunkedRecipeArray[chunkedRecipeArrayIndex][i].diets[j];
           cardText3.append(dietSpan);
@@ -1603,10 +1665,10 @@ class RecipesHandler {
         )
       );
     }
-    this.domManager.app.searchRecipesDownloadProgress.className =
+    this.domManager.app.searchRecipesDownloadProgress.classList =
       "recipe-progress-hidden mt-3";
-    this.domManager.app.searchRecipesDownloadText.className = "d-none";
-    for (var i = 0; i < this.domManager.app.inputs.length; i++) {
+    this.domManager.app.searchRecipesDownloadText.classList = "d-none";
+    for (let i = 0; i < this.domManager.app.inputs.length; i++) {
       this.domManager.app.inputs[i].disabled = false;
       this.domManager.app.inputs[i].classList.remove("no-click");
     }
@@ -1652,26 +1714,26 @@ class RecipesHandler {
       const ingredients = recipes[i].nutrition.ingredients;
       const summary = recipes[i].summary;
       const recipeCard = document.createElement("div");
-      recipeCard.className =
+      recipeCard.classList =
         "favorite-recipe-card favorited card m-3 px-0 col-xs-12 col-sm-5 col-md-5 col-lg-3 col-xl-2";
       recipeCard.id = id;
       const imageContainer = document.createElement("div");
       const titleAnchorTag = document.createElement("a");
-      imageContainer.className = "d-flex justify-content-center";
+      imageContainer.classList = "d-flex justify-content-center";
       const img = document.createElement("img");
-      imageContainer.className =
+      imageContainer.classList =
         "card-image-top d-flex justify-content-center mt-3";
       img.src = imageURL;
       img.alt = "Recipe Image";
-      img.className = "m-0 p-0";
+      img.classList = "m-0 p-0";
       img.width = "240";
       img.height = "180";
       const deleteIconContainer = document.createElement("span");
       deleteIconContainer.id = "delete_container";
-      deleteIconContainer.className =
+      deleteIconContainer.classList =
         "badge badge-light m-1 p-1 border border-danger rounded";
       const deleteIcon = document.createElement("i");
-      deleteIcon.className = "far fa-trash-alt text-danger delete-icon fa-lg";
+      deleteIcon.classList = "far fa-trash-alt text-danger delete-icon fa-lg";
       deleteIconContainer.append(deleteIcon);
       imageContainer.append(deleteIconContainer);
       deleteIconContainer.addEventListener(
@@ -1679,44 +1741,44 @@ class RecipesHandler {
         this.handleDeleteClick.bind(this, id, event)
       );
       const cardBody = document.createElement("div");
-      cardBody.className = "card-body py-0 mb-2";
+      cardBody.classList = "card-body py-0 mb-2";
       const cardTitle = document.createElement("div");
-      cardTitle.className = "card-title mb-2";
+      cardTitle.classList = "card-title mb-2";
       const recipeTitle = document.createElement("h5");
       recipeTitle.textContent = title;
       const cardText1 = document.createElement("div");
-      cardText1.className = "card-text";
+      cardText1.classList = "card-text";
       const minutesSpan = document.createElement("span");
-      minutesSpan.className = "badge badge-dark mr-1 mb-1";
+      minutesSpan.classList = "badge badge-dark mr-1 mb-1";
       minutesSpan.textContent = `${readyInMinutes} Minutes`;
       const servingsSpan = document.createElement("span");
-      servingsSpan.className = "badge badge-dark mb-1";
+      servingsSpan.classList = "badge badge-dark mb-1";
       servingsSpan.textContent = `${servings} Servings`;
       cardText1.append(minutesSpan);
       cardText1.append(servingsSpan);
       const cardText2 = document.createElement("div");
-      cardText2.className = "card-text d-flex flex-wrap";
+      cardText2.classList = "card-text d-flex flex-wrap";
       const calorieSpan = document.createElement("span");
-      calorieSpan.className = "badge badge-secondary mb-1 mr-1";
+      calorieSpan.classList = "badge badge-secondary mb-1 mr-1";
       calorieSpan.textContent = `${caloriesAmount} Calories`;
       const carbsSpan = document.createElement("span");
-      carbsSpan.className = "badge badge-secondary mb-1 mr-1";
+      carbsSpan.classList = "badge badge-secondary mb-1 mr-1";
       carbsSpan.textContent = `${carbsAmount}g Carbs`;
       const fatSpan = document.createElement("span");
-      fatSpan.className = "badge badge-secondary mb-1 mr-1";
+      fatSpan.classList = "badge badge-secondary mb-1 mr-1";
       fatSpan.textContent = `${fatAmount}g Total Fat`;
       const proteinSpan = document.createElement("span");
-      proteinSpan.className = "badge badge-secondary mb-1 mr-1";
+      proteinSpan.classList = "badge badge-secondary mb-1 mr-1";
       proteinSpan.textContent = `${proteinAmount}g Protein`;
       const sodiumSpan = document.createElement("span");
-      sodiumSpan.className = "badge badge-secondary mb-1 mr-1";
+      sodiumSpan.classList = "badge badge-secondary mb-1 mr-1";
       sodiumSpan.textContent = `${sodiumAmount}mg Sodium`;
       const cardText3 = document.createElement("div");
-      cardText3.className = "card=text d-flex flex-wrap";
+      cardText3.classList = "card=text d-flex flex-wrap";
       if (recipes[i].diets) {
-        for (var j = 0; j < recipes[i].diets.length; j++) {
+        for (let j = 0; j < recipes[i].diets.length; j++) {
           const dietSpan = document.createElement("span");
-          dietSpan.className = "badge badge-light mb-1 mr-1";
+          dietSpan.classList = "badge badge-light mb-1 mr-1";
           dietSpan.textContent = recipes[i].diets[j];
           cardText3.append(dietSpan);
         }
@@ -1754,17 +1816,17 @@ class RecipesHandler {
       this.domManager.app.favoriteRecipesSection.scrollHeight >
       this.domManager.app.favoriteRecipesSection.clientHeight
     ) {
-      this.domManager.app.favoriteRecipesSection.className =
+      this.domManager.app.favoriteRecipesSection.classList =
         "favorite-recipes-visible d-flex flex-column justify-content-start";
     } else {
-      this.domManager.app.favoriteRecipesSection.className =
+      this.domManager.app.favoriteRecipesSection.classList =
         "favorite-recipes-visible d-flex flex-column justify-content-center";
     }
-    this.domManager.app.favoriteRecipesStatusText.className =
+    this.domManager.app.favoriteRecipesStatusText.classList =
       "text-center d-none";
-    this.domManager.app.favoriteRecipesDownloadProgress.className =
+    this.domManager.app.favoriteRecipesDownloadProgress.classList =
       "favorite-recipe-progress-hidden";
-    this.domManager.app.emptyFavoriteTextContainer.className = "d-none";
+    this.domManager.app.emptyFavoriteTextContainer.classList = "d-none";
   }
 }
 // ------------- recipes-handler.js end
@@ -1772,32 +1834,34 @@ class RecipesHandler {
 // ------------- main.js start
 
 document.addEventListener("DOMContentLoaded", () => {
-  setTimeout(() => {
-    const domManager = new DOMManager();
+  const appStateManager = new AppStateManager();
 
-    const form = new Form(domManager);
+  const domManager = new DOMManager();
 
-    const imageTitleHandler = new ImageTitleHandler(domManager);
+  const form = new Form(domManager, appStateManager);
 
-    const searchRecipesContainer = document.getElementById(
-      "search_recipes_container"
-    );
-    const favoriteRecipesContainer = document.getElementById(
-      "favorite_recipes_container"
-    );
-    const recipesHandler = new RecipesHandler(
-      searchRecipesContainer,
-      favoriteRecipesContainer,
-      domManager
-    );
+  const imageTitleHandler = new ImageTitleHandler(domManager);
 
-    const app = new App(
-      form,
-      imageTitleHandler,
-      recipesHandler,
-      domManager,
-      favoriteRecipesContainer
-    );
-    app.start();
-  }, 1000);
+  const searchRecipesContainer = document.getElementById(
+    "search_recipes_container"
+  );
+  const favoriteRecipesContainer = document.getElementById(
+    "favorite_recipes_container"
+  );
+  const recipesHandler = new RecipesHandler(
+    searchRecipesContainer,
+    favoriteRecipesContainer,
+    domManager,
+    appStateManager
+  );
+
+  const app = new App(
+    form,
+    imageTitleHandler,
+    recipesHandler,
+    domManager,
+    favoriteRecipesContainer,
+    appStateManager
+  );
+  app.start();
 });
