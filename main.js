@@ -11,6 +11,8 @@ class AppStateManager {
 
     // APIKeys
     this.imgurAPIKey = config.imgurAPIKey;
+    this.imgurAlbumID = config.imgurAlbumID;
+    this.imgurAccessToken = config.imgurAccessToken;
     this.googleAPIKey = config.googleAPIKey;
     this.spoonacularAPIKey = config.spoonacularAPIKey;
 
@@ -394,7 +396,7 @@ class App {
       contentType: false,
       cache: false,
       headers: {
-        Authorization: `${this.appStateManager.getState("imgurAPIKey")}`,
+        Authorization: `Bearer ${this.appStateManager.getState("imgurAccessToken")}`,
       },
       xhr: function () {
         let xhr = new window.XMLHttpRequest();
@@ -434,6 +436,7 @@ class App {
   }
 
   handlePostImageError(error) {
+    console.log("error", error);
     this.domManager.app.imgurAPIError.classList = "text-center mt-3";
     for (let i = 0; i < this.domManager.app.inputs.length; i++) {
       this.domManager.app.inputs[i].disabled = false;
@@ -1003,7 +1006,7 @@ class Form {
       return;
     }
     formData.append("image", imageFile);
-    this.dietInfo();
+    formData.append("album", this.appStateManager.getState("imgurAlbumID"));
     this.postImage(formData, this.domManager);
     this.domManager.form.fileInputForm.value = "";
   }
