@@ -1,95 +1,101 @@
-const searchResultsQuantityText = document.getElementById(
-  "search_results_quantity_text"
-);
-const modalContainer = document.getElementById("modal_container");
-const resultsShownQuantityText = document.getElementById(
-  "results_shown_quantity_text"
-);
-const body = document.querySelector("body");
-const favoriteButton = document.getElementById("favorite_button");
-const backToTopButton = document.getElementById("back_to_top_button");
-const recipeInstructions = document.getElementById("recipe_instructions");
-const recipeIngredients = document.getElementById("recipe_ingredients");
-const modalButtonContainer = document.getElementById("modal_button_container");
-const overlayPreview = document.getElementById("overlay_preview");
-const modalDialog = document.getElementById("modal_dialog");
-
-class RecipesHandler {
-  constructor(searchRecipesContainer, favoriteRecipesContainer) {
+export class RecipesHandler {
+  constructor(
+    searchRecipesContainer,
+    favoriteRecipesContainer,
+    domManager,
+    appStateManager
+  ) {
+    this.appStateManager = appStateManager;
+    this.domManager = domManager;
     this.searchRecipesContainer = searchRecipesContainer;
     this.favoriteRecipesContainer = favoriteRecipesContainer;
     window.addEventListener("scroll", this.handleShowMoreScroll.bind(this));
-    backToTopButton.addEventListener(
+    this.domManager.recipes.backToTopButton.addEventListener(
       "click",
-      this.handleBackToTopClick.bind(this)
+      this.handleBackToTopClick
     );
     this.displaySearchedRecipes = this.displaySearchedRecipes.bind(this);
     this.updateResultsQuantityShown =
       this.updateResultsQuantityShown.bind(this);
     this.favoriteCheck = this.favoriteCheck.bind(this);
-    modalContainer.addEventListener(
+    this.domManager.recipes.modalContainer.addEventListener(
       "click",
       this.closePreview.bind(this, event)
     );
-    closePreviewXButton.addEventListener(
+    this.domManager.app.closePreviewXButton.addEventListener(
       "click",
       this.closePreview.bind(this, event)
     );
   }
-
   clickGetFavoriteRecipes(getFavoriteRecipes) {
     this.getFavoriteRecipes = getFavoriteRecipes;
   }
 
   chunkSearchedRecipes(recipes) {
-    recipeInformation = recipes;
+    this.domManager.app.recipeInformation = recipes;
     if (!recipes.results[0]) {
-      searchRecipesDownloadProgress.className = "recipe-progress-hidden mt-3";
-      searchRecipesDownloadText.className = "d-none";
-      noSearchRecipesText.className = "text-center mt-3";
-      for (var i = 0; i < inputs.length; i++) {
-        inputs[i].disabled = false;
-        inputs[i].classList.remove("no-click");
+      this.domManager.app.searchRecipesDownloadProgress.classList =
+        "recipe-progress-hidden mt-3";
+      this.domManager.app.searchRecipesDownloadText.classList = "d-none";
+      this.domManager.app.noSearchRecipesText.classList = "text-center mt-3";
+      for (let i = 0; i < this.domManager.app.inputs.length; i++) {
+        this.domManager.app.inputs[i].disabled = false;
+        this.domManager.app.inputs[i].classList.remove("no-click");
       }
       return;
     }
-    searchResultsQuantityDiv.className = "d-flex justify-content-center mt-3";
-    searchResultsQuantityText.textContent = `${recipes.results.length} recipes found`;
+    this.domManager.app.searchResultsQuantityDiv.classList =
+      "d-flex justify-content-center mt-3";
+    this.domManager.recipes.searchResultsQuantityText.textContent = `${recipes.results.length} recipes found`;
     let a = 0;
     while (a < recipes.results.length) {
-      chunkedRecipeArray.push(recipes.results.slice(a, a + 12));
+      const tempRecipeArray =
+        this.appStateManager.getState("chunkedRecipeArray");
+      tempRecipeArray.push(recipes.results.slice(a, a + 12));
+      this.appStateManager.updateState("chunkedRecipeArray", tempRecipeArray);
       a = a + 12;
     }
-    this.displaySearchedRecipes(chunkedRecipeArray, chunkedRecipeArrayIndex);
+    this.displaySearchedRecipes(
+      this.appStateManager.getState("chunkedRecipeArray"),
+      this.appStateManager.getState("chunkedRecipeArrayIndex")
+    );
     if (recipes.results.length > 12) {
-      resultsShownQuantityDiv.className =
+      this.domManager.app.resultsShownQuantityDiv.classList =
         "d-flex flex-column align-items-center justify-content-center mb-3";
     }
     this.updateResultsQuantityShown();
   }
 
   chunkRandomRecipes(recipes) {
-    recipeInformation = recipes;
+    this.domManager.app.recipeInformation = recipes;
     if (!recipes.results[0]) {
-      searchRecipesDownloadProgress.className = "recipe-progress-hidden mt-3";
-      searchRecipesDownloadText.className = "d-none";
-      noSearchRecipesText.className = "text-center mt-3";
-      for (var i = 0; i < inputs.length; i++) {
-        inputs[i].disabled = false;
-        inputs[i].classList.remove("no-click");
+      this.domManager.app.searchRecipesDownloadProgress.classList =
+        "recipe-progress-hidden mt-3";
+      this.domManager.app.searchRecipesDownloadText.classList = "d-none";
+      this.domManager.app.noSearchRecipesText.classList = "text-center mt-3";
+      for (let i = 0; i < this.domManager.app.inputs.length; i++) {
+        this.domManager.app.inputs[i].disabled = false;
+        this.domManager.app.inputs[i].classList.remove("no-click");
       }
       return;
     }
-    searchResultsQuantityDiv.className = "d-flex justify-content-center mt-3";
-    searchResultsQuantityText.textContent = `${recipes.results.length} random recipes found`;
+    this.domManager.app.searchResultsQuantityDiv.classList =
+      "d-flex justify-content-center mt-3";
+    this.domManager.recipes.searchResultsQuantityText.textContent = `${recipes.results.length} random recipes found`;
     let a = 0;
     while (a < recipes.results.length) {
-      chunkedRecipeArray.push(recipes.results.slice(a, a + 12));
+      const tempRecipeArray =
+        this.appStateManager.getState("chunkedRecipeArray");
+      tempRecipeArray.push(recipes.results.slice(a, a + 12));
+      this.appStateManager.updateState("chunkedRecipeArray", tempRecipeArray);
       a = a + 12;
     }
-    this.displaySearchedRecipes(chunkedRecipeArray, chunkedRecipeArrayIndex);
+    this.displaySearchedRecipes(
+      this.appStateManager.getState("chunkedRecipeArray"),
+      this.appStateManager.getState("chunkedRecipeArrayIndex")
+    );
     if (recipes.results.length > 12) {
-      resultsShownQuantityDiv.className =
+      this.domManager.app.resultsShownQuantityDiv.classList =
         "d-flex flex-column align-items-center justify-content-center mb-3";
     }
     this.updateResultsQuantityShown();
@@ -100,12 +106,18 @@ class RecipesHandler {
       document.documentElement.scrollTop + window.innerHeight ===
       document.documentElement.scrollHeight
     ) {
-      if (chunkedRecipeArrayIndex !== chunkedRecipeArray.length - 1) {
+      if (
+        this.appStateManager.getState("chunkedRecipeArrayIndex") !==
+        this.appStateManager.getState("chunkedRecipeArray").length - 1
+      ) {
         let yPosition = window.scrollY;
-        chunkedRecipeArrayIndex++;
+        this.appStateManager.updateState(
+          "chunkedRecipeArrayIndex",
+          this.appStateManager.getState("chunkedRecipeArrayIndex") + 1
+        );
         this.displaySearchedRecipes(
-          chunkedRecipeArray,
-          chunkedRecipeArrayIndex
+          this.appStateManager.getState("chunkedRecipeArray"),
+          this.appStateManager.getState("chunkedRecipeArrayIndex")
         );
         window.scroll(0, yPosition);
         this.updateResultsQuantityShown();
@@ -122,9 +134,9 @@ class RecipesHandler {
   }
 
   updateResultsQuantityShown() {
-    resultsShownQuantityText.textContent = `Showing ${
+    this.domManager.recipes.resultsShownQuantityText.textContent = `Showing ${
       document.querySelectorAll(".recipe-card").length
-    } of ${searchResultsQuantityText.textContent.substring(0, 3)}`;
+    } of ${this.domManager.recipes.searchResultsQuantityText.textContent.substring(0, 3)}`;
   }
 
   handleFavoriteClick(id) {
@@ -134,32 +146,43 @@ class RecipesHandler {
       heartIcon.parentNode.parentNode.parentNode.lastChild.firstChild.firstChild
         .firstChild.textContent;
     let twoWords = recipeTitle.split(" ").slice(0, 2).join(" ");
-    if (!favoriteArray.includes(id)) {
-      favoriteArray.push(id);
-      heartIcon.className = "fas fa-heart text-danger heart-icon fa-lg";
-      heartIcon.parentNode.parentNode.parentNode.className =
+    if (!this.appStateManager.getState("favoriteArray").includes(id)) {
+      this.appStateManager.updateState("favoriteArray", [
+        ...this.appStateManager.getState("favoriteArray"),
+        id,
+      ]);
+      heartIcon.classList = "fas fa-heart text-danger heart-icon fa-lg";
+      heartIcon.parentNode.parentNode.parentNode.classList =
         "recipe-card favorited card col-xs-12 col-sm-5 col-md-5 col-lg-3 col-xl-2 m-3 px-0 h-100";
-      Toastify({
-        text: `${twoWords}... added`,
-        duration: 1500,
-        newWindow: true,
-        gravity: "bottom",
-        position: "left",
-      }).showToast();
+      // Toastify({
+      //   text: `${twoWords}... added`,
+      //   duration: 1500,
+      //   newWindow: true,
+      //   gravity: "bottom",
+      //   position: "left",
+      // }).showToast();
     } else {
-      favoriteArray.splice(favoriteArray.indexOf(id), 1);
-      heartIcon.className = "far fa-heart text-danger heart-icon fa-lg";
-      heartIcon.parentNode.parentNode.parentNode.className =
+      const tempArray = this.appStateManager.getState("favoriteArray");
+      const index = this.appStateManager.getState("favoriteArray").indexOf(id);
+      if (index !== -1) {
+        tempArray.splice(index, 1);
+        this.appStateManager.updateState("favoriteArray", tempArray);
+      }
+      heartIcon.classList = "far fa-heart text-danger heart-icon fa-lg";
+      heartIcon.parentNode.parentNode.parentNode.classList =
         "recipe-card card col-xs-12 col-sm-5 col-md-5 col-lg-3 col-xl-2 m-3 px-0 h-100";
-      Toastify({
-        text: `${twoWords}... removed`,
-        duration: 1500,
-        newWindow: true,
-        gravity: "bottom",
-        position: "left",
-      }).showToast();
+      // Toastify({
+      //   text: `${twoWords}... removed`,
+      //   duration: 1500,
+      //   newWindow: true,
+      //   gravity: "bottom",
+      //   position: "left",
+      // }).showToast();
     }
-    localStorage.setItem("favoriteArray", JSON.stringify(favoriteArray));
+    localStorage.setItem(
+      "favoriteArray",
+      JSON.stringify(this.appStateManager.getState("favoriteArray"))
+    );
   }
 
   handleDeleteClick(id) {
@@ -169,30 +192,40 @@ class RecipesHandler {
       deleteCard.firstChild.nextSibling.firstChild.firstChild.firstChild
         .textContent;
     let twoWords = recipeTitle.split(" ").slice(0, 2).join(" ");
-    favoriteArray.splice(favoriteArray.indexOf(id), 1);
+    const tempArray = this.appStateManager.getState("favoriteArray");
+    const index = this.appStateManager.getState("favoriteArray").indexOf(id);
+    if (index !== -1) {
+      tempArray.splice(index, 1);
+      this.appStateManager.updateState("favoriteArray", tempArray);
+    }
     document.getElementById(`${id}`).remove();
-    localStorage.setItem("favoriteArray", JSON.stringify(favoriteArray));
+    localStorage.setItem(
+      "favoriteArray",
+      JSON.stringify(this.appStateManager.getState("favoriteArray"))
+    );
     if (localStorage.getItem("favoriteArray") === "[]") {
-      emptyFavoriteTextContainer.className = "d-flex justify-content-center";
-      favoriteRecipesSection.className =
+      this.domManager.app.emptyFavoriteTextContainer.classList =
+        "d-flex justify-content-center";
+      this.domManager.app.favoriteRecipesSection.classList =
         "favorite-recipes-visible d-flex flex-column justify-content-center";
     }
     if (
-      favoriteRecipesSection.scrollHeight > favoriteRecipesSection.clientHeight
+      this.domManager.app.favoriteRecipesSection.scrollHeight >
+      this.domManager.app.favoriteRecipesSection.clientHeight
     ) {
-      favoriteRecipesSection.className =
+      this.domManager.app.favoriteRecipesSection.classList =
         "favorite-recipes-visible d-flex flex-column justify-content-start";
     } else {
-      favoriteRecipesSection.className =
+      this.domManager.app.favoriteRecipesSection.classList =
         "favorite-recipes-visible d-flex flex-column justify-content-center";
     }
-    Toastify({
-      text: `${twoWords}... removed`,
-      duration: 1500,
-      newWindow: true,
-      gravity: "bottom",
-      position: "left",
-    }).showToast();
+    // Toastify({
+    //   text: `${twoWords}... removed`,
+    //   duration: 1500,
+    //   newWindow: true,
+    //   gravity: "bottom",
+    //   position: "left",
+    // }).showToast();
     this.favoriteCheck(id);
   }
 
@@ -201,68 +234,91 @@ class RecipesHandler {
     const favoriteButton = document.getElementById("favorite_button");
     let recipeTitle = document.getElementById("recipe_title").textContent;
     let twoWords = recipeTitle.split(" ").slice(2, 4).join(" ");
-    if (favoriteArray.includes(id) === false) {
-      favoriteArray.push(id);
-      favoriteButton.className = "btn btn-danger";
+    if (!this.appStateManager.getState("favoriteArray").includes(id)) {
+      this.appStateManager.updateState("favoriteArray", [
+        ...this.appStateManager.getState("favoriteArray"),
+        id,
+      ]);
+      favoriteButton.classList = "btn btn-danger";
       favoriteButton.textContent = "Remove from Favorites";
-      Toastify({
-        text: `${twoWords}... added`,
-        duration: 1500,
-        newWindow: true,
-        gravity: "bottom",
-        position: "left",
-      }).showToast();
+      // Toastify({
+      //   text: `${twoWords}... added`,
+      //   duration: 1500,
+      //   newWindow: true,
+      //   gravity: "bottom",
+      //   position: "left",
+      // }).showToast();
       if (document.getElementById(`heart_icon_${id}`)) {
-        document.getElementById(`heart_icon_${id}`).className =
+        document.getElementById(`heart_icon_${id}`).classList =
           "fas fa-heart text-danger heart-icon fa-lg";
       }
-      localStorage.setItem("favoriteArray", JSON.stringify(favoriteArray));
+      localStorage.setItem(
+        "favoriteArray",
+        JSON.stringify(this.appStateManager.getState("favoriteArray"))
+      );
       if (
-        favoriteRecipesSection.classList.contains("favorite-recipes-visible")
+        this.domManager.app.favoriteRecipesSection.classList.contains(
+          "favorite-recipes-visible"
+        )
       ) {
         this.getFavoriteRecipes();
-        spoonacularFavoriteError.className = "d-none";
-        spoonacularFavoriteTimeoutError.className = "d-none";
+        this.domManager.app.spoonacularFavoriteError.classList = "d-none";
+        this.domManager.app.spoonacularFavoriteTimeoutError.classList =
+          "d-none";
       }
       return;
     } else {
-      favoriteArray.splice(favoriteArray.indexOf(id), 1);
-      localStorage.setItem("favoriteArray", JSON.stringify(favoriteArray));
-      favoriteButton.className = "btn btn-outline-danger";
+      const tempArray = this.appStateManager.getState("favoriteArray");
+      const index = this.appStateManager.getState("favoriteArray").indexOf(id);
+      if (index !== -1) {
+        tempArray.splice(index, 1);
+        this.appStateManager.updateState("favoriteArray", tempArray);
+      }
+      localStorage.setItem(
+        "favoriteArray",
+        JSON.stringify(this.appStateManager.getState("favoriteArray"))
+      );
+      favoriteButton.classList = "btn btn-outline-danger";
       favoriteButton.textContent = "Save to Favorites";
       if (document.getElementById(`heart_icon_${id}`)) {
-        document.getElementById(`heart_icon_${id}`).className =
+        document.getElementById(`heart_icon_${id}`).classList =
           "far fa-heart text-danger heart-icon fa-lg";
       }
       if (document.getElementById(`${id}`)) {
         document.getElementById(`${id}`).remove();
       }
       if (
-        favoriteRecipesSection.scrollHeight >
-          favoriteRecipesSection.clientHeight &&
-        favoriteRecipesSection.classList.contains("favorite-recipes-visible")
+        this.domManager.app.favoriteRecipesSection.scrollHeight >
+          this.domManager.app.favoriteRecipesSection.clientHeight &&
+        this.domManager.app.favoriteRecipesSection.classList.contains(
+          "favorite-recipes-visible"
+        )
       ) {
-        favoriteRecipesSection.className =
+        this.domManager.app.favoriteRecipesSection.classList =
           "favorite-recipes-visible d-flex flex-column justify-content-start";
       } else {
-        favoriteRecipesSection.className =
+        this.domManager.app.favoriteRecipesSection.classList =
           "favorite-recipes-visible d-flex flex-column justify-content-center";
       }
-      localStorage.setItem("favoriteArray", JSON.stringify(favoriteArray));
+      localStorage.setItem(
+        "favoriteArray",
+        JSON.stringify(this.appStateManager.getState("favoriteArray"))
+      );
       if (
         !localStorage.getItem("favoriteArray") ||
         localStorage.getItem("favoriteArray") === "[]"
       ) {
-        emptyFavoriteTextContainer.className = "d-flex justify-content-center";
+        this.domManager.app.emptyFavoriteTextContainer.classList =
+          "d-flex justify-content-center";
         return;
       }
-      Toastify({
-        text: `${twoWords}... removed`,
-        duration: 1500,
-        newWindow: true,
-        gravity: "bottom",
-        position: "left",
-      }).showToast();
+      // Toastify({
+      //   text: `${twoWords}... removed`,
+      //   duration: 1500,
+      //   newWindow: true,
+      //   gravity: "bottom",
+      //   position: "left",
+      // }).showToast();
     }
   }
 
@@ -274,16 +330,16 @@ class RecipesHandler {
     let favoriteArrayToCheck = JSON.parse(
       localStorage.getItem("favoriteArray")
     );
-    for (var i = 0; i < searchedArray.length; i++) {
+    for (let i = 0; i < searchedArray.length; i++) {
       if (
         favoriteArrayToCheck.includes(
           parseInt(searchedArray[i].id.substring(11))
         )
       ) {
-        searchedArray[i].className =
+        searchedArray[i].classList =
           "fas fa-heart text-danger heart-icon fa-lg";
       } else {
-        searchedArray[i].className =
+        searchedArray[i].classList =
           "far fa-heart text-danger heart-icon fa-lg";
       }
     }
@@ -306,32 +362,32 @@ class RecipesHandler {
     const recipeImage = document.getElementById("recipe_image");
     const recipeSummary = document.getElementById("recipe_summary");
     const externalLinkButton = document.createElement("button");
-    overlayPreview.className = "";
+    this.domManager.recipes.overlayPreview.classList = "";
     externalLinkButton.id = "external_link_button";
-    externalLinkButton.className = "btn btn-primary text-white";
+    externalLinkButton.classList = "btn btn-primary text-white";
     externalLinkButton.textContent = "Recipe Page";
     const favoriteButton = document.createElement("button");
     favoriteButton.id = "favorite_button";
     // const closePreviewButton = document.createElement("button");
     // closePreviewButton.id = "go_back_button";
-    // closePreviewButton.className = "btn btn-secondary";
+    // closePreviewButton.classList = "btn btn-secondary";
     // closePreviewButton.textContent = "Close Preview";
-    closePreviewXButton.className =
+    this.domManager.app.closePreviewXButton.classList =
       "close-preview-x-button-visible justify-content-center align-items-center text-danger p-0 m-0";
-    modalButtonContainer.append(externalLinkButton);
-    modalButtonContainer.append(favoriteButton);
-    // modalButtonContainer.append(closePreviewButton);
-    for (var x = 0; x < ingredients.length; x++) {
+    this.domManager.recipes.modalButtonContainer.append(externalLinkButton);
+    this.domManager.recipes.modalButtonContainer.append(favoriteButton);
+    // this.domManager.recipes.modalButtonContainer.append(closePreviewButton);
+    for (let x = 0; x < ingredients.length; x++) {
       const ingredient = document.createElement("li");
       ingredient.textContent = `${ingredients[x].amount} ${ingredients[x].unit} ${ingredients[x].name}`;
-      recipeIngredients.append(ingredient);
+      this.domManager.recipes.recipeIngredients.append(ingredient);
     }
     const cleanSummary = DOMPurify.sanitize(summary);
-    modalContainer.className = "";
+    this.domManager.recipes.modalContainer.classList = "";
     recipeTitle.textContent = `Recipe Preview: ${title}`;
     recipeImage.src = imageURL;
     recipeSummary.innerHTML = cleanSummary;
-    body.className = "bg-light freeze";
+    this.domManager.recipes.body.classList = "bg-light freeze";
     externalLinkButton.addEventListener("click", () => {
       window.open(recipeURL, "_blank");
     });
@@ -339,21 +395,21 @@ class RecipesHandler {
       "click",
       this.handleFavoriteButtonClick.bind(this, id)
     );
-    if (favoriteArray.includes(id)) {
-      favoriteButton.className = "btn btn-danger";
+    if (this.appStateManager.getState("favoriteArray").includes(id)) {
+      favoriteButton.classList = "btn btn-danger";
       favoriteButton.textContent = "Remove from Favorites";
     } else {
-      favoriteButton.className = "btn btn-outline-danger";
+      favoriteButton.classList = "btn btn-outline-danger";
       favoriteButton.textContent = "Save to Favorites";
     }
     // closePreviewButton.addEventListener("click", this.closePreview.bind(this));
-    for (var i = 0; i < instructions.length; i++) {
+    for (let i = 0; i < instructions.length; i++) {
       if (instructions[i] === "var article") {
         return;
       }
       const step = document.createElement("li");
       step.textContent = instructions[i];
-      recipeInstructions.append(step);
+      this.domManager.recipes.recipeInstructions.append(step);
     }
   }
 
@@ -367,17 +423,24 @@ class RecipesHandler {
         top: 0,
         behavior: "auto",
       });
-      modalContainer.className = "d-none justify-content-center";
-      body.className = "bg-light";
-      overlayPreview.className = "d-none";
-      while (recipeInstructions.firstChild) {
-        recipeInstructions.removeChild(recipeInstructions.firstChild);
+      this.domManager.recipes.modalContainer.classList =
+        "d-none justify-content-center";
+      this.domManager.recipes.body.classList = "bg-light";
+      this.domManager.recipes.overlayPreview.classList = "d-none";
+      while (this.domManager.recipes.recipeInstructions.firstChild) {
+        this.domManager.recipes.recipeInstructions.removeChild(
+          this.domManager.recipes.recipeInstructions.firstChild
+        );
       }
-      while (recipeIngredients.firstChild) {
-        recipeIngredients.removeChild(recipeIngredients.firstChild);
+      while (this.domManager.recipes.recipeIngredients.firstChild) {
+        this.domManager.recipes.recipeIngredients.removeChild(
+          this.domManager.recipes.recipeIngredients.firstChild
+        );
       }
-      while (modalButtonContainer.firstChild) {
-        modalButtonContainer.removeChild(modalButtonContainer.firstChild);
+      while (this.domManager.recipes.modalButtonContainer.firstChild) {
+        this.domManager.recipes.modalButtonContainer.removeChild(
+          this.domManager.recipes.modalButtonContainer.firstChild
+        );
       }
     } else return;
   }
@@ -444,30 +507,30 @@ class RecipesHandler {
         chunkedRecipeArray[chunkedRecipeArrayIndex][i].nutrition.ingredients;
       const summary = chunkedRecipeArray[chunkedRecipeArrayIndex][i].summary;
       const recipeCard = document.createElement("div");
-      recipeCard.className =
+      recipeCard.classList =
         "recipe-card card col-xs-12 col-sm-5 col-md-5 col-lg-3 col-xl-2 m-3 px-0 h-100";
       recipeCard.id = "recipe";
       const imageContainer = document.createElement("div");
       const titleAnchorTag = document.createElement("a");
-      imageContainer.className = "d-flex justify-content-center";
+      imageContainer.classList = "d-flex justify-content-center";
       const img = document.createElement("img");
-      imageContainer.className =
+      imageContainer.classList =
         "card-image-top d-flex justify-content-center mt-3";
       img.src = imageURL;
       img.alt = "Recipe Image";
-      img.className = "mb-1 p-0";
+      img.classList = "mb-1 p-0";
       img.width = "240";
       img.height = "180";
       const heartIconContainer = document.createElement("span");
       heartIconContainer.id = "heart_container";
-      heartIconContainer.className =
+      heartIconContainer.classList =
         "badge badge-light m-1 p-1 border border-danger rounded";
       const heartIcon = document.createElement("i");
       heartIcon.id = `heart_icon_${id}`;
-      if (favoriteArray.includes(id)) {
-        heartIcon.className = "fas fa-heart text-danger heart-icon fa-lg";
+      if (this.appStateManager.getState("favoriteArray").includes(id)) {
+        heartIcon.classList = "fas fa-heart text-danger heart-icon fa-lg";
       } else {
-        heartIcon.className = "far fa-heart text-danger heart-icon fa-lg";
+        heartIcon.classList = "far fa-heart text-danger heart-icon fa-lg";
       }
       heartIconContainer.append(heartIcon);
       imageContainer.append(heartIconContainer);
@@ -476,49 +539,49 @@ class RecipesHandler {
         this.handleFavoriteClick.bind(this, id, event)
       );
       const cardBody = document.createElement("div");
-      cardBody.className = "card-body py-0 mb-2";
+      cardBody.classList = "card-body py-0 mb-2";
       const cardTitle = document.createElement("div");
-      cardTitle.className = "card-title mb-2";
+      cardTitle.classList = "card-title mb-2";
       const recipeTitle = document.createElement("h5");
       recipeTitle.textContent = title;
       const cardText1 = document.createElement("div");
-      cardText1.className = "card-text";
+      cardText1.classList = "card-text";
       const minutesSpan = document.createElement("span");
-      minutesSpan.className = "badge badge-dark mr-1 mb-1";
+      minutesSpan.classList = "badge badge-dark mr-1 mb-1";
       minutesSpan.textContent = `${readyInMinutes} Minutes`;
       const servingsSpan = document.createElement("span");
-      servingsSpan.className = "badge badge-dark mb-1";
+      servingsSpan.classList = "badge badge-dark mb-1";
       servingsSpan.textContent = `${servings} Servings`;
       cardText1.append(minutesSpan);
       cardText1.append(servingsSpan);
       const cardText2 = document.createElement("div");
-      cardText2.className = "card-text d-flex flex-wrap";
+      cardText2.classList = "card-text d-flex flex-wrap";
       const calorieSpan = document.createElement("span");
-      calorieSpan.className = "badge badge-secondary mb-1 mr-1";
+      calorieSpan.classList = "badge badge-secondary mb-1 mr-1";
       calorieSpan.textContent = `${caloriesAmount} Calories`;
       const carbsSpan = document.createElement("span");
-      carbsSpan.className = "badge badge-secondary mb-1 mr-1";
+      carbsSpan.classList = "badge badge-secondary mb-1 mr-1";
       carbsSpan.textContent = `${carbsAmount}g Carbs`;
       const fatSpan = document.createElement("span");
-      fatSpan.className = "badge badge-secondary mb-1 mr-1";
+      fatSpan.classList = "badge badge-secondary mb-1 mr-1";
       fatSpan.textContent = `${fatAmount}g Total Fat`;
       const proteinSpan = document.createElement("span");
-      proteinSpan.className = "badge badge-secondary mb-1 mr-1";
+      proteinSpan.classList = "badge badge-secondary mb-1 mr-1";
       proteinSpan.textContent = `${proteinAmount}g Protein`;
       const sodiumSpan = document.createElement("span");
-      sodiumSpan.className = "badge badge-secondary mb-1 mr-1";
+      sodiumSpan.classList = "badge badge-secondary mb-1 mr-1";
       sodiumSpan.textContent = `${sodiumAmount}mg Sodium`;
       const cardText3 = document.createElement("div");
-      cardText3.className = "card-text d-flex flex-wrap";
+      cardText3.classList = "card-text d-flex flex-wrap";
       let dietSpan;
       if (chunkedRecipeArray[chunkedRecipeArrayIndex][i].diets) {
         for (
-          var j = 0;
+          let j = 0;
           j < chunkedRecipeArray[chunkedRecipeArrayIndex][i].diets.length;
           j++
         ) {
           dietSpan = document.createElement("span");
-          dietSpan.className = "badge badge-light mb-1 mr-1";
+          dietSpan.classList = "badge badge-light mb-1 mr-1";
           dietSpan.textContent =
             chunkedRecipeArray[chunkedRecipeArrayIndex][i].diets[j];
           cardText3.append(dietSpan);
@@ -553,11 +616,12 @@ class RecipesHandler {
         )
       );
     }
-    searchRecipesDownloadProgress.className = "recipe-progress-hidden mt-3";
-    searchRecipesDownloadText.className = "d-none";
-    for (var i = 0; i < inputs.length; i++) {
-      inputs[i].disabled = false;
-      inputs[i].classList.remove("no-click");
+    this.domManager.app.searchRecipesDownloadProgress.classList =
+      "recipe-progress-hidden mt-3";
+    this.domManager.app.searchRecipesDownloadText.classList = "d-none";
+    for (let i = 0; i < this.domManager.app.inputs.length; i++) {
+      this.domManager.app.inputs[i].disabled = false;
+      this.domManager.app.inputs[i].classList.remove("no-click");
     }
   }
 
@@ -601,26 +665,26 @@ class RecipesHandler {
       const ingredients = recipes[i].nutrition.ingredients;
       const summary = recipes[i].summary;
       const recipeCard = document.createElement("div");
-      recipeCard.className =
+      recipeCard.classList =
         "favorite-recipe-card favorited card m-3 px-0 col-xs-12 col-sm-5 col-md-5 col-lg-3 col-xl-2";
       recipeCard.id = id;
       const imageContainer = document.createElement("div");
       const titleAnchorTag = document.createElement("a");
-      imageContainer.className = "d-flex justify-content-center";
+      imageContainer.classList = "d-flex justify-content-center";
       const img = document.createElement("img");
-      imageContainer.className =
+      imageContainer.classList =
         "card-image-top d-flex justify-content-center mt-3";
       img.src = imageURL;
       img.alt = "Recipe Image";
-      img.className = "m-0 p-0";
+      img.classList = "m-0 p-0";
       img.width = "240";
       img.height = "180";
       const deleteIconContainer = document.createElement("span");
       deleteIconContainer.id = "delete_container";
-      deleteIconContainer.className =
+      deleteIconContainer.classList =
         "badge badge-light m-1 p-1 border border-danger rounded";
       const deleteIcon = document.createElement("i");
-      deleteIcon.className = "far fa-trash-alt text-danger delete-icon fa-lg";
+      deleteIcon.classList = "far fa-trash-alt text-danger delete-icon fa-lg";
       deleteIconContainer.append(deleteIcon);
       imageContainer.append(deleteIconContainer);
       deleteIconContainer.addEventListener(
@@ -628,44 +692,44 @@ class RecipesHandler {
         this.handleDeleteClick.bind(this, id, event)
       );
       const cardBody = document.createElement("div");
-      cardBody.className = "card-body py-0 mb-2";
+      cardBody.classList = "card-body py-0 mb-2";
       const cardTitle = document.createElement("div");
-      cardTitle.className = "card-title mb-2";
+      cardTitle.classList = "card-title mb-2";
       const recipeTitle = document.createElement("h5");
       recipeTitle.textContent = title;
       const cardText1 = document.createElement("div");
-      cardText1.className = "card-text";
+      cardText1.classList = "card-text";
       const minutesSpan = document.createElement("span");
-      minutesSpan.className = "badge badge-dark mr-1 mb-1";
+      minutesSpan.classList = "badge badge-dark mr-1 mb-1";
       minutesSpan.textContent = `${readyInMinutes} Minutes`;
       const servingsSpan = document.createElement("span");
-      servingsSpan.className = "badge badge-dark mb-1";
+      servingsSpan.classList = "badge badge-dark mb-1";
       servingsSpan.textContent = `${servings} Servings`;
       cardText1.append(minutesSpan);
       cardText1.append(servingsSpan);
       const cardText2 = document.createElement("div");
-      cardText2.className = "card-text d-flex flex-wrap";
+      cardText2.classList = "card-text d-flex flex-wrap";
       const calorieSpan = document.createElement("span");
-      calorieSpan.className = "badge badge-secondary mb-1 mr-1";
+      calorieSpan.classList = "badge badge-secondary mb-1 mr-1";
       calorieSpan.textContent = `${caloriesAmount} Calories`;
       const carbsSpan = document.createElement("span");
-      carbsSpan.className = "badge badge-secondary mb-1 mr-1";
+      carbsSpan.classList = "badge badge-secondary mb-1 mr-1";
       carbsSpan.textContent = `${carbsAmount}g Carbs`;
       const fatSpan = document.createElement("span");
-      fatSpan.className = "badge badge-secondary mb-1 mr-1";
+      fatSpan.classList = "badge badge-secondary mb-1 mr-1";
       fatSpan.textContent = `${fatAmount}g Total Fat`;
       const proteinSpan = document.createElement("span");
-      proteinSpan.className = "badge badge-secondary mb-1 mr-1";
+      proteinSpan.classList = "badge badge-secondary mb-1 mr-1";
       proteinSpan.textContent = `${proteinAmount}g Protein`;
       const sodiumSpan = document.createElement("span");
-      sodiumSpan.className = "badge badge-secondary mb-1 mr-1";
+      sodiumSpan.classList = "badge badge-secondary mb-1 mr-1";
       sodiumSpan.textContent = `${sodiumAmount}mg Sodium`;
       const cardText3 = document.createElement("div");
-      cardText3.className = "card=text d-flex flex-wrap";
+      cardText3.classList = "card=text d-flex flex-wrap";
       if (recipes[i].diets) {
-        for (var j = 0; j < recipes[i].diets.length; j++) {
+        for (let j = 0; j < recipes[i].diets.length; j++) {
           const dietSpan = document.createElement("span");
-          dietSpan.className = "badge badge-light mb-1 mr-1";
+          dietSpan.classList = "badge badge-light mb-1 mr-1";
           dietSpan.textContent = recipes[i].diets[j];
           cardText3.append(dietSpan);
         }
@@ -700,17 +764,19 @@ class RecipesHandler {
       );
     }
     if (
-      favoriteRecipesSection.scrollHeight > favoriteRecipesSection.clientHeight
+      this.domManager.app.favoriteRecipesSection.scrollHeight >
+      this.domManager.app.favoriteRecipesSection.clientHeight
     ) {
-      favoriteRecipesSection.className =
+      this.domManager.app.favoriteRecipesSection.classList =
         "favorite-recipes-visible d-flex flex-column justify-content-start";
     } else {
-      favoriteRecipesSection.className =
+      this.domManager.app.favoriteRecipesSection.classList =
         "favorite-recipes-visible d-flex flex-column justify-content-center";
     }
-    favoriteRecipesStatusText.className = "text-center d-none";
-    favoriteRecipesDownloadProgress.className =
+    this.domManager.app.favoriteRecipesStatusText.classList =
+      "text-center d-none";
+    this.domManager.app.favoriteRecipesDownloadProgress.classList =
       "favorite-recipe-progress-hidden";
-    emptyFavoriteTextContainer.className = "d-none";
+    this.domManager.app.emptyFavoriteTextContainer.classList = "d-none";
   }
 }
