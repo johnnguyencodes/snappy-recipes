@@ -460,7 +460,7 @@
           id="uploaded_image_container"
           class="col-xs-12 col-sm-12 col-md-12 col-lg-12 d-flex justify-content-center my-3 desktop-space-form"
         >
-          <img id="uploaded_image" src="" alt="" />
+          <img id="uploaded_image" src="" crossorigin="anonymous" alt="" />
         </div>
         <div id="title_container" class="d-none desktop-space-form">
           <p id="image_recognition_status" class="text-center d-none">
@@ -530,12 +530,6 @@
       type="text/javascript"
       src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.0.12/purify.min.js"
     ></script>
-    <script src="config.js"></script>
-    <!-- <script src="components/toastify.js"></script> -->
-    <!-- <script src="components/app.js"></script> -->
-    <!-- <script src="components/image-title-handler.js"></script> -->
-    <!-- <script src="components/form.js"></script> -->
-    <!-- <script src="components/recipes-handler.js"></script> -->
-    <script src="main.js"></script>
+    <script type="module" src="./src/main.js"></script>
   </body>
 </html>
