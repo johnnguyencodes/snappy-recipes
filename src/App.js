@@ -171,10 +171,6 @@ export class App {
 
   //POST request to IMGUR with image id supplied
   postImage(formData, domManager) {
-    console.log("FormData contents:");
-    for (let pair of formData.entries()) {
-      console.log(pair[0] + ":", pair[1]); // Logs each key-value pair in the FormData object
-    }
     $.ajax({
       // to see the uploaded image on the page, MAKE SURE to open html page using live server with the `use local ip` setting checked
       // Imgur will not load images on the page if the ip address starts with 127.0.0.1
@@ -225,7 +221,7 @@ export class App {
   }
 
   handlePostImageError(error) {
-    console.log("error", error);
+    console.error("error", error);
     this.domManager.app.imgurAPIError.classList = "text-center mt-3";
     for (let i = 0; i < this.domManager.app.inputs.length; i++) {
       this.domManager.app.inputs[i].disabled = false;
@@ -293,10 +289,6 @@ export class App {
     const data = await response.json();
     if (response.ok) {
       this.appStateManager.updateState("imgurAccessToken", data.access_token);
-      console.log(
-        "New access token:",
-        this.appStateManager.getState("imgurAccessToken")
-      );
     } else {
       console.error("Error refreshing token:", data);
     }

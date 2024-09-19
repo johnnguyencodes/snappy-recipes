@@ -1,0 +1,23 @@
+{
+  "name": "real-snappy-recipes",
+  "version": "1.0.0",
+  "description": "> * Maintained by: `John Nguyen`",
+  "main": "./src/main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.4.5"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.25.2",
+    "@babel/preset-env": "^7.25.4",
+    "babel-loader": "^9.2.1",
+    "copy-webpack-plugin": "^12.0.2",
+    "dotenv-webpack": "^8.1.0",
+    "webpack-cli": "^5.1.4"
+  }
+}
