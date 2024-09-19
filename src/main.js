@@ -6,6 +6,14 @@ import { RecipesHandler } from "./RecipesHandler.js";
 import { App } from "./App.js";
 
 document.addEventListener("DOMContentLoaded", () => {
+  let imgurClientID;
+  let imgurClientSecret;
+  let imgurAlbumID;
+  let imgurAuthorizationCode;
+  let imgurRefreshToken;
+  let spoonacularAPIKey;
+  let googleAPIKey;
+
   // First, define the function to get credentials based on environment
   function getCredentials() {
     if (
@@ -13,7 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
       process.env.NODE_ENV === "production"
     ) {
       // Use environment variables in production
-      return Promise.resolve({
+      return {
         imgurClientID: process.env.imgurClientID,
         imgurClientSecret: process.env.imgurClientSecret,
         imgurAlbumID: process.env.imgurAlbumID,
@@ -21,9 +29,9 @@ document.addEventListener("DOMContentLoaded", () => {
         imgurRefreshToken: process.env.imgurRefreshToken,
         spoonacularAPIKey: process.env.spoonacularAPIKey,
         googleAPIKey: process.env.googleAPIKey,
-      });
+      };
     } else {
-      // Use dynamic import for development config
+      // Only import config.js in development
       return import("../config/config.js")
         .then((module) => ({
           imgurClientID: module.imgurClientID,
@@ -35,7 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
           googleAPIKey: module.googleAPIKey,
         }))
         .catch((error) => {
-          console.error("Error loading config:", error);
+          console.error("Error loading config in development:", error);
           return {}; // Return empty object on error
         });
     }
@@ -43,54 +51,56 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Now call getCredentials and wait for credentials before creating the AppStateManager
   getCredentials().then((credentials) => {
-    const {
-      imgurClientID,
-      imgurClientSecret,
-      imgurAlbumID,
-      imgurAuthorizationCode,
-      imgurRefreshToken,
-      spoonacularAPIKey,
-      googleAPIKey,
-    } = credentials;
+    // In production, you may skip destructuring if environment variables are already available
+    if (credentials) {
+      ({
+        imgurClientID,
+        imgurClientSecret,
+        imgurAlbumID,
+        imgurAuthorizationCode,
+        imgurRefreshToken,
+        spoonacularAPIKey,
+        googleAPIKey,
+      } = credentials);
+      // Now that you have the credentials, create your AppStateManager
+      const appStateManager = new AppStateManager(
+        imgurClientID,
+        imgurClientSecret,
+        imgurAlbumID,
+        imgurAuthorizationCode,
+        imgurRefreshToken,
+        spoonacularAPIKey,
+        googleAPIKey
+      );
 
-    // Now that you have the credentials, create your AppStateManager
-    const appStateManager = new AppStateManager(
-      imgurClientID,
-      imgurClientSecret,
-      imgurAlbumID,
-      imgurAuthorizationCode,
-      imgurRefreshToken,
-      spoonacularAPIKey,
-      googleAPIKey
-    );
+      const domManager = new DOMManager();
 
-    const domManager = new DOMManager();
+      const form = new Form(domManager, appStateManager);
 
-    const form = new Form(domManager, appStateManager);
+      const imageTitleHandler = new ImageTitleHandler(domManager);
 
-    const imageTitleHandler = new ImageTitleHandler(domManager);
+      const searchRecipesContainer = document.getElementById(
+        "search_recipes_container"
+      );
+      const favoriteRecipesContainer = document.getElementById(
+        "favorite_recipes_container"
+      );
+      const recipesHandler = new RecipesHandler(
+        searchRecipesContainer,
+        favoriteRecipesContainer,
+        domManager,
+        appStateManager
+      );
 
-    const searchRecipesContainer = document.getElementById(
-      "search_recipes_container"
-    );
-    const favoriteRecipesContainer = document.getElementById(
-      "favorite_recipes_container"
-    );
-    const recipesHandler = new RecipesHandler(
-      searchRecipesContainer,
-      favoriteRecipesContainer,
-      domManager,
-      appStateManager
-    );
-
-    const app = new App(
-      form,
-      imageTitleHandler,
-      recipesHandler,
-      domManager,
-      favoriteRecipesContainer,
-      appStateManager
-    );
-    app.start();
+      const app = new App(
+        form,
+        imageTitleHandler,
+        recipesHandler,
+        domManager,
+        favoriteRecipesContainer,
+        appStateManager
+      );
+      app.start();
+    }
   });
 });
