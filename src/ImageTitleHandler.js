@@ -48,7 +48,6 @@ export class ImageTitleHandler {
   }
 
   imageLoaderFunction(imageURL) {
-    console.log("imageURL", imageURL);
     this.domManager.app.uploadedImage.src = imageURL;
   }
 
