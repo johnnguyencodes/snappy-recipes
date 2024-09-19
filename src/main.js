@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let googleAPIKey;
 
   // First, define the function to get credentials based on environment
-  function getCredentials() {
+  async function getCredentials() {
     if (
       typeof process !== "undefined" &&
       process.env.NODE_ENV === "production"
@@ -31,9 +31,10 @@ document.addEventListener("DOMContentLoaded", () => {
         googleAPIKey: process.env.googleAPIKey,
       };
     } else {
-      // Only import config.js in development
-      return import("../config/config.js")
-        .then((module) => ({
+      // Dynamically import config.js in development
+      try {
+        const module = await import("../config/config.js");
+        return {
           imgurClientID: module.imgurClientID,
           imgurClientSecret: module.imgurClientSecret,
           imgurAlbumID: module.imgurAlbumID,
@@ -41,11 +42,11 @@ document.addEventListener("DOMContentLoaded", () => {
           imgurRefreshToken: module.imgurRefreshToken,
           spoonacularAPIKey: module.spoonacularAPIKey,
           googleAPIKey: module.googleAPIKey,
-        }))
-        .catch((error) => {
-          console.error("Error loading config in development:", error);
-          return {}; // Return empty object on error
-        });
+        };
+      } catch (error) {
+        console.error("Error loading config in development:", error);
+        return {}; // Return empty object on error
+      }
     }
   }
 
