@@ -22,13 +22,13 @@ document.addEventListener("DOMContentLoaded", () => {
     ) {
       // Use environment variables in production
       return {
-        imgurClientID: process.env.imgurClientID,
-        imgurClientSecret: process.env.imgurClientSecret,
-        imgurAlbumID: process.env.imgurAlbumID,
-        imgurAuthorizationCode: process.env.imgurAuthorizationCode,
-        imgurRefreshToken: process.env.imgurRefreshToken,
-        spoonacularAPIKey: process.env.spoonacularAPIKey,
-        googleAPIKey: process.env.googleAPIKey,
+        imgurClientID: process.env.IMGUR_CLIENT_ID,
+        imgurClientSecret: process.env.IMGUR_CLIENT_SECRET,
+        imgurAlbumID: process.env.IMGUR_ALBUM_ID,
+        imgurAuthorizationCode: process.env.IMGUR_AUTHORIZATION_CODE,
+        imgurRefreshToken: process.env.IMGUR_REFRESH_TOKEN,
+        spoonacularAPIKey: process.env.SPOONACULAR_API_KEY,
+        googleAPIKey: process.env.GOOGLE_API_KEY,
       };
     } else {
       // Dynamically import config.js in development
@@ -63,6 +63,8 @@ document.addEventListener("DOMContentLoaded", () => {
         spoonacularAPIKey,
         googleAPIKey,
       } = credentials);
+
+      console.log("googleAPIKey", googleAPIKey);
       // Now that you have the credentials, create your AppStateManager
       const appStateManager = new AppStateManager(
         imgurClientID,
