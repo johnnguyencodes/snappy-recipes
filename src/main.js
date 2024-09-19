@@ -65,6 +65,7 @@ document.addEventListener("DOMContentLoaded", () => {
       } = credentials);
 
       console.log("googleAPIKey", googleAPIKey);
+      console.log("process", typeof process);
       // Now that you have the credentials, create your AppStateManager
       const appStateManager = new AppStateManager(
         imgurClientID,
