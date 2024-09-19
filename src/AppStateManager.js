@@ -1,45 +1,13 @@
-// Always import your config.js credentials at the top
-import {
-  imgurClientID as devImgurClientID,
-  imgurClientSecret as devImgurClientSecret,
-  imgurAlbumID as devImgurAlbumID,
-  imgurAuthorizationCode as devImgurAuthorizationCode,
-  imgurRefreshToken as devImgurRefreshToken,
-  spoonacularAPIKey as devSpoonacularAPIKey,
-  googleAPIKey as devGoogleAPIKey,
-} from "../config/config.js";
-
-// Now conditionally assign the values based on environment
-let imgurClientID;
-let imgurClientSecret;
-let imgurAlbumID;
-let imgurAuthorizationCode;
-let imgurRefreshToken;
-let spoonacularAPIKey;
-let googleAPIKey;
-
-if (typeof process !== "undefined" && process.env.NODE_ENV === "production") {
-  // Use environment variables in production
-  imgurClientID = process.env.imgurClientID;
-  imgurClientSecret = process.env.imgurClientSecret;
-  imgurAlbumID = process.env.imgurAlbumID;
-  imgurAuthorizationCode = process.env.imgurAuthorizationCode;
-  imgurRefreshToken = process.env.imgurRefreshToken;
-  spoonacularAPIKey = process.env.spoonacularAPIKey;
-  googleAPIKey = process.env.googleAPIKey;
-} else {
-  // Use the development config in development
-  imgurClientID = devImgurClientID;
-  imgurClientSecret = devImgurClientSecret;
-  imgurAlbumID = devImgurAlbumID;
-  imgurAuthorizationCode = devImgurAuthorizationCode;
-  imgurRefreshToken = devImgurRefreshToken;
-  spoonacularAPIKey = devSpoonacularAPIKey;
-  googleAPIKey = devGoogleAPIKey;
-}
-
 export class AppStateManager {
-  constructor() {
+  constructor(
+    imgurClientID,
+    imgurClientSecret,
+    imgurAlbumID,
+    imgurAuthorizationCode,
+    imgurRefreshToken,
+    spoonacularAPIKey,
+    googleAPIKey
+  ) {
     // Credentials
     this.imgurClientID = imgurClientID;
     this.imgurClientSecret = imgurClientSecret;
