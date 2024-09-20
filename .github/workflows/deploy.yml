@@ -5,13 +5,13 @@ on:
       - master
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Replace  placeholders in main.js
+      - name: Replace placeholders in main.js
         run: |
           sed -i 's/__IMGUR_CLIENT_ID__/${{ secrets.IMGUR_CLIENT_ID }}/' ./src/main.js
           sed -i 's/__IMGUR_CLIENT_SECRET__/${{ secrets.IMGUR_CLIENT_SECRET }}/' ./src/main.js
@@ -20,11 +20,9 @@ jobs:
           sed -i 's/__IMGUR_REFRESH_TOKEN__/${{ secrets.IMGUR_REFRESH_TOKEN }}/' ./src/main.js
           sed -i 's/__SPOONACULAR_API_KEY__/${{ secrets.SPOONACULAR_API_KEY }}/' ./src/main.js
           sed -i 's/__GOOGLE_API_KEY__/${{ secrets.GOOGLE_API_KEY }}/' ./src/main.js
-        
-      - name: Build and Deploy
-        run: |
-          echo "Building project"
-          # You can use the environment variables in your script here
-          npm run build
-          npm run deploy
-          
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public
