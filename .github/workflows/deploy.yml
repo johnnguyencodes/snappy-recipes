@@ -11,15 +11,17 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Replace  placeholders in main.js
+        run: |
+          sed -i 's/__IMGUR_CLIENT_ID__/${{ secrets.IMGUR_CLIENT_ID }}/' ./src/main.js
+          sed -i 's/__IMGUR_CLIENT_SECRET__/${{ secrets.IMGUR_CLIENT_SECRET }}/' ./src/main.js
+          sed -i 's/__IMGUR_ALBUM_ID__/${{ secrets.IMGUR_ALBUM_ID }}/' ./src/main.js
+          sed -i 's/__IMGUR_AUTHORIZATION_CODE__/${{ secrets.IMGUR_AUTHORIZATION_CODE }}/' ./src/main.js
+          sed -i 's/__IMGUR_REFRESH_TOKEN__/${{ secrets.IMGUR_REFRESH_TOKEN }}/' ./src/main.js
+          sed -i 's/__SPOONACULAR_API_KEY__/${{ secrets.SPOONACULAR_API_KEY }}/' ./src/main.js
+          sed -i 's/__GOOGLE_API_KEY__/${{ secrets.GOOGLE_API_KEY }}/' ./src/main.js
+        
       - name: Build and Deploy
-        env:
-          IMGUR_CLIENT_ID: ${{ secrets.IMGUR_CLIENT_ID }}
-          IMGUR_CLIENT_SECRET: ${{ secrets.IMGUR_CLIENT_SECRET }}
-          IMGUR_ALBUM_ID: ${{ secrets.IMGUR_ALBUM_ID }}
-          IMGUR_AUTHORIZATION_CODE: ${{ secrets.IMGUR_AUTHORIZATION_CODE }}
-          IMGUR_REFRESH_TOKEN: ${{ secrets.IMGUR_REFRESH_TOKEN }}
-          SPOONACULAR_API_KEY: ${{ secrets.SPOONACULAR_API_KEY }}
-          GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
         run: |
           echo "Building project"
           # You can use the environment variables in your script here
