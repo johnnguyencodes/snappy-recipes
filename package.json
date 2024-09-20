@@ -4,7 +4,8 @@
   "description": "> * Maintained by: `John Nguyen`",
   "main": "./src/main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "webpack --config webpack.config.js --mode production",
+    "build": "webpack --config webpack.config.js --mode production"
   },
   "keywords": [],
   "author": "",
