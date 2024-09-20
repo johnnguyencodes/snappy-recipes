@@ -27,3 +27,4 @@ jobs:
           # You can use the environment variables in your script here
           npm run build
           npm run deploy
+          
