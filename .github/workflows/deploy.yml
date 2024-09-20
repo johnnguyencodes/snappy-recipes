@@ -28,7 +28,6 @@ jobs:
           sed -i "s|__IMGUR_REFRESH_TOKEN__|$IMGUR_REFRESH_TOKEN|" ./src/main.js
           sed -i "s|__SPOONACULAR_API_KEY__|$SPOONACULAR_API_KEY|" ./src/main.js
           sed -i "s|__GOOGLE_API_KEY__|$GOOGLE_API_KEY|" ./src/main.js
-
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
