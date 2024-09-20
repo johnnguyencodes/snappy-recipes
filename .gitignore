@@ -1,4 +1,4 @@
-config/config.js
+# config/config.js
 .env
 /dist
 /node_modules
