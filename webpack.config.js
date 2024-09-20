@@ -1,23 +1,12 @@
 const path = require("path");
 const Dotenv = require("dotenv-webpack");
-const CopyWebpackPlugin = require("copy-webpack-plugin");
-const webpack = require("webpack"); // Add this to require webpack
 
 module.exports = {
-  entry: "./src/main.js",
+  entry: "./src/main.js", // Adjust this to your entry file path
   output: {
     filename: "bundle.js",
     path: path.resolve(__dirname, "dist"),
   },
-  plugins: [
-    new Dotenv(),
-    new CopyWebpackPlugin({
-      patterns: [
-        { from: "./index.html", to: "./" }, // Copy index.html to dist folder
-        { from: "./styles.css", to: "./" }, // Copy styles.css to dist folder
-      ],
-    }),
-  ],
   module: {
     rules: [
       {
@@ -29,5 +18,8 @@ module.exports = {
       },
     ],
   },
-  mode: "development",
+  plugins: [
+    new Dotenv(), // Dotenv plugin for loading environment variables
+  ],
+  mode: "development", // Change this to 'production' for production builds
 };
