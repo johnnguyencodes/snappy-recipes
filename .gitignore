@@ -1,6 +1,4 @@
-config/config.js
+/config
 .env
-/dist
-/public
 /node_modules
 
