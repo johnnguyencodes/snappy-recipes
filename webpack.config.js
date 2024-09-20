@@ -5,7 +5,7 @@ module.exports = {
   entry: "./src/main.js", // Adjust this to your entry file path
   output: {
     filename: "bundle.js",
-    path: path.resolve(__dirname, "dist"),
+    path: path.resolve(__dirname, "public"),
   },
   module: {
     rules: [
