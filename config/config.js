@@ -1,0 +1,10 @@
+export const imgurClientID = "";
+export const imgurClientSecret = "";
+// export const imgurAccessToken = "";
+export const imgurAlbumID = "";
+export const imgurAuthorizationCode = "";
+export const imgurRefreshToken = "";
+export const deletehash = "";
+export const spoonacularAPIKey = "";
+// export const spoonacularAPIKey= "";
+export const googleAPIKey = "";
