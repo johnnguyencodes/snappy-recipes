@@ -1,7 +1,6 @@
 {
   "name": "real-snappy-recipes",
   "version": "1.0.0",
-  "type": "module",
   "description": "> * Maintained by: `John Nguyen`",
   "main": "./src/main.js",
   "scripts": {
