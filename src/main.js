@@ -16,10 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // First, define the function to get credentials based on environment
   async function getCredentials() {
-    if (
-      typeof process !== "undefined" &&
-      process.env.NODE_ENV === "production"
-    ) {
+    if (process.env.NODE_ENV === "production") {
       // Use environment variables in production
       return {
         imgurClientID: process.env.IMGUR_CLIENT_ID,
