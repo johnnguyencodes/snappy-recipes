@@ -1,20 +1,30 @@
 const path = require("path");
-const Dotenv = require("dotenv-webpack");
+const dotenv = require("dotenv");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
-const webpack = require("webpack"); // Add this to require webpack
+const webpack = require("webpack");
+
+// Manually load environment variables
+dotenv.config();
 
 module.exports = {
   entry: "./src/main.js",
   output: {
     filename: "bundle.js",
-    path: path.resolve(__dirname, "dist"),
+    path: path.resolve(__dirname, "public"),
+  },
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: "babel-loader",
+        },
+      },
+    ],
   },
   plugins: [
-    new Dotenv(),
     new webpack.DefinePlugin({
-      "process.env.NODE_ENV": JSON.stringify(
-        process.env.NODE_ENV || "development"
-      ),
       "process.env.IMGUR_CLIENT_ID": JSON.stringify(
         process.env.IMGUR_CLIENT_ID
       ),
@@ -32,24 +42,23 @@ module.exports = {
         process.env.SPOONACULAR_API_KEY
       ),
       "process.env.GOOGLE_API_KEY": JSON.stringify(process.env.GOOGLE_API_KEY),
+      "process.env.NODE_ENV": JSON.stringify(
+        process.env.NODE_ENV || "development"
+      ),
     }),
     new CopyWebpackPlugin({
       patterns: [
-        { from: "./index.html", to: "./" }, // Copy index.html to dist folder
-        { from: "./styles.css", to: "./" }, // Copy styles.css to dist folder
+        { from: "./index.html", to: "./" },
+        { from: "./styles.css", to: "./" },
       ],
     }),
   ],
-  module: {
-    rules: [
-      {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        use: {
-          loader: "babel-loader",
-        },
-      },
-    ],
-  },
   mode: "development",
+  devServer: {
+    static: {
+      directory: path.join(__dirname, "public"), // Serve files from the public folder
+    },
+    compress: true,
+    port: 8080, // You can change the port if needed
+  },
 };
