@@ -7,170 +7,122 @@ export class App {
     favoriteRecipesContainer,
     appStateManager
   ) {
-    this.favoriteRecipesContainer = favoriteRecipesContainer;
     this.form = form;
-    this.domManager = domManager;
     this.imageTitleHandler = imageTitleHandler;
     this.recipesHandler = recipesHandler;
+    this.domManager = domManager;
+    this.favoriteRecipesContainer = favoriteRecipesContainer;
     this.appStateManager = appStateManager;
+
+    this.init();
+  }
+
+  // Initialize event handlers and start app functions
+  init() {
+    this.setupBindings();
+    this.start();
+  }
+
+  setupBindings() {
     this.dietInfo = this.dietInfo.bind(this);
     this.postImage = this.postImage.bind(this);
-    this.handlePostImageSuccess = this.handlePostImageSuccess.bind(this);
-    this.handlePostImageError = this.handlePostImageError.bind(this);
     this.imageRecognition = this.imageRecognition.bind(this);
-    this.handleImageRecognitionSuccess =
-      this.handleImageRecognitionSuccess.bind(this);
-    this.handleImageRecognitionError =
-      this.handleImageRecognitionError.bind(this);
     this.getRecipes = this.getRecipes.bind(this);
-    this.handleGetRecipesSuccess = this.handleGetRecipesSuccess.bind(this);
-    this.handleGetRecipesError = this.handleGetRecipesError.bind(this);
     this.getFavoriteRecipes = this.getFavoriteRecipes.bind(this);
-    this.handleGetFavoriteRecipesSuccess =
-      this.handleGetFavoriteRecipesSuccess.bind(this);
-    this.handleGetFavoriteRecipesError =
-      this.handleGetFavoriteRecipesError.bind(this);
-    this.savedDietInfoCheck = this.savedDietInfoCheck.bind(this);
-    this.localStorageCheck = this.localStorageCheck.bind(this);
     this.getRandomRecipes = this.getRandomRecipes.bind(this);
-    this.handleGetRandomRecipesSuccess =
-      this.handleGetRandomRecipesSuccess.bind(this);
   }
 
   start() {
     this.localStorageCheck();
     this.savedDietInfoCheck();
+    this.dietInfo();
     this.getRandomRecipes();
-    this.form.clickDietInfo(this.dietInfo);
-    this.form.clickPostImage(this.postImage);
-    this.form.clickGetRecipes(this.getRecipes);
-    this.form.clickGetRandomRecipes(this.getRandomRecipes);
-    this.form.clickGetFavoriteRecipes(this.getFavoriteRecipes);
+
+    const formEvents = {
+      clickDietInfo: this.dietInfo,
+      clickPostImage: this.postImage,
+      clickGetRecipes: this.getRecipes,
+      clickGetFavoriteRecipes: this.getFavoriteRecipes,
+      clickGetRandomRecipes: this.getRandomRecipes,
+    };
+
+    for (const [event, handler] of Object.entries(formEvents)) {
+      this.form[event](handler);
+    }
+
     this.recipesHandler.clickGetFavoriteRecipes(this.getFavoriteRecipes);
     this.refreshAccessToken(this.appStateManager.getState("imgurRefreshToken"));
   }
 
+  // Helper function for localStorage checks
+  checkLocalStorage(key, defaultValue = null) {
+    const storedValue = localStorage.getItem(key);
+    if (!storedValue) {
+      this.appStateManager.setState(key, defaultValue);
+      localStorage.setItem(key, JSON.stringify(defaultValue));
+    } else {
+      this.appStateManager.setState(key, JSON.parse(storedValue));
+    }
+  }
+
   localStorageCheck() {
-    if (!localStorage.getItem("favoriteArray")) {
-      this.appStateManager.updateState("favoriteArray", []);
-      localStorage.setItem(
-        "favoriteArray",
-        JSON.stringify(this.appStateManager.getState("favoriteArray"))
-      );
-    } else {
-      this.appStateManager.updateState(
-        "favoriteArray",
-        JSON.parse(localStorage.getItem("favoriteArray"))
-      );
-    }
-    if (!localStorage.getItem("restrictionsString")) {
-      this.appStateManager.updateState("restrictionsString", "");
-    } else {
-      this.appStateManager.updateState(
-        "restrictionsString",
-        JSON.parse(localStorage.getItem("restrictionsString"))
-      );
-    }
-    if (!localStorage.getItem("intolerancesString")) {
-      this.appStateManager.updateState("intolerancesString", "");
-    } else {
-      this.appStateManager.updateState(
-        "intolerancesString",
-        JSON.parse(localStorage.getItem("intolerancesString"))
-      );
-    }
+    this.checkLocalStorage("favoriteArray", []);
+    this.checkLocalStorage("diet", "");
+    this.checkLocalStorage("intolerances", "");
   }
 
   savedDietInfoCheck() {
-    if (
-      !localStorage.getItem("restrictionsString") ||
-      !localStorage.getItem("intolerancesString")
-    ) {
-      return;
-    }
-    let restrictionsArray = JSON.parse(
-      localStorage.getItem("restrictionsString")
-    ).split(",");
-    let intolerancesArray = JSON.parse(
-      localStorage.getItem("intolerancesString")
-    ).split(",");
-    for (
-      let i = 0;
-      i < this.domManager.app.restrictionsCheckboxes.length;
-      i++
-    ) {
-      if (
-        restrictionsArray.includes(
-          this.domManager.app.restrictionsCheckboxes[i].id
-        )
-      ) {
-        this.domManager.app.restrictionsCheckboxes[i].checked = true;
+    const dietArray = this.getLocalStorageArray("diet");
+    const intolerancesArray = this.getLocalStorageArray("intolerances");
+
+    Array.from(this.domManager.app.dietCheckboxes).forEach((checkbox) => {
+      checkbox.checked = dietArray.includes(checkbox.id);
+    });
+
+    Array.from(this.domManager.app.intolerancesCheckboxes).forEach(
+      (checkbox) => {
+        checkbox.checked = intolerancesArray.includes(checkbox.id);
       }
-    }
-    for (
-      let j = 0;
-      j < this.domManager.app.intolerancesCheckboxes.length;
-      j++
-    ) {
-      if (
-        intolerancesArray.includes(
-          this.domManager.app.intolerancesCheckboxes[j].id
-        )
-      ) {
-        this.domManager.app.intolerancesCheckboxes[j].checked = true;
-      }
-    }
+    );
+  }
+
+  // Helper for retrieving an array from localStorage
+  getLocalStorageArray(key) {
+    const storedValue = localStorage.getItem(key);
+    return storedValue ? JSON.parse(storedValue).split(",") : [];
   }
 
   dietInfo() {
-    let restrictionValues = "";
-    let intoleranceValues = "";
-    for (
-      let i = 0;
-      i < this.domManager.app.restrictionsCheckboxes.length;
-      i++
-    ) {
-      if (this.domManager.app.restrictionsCheckboxes[i].checked) {
-        restrictionValues +=
-          this.domManager.app.restrictionsCheckboxes[i].value + ", ";
-      }
-    }
-    for (
-      let j = 0;
-      j < this.domManager.app.intolerancesCheckboxes.length;
-      j++
-    ) {
-      if (this.domManager.app.intolerancesCheckboxes[j].checked) {
-        intoleranceValues +=
-          this.domManager.app.intolerancesCheckboxes[j].value + ", ";
-      }
-    }
-    this.domManager.app.spoonacularDataToSend.diet = restrictionValues
-      .slice(0, -2)
-      .replace(/\s/g, "");
-    this.appStateManager.updateState(
-      "restrictionsString",
-      this.domManager.app.spoonacularDataToSend.diet
+    const getCheckedValues = (checkboxes) => {
+      // Convert checkboxes to an array and filter/map them
+      return Array.from(checkboxes)
+        .filter((box) => box.checked)
+        .map((box) => box.value)
+        .join(", ")
+        .replace(/\s/g, "");
+    };
+
+    const diet = getCheckedValues(this.domManager.app.dietCheckboxes);
+    const intolerances = getCheckedValues(
+      this.domManager.app.intolerancesCheckboxes
     );
-    localStorage.setItem(
-      "restrictionsString",
-      JSON.stringify(this.appStateManager.getState("restrictionsString"))
-    );
-    this.domManager.app.spoonacularDataToSend.intolerances = intoleranceValues
-      .slice(0, -2)
-      .replace(/\s/g, "");
-    this.appStateManager.updateState(
-      "intolerancesString",
-      this.domManager.app.spoonacularDataToSend.intolerances
-    );
-    localStorage.setItem(
-      "intolerancesString",
-      JSON.stringify(this.appStateManager.getState("intolerancesString"))
-    );
+
+    this.updateDietInfo("diet", diet);
+    this.updateDietInfo("intolerances", intolerances);
+  }
+
+  // Update and store diet info in appState and localStorage
+  updateDietInfo(key, value) {
+    this.domManager.app.spoonacularDataToSend[key] = value;
+    this.appStateManager.setState(key, value);
+    localStorage.setItem(key, JSON.stringify(value));
   }
 
   //POST request to IMGUR with image id supplied
-  postImage(formData, domManager) {
+  postImage(formData) {
+    const imgurAccessToken = this.appStateManager.getState("imgurAccessToken");
+    console.log(formData);
+
     $.ajax({
       // to see the uploaded image on the page, MAKE SURE to open html page using live server with the `use local ip` setting checked
       // Imgur will not load images on the page if the ip address starts with 127.0.0.1
@@ -181,89 +133,77 @@ export class App {
       contentType: false,
       cache: false,
       headers: {
-        Authorization: `Bearer ${this.appStateManager.getState("imgurAccessToken")}`,
+        Authorization: `Bearer ${imgurAccessToken}`,
       },
       xhr: function () {
-        let xhr = new window.XMLHttpRequest();
+        const xhr = new window.XMLHttpRequest();
+
+        // Helper function to update the progress bar
+        const updateProgressBar = (percentComplete) => {
+          $("#percentage_bar_upload").css({
+            width: `${percentComplete * 100}%`,
+          });
+        };
+
+        // Helper function to toggle the upload container visibility
+        const toggleUploadContainer = (percentComplete) => {
+          if (percentComplete > 0 && percentComplete < 1) {
+            $("#percentage_upload_container").removeClass("d-none");
+          } else if (percentComplete === 1) {
+            $("#percentage_upload_container").addClass("d-none");
+          }
+        };
+
+        // Helper function to show the image processing container
+        const showImageProcessingContainer = () => {
+          document.getElementById("image_processing_container").classList =
+            "d-flex col-12 flex-column align-items-center justify-content-center desktop-space-form";
+        };
+
+        // Event listener for upload progress
         xhr.upload.addEventListener(
           "progress",
           (evt) => {
             if (evt.lengthComputable) {
-              let percentComplete = evt.loaded / evt.total;
-              $("#percentage_bar_upload").css({
-                width: percentComplete * 100 + "%",
-              });
-              if (percentComplete > 0 && percentComplete < 1) {
-                $("#percentage_upload_container").removeClass("d-none");
-              }
+              const percentComplete = evt.loaded / evt.total;
+
+              updateProgressBar(percentComplete);
+              toggleUploadContainer(percentComplete);
+
               if (percentComplete === 1) {
-                $("#percentage_upload_container").addClass("d-none");
-                domManager.app.imageProcessingContainer.classList =
-                  "d-flex col-12 flex-column align-items-center justify-content-center desktop-space-form";
+                showImageProcessingContainer();
               }
             }
           },
           false
         );
+
         return xhr;
       },
-      success: this.handlePostImageSuccess,
-      error: this.handlePostImageError,
+      success: this.onPostImageSuccess,
+      error: this.onPostImageError,
     });
   }
 
-  handlePostImageSuccess(data) {
+  onPostImageSuccess = (data) => {
     const imageURL = data.data.link;
     this.domManager.app.dataForImageRecognition.requests[0].image.source.imageUri =
       imageURL;
     this.imageTitleHandler.postedImageDownloadProgress(imageURL);
     this.imageRecognition();
-  }
+  };
 
   handlePostImageError(error) {
     console.error("error", error);
+    this.toggleInputs(false);
     this.domManager.app.imgurAPIError.classList = "text-center mt-3";
-    for (let i = 0; i < this.domManager.app.inputs.length; i++) {
-      this.domManager.app.inputs[i].disabled = false;
-      this.domManager.app.inputs[i].classList.remove("no-click");
-    }
   }
 
-  //POST request to Google's Cloud Vision API with image from IMGUR to label the object in the image
-  imageRecognition() {
-    this.domManager.app.imageRecognitionStatusText.classList = "text-center";
-    $.ajax({
-      url: `https://vision.googleapis.com/v1/images:annotate?fields=responses&key=${this.appStateManager.getState("googleAPIKey")}`,
-      type: "POST",
-      dataType: "JSON",
-      contentType: "application/json",
-      data: JSON.stringify(this.domManager.app.dataForImageRecognition),
-      success: this.handleImageRecognitionSuccess,
-      error: this.handleImageRecognitionError,
+  toggleInputs(isDisabled) {
+    this.domManager.app.inputs.forEach((input) => {
+      input.disabled = isDisabled;
+      input.classList.toggle("no-click", isDisabled);
     });
-  }
-
-  handleImageRecognitionSuccess(response) {
-    if (!response.responses[0].labelAnnotations) {
-      this.domManager.app.imageRecognitionStatusText.classList = "d-none";
-      this.domManager.app.imageRecognitionFailedText.classList = "text-center";
-      this.domManager.app.uploadedImage.src = "";
-      for (let i = 0; i < this.domManager.app.inputs.length; i++) {
-        this.domManager.app.inputs[i].disabled = false;
-        this.domManager.app.inputs[i].classList.remove("no-click");
-      }
-      return;
-    }
-    const imageTitle = response.responses[0].labelAnnotations[0].description;
-    const score = response.responses[0].labelAnnotations[0].score;
-    this.imageTitleHandler.imageTitleOnPage(imageTitle, score);
-    this.domManager.app.imageRecognitionStatusText.classList =
-      "text-center d-none";
-    this.getRecipes(imageTitle);
-  }
-
-  handleImageRecognitionError(error) {
-    console.error(error);
   }
 
   // refresh imgurAccessToken
@@ -288,49 +228,60 @@ export class App {
 
     const data = await response.json();
     if (response.ok) {
-      this.appStateManager.updateState("imgurAccessToken", data.access_token);
+      this.appStateManager.setState("imgurAccessToken", data.access_token);
     } else {
       console.error("Error refreshing token:", data);
     }
   }
 
-  //GET request to Spoonacular's API with label from Google, if available, to get a list of up to 100 recipes.
+  //POST request to Google's Cloud Vision API with image from IMGUR to label the object in the image
+  imageRecognition() {
+    this.domManager.app.imageRecognitionStatusText.classList = "text-center";
 
-  getRandomRecipes() {
-    for (let i = 0; i < this.domManager.app.inputs.length; i++) {
-      this.domManager.app.inputs[i].disabled = true;
-      this.domManager.app.inputs[i].classList.add("no-click");
-    }
-    this.domManager.app.searchRecipesDownloadProgress.classList =
-      "recipe-progress-visible text-left mt-3";
-    this.domManager.app.searchRecipesDownloadText.classList =
-      "text-center mt-3";
-    this.domManager.app.searchRecipesDownloadText.textContent =
-      "Gathering random recipes, please wait...";
-    this.domManager.app.titleContainer.classList = "d-none desktop-space-form";
-    this.domManager.app.percentageBarContainer.classList =
-      "d-none desktop-space-form";
-    this.domManager.app.uploadedImageContainer.classList =
-      "d-none desktop-space-form";
-    this.appStateManager.updateState("chunkedRecipeArray", []);
-    this.appStateManager.updateState("chunkedRecipeArrayIndex", 0);
-    let spoonacularURL = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${this.appStateManager.getState("spoonacularAPIKey")}&addRecipeNutrition=true&636x393&number=100&sort=random`;
+    const googleAPIKey = this.appStateManager.getState("googleAPIKey");
+    const url = `https://vision.googleapis.com/v1/images:annotate?fields=responses&key=${googleAPIKey}`;
+
     $.ajax({
-      method: "GET",
-      url: spoonacularURL,
-      data: this.domManager.app.spoonacularDataToSend,
-      headers: {
-        "Content-Type": "application/json",
-      },
-      success: this.handleGetRandomRecipesSuccess,
-      error: this.handleGetRecipesError,
+      url,
+      type: "POST",
+      dataType: "JSON",
+      contentType: "application/json",
+      data: JSON.stringify(this.domManager.app.dataForImageRecognition),
+      success: this.onImageRecognitionSuccess,
+      error: this.onImageRecognitionError,
     });
   }
 
-  handleGetRandomRecipesSuccess(recipes) {
-    this.recipesHandler.chunkRandomRecipes(recipes);
+  onImageRecognitionSuccess = (response) => {
+    const labelAnnotations = response.responses[0]?.labelAnnotations;
+    if (!labelAnnotations) {
+      this.showRecognitionFailure();
+      return;
+    }
+
+    const [firstAnnotation] = labelAnnotations;
+    const { description: imageTitle, score } = firstAnnotation;
+
+    this.imageTitleHandler.imageTitleOnPage(imageTitle, score);
+    this.domManager.app.imageRecognitionStatusText.classList = "d-none";
+
+    // Get recipes based on title
+    this.getRecipes(imageTitle);
+  };
+
+  onImageRecognitionError = (error) => {
+    console.error("Image recognition error:", error);
+    // Add error UI handling here
+  };
+
+  showRecognitionFailure() {
+    this.domManager.app.imageRecognitionStatusText.classList = "d-none";
+    this.domManager.app.imageRecognitionFailedText.classList = "text-center";
+    this.domManager.app.uploadedImage.src = "";
+    this.toggleInputs(false);
   }
 
+  //GET request to Spoonacular's API with label from Google (image title)
   getRecipes(imageTitle) {
     this.domManager.app.searchRecipesDownloadProgress.classList =
       "recipe-progress-visible text-left mt-3";
@@ -338,9 +289,13 @@ export class App {
       "text-center mt-3";
     this.domManager.app.searchRecipesDownloadText.textContent =
       "Gathering recipes, please wait...";
-    this.appStateManager.updateState("chunkedRecipeArray", []);
-    this.appStateManager.updateState("chunkedRecipeArrayIndex", 0);
-    let spoonacularURL = `https://api.spoonacular.com/recipes/complexSearch?query=${imageTitle}&apiKey=${this.appStateManager.getState("spoonacularAPIKey")}&addRecipeNutrition=true&636x393&number=100`;
+
+    this.prepareForRecipesSearch();
+
+    const spoonacularAPIKey =
+      this.appStateManager.getState("spoonacularAPIKey");
+    const spoonacularURL = `https://api.spoonacular.com/recipes/complexSearch?query=${imageTitle}&apiKey=${spoonacularAPIKey}&addRecipeNutrition=true&636x393&number=100`;
+
     $.ajax({
       method: "GET",
       url: spoonacularURL,
@@ -348,69 +303,111 @@ export class App {
       headers: {
         "Content-Type": "application/json",
       },
-      error: this.handleGetRecipesError,
-      success: this.handleGetRecipesSuccess,
+      success: this.onGetRecipesSuccess,
+      error: this.onGetRecipesError,
       timeout: 10000,
     });
   }
 
-  handleGetRecipesSuccess(recipes) {
+  onGetRecipesSuccess = (recipes) => {
     this.recipesHandler.chunkSearchedRecipes(recipes);
+  };
+
+  onGetRecipesError = (error) => {
+    this.handleRecipeError(
+      error,
+      "searchRecipesDownloadContainer",
+      "spoonacularSearchError"
+    );
+  };
+
+  prepareForRecipesSearch() {
+    this.appStateManager.setState("chunkedRecipeArray", []);
+    this.appStateManager.setState("chunkedRecipeArrayIndex", 0);
   }
 
-  handleGetRecipesError(error) {
-    this.domManager.app.searchRecipesDownloadContainer.classList = "d-none";
+  // GET random recipes from Spoonacular's API
+  getRandomRecipes() {
+    if (this.appStateManager.isGetRandomRecipesCalled) return;
+    this.appStateManager.setState("isGetRandomRecipesCalled", true);
+
+    this.toggleInputs(true);
+
+    this.domManager.app.searchRecipesDownloadProgress.classList =
+      "recipe-progress-visible text-left mt-3";
+    this.domManager.app.searchRecipesDownloadText.classList =
+      "text-center mt-3";
+    this.domManager.app.searchRecipesDownloadText.textContent =
+      "Gathering random recipes, please wait...";
+
+    this.prepareForRecipesSearch();
+
+    this.domManager.app.titleContainer.classList = "d-none desktop-space-form";
+    this.domManager.app.percentageBarContainer.classList =
+      "d-none desktop-space-form";
+    this.domManager.app.uploadedImageContainer.classList =
+      "d-none desktop-space-form";
+
+    const spoonacularAPIKey =
+      this.appStateManager.getState("spoonacularAPIKey");
+    const spoonacularURL = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${spoonacularAPIKey}&addRecipeNutrition=true&number=100`;
+
+    $.ajax({
+      method: "GET",
+      url: spoonacularURL,
+      data: this.domManager.app.spoonacularDataToSend,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      success: this.onGetRandomRecipesSuccess,
+      error: this.onGetRecipesError,
+    });
+  }
+
+  onGetRandomRecipesSuccess = (recipes) => {
+    this.recipesHandler.chunkSearchedRecipes(recipes);
+  };
+
+  // Handle common recipe error
+  handleRecipeError = (error, progressContainer, errorTextContainer) => {
+    this.domManager.app[progressContainer].classList = "d-none";
     this.domManager.app.searchRecipesDownloadProgress.classList =
       "recipe-progress-hidden text-left mt-3";
     this.domManager.app.searchRecipesDownloadText.classList = "d-none";
-    this.domManager.app.spoonacularSearchError.classList = "text-center mt-3";
-    for (let i = 0; i < this.domManager.app.inputs.length; i++) {
-      this.domManager.app.inputs[i].disabled = false;
-      this.domManager.app.inputs[i].classList.remove("no-click");
-    }
+    this.domManager.app[errorTextContainer].classList = "text-center mt-3";
+
+    this.toggleInputs(false);
+
     if (error.status === 402) {
       this.domManager.app.spoonacularSearchError.innerHTML =
         "The Spoonacular API has reached its daily quota for this app's current API Key. Please notify <a href = 'mailto:john@johnnguyencodes.com?subject=Snappy%20Recipes%20API%20Key%20Refresh'> john@johnnguyencodes.com</a>, thank you.";
-      return;
-    }
-    if (error.statusText === "timeout") {
+    } else if (error.statusText === "timeout") {
       this.domManager.app.spoonacularSearchError.innerHTML =
         "The ajax request to the Spoonacular API has timed out, please try again.";
-      return;
     } else {
       this.domManager.app.spoonacularSearchError.innerHTML =
         "There is a CORS issue with the Spoonacular's API.  This issue will usually resolve itself in ten minutes.  If it does not, please notify <a href = 'mailto:john@johnnguyencodes.com?subject=Snappy%20Recipes%20API%20Key%20Refresh'> john@johnnguyencodes.com</a >, thank you.";
     }
-  }
+  };
 
+  // GET favorite recipes from Spoonacular's API
   getFavoriteRecipes() {
-    while (this.favoriteRecipesContainer.firstChild) {
-      this.favoriteRecipesContainer.removeChild(
-        this.favoriteRecipesContainer.firstChild
-      );
-    }
-    if (
-      !localStorage.getItem("favoriteArray") ||
-      localStorage.getItem("favoriteArray") === "[]"
-    ) {
-      this.domManager.app.emptyFavoriteTextContainer.classList =
-        "d-flex justify-content-center";
+    this.clearFavoriteRecipesContainer();
+
+    if (!this.isFavoritesStored()) {
+      this.showEmptyFavoriteText();
       return;
     }
-    this.domManager.app.favoriteRecipesSection.classList =
-      "favorite-recipes-visible d-flex flex-column justify-content-center";
-    this.domManager.app.emptyFavoriteTextContainer.classList = "d-none";
-    this.domManager.app.favoriteRecipesDownloadProgress.classList =
-      "favorite-recipe-progress-visible mt-3";
-    this.domManager.app.favoriteRecipesStatusText.classList = "text-center";
-    this.appStateManager.updateState(
-      "favoriteArray",
-      JSON.parse(localStorage.getItem("favoriteArray"))
-    );
-    let stringifiedArray = this.appStateManager
+
+    this.showFavoriteRecipesSection();
+
+    const spoonacularAPIKey =
+      this.appStateManager.getState("spoonacularAPIKey");
+    const favoriteArray = this.appStateManager
       .getState("favoriteArray")
       .join(",");
-    let spoonacularURL = `https://api.spoonacular.com/recipes/informationBulk?ids=${stringifiedArray}&apiKey=${this.appStateManager.getState("spoonacularAPIKey")}&includeNutrition=true&size=636x393`;
+    const spoonacularURL = `https://api.spoonacular.com/recipes/informationBulk?ids=${favoriteArray}&apiKey=${spoonacularAPIKey}&includeNutrition=true&size=636x393`;
+
     $.ajax({
       method: "GET",
       url: spoonacularURL,
@@ -418,16 +415,16 @@ export class App {
         "Content-Type": "application/json",
       },
       timeout: 10000,
-      error: this.handleGetFavoriteRecipesError,
-      success: this.handleGetFavoriteRecipesSuccess,
+      error: this.onGetFavoriteRecipesError,
+      success: this.onGetFavoriteRecipesSuccess,
     });
   }
 
-  handleGetFavoriteRecipesSuccess(recipes) {
+  onGetFavoriteRecipesSuccess = (recipes) => {
     this.recipesHandler.displayFavoriteRecipes(recipes);
-  }
+  };
 
-  handleGetFavoriteRecipesError(error) {
+  onGetFavoriteRecipesError = (error) => {
     this.domManager.app.favoriteRecipesDownloadProgress.classList =
       "favorite-recipe-progress-hidden";
     this.domManager.app.favoriteRecipesStatusText.classList = "d-none";
@@ -439,5 +436,35 @@ export class App {
       this.domManager.app.spoonacularFavoriteTimeoutError.classList =
         "mt-3 text-center";
     }
+  };
+
+  // Helper methods for favorite recipes
+  clearFavoriteRecipesContainer() {
+    while (this.favoriteRecipesContainer.firstChild) {
+      this.favoriteRecipesContainer.removeChild(
+        this.favoriteRecipesContainer.firstChild
+      );
+    }
+  }
+
+  isFavoritesStored() {
+    return (
+      localStorage.getItem("favoriteArray") &&
+      localStorage.getItem("favoriteArray") !== "[]"
+    );
+  }
+
+  showEmptyFavoriteText() {
+    this.domManager.app.emptyFavoriteTextContainer.classList =
+      "d-flex justify-content-center";
+  }
+
+  showFavoriteRecipesSection() {
+    this.domManager.app.favoriteRecipesSection.classList =
+      "favorite-recipes-visible d-flex flex-column justify-content-center";
+    this.domManager.app.emptyFavoriteTextContainer.classList = "d-none";
+    this.domManager.app.favoriteRecipesDownloadProgress.classList =
+      "favorite-recipe-progress-visible mt-3";
+    this.domManager.app.favoriteRecipesStatusText.classList = "text-center";
   }
 }
