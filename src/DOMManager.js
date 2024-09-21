@@ -18,7 +18,7 @@ class AppDOMManager {
       "no_search_recipes_text"
     );
     this.uploadedImage = document.getElementById("uploaded_image");
-    this.restrictionsCheckboxes = document.getElementsByClassName(
+    this.dietCheckboxes = document.getElementsByClassName(
       "restriction-checkbox"
     );
     this.intolerancesCheckboxes = document.getElementsByClassName(

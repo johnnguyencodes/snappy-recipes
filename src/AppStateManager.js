@@ -22,10 +22,11 @@ export class AppStateManager {
     this.spoonacularAPIKey = spoonacularAPIKey;
 
     // state
+    this.isGetRandomRecipesCalled = false;
     this.imgurAccessToken = null;
     this.favoriteArray = [];
-    this.restrictionsString = "";
-    this.intolerancesString = "";
+    this.diet = "";
+    this.intolerances = "";
     this.chunkedRecipeArray = [];
     this.chunkedRecipeArrayIndex = 0;
     this.favoriteYPosition = null;

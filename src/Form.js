@@ -296,7 +296,7 @@ export class Form {
     formData.append("image", imageFile);
     formData.append("album", this.appStateManager.getState("imgurAlbumID"));
     formData.append("privacy", "public");
-    this.postImage(formData, this.domManager);
+    this.postImage(formData);
     this.domManager.form.fileInputForm.value = "";
   }
 
@@ -328,6 +328,7 @@ export class Form {
     this.domManager.app.uploadedImageContainer.classList =
       "d-none desktop-space-form";
     if (!query) {
+      this.appStateManager.setState("isGetRandomRecipesCalled", false);
       this.getRandomRecipes();
       return;
     }

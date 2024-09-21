@@ -35,15 +35,15 @@ export class App {
   start() {
     this.localStorageCheck();
     this.savedDietInfoCheck();
+    this.dietInfo();
     this.getRandomRecipes();
 
     const formEvents = {
       clickDietInfo: this.dietInfo,
       clickPostImage: this.postImage,
       clickGetRecipes: this.getRecipes,
+      clickGetFavoriteRecipes: this.getFavoriteRecipes,
       clickGetRandomRecipes: this.getRandomRecipes,
-      clickGetFavoriteRecipes: this.getFavoriteRecipes,
-      clickGetFavoriteRecipes: this.getFavoriteRecipes,
     };
 
     for (const [event, handler] of Object.entries(formEvents)) {
@@ -67,19 +67,17 @@ export class App {
 
   localStorageCheck() {
     this.checkLocalStorage("favoriteArray", []);
-    this.checkLocalStorage("restrictionsArray", "");
-    this.checkLocalStorage("intolerancesString", "");
+    this.checkLocalStorage("diet", "");
+    this.checkLocalStorage("intolerances", "");
   }
 
   savedDietInfoCheck() {
-    const restrictionsArray = this.getLocalStorageArray("restrictionsString");
-    const intolerancesArray = this.getLocalStorageArray("intolerancesString");
+    const dietArray = this.getLocalStorageArray("diet");
+    const intolerancesArray = this.getLocalStorageArray("intolerances");
 
-    Array.from(this.domManager.app.restrictionsCheckboxes).forEach(
-      (checkbox) => {
-        checkbox.checked = restrictionsArray.includes(checkbox.id);
-      }
-    );
+    Array.from(this.domManager.app.dietCheckboxes).forEach((checkbox) => {
+      checkbox.checked = dietArray.includes(checkbox.id);
+    });
 
     Array.from(this.domManager.app.intolerancesCheckboxes).forEach(
       (checkbox) => {
@@ -96,22 +94,21 @@ export class App {
 
   dietInfo() {
     const getCheckedValues = (checkboxes) => {
-      checkboxes
-        .filter((checkbox) => checkbox.checked)
-        .map((checkbox) => checkbox.value)
+      // Convert checkboxes to an array and filter/map them
+      return Array.from(checkboxes)
+        .filter((box) => box.checked)
+        .map((box) => box.value)
         .join(", ")
         .replace(/\s/g, "");
     };
 
-    const restrictions = getCheckedValues(
-      this.domManager.app.restrictionsCheckboxes
-    );
+    const diet = getCheckedValues(this.domManager.app.dietCheckboxes);
     const intolerances = getCheckedValues(
       this.domManager.app.intolerancesCheckboxes
     );
 
-    this.updateDietInfo("restrictionsString", restrictions);
-    this.updateDietInfo("intolerancesString", intolerances);
+    this.updateDietInfo("diet", diet);
+    this.updateDietInfo("intolerances", intolerances);
   }
 
   // Update and store diet info in appState and localStorage
@@ -124,6 +121,7 @@ export class App {
   //POST request to IMGUR with image id supplied
   postImage(formData) {
     const imgurAccessToken = this.appStateManager.getState("imgurAccessToken");
+    console.log(formData);
 
     $.ajax({
       // to see the uploaded image on the page, MAKE SURE to open html page using live server with the `use local ip` setting checked
@@ -137,45 +135,54 @@ export class App {
       headers: {
         Authorization: `Bearer ${imgurAccessToken}`,
       },
-      xhr: () => this.createUploadXVR(),
+      xhr: function () {
+        const xhr = new window.XMLHttpRequest();
+
+        // Helper function to update the progress bar
+        const updateProgressBar = (percentComplete) => {
+          $("#percentage_bar_upload").css({
+            width: `${percentComplete * 100}%`,
+          });
+        };
+
+        // Helper function to toggle the upload container visibility
+        const toggleUploadContainer = (percentComplete) => {
+          if (percentComplete > 0 && percentComplete < 1) {
+            $("#percentage_upload_container").removeClass("d-none");
+          } else if (percentComplete === 1) {
+            $("#percentage_upload_container").addClass("d-none");
+          }
+        };
+
+        // Helper function to show the image processing container
+        const showImageProcessingContainer = () => {
+          document.getElementById("image_processing_container").classList =
+            "d-flex col-12 flex-column align-items-center justify-content-center desktop-space-form";
+        };
+
+        // Event listener for upload progress
+        xhr.upload.addEventListener(
+          "progress",
+          (evt) => {
+            if (evt.lengthComputable) {
+              const percentComplete = evt.loaded / evt.total;
+
+              updateProgressBar(percentComplete);
+              toggleUploadContainer(percentComplete);
+
+              if (percentComplete === 1) {
+                showImageProcessingContainer();
+              }
+            }
+          },
+          false
+        );
+
+        return xhr;
+      },
       success: this.onPostImageSuccess,
       error: this.onPostImageError,
     });
-  }
-
-  createUploadXHR() {
-    let xhr = new window.XMLHttpRequest();
-    xhr.upload.addEventListener(
-      "progress",
-      (evt) => this.handleUploadProgress(evt),
-      false
-    );
-    return xhr;
-  }
-
-  handleUploadProgress(evt) {
-    if (evt.lengthComputable) {
-      const percentComplete = (evt.loaded / evt.total) * 100;
-
-      $("#precentage_bar_upload").css({ width: `${percentComplete}` });
-      $("#percentage_upload_container").toggleClass(
-        "d-none",
-        percentComplete === 1
-      );
-    }
-
-    // let percentComplete = evt.loaded / evt.total;
-    // $("#percentage_bar_upload").css({
-    //   width: percentComplete * 100 + "%",
-    // });
-    // if (percentComplete > 0 && percentComplete < 1) {
-    //   $("#percentage_upload_container").removeClass("d-none");
-    // }
-    // if (percentComplete === 1) {
-    //   $("#percentage_upload_container").addClass("d-none");
-    //   domManager.app.imageProcessingContainer.classList =
-    //     "d-flex col-12 flex-column align-items-center justify-content-center desktop-space-form";
-    // }
   }
 
   onPostImageSuccess = (data) => {
@@ -302,6 +309,10 @@ export class App {
     });
   }
 
+  onGetRecipesSuccess = (recipes) => {
+    this.recipesHandler.chunkSearchedRecipes(recipes);
+  };
+
   onGetRecipesError = (error) => {
     this.handleRecipeError(
       error,
@@ -317,6 +328,9 @@ export class App {
 
   // GET random recipes from Spoonacular's API
   getRandomRecipes() {
+    if (this.appStateManager.isGetRandomRecipesCalled) return;
+    this.appStateManager.setState("isGetRandomRecipesCalled", true);
+
     this.toggleInputs(true);
 
     this.domManager.app.searchRecipesDownloadProgress.classList =
@@ -351,7 +365,7 @@ export class App {
   }
 
   onGetRandomRecipesSuccess = (recipes) => {
-    this.recipesHandler.chunkedRandomRecipes(recipes);
+    this.recipesHandler.chunkSearchedRecipes(recipes);
   };
 
   // Handle common recipe error
