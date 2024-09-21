@@ -99,7 +99,7 @@ export class Form {
 
   openFavorites() {
     event.preventDefault();
-    this.appStateManager.updateState("favoriteYPosition", window.scrollY);
+    this.appStateManager.setState("favoriteYPosition", window.scrollY);
     this.domManager.app.favoriteRecipesSection.classList =
       "favorite-recipes-visible d-flex flex-column justify-content-center";
     if (
@@ -135,8 +135,8 @@ export class Form {
 
   openSideMenu() {
     event.preventDefault();
-    this.appStateManager.updateState("favoriteYPosition", window.scrollY);
-    this.appStateManager.updateState(
+    this.appStateManager.setState("favoriteYPosition", window.scrollY);
+    this.appStateManager.setState(
       "rect",
       this.domManager.form.userInputContainer.getBoundingClientRect()
     );

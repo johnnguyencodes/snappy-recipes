@@ -5,10 +5,10 @@ export class RecipesHandler {
     domManager,
     appStateManager
   ) {
-    this.appStateManager = appStateManager;
-    this.domManager = domManager;
     this.searchRecipesContainer = searchRecipesContainer;
     this.favoriteRecipesContainer = favoriteRecipesContainer;
+    this.domManager = domManager;
+    this.appStateManager = appStateManager;
     window.addEventListener("scroll", this.handleShowMoreScroll.bind(this));
     this.domManager.recipes.backToTopButton.addEventListener(
       "click",
@@ -52,7 +52,7 @@ export class RecipesHandler {
       const tempRecipeArray =
         this.appStateManager.getState("chunkedRecipeArray");
       tempRecipeArray.push(recipes.results.slice(a, a + 12));
-      this.appStateManager.updateState("chunkedRecipeArray", tempRecipeArray);
+      this.appStateManager.setState("chunkedRecipeArray", tempRecipeArray);
       a = a + 12;
     }
     this.displaySearchedRecipes(
@@ -87,7 +87,7 @@ export class RecipesHandler {
       const tempRecipeArray =
         this.appStateManager.getState("chunkedRecipeArray");
       tempRecipeArray.push(recipes.results.slice(a, a + 12));
-      this.appStateManager.updateState("chunkedRecipeArray", tempRecipeArray);
+      this.appStateManager.setState("chunkedRecipeArray", tempRecipeArray);
       a = a + 12;
     }
     this.displaySearchedRecipes(
@@ -111,7 +111,7 @@ export class RecipesHandler {
         this.appStateManager.getState("chunkedRecipeArray").length - 1
       ) {
         let yPosition = window.scrollY;
-        this.appStateManager.updateState(
+        this.appStateManager.setState(
           "chunkedRecipeArrayIndex",
           this.appStateManager.getState("chunkedRecipeArrayIndex") + 1
         );
@@ -147,7 +147,7 @@ export class RecipesHandler {
         .firstChild.textContent;
     let twoWords = recipeTitle.split(" ").slice(0, 2).join(" ");
     if (!this.appStateManager.getState("favoriteArray").includes(id)) {
-      this.appStateManager.updateState("favoriteArray", [
+      this.appStateManager.setState("favoriteArray", [
         ...this.appStateManager.getState("favoriteArray"),
         id,
       ]);
@@ -166,7 +166,7 @@ export class RecipesHandler {
       const index = this.appStateManager.getState("favoriteArray").indexOf(id);
       if (index !== -1) {
         tempArray.splice(index, 1);
-        this.appStateManager.updateState("favoriteArray", tempArray);
+        this.appStateManager.setState("favoriteArray", tempArray);
       }
       heartIcon.classList = "far fa-heart text-danger heart-icon fa-lg";
       heartIcon.parentNode.parentNode.parentNode.classList =
@@ -196,7 +196,7 @@ export class RecipesHandler {
     const index = this.appStateManager.getState("favoriteArray").indexOf(id);
     if (index !== -1) {
       tempArray.splice(index, 1);
-      this.appStateManager.updateState("favoriteArray", tempArray);
+      this.appStateManager.setState("favoriteArray", tempArray);
     }
     document.getElementById(`${id}`).remove();
     localStorage.setItem(
@@ -235,7 +235,7 @@ export class RecipesHandler {
     let recipeTitle = document.getElementById("recipe_title").textContent;
     let twoWords = recipeTitle.split(" ").slice(2, 4).join(" ");
     if (!this.appStateManager.getState("favoriteArray").includes(id)) {
-      this.appStateManager.updateState("favoriteArray", [
+      this.appStateManager.setState("favoriteArray", [
         ...this.appStateManager.getState("favoriteArray"),
         id,
       ]);
@@ -272,7 +272,7 @@ export class RecipesHandler {
       const index = this.appStateManager.getState("favoriteArray").indexOf(id);
       if (index !== -1) {
         tempArray.splice(index, 1);
-        this.appStateManager.updateState("favoriteArray", tempArray);
+        this.appStateManager.setState("favoriteArray", tempArray);
       }
       localStorage.setItem(
         "favoriteArray",

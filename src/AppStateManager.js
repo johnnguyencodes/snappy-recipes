@@ -506,11 +506,11 @@ export class AppStateManager {
     ];
 
     // binding class methods
-    this.updateState = this.updateState.bind(this);
+    this.setState = this.setState.bind(this);
     this.getState = this.getState.bind(this);
   }
 
-  updateState(key, value) {
+  setState(key, value) {
     if (this.hasOwnProperty(key)) {
       this[key] = value;
     } else {
