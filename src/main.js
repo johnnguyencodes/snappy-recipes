@@ -6,25 +6,7 @@ import { RecipesHandler } from "./RecipesHandler.js";
 import { App } from "./App.js";
 
 document.addEventListener("DOMContentLoaded", () => {
-  const imgurClientID = `__IMGUR_CLIENT_ID__`;
-  const imgurClientSecret = `__IMGUR_CLIENT_SECRET__`;
-  const imgurAlbumID = `__IMGUR_ALBUM_ID__`;
-  const imgurAuthorizationCode = `__IMGUR_AUTHORIZATION_CODE__`;
-  const imgurRefreshToken = `__IMGUR_REFRESH_TOKEN__`;
-  const spoonacularAPIKey = `__SPOONACULAR_API_KEY__`;
-  const googleAPIKey = "__GOOGLE_API_KEY__";
-
-  console.log("googleAPIKey", googleAPIKey);
-  // Now that you have the credentials, create your AppStateManager
-  const appStateManager = new AppStateManager(
-    imgurClientID,
-    imgurClientSecret,
-    imgurAlbumID,
-    imgurAuthorizationCode,
-    imgurRefreshToken,
-    spoonacularAPIKey,
-    googleAPIKey
-  );
+  const appStateManager = new AppStateManager();
 
   const domManager = new DOMManager();
 

@@ -1,13 +1,16 @@
+import {
+  imgurClientID,
+  imgurClientSecret,
+  // imgurAccessToken,
+  imgurAlbumID,
+  imgurAuthorizationCode,
+  imgurRefreshToken,
+  spoonacularAPIKey,
+  googleAPIKey,
+} from "../config/config.js";
+
 export class AppStateManager {
-  constructor(
-    imgurClientID,
-    imgurClientSecret,
-    imgurAlbumID,
-    imgurAuthorizationCode,
-    imgurRefreshToken,
-    spoonacularAPIKey,
-    googleAPIKey
-  ) {
+  constructor() {
     // Credentials
     this.imgurClientID = imgurClientID;
     this.imgurClientSecret = imgurClientSecret;
