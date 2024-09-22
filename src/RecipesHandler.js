@@ -262,9 +262,10 @@ export class RecipesHandler {
         )
       ) {
         this.getFavoriteRecipes();
-        this.domManager.app.spoonacularFavoriteError.classList = "d-none";
-        this.domManager.app.spoonacularFavoriteTimeoutError.classList =
-          "d-none";
+        this.domManager.app.spoonacularFavoriteError.classList.add("d-none");
+        this.domManager.app.spoonacularFavoriteTimeoutError.classList.add(
+          "d-none"
+        );
       }
       return;
     } else {

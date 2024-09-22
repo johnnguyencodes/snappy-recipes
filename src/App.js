@@ -75,15 +75,15 @@ export class App {
     const dietArray = this.getLocalStorageArray("diet");
     const intolerancesArray = this.getLocalStorageArray("intolerances");
 
-    Array.from(this.domManager.app.dietCheckboxes).forEach((checkbox) => {
+    const { app } = this.domManager;
+
+    Array.from(app.dietCheckboxes).forEach((checkbox) => {
       checkbox.checked = dietArray.includes(checkbox.id);
     });
 
-    Array.from(this.domManager.app.intolerancesCheckboxes).forEach(
-      (checkbox) => {
-        checkbox.checked = intolerancesArray.includes(checkbox.id);
-      }
-    );
+    Array.from(app.intolerancesCheckboxes).forEach((checkbox) => {
+      checkbox.checked = intolerancesArray.includes(checkbox.id);
+    });
   }
 
   // Helper for retrieving an array from localStorage
@@ -102,10 +102,10 @@ export class App {
         .replace(/\s/g, "");
     };
 
-    const diet = getCheckedValues(this.domManager.app.dietCheckboxes);
-    const intolerances = getCheckedValues(
-      this.domManager.app.intolerancesCheckboxes
-    );
+    const { app } = this.domManager;
+
+    const diet = getCheckedValues(app.dietCheckboxes);
+    const intolerances = getCheckedValues(app.intolerancesCheckboxes);
 
     this.updateDietInfo("diet", diet);
     this.updateDietInfo("intolerances", intolerances);
@@ -275,19 +275,21 @@ export class App {
   };
 
   showRecognitionFailure() {
-    this.domManager.app.imageRecognitionStatusText.classList = "d-none";
-    this.domManager.app.imageRecognitionFailedText.classList = "text-center";
-    this.domManager.app.uploadedImage.src = "";
+    const { app } = this.domManager;
+    app.imageRecognitionStatusText.classList = "d-none";
+    app.imageRecognitionFailedText.classList = "text-center";
+    app.uploadedImage.src = "";
     this.toggleInputs(false);
   }
 
   //GET request to Spoonacular's API with label from Google (image title)
   getRecipes(imageTitle) {
-    this.domManager.app.searchRecipesDownloadProgress.classList =
+    const { app } = this.domManager;
+
+    app.searchRecipesDownloadProgress.classList =
       "recipe-progress-visible text-left mt-3";
-    this.domManager.app.searchRecipesDownloadText.classList =
-      "text-center mt-3";
-    this.domManager.app.searchRecipesDownloadText.textContent =
+    app.searchRecipesDownloadText.classList = "text-center mt-3";
+    app.searchRecipesDownloadText.textContent =
       "Gathering recipes, please wait...";
 
     this.prepareForRecipesSearch();
@@ -299,7 +301,7 @@ export class App {
     $.ajax({
       method: "GET",
       url: spoonacularURL,
-      data: this.domManager.app.spoonacularDataToSend,
+      data: app.spoonacularDataToSend,
       headers: {
         "Content-Type": "application/json",
       },
@@ -328,25 +330,24 @@ export class App {
 
   // GET random recipes from Spoonacular's API
   getRandomRecipes() {
+    const { app } = this.domManager;
+
     if (this.appStateManager.isGetRandomRecipesCalled) return;
     this.appStateManager.setState("isGetRandomRecipesCalled", true);
 
     this.toggleInputs(true);
 
-    this.domManager.app.searchRecipesDownloadProgress.classList =
+    app.searchRecipesDownloadProgress.classList =
       "recipe-progress-visible text-left mt-3";
-    this.domManager.app.searchRecipesDownloadText.classList =
-      "text-center mt-3";
-    this.domManager.app.searchRecipesDownloadText.textContent =
+    app.searchRecipesDownloadText.classList = "text-center mt-3";
+    app.searchRecipesDownloadText.textContent =
       "Gathering random recipes, please wait...";
 
     this.prepareForRecipesSearch();
 
-    this.domManager.app.titleContainer.classList = "d-none desktop-space-form";
-    this.domManager.app.percentageBarContainer.classList =
-      "d-none desktop-space-form";
-    this.domManager.app.uploadedImageContainer.classList =
-      "d-none desktop-space-form";
+    app.titleContainer.classList = "d-none desktop-space-form";
+    app.percentageBarContainer.classList = "d-none desktop-space-form";
+    app.uploadedImageContainer.classList = "d-none desktop-space-form";
 
     const spoonacularAPIKey =
       this.appStateManager.getState("spoonacularAPIKey");
@@ -355,7 +356,7 @@ export class App {
     $.ajax({
       method: "GET",
       url: spoonacularURL,
-      data: this.domManager.app.spoonacularDataToSend,
+      data: app.spoonacularDataToSend,
       headers: {
         "Content-Type": "application/json",
       },
@@ -370,22 +371,24 @@ export class App {
 
   // Handle common recipe error
   handleRecipeError = (error, progressContainer, errorTextContainer) => {
-    this.domManager.app[progressContainer].classList = "d-none";
-    this.domManager.app.searchRecipesDownloadProgress.classList =
+    const { app } = this.domManager;
+
+    app[progressContainer].classList = "d-none";
+    app.searchRecipesDownloadProgress.classList =
       "recipe-progress-hidden text-left mt-3";
-    this.domManager.app.searchRecipesDownloadText.classList = "d-none";
-    this.domManager.app[errorTextContainer].classList = "text-center mt-3";
+    app.searchRecipesDownloadText.classList = "d-none";
+    app[errorTextContainer].classList = "text-center mt-3";
 
     this.toggleInputs(false);
 
     if (error.status === 402) {
-      this.domManager.app.spoonacularSearchError.innerHTML =
+      app.spoonacularSearchError.innerHTML =
         "The Spoonacular API has reached its daily quota for this app's current API Key. Please notify <a href = 'mailto:john@johnnguyencodes.com?subject=Snappy%20Recipes%20API%20Key%20Refresh'> john@johnnguyencodes.com</a>, thank you.";
     } else if (error.statusText === "timeout") {
-      this.domManager.app.spoonacularSearchError.innerHTML =
+      app.spoonacularSearchError.innerHTML =
         "The ajax request to the Spoonacular API has timed out, please try again.";
     } else {
-      this.domManager.app.spoonacularSearchError.innerHTML =
+      app.spoonacularSearchError.innerHTML =
         "There is a CORS issue with the Spoonacular's API.  This issue will usually resolve itself in ten minutes.  If it does not, please notify <a href = 'mailto:john@johnnguyencodes.com?subject=Snappy%20Recipes%20API%20Key%20Refresh'> john@johnnguyencodes.com</a >, thank you.";
     }
   };
@@ -425,16 +428,17 @@ export class App {
   };
 
   onGetFavoriteRecipesError = (error) => {
-    this.domManager.app.favoriteRecipesDownloadProgress.classList =
+    console.log("favoriteError:", error);
+    const { app } = this.domManager;
+
+    app.favoriteRecipesDownloadProgress.classList =
       "favorite-recipe-progress-hidden";
-    this.domManager.app.favoriteRecipesStatusText.classList = "d-none";
+    app.favoriteRecipesStatusText.classList = "d-none";
     if (error.statusText === "error") {
-      this.domManager.app.spoonacularFavoriteError.classList =
-        "mt-3 text-center";
+      app.spoonacularFavoriteError.classList = "mt-3 text-center";
     }
     if (error.statusText === "timeout") {
-      this.domManager.app.spoonacularFavoriteTimeoutError.classList =
-        "mt-3 text-center";
+      app.spoonacularFavoriteTimeoutError.classList.remove("d-none");
     }
   };
 
@@ -460,11 +464,13 @@ export class App {
   }
 
   showFavoriteRecipesSection() {
-    this.domManager.app.favoriteRecipesSection.classList =
+    const { app } = this.domManager;
+
+    app.favoriteRecipesSection.classList =
       "favorite-recipes-visible d-flex flex-column justify-content-center";
-    this.domManager.app.emptyFavoriteTextContainer.classList = "d-none";
-    this.domManager.app.favoriteRecipesDownloadProgress.classList =
+    app.emptyFavoriteTextContainer.classList = "d-none";
+    app.favoriteRecipesDownloadProgress.classList =
       "favorite-recipe-progress-visible mt-3";
-    this.domManager.app.favoriteRecipesStatusText.classList = "text-center";
+    app.favoriteRecipesStatusText.classList = "text-center";
   }
 }
