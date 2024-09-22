@@ -51,13 +51,13 @@
         <div class="row m-0 p-0 d-flex justify-content-around bg-light">
           <button
             id="toggle_favorites_button"
-            class="favorites-toggle-hidden toggle btn btn-danger text-white mx-2 px-2 py-0 d-flex justify-content-center align-items-center font-weight-bold"
+            class="favorites-toggle-hidden toggle btn btn-danger text-white m-2 px-2 py-0 d-flex justify-content-center align-items-center font-weight-bold"
           >
             <i class="fas fa-heart fa-sm p-0 mr-2 my-0 ml-0"></i> Favorites
           </button>
           <button
             id="toggle_diet_button"
-            class="diet-toggle-hidden toggle btn btn-primary text-white mx-2 px-2 py-0 d-flex justify-content-center align-items-center"
+            class="diet-toggle-hidden toggle btn btn-primary text-white m-2 px-2 py-0 d-flex justify-content-center align-items-center"
           >
             <i class="fas fa-tasks fa-sm p-0 mr-2 my-0 ml-0"></i> Diet
             Preferences
@@ -117,7 +117,7 @@
     </div>
     <div
       id="side_menu_container"
-      class="side-menu-hidden d-flex flex-column justify-content-center align-items"
+      class="side-menu-hidden d-flex flex-column justify-content-center align-items-center"
     >
       <div
         id="favorite_recipes_section"
@@ -131,7 +131,10 @@
             >john@johnnguyencodes.com</a
           >, thank you.
         </p>
-        <p id="spoonacular_favorite_timeout_error" class="d-none">
+        <p
+          id="spoonacular_favorite_timeout_error"
+          class="d-none mt-3 text-center"
+        >
           The Ajax Request to the Spoonacular API timed out. Please close and
           re-open the favorites menu to try again, thank you.
         </p>
