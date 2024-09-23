@@ -150,6 +150,8 @@ export class App {
           if (percentComplete > 0 && percentComplete < 1) {
             $("#percentage_upload_container").removeClass("d-none");
           } else if (percentComplete === 1) {
+            document.getElementById("image_processing_container").className =
+              "d-flex col-12 flex-column align-items-center justify-content-center desktop-space-form";
             $("#percentage_upload_container").addClass("d-none");
           }
         };
@@ -262,7 +264,7 @@ export class App {
     const [firstAnnotation] = labelAnnotations;
     const { description: imageTitle, score } = firstAnnotation;
 
-    this.imageTitleHandler.imageTitleOnPage(imageTitle, score);
+    this.imageTitleHandler.displayImageTitle(imageTitle, score);
     this.domManager.app.imageRecognitionStatusText.classList = "d-none";
 
     // Get recipes based on title
@@ -351,7 +353,7 @@ export class App {
 
     const spoonacularAPIKey =
       this.appStateManager.getState("spoonacularAPIKey");
-    const spoonacularURL = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${spoonacularAPIKey}&addRecipeNutrition=true&number=100`;
+    const spoonacularURL = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${spoonacularAPIKey}&addRecipeNutrition=true&number=100&sort=random`;
 
     $.ajax({
       method: "GET",
