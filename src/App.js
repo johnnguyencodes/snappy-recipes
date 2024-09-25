@@ -314,7 +314,7 @@ export class App {
   }
 
   onGetRecipesSuccess = (recipes) => {
-    this.recipesHandler.chunkSearchedRecipes(recipes);
+    this.recipesHandler.chunkRecipes(recipes, "searched");
   };
 
   onGetRecipesError = (error) => {
@@ -368,7 +368,7 @@ export class App {
   }
 
   onGetRandomRecipesSuccess = (recipes) => {
-    this.recipesHandler.chunkSearchedRecipes(recipes);
+    this.recipesHandler.chunkRecipes(recipes, "random");
   };
 
   // Handle common recipe error
