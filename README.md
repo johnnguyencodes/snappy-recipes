@@ -1,4 +1,4 @@
-# Snappy Recipes
+# Snappy Recipes 
 > * Maintained by: `John Nguyen`
 
 Machine learning based web app to help users with dietary restrictions find and save recipes via image recognition and classification of various foods.
